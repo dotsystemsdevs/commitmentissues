@@ -33,9 +33,31 @@ export default function Page() {
   return (
     <main style={{ minHeight: '100vh', background: '#faf8f4', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 24px' }}>
 
+      {/* Hero */}
+      {!certificate && (
+        <header style={{ width: '100%', maxWidth: '680px', paddingTop: '44px', paddingBottom: '22px', textAlign: 'center' }}>
+          <button onClick={handleReset} style={{ background: 'none', border: 'none', cursor: 'default', width: '100%', display: 'block' }}>
+            <div style={{ fontSize: '32px', marginBottom: '12px', lineHeight: 1 }}>🪦</div>
+            <h1 style={{
+              fontFamily: 'var(--font-gothic), serif',
+              fontSize: 'clamp(2.4rem, 7vw, 3.6rem)',
+              color: '#160A06',
+              lineHeight: 0.95,
+              marginBottom: '20px',
+              letterSpacing: '-0.01em',
+            }}>
+              Certificate of Death
+            </h1>
+          </button>
+          <p style={{ fontFamily: FONT, fontSize: '15px', color: '#938882', lineHeight: 1.6, margin: '0 auto', maxWidth: '420px' }}>
+            Paste any GitHub URL. We issue an official death certificate for your abandoned repo.
+          </p>
+        </header>
+      )}
+
       {/* Search — hide when certificate is showing */}
       {!certificate && (
-        <div style={{ width: '100%', maxWidth: '680px', marginBottom: '12px', marginTop: '32px' }}>
+        <div style={{ width: '100%', maxWidth: '680px', marginBottom: '12px' }}>
           <SearchForm url={url} setUrl={setUrl} onSubmit={() => analyze(url)} onExample={handleExample} loading={loading} />
         </div>
       )}
