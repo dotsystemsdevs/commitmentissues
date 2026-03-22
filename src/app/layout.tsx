@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Playfair_Display, Courier_Prime, UnifrakturMaguntia, DM_Sans } from 'next/font/google'
+import { Playfair_Display, Courier_Prime, UnifrakturMaguntia, Inter } from 'next/font/google'
 import Script from 'next/script'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -18,7 +18,7 @@ const courierPrime = Courier_Prime({
   display: 'swap',
 })
 
-const dmSans = DM_Sans({
+const inter = Inter({
   subsets: ['latin'],
   variable: '--font-dm',
   display: 'swap',
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${playfair.variable} ${courierPrime.variable} ${unifraktur.variable} ${dmSans.variable} antialiased`}>
+      <body className={`${playfair.variable} ${courierPrime.variable} ${unifraktur.variable} ${inter.variable} antialiased`}>
         {children}
         <Analytics />
         <SpeedInsights />

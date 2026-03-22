@@ -23,7 +23,7 @@ export default function TopBar() {
         right: 0,
         height: '52px',
         background: '#160A06',
-        borderBottom: '1px solid #2a1a0e',
+        borderBottom: '1px solid #222',
         display: 'grid',
         gridTemplateColumns: '1fr auto 1fr',
         alignItems: 'center',
@@ -95,7 +95,7 @@ export default function TopBar() {
           left: 0,
           right: 0,
           background: '#160A06',
-          borderBottom: '1px solid #2a1a0e',
+          borderBottom: '1px solid #222',
           zIndex: 99,
           padding: '8px 0 16px',
         }}>

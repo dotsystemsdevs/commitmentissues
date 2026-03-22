@@ -8,15 +8,15 @@
     @apply antialiased;
     font-family: var(--font-dm), -apple-system, sans-serif;
     font-size: 14px;
-    color: #160A06;
-    background-color: #faf8f4;
+    color: #edebe8;
+    background-color: #111111;
   }
   * { box-sizing: border-box; }
-  input::placeholder { color: #b0aca8; opacity: 1; }
+  input::placeholder { color: #555; opacity: 1; }
   input:-webkit-autofill,
   input:-webkit-autofill:focus {
-    -webkit-text-fill-color: #160A06;
-    -webkit-box-shadow: 0 0 0 1000px #faf8f4 inset;
+    -webkit-text-fill-color: #edebe8;
+    -webkit-box-shadow: 0 0 0 1000px #1e1e1e inset;
     transition: background-color 5000s ease-in-out 0s;
   }
 }

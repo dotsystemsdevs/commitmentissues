@@ -33,15 +33,15 @@ export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }
             width: '100%',
             height: '48px',
             padding: '0 18px',
-            background: '#faf8f4',
-            border: '1.5px solid #8b7355',
+            background: '#1e1e1e',
+            border: '1.5px solid #333',
             borderRadius: '6px 6px 0 0',
-            color: '#160A06',
+            color: '#edebe8',
             outline: 'none',
             transition: 'border-color 0.15s',
           }}
           onFocus={e => (e.currentTarget.style.borderColor = '#8b0000')}
-          onBlur={e => (e.currentTarget.style.borderColor = '#8b7355')}
+          onBlur={e => (e.currentTarget.style.borderColor = '#333')}
         />
         <button
           type="submit"
@@ -75,7 +75,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }
           fontFamily: FONT,
           fontSize: '13px',
           fontStyle: 'italic',
-          color: '#938882',
+          color: '#666',
           background: 'none',
           border: 'none',
           cursor: 'pointer',

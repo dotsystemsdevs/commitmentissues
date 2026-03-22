@@ -25,10 +25,10 @@ const HALL_OF_SHAME: LeaderboardEntry[] = [
 ]
 
 const FONT = `var(--font-dm), -apple-system, sans-serif`
-const C_WARM_GR = '#6b6560'
-const C_LIGHT   = '#ccc8c4'
-const C_DARK    = '#462D21'
-const C_DARKEST = '#160A06'
+const C_WARM_GR = '#888'
+const C_LIGHT   = '#2a2a2a'
+const C_DARK    = '#aaa'
+const C_DARKEST = '#edebe8'
 
 function timeAgo(iso: string): string {
   const ms = Date.now() - new Date(iso).getTime()
@@ -100,8 +100,8 @@ export default function Leaderboard({ onSelect }: Props) {
           alignItems: 'center',
           gap: '10px',
           padding: '9px 16px',
-          background: C_LIGHT,
-          borderBottom: `1px solid #6b6560`,
+          background: '#1e1e1e',
+          borderBottom: `1px solid #2a2a2a`,
         }}>
           <span style={{ fontSize: '14px', flexShrink: 0 }}>🪦</span>
           <span style={{ fontSize: '13px', fontWeight: 700, color: C_DARKEST }}>the_grim_reaper</span>
@@ -139,7 +139,7 @@ export default function Leaderboard({ onSelect }: Props) {
               transition: 'background 0.12s, border-left-color 0.12s',
             }}
             onMouseEnter={e => {
-              e.currentTarget.style.background = C_LIGHT
+              e.currentTarget.style.background = '#1e1e1e'
               e.currentTarget.style.borderLeftColor = '#8b0000'
             }}
             onMouseLeave={e => {
