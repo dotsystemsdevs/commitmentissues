@@ -92,12 +92,12 @@ export default function CertificateCard({ cert, onReset }: Props) {
   return (
     <div style={{ width: '100%', maxWidth: '480px', margin: '0 auto' }}>
 
-      {/* ── Page heading above buttons ── */}
-      <div style={{ textAlign: 'center', marginTop: '24px', marginBottom: '16px' }}>
-        <div style={{ fontSize: '36px', lineHeight: 1, marginBottom: '6px' }}>🪦</div>
-        <h2 style={{ fontFamily: 'var(--font-gothic), serif', fontSize: 'clamp(1.6rem, 5vw, 2.2rem)', color: '#160A06', lineHeight: 1, margin: 0 }}>
+      {/* ── Page heading above buttons — matches homepage hero exactly ── */}
+      <div style={{ textAlign: 'center', marginTop: '44px', marginBottom: '20px' }}>
+        <div style={{ fontSize: '56px', lineHeight: 1, marginBottom: '12px' }}>🪦</div>
+        <h1 style={{ fontFamily: 'var(--font-gothic), serif', fontSize: 'clamp(2.4rem, 7vw, 3.6rem)', color: '#160A06', lineHeight: 0.95, margin: 0 }}>
           Certificate of Death
-        </h2>
+        </h1>
       </div>
 
       {/* ── Actions ── 3 buttons (outside zoom wrapper so they stay full-size on mobile) */}
