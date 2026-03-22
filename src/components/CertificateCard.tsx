@@ -158,22 +158,22 @@ export default function CertificateCard({ cert, onReset }: Props) {
         {/* 1. Share — primary, full width */}
         <button
           onClick={handleShare}
-          style={{ width: '100%', fontFamily: UI, background: CTA_RED, color: '#fff', border: 'none', borderRadius: '8px', padding: '18px 20px', cursor: 'pointer', transition: 'background 0.15s, transform 0.12s, box-shadow 0.12s', transform: 'translateY(0)', boxShadow: 'none', textAlign: 'center' }}
-          onMouseEnter={e => { e.currentTarget.style.background = CTA_RED_HOVER; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.25)' }}
+          style={{ width: '100%', fontFamily: UI, background: CTA_RED, color: '#fff', border: 'none', borderRadius: '8px', padding: '17px 20px', cursor: 'pointer', transition: 'background 0.15s, transform 0.12s, box-shadow 0.12s', transform: 'translateY(0)', boxShadow: 'none', textAlign: 'center', letterSpacing: '0.03em' }}
+          onMouseEnter={e => { e.currentTarget.style.background = CTA_RED_HOVER; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.22)' }}
           onMouseLeave={e => { e.currentTarget.style.background = CTA_RED; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none' }}
         >
-          <div style={{ fontSize: '15px', fontWeight: 700 }}>📤 Post this before they forget</div>
+          <div style={{ fontSize: '14px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Share</div>
         </button>
 
         {/* 2. Download A4 — outlined secondary */}
         <button
           onClick={handleDownload}
-          style={{ width: '100%', fontFamily: UI, background: 'transparent', color: CTA_RED, border: `1.5px solid ${CTA_RED}`, borderRadius: '8px', padding: '16px 20px', cursor: 'pointer', transition: 'border-color 0.15s, color 0.15s, background 0.15s, transform 0.12s', transform: 'translateY(0)', textAlign: 'center' }}
+          style={{ width: '100%', fontFamily: UI, background: 'transparent', color: CTA_RED, border: `1.5px solid ${CTA_RED}`, borderRadius: '8px', padding: '15px 20px', cursor: 'pointer', transition: 'border-color 0.15s, color 0.15s, background 0.15s, transform 0.12s', transform: 'translateY(0)', textAlign: 'center' }}
           onMouseEnter={e => { e.currentTarget.style.borderColor = CTA_RED_HOVER; e.currentTarget.style.color = CTA_RED_HOVER; e.currentTarget.style.background = 'rgba(0,0,0,0.04)'; e.currentTarget.style.transform = 'translateY(-2px)' }}
           onMouseLeave={e => { e.currentTarget.style.borderColor = CTA_RED; e.currentTarget.style.color = CTA_RED; e.currentTarget.style.background = 'transparent'; e.currentTarget.style.transform = 'translateY(0)' }}
         >
-          <div style={{ fontSize: '14px', fontWeight: 700 }}>🪦 Get the official certificate</div>
-          <div style={{ fontSize: '11px', color: '#938882', marginTop: '4px' }}>Printable · High-res · No watermark · $4.99</div>
+          <div style={{ fontSize: '14px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Get the official certificate</div>
+          <div style={{ fontSize: '11px', color: '#938882', marginTop: '3px', letterSpacing: '0.02em' }}>Printable · High-res · No watermark · $4.99</div>
         </button>
 
       </div>
