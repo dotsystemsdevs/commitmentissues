@@ -37,13 +37,7 @@ export default function Page() {
         <>
           <PageHero
             subtitle="Turn any GitHub repo into its official death certificate."
-            microcopy={
-              <span style={{ display: 'inline-flex', gap: '6px', flexWrap: 'wrap', justifyContent: 'center' }}>
-                {['no auth', 'no setup', 'instant result'].map(tag => (
-                  <span key={tag} style={{ border: '1px solid #ccc', borderRadius: '20px', padding: '2px 10px', fontSize: '11px', color: '#938882', letterSpacing: '0.03em', fontFamily: 'var(--font-dm), system-ui, sans-serif' }}>{tag}</span>
-                ))}
-              </span>
-            }
+            microcopy={null}
           />
 
           <div style={{ width: '100%', marginBottom: 0 }}>
@@ -67,7 +61,7 @@ export default function Page() {
         <div style={{ width: '100%', marginTop: '32px', paddingBottom: '52px' }}>
           <StatsBar />
           <p style={{ fontFamily: FONT, fontSize: '12px', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#938882', marginBottom: '10px' }}>
-            Notable repo deaths
+            Historical repo deaths
           </p>
           <Leaderboard onSelect={handleSelect} />
         </div>

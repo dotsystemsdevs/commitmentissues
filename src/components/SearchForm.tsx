@@ -90,20 +90,20 @@ export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }
         style={{
           fontFamily: FONT,
           fontSize: '13px',
-          color: '#6b5a50',
+          color: '#938882',
           background: 'none',
           border: 'none',
           cursor: 'pointer',
           padding: '4px 0',
-          textAlign: 'left',
+          textAlign: 'center',
+          width: '100%',
           transition: 'color 0.15s',
-          letterSpacing: '0.01em',
           WebkitTapHighlightColor: 'transparent',
         }}
-        onMouseEnter={e => { e.currentTarget.style.color = CTA_RED }}
-        onMouseLeave={e => { e.currentTarget.style.color = '#6b5a50' }}
+        onMouseEnter={e => { e.currentTarget.style.color = '#555' }}
+        onMouseLeave={e => { e.currentTarget.style.color = '#938882' }}
       >
-        Try on atom/atom — already dead →
+        or paste any dead repo — atom/atom works →
       </button>
     </div>
   )

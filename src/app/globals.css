@@ -404,7 +404,7 @@ a.subpage-inline-mail {
   .lb-cause span:first-child { font-size: 13px !important; }
   .lb-date { justify-self: start; margin-top: 0 !important; font-size: 12px !important; }
   .lb-icon { font-size: 15px !important; }
-  .lb-commit-msg { white-space: normal !important; overflow: visible !important; text-overflow: unset !important; font-size: 12px !important; }
+  .lb-commit-msg { display: none !important; }
   .lb-last-words { display: none !important; }
   .lb-commit-bar { padding: 8px 12px !important; }
 }

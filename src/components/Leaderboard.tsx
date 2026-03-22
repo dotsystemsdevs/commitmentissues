@@ -60,7 +60,6 @@ export default function Leaderboard({ onSelect }: Props) {
           <span className="lb-commit-msg" style={{ fontSize: '13px', fontStyle: 'italic', color: C_WARM_GR, flex: '1 1 160px', minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
             {'chore: collect souls and close issues permanently'}
           </span>
-          <span style={{ fontSize: '12px', fontStyle: 'italic', color: C_WARM_GR, whiteSpace: 'nowrap', flexShrink: 0 }}>eternally ago</span>
         </div>
 
         {list.length === 0 ? (
@@ -124,18 +123,6 @@ export default function Leaderboard({ onSelect }: Props) {
               }}>
                 {entry.cause}
               </span>
-              {entry.lastWords && (
-                <span className="lb-last-words" style={{
-                  fontFamily: FONT,
-                  fontSize: '12px',
-                  color: '#aaa',
-                  lineHeight: '1.5',
-                  display: 'block',
-                  marginTop: '2px',
-                }}>
-                  &ldquo;{entry.lastWords}&rdquo;
-                </span>
-              )}
             </div>
 
             <span className="lb-date" style={{
