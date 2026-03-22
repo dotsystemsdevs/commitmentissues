@@ -31,16 +31,13 @@ export default function Page() {
   const idle = !loading && !certificate && !error
 
   return (
-    <main style={{ minHeight: '100vh', background: '#f5f5f5', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 24px' }}>
+    <main style={{ minHeight: '100vh', background: 'radial-gradient(ellipse 900px 420px at 50% 0px, rgba(139,0,0,0.13) 0%, transparent 70%), #f5f5f5', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 24px' }}>
 
       {/* Hero */}
       {!certificate && (
         <header style={{ width: '100%', maxWidth: '680px', paddingTop: '44px', paddingBottom: '22px', textAlign: 'center' }}>
           <button onClick={handleReset} style={{ background: 'none', border: 'none', cursor: 'default', width: '100%', display: 'block' }}>
-            <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: '12px', position: 'relative' }}>
-              <span className="hero-glow" />
-              <span style={{ fontSize: '56px', lineHeight: 1, position: 'relative', zIndex: 1 }}>🪦</span>
-            </div>
+            <div style={{ fontSize: '56px', marginBottom: '12px', lineHeight: 1 }}>🪦</div>
             <h1 style={{
               fontFamily: 'var(--font-gothic), serif',
               fontSize: 'clamp(2.4rem, 7vw, 3.6rem)',
