@@ -11,17 +11,12 @@ interface Props {
 export default function CertificateCard({ cert, onReset }: Props) {
   const cardRef = useRef<HTMLDivElement>(null)
   const igRef  = useRef<HTMLDivElement>(null)
-  const [visible,      setVisible]      = useState(false)
-  const [showStamp,    setShowStamp]    = useState(false)
-  const [stampFading,  setStampFading]  = useState(false)
-  const [shareLabel,   setShareLabel]   = useState('Share')
+  const [visible,    setVisible]    = useState(false)
+  const [shareLabel, setShareLabel] = useState('Share')
 
   useEffect(() => {
     const t1 = setTimeout(() => setVisible(true), 50)
-    const t2 = setTimeout(() => setShowStamp(true), 700)
-    const t3 = setTimeout(() => setStampFading(true), 1700)
-    const t4 = setTimeout(() => { setShowStamp(false); setStampFading(false) }, 2000)
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4) }
+    return () => clearTimeout(t1)
   }, [])
 
   // Download → A4 PNG from the visible certificate card
@@ -103,43 +98,43 @@ export default function CertificateCard({ cert, onReset }: Props) {
         </p>
       </button>
 
-      {/* ── Actions ── */}
+      {/* ── Actions: Share → Download → issue another ── */}
       <div className="cert-actions" style={{ display: 'flex', gap: '10px', marginBottom: '16px' }}>
 
-        {/* Download */}
+        {/* 1. Share free — lowest friction first */}
         <button
-          onClick={handleDownload}
+          onClick={handleShare}
           style={{ flex: 1, fontFamily: UI, background: '#1a1a1a', color: '#fff', border: 'none', borderRadius: '8px', padding: '14px 12px 12px', cursor: 'pointer', transition: 'background 0.15s, transform 0.12s, box-shadow 0.12s', transform: 'translateY(0)', boxShadow: 'none', textAlign: 'center' }}
           onMouseEnter={e => { e.currentTarget.style.background = '#8b0000'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(139,0,0,0.25)' }}
           onMouseLeave={e => { e.currentTarget.style.background = '#1a1a1a'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none' }}
         >
-          <div style={{ fontSize: '18px', marginBottom: '4px' }}>⬇</div>
-          <div style={{ fontSize: '13px', fontWeight: 700, letterSpacing: '0.04em' }}>Download A4 — $4.99</div>
-          <div style={{ fontSize: '12px', fontStyle: 'italic', color: '#c8b090', marginTop: '4px' }}>print-ready, yours forever →</div>
+          <div style={{ fontSize: '18px', marginBottom: '4px' }}>↗</div>
+          <div style={{ fontSize: '13px', fontWeight: 700 }}>{shareLabel === 'Share' ? 'Share free' : shareLabel}</div>
+          <div style={{ fontSize: '12px', fontStyle: 'italic', color: '#c8b090', marginTop: '4px' }}>post it before they forget →</div>
         </button>
 
-        {/* Share */}
+        {/* 2. Download A4 */}
         <button
-          onClick={handleShare}
+          onClick={handleDownload}
           style={{ flex: 1, fontFamily: UI, background: 'transparent', color: '#1a1a1a', border: '1.5px solid #1a1a1a', borderRadius: '8px', padding: '14px 12px 12px', cursor: 'pointer', transition: 'background 0.15s, color 0.15s, transform 0.12s, box-shadow 0.12s', transform: 'translateY(0)', boxShadow: 'none', textAlign: 'center' }}
           onMouseEnter={e => { e.currentTarget.style.background = '#1a1a1a'; e.currentTarget.style.color = '#fff'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.12)' }}
           onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#1a1a1a'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none' }}
         >
-          <div style={{ fontSize: '18px', marginBottom: '4px' }}>↗</div>
-          <div style={{ fontSize: '13px', fontWeight: 600 }}>{shareLabel === 'Share' ? 'Share free' : shareLabel}</div>
-          <div style={{ fontSize: '12px', fontStyle: 'italic', color: '#888', marginTop: '4px' }}>post it before they forget →</div>
+          <div style={{ fontSize: '18px', marginBottom: '4px' }}>⬇</div>
+          <div style={{ fontSize: '13px', fontWeight: 700, letterSpacing: '0.04em' }}>Download A4 — $4.99</div>
+          <div style={{ fontSize: '12px', fontStyle: 'italic', color: '#888', marginTop: '4px' }}>official PDF, frame it or forget it →</div>
         </button>
 
-        {/* New repo */}
+        {/* 3. issue another — viral loop */}
         <button
           onClick={onReset}
-          style={{ flex: 1, fontFamily: UI, background: 'transparent', color: '#938882', border: '1.5px solid #c8c8c8', borderRadius: '8px', padding: '14px 12px 12px', cursor: 'pointer', transition: 'color 0.15s, border-color 0.15s, transform 0.12s', transform: 'translateY(0)', textAlign: 'center' }}
-          onMouseEnter={e => { e.currentTarget.style.color = '#1a1a1a'; e.currentTarget.style.borderColor = '#1a1a1a'; e.currentTarget.style.transform = 'translateY(-2px)' }}
-          onMouseLeave={e => { e.currentTarget.style.color = '#938882'; e.currentTarget.style.borderColor = '#c8c8c8'; e.currentTarget.style.transform = 'translateY(0)' }}
+          style={{ flex: 1, fontFamily: UI, background: 'transparent', color: '#1a1a1a', border: '1.5px solid #1a1a1a', borderRadius: '8px', padding: '14px 12px 12px', cursor: 'pointer', transition: 'background 0.15s, color 0.15s, border-color 0.15s, transform 0.12s', transform: 'translateY(0)', textAlign: 'center' }}
+          onMouseEnter={e => { e.currentTarget.style.background = '#1a1a1a'; e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = '#1a1a1a'; e.currentTarget.style.transform = 'translateY(-2px)' }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#1a1a1a'; e.currentTarget.style.borderColor = '#1a1a1a'; e.currentTarget.style.transform = 'translateY(0)' }}
         >
           <div style={{ fontSize: '18px', marginBottom: '4px' }}>↺</div>
-          <div style={{ fontSize: '13px', fontStyle: 'italic' }}>issue another</div>
-          <div style={{ fontSize: '12px', fontStyle: 'italic', color: '#aaa', marginTop: '4px' }}>kill another repo →</div>
+          <div style={{ fontSize: '13px', fontWeight: 700 }}>issue another</div>
+          <div style={{ fontSize: '12px', fontStyle: 'italic', color: '#888', marginTop: '4px' }}>kill another repo →</div>
         </button>
 
       </div>
@@ -147,15 +142,13 @@ export default function CertificateCard({ cert, onReset }: Props) {
       {/* ── Certificate (zoomed on mobile) ── */}
       <div className="certificate-wrapper relative" style={{ width: '480px' }}>
 
-      {/* ── Stamp overlay ── */}
-      {showStamp && (
-        <div className={`absolute inset-0 z-20 flex items-center justify-center pointer-events-none transition-opacity duration-300 ${stampFading ? 'opacity-0' : 'opacity-100'}`}>
-          <div className="px-12 py-6 select-none" style={{ transform: 'rotate(-12deg)', border: '4px solid #8B1A1A', background: 'rgba(139,26,26,0.04)', boxShadow: '0 0 0 1px rgba(139,26,26,0.1)' }}>
-            <span className="font-serif text-4xl font-bold tracking-[0.15em] uppercase block text-center" style={{ color: '#8B1A1A' }}>CERTIFIED DEAD</span>
-            <p className="font-mono text-[10px] tracking-[0.4em] text-center mt-1" style={{ color: 'rgba(139,26,26,0.5)' }}>COMMITMENTISSUES.DEV</p>
-          </div>
+      {/* ── Stamp — permanent, always visible ── */}
+      <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
+        <div className="select-none" style={{ transform: 'rotate(-12deg)', border: '5px solid rgba(139,26,26,0.75)', borderRadius: '4px', padding: '12px 40px', background: 'rgba(139,26,26,0.04)' }}>
+          <span style={{ fontFamily: 'var(--font-playfair), serif', fontSize: '2.6rem', fontWeight: 900, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(139,26,26,0.72)', display: 'block', textAlign: 'center', lineHeight: 1 }}>CERTIFIED DEAD</span>
+          <p style={{ fontFamily: 'var(--font-courier), monospace', fontSize: '9px', letterSpacing: '0.4em', textAlign: 'center', marginTop: '6px', color: 'rgba(139,26,26,0.45)', textTransform: 'uppercase' }}>COMMITMENTISSUES.DEV</p>
         </div>
-      )}
+      </div>
 
       {/* ── A4 Certificate ── */}
       <div
