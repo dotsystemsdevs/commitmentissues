@@ -176,14 +176,14 @@ function handleTweet() {
           get the official certificate — $4.99 →
         </button>
 
-        {/* Share — plain text link */}
+        {/* Share — outlined, same size as buy button */}
         <button
           onClick={handleShare}
-          style={{ width: '100%', fontFamily: UI, background: 'none', border: 'none', cursor: 'pointer', padding: '6px 0', textAlign: 'center', fontSize: '13px', color: '#938882', transition: 'color 0.15s' }}
-          onMouseEnter={e => { e.currentTarget.style.color = '#555' }}
-          onMouseLeave={e => { e.currentTarget.style.color = '#938882' }}
+          style={{ width: '100%', fontFamily: UI, fontSize: '14px', fontWeight: 600, background: '#fff', color: '#0a0a0a', border: '1.5px solid #0a0a0a', borderRadius: '8px', padding: '15px 20px', cursor: 'pointer', textAlign: 'center', transition: 'background 0.15s, color 0.15s' }}
+          onMouseEnter={e => { e.currentTarget.style.background = '#0a0a0a'; e.currentTarget.style.color = '#fff' }}
+          onMouseLeave={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#0a0a0a' }}
         >
-          or share →
+          share for free →
         </button>
 
       </div>

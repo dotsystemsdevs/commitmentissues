@@ -8,7 +8,7 @@ const SECTIONS = [
   { title: 'What we collect', body: 'Nothing personal. No accounts, no emails, no stored URLs.' },
   { title: 'GitHub API', body: 'Public repo data only. We do not access private repositories.' },
   { title: 'Payments', body: 'Handled by Stripe. We never see your card details.' },
-  { title: 'Analytics', body: 'Plausible. No cookies, no personal data, aggregate counts only.' },
+  { title: 'Analytics', body: 'None. We do not track individual users.' },
   { title: 'Cookies', body: 'None. Recently analyzed repos live in your own localStorage.' },
   { title: 'Contact', body: 'Questions? ', email: 'dot.systems@proton.me' },
 ]
