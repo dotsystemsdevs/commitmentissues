@@ -1,7 +1,7 @@
 'use client'
 
 import { FormEvent } from 'react'
-import { CTA_ISSUE, CTA_ISSUING, CTA_RED, CTA_RED_HOVER } from '@/lib/cta'
+import { CTA_RED, CTA_RED_HOVER } from '@/lib/cta'
 
 const FONT = `var(--font-dm), -apple-system, sans-serif`
 
@@ -21,8 +21,8 @@ export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }
   }
 
   return (
-    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
+    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '14px' }}>
+      <form onSubmit={handleSubmit} style={{ display: 'flex', width: '100%' }}>
         <input
           autoFocus
           type="text"
@@ -32,15 +32,16 @@ export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }
           style={{
             fontFamily: FONT,
             fontSize: '16px',
-            width: '100%',
+            flex: 1,
             height: '52px',
-            padding: '0 20px',
+            padding: '0 16px',
             background: '#fff',
             border: '2px solid #e0e0e0',
-            borderBottom: 'none',
-            borderRadius: '8px 8px 0 0',
+            borderRight: 'none',
+            borderRadius: '8px 0 0 8px',
             color: '#160A06',
             outline: 'none',
+            minWidth: 0,
             transition: 'border-color 0.2s, box-shadow 0.2s',
           }}
           onFocus={e => {
@@ -55,36 +56,34 @@ export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }
         <button
           type="submit"
           disabled={loading}
-          className="cta-btn"
           style={{
             fontFamily: FONT,
-            fontSize: '13px',
-            fontWeight: 800,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-            width: '100%',
+            fontSize: '20px',
+            width: '56px',
             height: '52px',
+            flexShrink: 0,
             background: CTA_RED,
             color: '#fff',
             border: 'none',
-            borderRadius: '0 0 8px 8px',
+            borderRadius: '0 8px 8px 0',
             cursor: loading ? 'wait' : 'pointer',
-            transition: 'background 0.2s, transform 0.15s, box-shadow 0.2s',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transition: 'background 0.15s, transform 0.12s',
           }}
           onMouseEnter={e => {
             if (!loading) {
               e.currentTarget.style.background = CTA_RED_HOVER
-              e.currentTarget.style.transform = 'translateY(-2px)'
-              e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.25)'
+              e.currentTarget.style.transform = 'translateY(-1px)'
             }
           }}
           onMouseLeave={e => {
             e.currentTarget.style.background = CTA_RED
             e.currentTarget.style.transform = 'translateY(0)'
-            e.currentTarget.style.boxShadow = 'none'
           }}
         >
-          {loading ? CTA_ISSUING : CTA_ISSUE}
+          {loading ? '…' : '→'}
         </button>
       </form>
 
@@ -94,25 +93,19 @@ export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }
         style={{
           fontFamily: FONT,
           fontSize: '13px',
-          color: '#8a7060',
+          color: '#aaa',
           background: 'none',
           border: 'none',
           cursor: 'pointer',
           padding: '0',
           textAlign: 'left',
-          transition: 'color 0.15s, letter-spacing 0.15s',
+          transition: 'color 0.15s',
           letterSpacing: '0.01em',
         }}
-        onMouseEnter={e => {
-          e.currentTarget.style.color = CTA_RED
-          e.currentTarget.style.letterSpacing = '0.03em'
-        }}
-        onMouseLeave={e => {
-          e.currentTarget.style.color = '#8a7060'
-          e.currentTarget.style.letterSpacing = '0.01em'
-        }}
+        onMouseEnter={e => { e.currentTarget.style.color = '#555' }}
+        onMouseLeave={e => { e.currentTarget.style.color = '#aaa' }}
       >
-        ☠ Try it on atom/atom — already dead →
+        Try on atom/atom — already dead →
       </button>
     </div>
   )

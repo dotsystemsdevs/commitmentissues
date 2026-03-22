@@ -37,7 +37,13 @@ export default function Page() {
         <>
           <PageHero
             subtitle="Turn any GitHub repo into its official death certificate."
-            microcopy="no auth · no setup · instant result"
+            microcopy={
+              <span style={{ display: 'inline-flex', gap: '6px', flexWrap: 'wrap', justifyContent: 'center' }}>
+                {['no auth', 'no setup', 'instant result'].map(tag => (
+                  <span key={tag} style={{ border: '1px solid #ccc', borderRadius: '20px', padding: '2px 10px', fontSize: '11px', color: '#938882', letterSpacing: '0.03em', fontFamily: 'var(--font-dm), system-ui, sans-serif' }}>{tag}</span>
+                ))}
+              </span>
+            }
           />
 
           <div style={{ width: '100%', marginBottom: 0 }}>

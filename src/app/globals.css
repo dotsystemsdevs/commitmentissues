@@ -397,12 +397,16 @@ a.subpage-inline-mail {
       'icon name'
       'icon cause'
       'icon date';
-    row-gap: 4px;
+    row-gap: 3px;
+    padding: 10px 12px !important;
   }
-  .lb-name { white-space: normal; }
-  .lb-date { justify-self: start; margin-top: 0 !important; }
-  .lb-commit-msg { white-space: normal !important; overflow: visible !important; text-overflow: unset !important; }
+  .lb-name { white-space: normal; font-size: 14px !important; }
+  .lb-cause span:first-child { font-size: 13px !important; }
+  .lb-date { justify-self: start; margin-top: 0 !important; font-size: 12px !important; }
+  .lb-icon { font-size: 15px !important; }
+  .lb-commit-msg { white-space: normal !important; overflow: visible !important; text-overflow: unset !important; font-size: 12px !important; }
   .lb-last-words { display: none !important; }
+  .lb-commit-bar { padding: 8px 12px !important; }
 }
 
 @layer base {
