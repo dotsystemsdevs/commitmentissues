@@ -32,7 +32,7 @@ export default function Page() {
 
   return (
     <main style={{ minHeight: '100vh', background: '#f5f5f5', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 24px', position: 'relative' }}>
-      <div className="hero-bg" style={{ position: 'fixed', top: 0, left: 0, right: 0, height: '480px', background: 'radial-gradient(ellipse 900px 480px at 50% 0px, rgba(139,0,0,0.22) 0%, transparent 70%)', pointerEvents: 'none', zIndex: 0 }} />
+      <div style={{ position: 'fixed', top: 0, left: 0, right: 0, height: '480px', background: 'radial-gradient(ellipse 900px 480px at 50% 0px, rgba(100,80,60,0.18) 0%, transparent 70%)', pointerEvents: 'none', zIndex: 0 }} />
       <div style={{ position: 'relative', zIndex: 1, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
 
       {/* Hero */}
