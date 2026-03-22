@@ -1,4 +1,13 @@
 
+@keyframes glow-breathe {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.45; }
+}
+
+.hero-bg {
+  animation: glow-breathe 4s ease-in-out infinite;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
