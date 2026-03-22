@@ -86,7 +86,7 @@ const CertificateSheet = forwardRef<HTMLDivElement, Props>(
               {r.name}
             </h3>
             {r.description && (
-              <p style={{ fontFamily: MONO, fontSize: '9px', color: '#8B6B4A', margin: '2% 0 0 0', lineHeight: 1.6 }}>
+              <p style={{ fontFamily: MONO, fontSize: '9px', color: '#8B6B4A', margin: '2% 0 0 0', lineHeight: 1.6, display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden' }}>
                 {r.description}
               </p>
             )}

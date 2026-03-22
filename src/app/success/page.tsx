@@ -82,7 +82,7 @@ export default function SuccessPage() {
         </p>
 
         {/* Retry / manual download button */}
-        {(status === 'error' || (status === 'idle' && !cert)) && (
+        {status === 'error' && (
           <button
             onClick={triggerDownload}
             style={{
@@ -98,8 +98,27 @@ export default function SuccessPage() {
               marginBottom: '16px',
             }}
           >
-            {cert ? `download — ${cert.repoData.name} →` : 'issue a certificate →'}
+            {cert ? `download — ${cert.repoData.name} →` : 'try again →'}
           </button>
+        )}
+        {status === 'idle' && !cert && (
+          <Link
+            href="/"
+            style={{
+              fontFamily: UI,
+              fontSize: '14px',
+              fontWeight: 600,
+              color: '#fff',
+              background: '#0a0a0a',
+              borderRadius: '8px',
+              padding: '14px 28px',
+              textDecoration: 'none',
+              display: 'inline-block',
+              marginBottom: '16px',
+            }}
+          >
+            issue a certificate →
+          </Link>
         )}
 
         {status === 'done' && (

@@ -147,7 +147,7 @@ export async function GET(request: NextRequest) {
     age: computeAge(repoData.createdAt, lastCommitDate),
     lastWords,
     mourners: `${repoData.stargazersCount} stars, ${repoData.forksCount} forks (probably also dead)`,
-    shareText: buildShareText(repoData.name, causeOfDeath),
+    shareText: buildShareText(repoData.fullName, causeOfDeath),
   }
 
   addRecent({

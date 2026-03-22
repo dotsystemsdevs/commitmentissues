@@ -33,7 +33,6 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://commitmentissues.dev'),
-  icons: { icon: '/favicon.svg', shortcut: '/favicon.svg' },
   title: 'commitmentissues — Death Certificates for Abandoned GitHub Repos',
   description: 'Paste any GitHub URL. Get an official death certificate for your abandoned repo. Cause of death, last words, and more.',
   keywords: ['github', 'dead repo', 'abandoned project', 'death certificate', 'side project', 'open source'],

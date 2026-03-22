@@ -59,15 +59,17 @@ export default function CertificateCard({ cert, onReset }: Props) {
   }
 
   async function handleShare() {
-    // Share image gets watermark — social-friendly, not print-ready
-    const blob = await exportBlob(2, true)
-    if (blob && navigator.canShare) {
-      const file = new File([blob], `${cert.repoData.name}.png`, { type: 'image/png' })
-      if (navigator.canShare({ files: [file] })) {
-        try { await navigator.share({ files: [file], title: cert.repoData.name, text: cert.shareText }) }
-        catch { /* cancelled */ }
-        fetch('/api/stats', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ counter: 'shared' }) }).catch(() => {})
-        return
+    // Only attempt native share if the API is available
+    if (navigator.canShare) {
+      const blob = await exportBlob(2, true)
+      if (blob) {
+        const file = new File([blob], `${cert.repoData.name}.png`, { type: 'image/png' })
+        if (navigator.canShare({ files: [file] })) {
+          try { await navigator.share({ files: [file], title: cert.repoData.name, text: cert.shareText }) }
+          catch { /* cancelled */ }
+          fetch('/api/stats', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ counter: 'shared' }) }).catch(() => {})
+          return
+        }
       }
     }
     setShowModal(true)
@@ -100,7 +102,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
     fetch('/api/stats', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ counter: 'shared' }) }).catch(() => {})
   }
 
-function handleTweet() {
+  function handleTweet() {
     const text = encodeURIComponent(`${cert.repoData.fullName} has officially died.\n\nCause of death: ${cert.causeOfDeath}\n\nRIP 🪦`)
     const url  = encodeURIComponent('https://commitmentissues.dev')
     window.open(`https://x.com/intent/tweet?text=${text}&url=${url}`, '_blank')
@@ -128,11 +130,11 @@ function handleTweet() {
               <p style={{ fontFamily: UI, fontSize: '1.05rem', fontWeight: 600, color: '#160A06', margin: 0, lineHeight: 1.25 }}>{r.name} is officially dead</p>
             </div>
             {([
-              { label: copyLabel, sub: 'commitmentissues.dev', fn: handleCopyLink },
-              { label: 'Post on X', sub: 'Opens X with pre-filled text', fn: handleTweet },
-            ] as { label: string; sub: string; fn: () => void }[]).map(({ label, sub, fn }) => (
+              { key: 'copy', label: copyLabel, sub: 'commitmentissues.dev', fn: handleCopyLink },
+              { key: 'tweet', label: 'Post on X', sub: 'Opens X with pre-filled text', fn: handleTweet },
+            ] as { key: string; label: string; sub: string; fn: () => void }[]).map(({ key, label, sub, fn }) => (
               <button
-                key={label}
+                key={key}
                 onClick={fn}
                 style={{ display: 'block', width: '100%', padding: '16px 24px', background: 'none', border: 'none', borderBottom: '1px solid #f0f0f0', cursor: 'pointer', textAlign: 'left', transition: 'background 0.12s' }}
                 onMouseEnter={e => (e.currentTarget.style.background = '#fafafa')}
