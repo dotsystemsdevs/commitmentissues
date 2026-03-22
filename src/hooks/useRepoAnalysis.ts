@@ -27,6 +27,7 @@ export function useRepoAnalysis() {
         setError({ message: data.error, retryAfter: data.retryAfter })
       } else {
         setCertificate(data)
+        fetch('/api/stats', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ counter: 'buried' }) }).catch(() => {})
         // Save to localStorage for "Recently Buried"
         try {
           const entry = {

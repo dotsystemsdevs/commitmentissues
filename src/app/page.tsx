@@ -6,6 +6,7 @@ import LoadingState from '@/components/LoadingState'
 import ErrorDisplay from '@/components/ErrorDisplay'
 import CertificateCard from '@/components/CertificateCard'
 import Leaderboard from '@/components/Leaderboard'
+import StatsBar from '@/components/StatsBar'
 
 const FONT = `var(--font-dm), -apple-system, sans-serif`
 const EXAMPLE_URL = 'https://github.com/atom/atom'
@@ -72,6 +73,7 @@ export default function Page() {
       {/* Leaderboard section */}
       {idle && (
         <div style={{ width: '100%', maxWidth: '680px', borderTop: '1px solid #e0e0e0', marginTop: '40px', paddingTop: '28px', paddingBottom: '52px' }}>
+          <StatsBar />
           <Leaderboard onSelect={handleSelect} />
         </div>
       )}

@@ -74,6 +74,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
       a.click()
     }
 
+    fetch('/api/stats', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ counter: 'shared' }) }).catch(() => {})
     setShareLabel('✓ done')
     setTimeout(() => setShareLabel('Share'), 2000)
   }
