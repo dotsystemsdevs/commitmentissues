@@ -30,66 +30,16 @@ const C_LIGHT   = '#e0ddd9'
 const C_DARK    = '#462D21'
 const C_DARKEST = '#160A06'
 
-function timeAgo(iso: string): string {
-  const ms = Date.now() - new Date(iso).getTime()
-  const minutes = Math.floor(ms / 60000)
-  const hours = Math.floor(minutes / 60)
-  const days = Math.floor(hours / 24)
-  const months = Math.floor(days / 30)
-  if (months >= 1) return `${months}mo ago`
-  if (days >= 1) return `${days}d ago`
-  if (hours >= 1) return `${hours}h ago`
-  if (minutes >= 1) return `${minutes}m ago`
-  return 'just now'
-}
 
 interface Props {
   onSelect: (url: string) => void
 }
 
 export default function Leaderboard({ onSelect }: Props) {
-  const [showRecent, setShowRecent] = useState(false)
-  const [recent, setRecent] = useState<LeaderboardEntry[]>([])
-
-  useEffect(() => {
-    try {
-      const stored = JSON.parse(localStorage.getItem('ci_recent') ?? '[]')
-      setRecent(Array.isArray(stored) ? stored : [])
-    } catch { setRecent([]) }
-  }, [showRecent])
-
-  const list = showRecent ? recent : HALL_OF_SHAME
+  const list = HALL_OF_SHAME
 
   return (
     <div style={{ fontFamily: FONT, width: '100%', border: `1px solid ${C_LIGHT}`, borderRadius: '10px', overflow: 'hidden' }}>
-
-      {/* Tab header */}
-      <div style={{ display: 'flex', alignItems: 'center', borderBottom: `1px solid ${C_LIGHT}` }}>
-        {[
-          { label: 'All time', active: !showRecent, onClick: () => setShowRecent(false) },
-          { label: 'Mine',     active: showRecent,  onClick: () => setShowRecent(true) },
-        ].map(({ label, active, onClick }) => (
-          <button key={label} onClick={onClick} style={{
-            fontFamily: FONT,
-            fontSize: '14px',
-            fontWeight: active ? 600 : 400,
-            fontStyle: active ? 'normal' : 'italic',
-            color: active ? C_DARKEST : C_WARM_GR,
-            background: 'none',
-            border: 'none',
-            borderBottom: active ? '2px solid #8b0000' : '2px solid transparent',
-            marginBottom: '-1px',
-            padding: '10px 20px',
-            cursor: 'pointer',
-            transition: 'color 0.1s',
-          }}
-          onMouseEnter={e => { if (!active) e.currentTarget.style.color = C_DARKEST }}
-          onMouseLeave={e => { if (!active) e.currentTarget.style.color = C_WARM_GR }}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
 
       {/* Table */}
       <div style={{ overflow: 'hidden' }}>
@@ -106,9 +56,7 @@ export default function Leaderboard({ onSelect }: Props) {
           <span style={{ fontSize: '14px', flexShrink: 0 }}>🪦</span>
           <span style={{ fontSize: '13px', fontWeight: 700, color: C_DARKEST }}>the_grim_reaper</span>
           <span style={{ fontSize: '13px', fontStyle: 'italic', color: C_WARM_GR, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-            {showRecent
-              ? 'these are yours. you did this.'
-              : 'chore: collect souls and close issues permanently'}
+            {'chore: collect souls and close issues permanently'}
           </span>
           <span style={{ fontSize: '12px', fontStyle: 'italic', color: C_WARM_GR, whiteSpace: 'nowrap' }}>eternally ago</span>
         </div>
@@ -189,7 +137,7 @@ export default function Leaderboard({ onSelect }: Props) {
                 lineHeight: '1.5',
                 marginTop: '2px',
               }}>
-                {showRecent && entry.analyzedAt ? timeAgo(entry.analyzedAt) : entry.deathDate ?? ''}
+                {entry.deathDate ?? ''}
               </span>
             </div>
 
