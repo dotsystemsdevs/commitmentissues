@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import SubpageShell from '@/components/SubpageShell'
-import { CTA_ISSUE_ARROW } from '@/lib/cta'
 
 const UI = `var(--font-dm), -apple-system, sans-serif`
 
@@ -43,7 +42,7 @@ export default function TermsPage() {
       ))}
       <div className="subpage-bottom-links">
         <Link href="/" className="subpage-bottom-primary">
-          {CTA_ISSUE_ARROW}
+          issue a certificate →
         </Link>
         <Link href="/privacy" className="subpage-bottom-secondary">
           Privacy Policy →

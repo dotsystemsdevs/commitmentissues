@@ -11,9 +11,9 @@ const FREE_FEATURES = [
 
 const PREMIUM_FEATURES = [
   'Everything in Free',
-  'Print-quality PNG (3x resolution)',
-  'No watermark — frame-worthy',
-  'Official cause of death + last words',
+  'High-res PNG — print or frame it',
+  'No watermark',
+  'Download to your device',
 ]
 
 export default function PricingPage() {
@@ -141,9 +141,14 @@ export default function PricingPage() {
 
       </div>
 
-      <p style={{ fontFamily: UI, fontSize: '14px', color: '#938882', textAlign: 'center', margin: '0 0 8px 0' }}>
-        Questions? <Link href="/faq" style={{ color: '#0a0a0a', textDecoration: 'underline', textUnderlineOffset: '3px' }}>See FAQ →</Link>
-      </p>
+      <div style={{ textAlign: 'center', marginTop: '8px' }}>
+        <Link href="/" className="pricing-cta-btn">
+          issue a certificate →
+        </Link>
+        <p style={{ fontFamily: UI, fontSize: '13px', color: '#b0aca8', marginTop: '16px', marginBottom: 0 }}>
+          Questions? <Link href="/faq" style={{ color: '#938882', textDecoration: 'underline', textUnderlineOffset: '3px' }}>See FAQ →</Link>
+        </p>
+      </div>
     </SubpageShell>
   )
 }

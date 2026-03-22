@@ -189,6 +189,27 @@
   padding: 0 0 18px 0;
 }
 
+/* Pricing page bottom CTA button */
+.pricing-cta-btn {
+  display: inline-block;
+  font-family: var(--font-dm), -apple-system, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  background: #0a0a0a;
+  border-radius: 8px;
+  padding: 15px 36px;
+  text-decoration: none;
+  transition: background 0.15s, transform 0.12s;
+}
+.pricing-cta-btn:hover {
+  background: #2a2a2a;
+  transform: translateY(-2px);
+}
+.pricing-cta-btn:active {
+  transform: translateY(0);
+}
+
 /* Terms / Privacy / Pricing bottom link rows */
 .subpage-bottom-links {
   margin-top: 36px;
