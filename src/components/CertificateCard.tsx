@@ -92,8 +92,16 @@ export default function CertificateCard({ cert, onReset }: Props) {
   return (
     <div style={{ width: '100%', maxWidth: '480px', margin: '0 auto' }}>
 
+      {/* ── Page heading above buttons ── */}
+      <div style={{ textAlign: 'center', marginTop: '24px', marginBottom: '16px' }}>
+        <div style={{ fontSize: '36px', lineHeight: 1, marginBottom: '6px' }}>🪦</div>
+        <h2 style={{ fontFamily: 'var(--font-gothic), serif', fontSize: 'clamp(1.6rem, 5vw, 2.2rem)', color: '#160A06', lineHeight: 1, margin: 0 }}>
+          Certificate of Death
+        </h2>
+      </div>
+
       {/* ── Actions ── 3 buttons (outside zoom wrapper so they stay full-size on mobile) */}
-      <div className="cert-actions" style={{ display: 'flex', gap: '8px', marginBottom: '16px', marginTop: '24px' }}>
+      <div className="cert-actions" style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
         <button
           onClick={handleDownload}
           style={{
@@ -307,16 +315,6 @@ export default function CertificateCard({ cert, onReset }: Props) {
             </p>
           </div>
 
-          {/* FOOTER */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '4%' }}>
-            <span style={{ fontFamily: MONO, fontSize: '8px', color: '#8B6B4A' }}>
-              issued by{' '}
-              <a href="https://commitmentissues.dev" target="_blank" rel="noopener noreferrer" style={{ color: '#5C3D20', textDecoration: 'underline', textUnderlineOffset: '3px' }}>
-                commitmentissues.dev
-              </a>
-            </span>
-            <span style={{ fontFamily: MONO, fontSize: '8px', color: '#8B6B4A' }}>{today}</span>
-          </div>
 
         </div>
       </div>
