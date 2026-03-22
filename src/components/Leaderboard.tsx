@@ -102,9 +102,7 @@ export default function Leaderboard({ onSelect }: Props) {
           >
             {/* Header: tombstone + name + date */}
             <div className="lb-row-header" style={{ display: 'flex', alignItems: 'flex-start', gap: '14px', flex: 1, minWidth: 0 }}>
-              <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#111', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                <span style={{ fontSize: '13px', lineHeight: 1 }}>🪦</span>
-              </div>
+              <span style={{ fontSize: '17px', flexShrink: 0, lineHeight: '1.4', marginTop: '1px' }}>🪦</span>
 
               <span className="lb-name" style={{
                 fontFamily: FONT,
