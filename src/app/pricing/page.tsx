@@ -110,7 +110,8 @@ export default function PricingPage() {
             </p>
             <span style={{ fontFamily: UI, fontSize: '13px', color: '#938882' }}>per certificate</span>
           </div>
-          <p style={{ fontFamily: UI, fontSize: '13px', color: '#b0aca8', margin: '0 0 24px 0' }}>one-time · no subscription</p>
+          <p style={{ fontFamily: UI, fontSize: '13px', color: '#b0aca8', margin: '0 0 4px 0' }}>one-time · no subscription</p>
+          <p style={{ fontFamily: UI, fontSize: '12px', color: '#b0aca8', margin: '0 0 24px 0' }}>Prices exclude VAT. VAT may be added at checkout where applicable.</p>
 
           <ul style={{ fontFamily: UI, fontSize: '14px', color: '#555', lineHeight: 1, listStyle: 'none', padding: 0, margin: '0 0 28px 0', display: 'flex', flexDirection: 'column', gap: '13px', flex: 1 }}>
             {PREMIUM_FEATURES.map(f => (
