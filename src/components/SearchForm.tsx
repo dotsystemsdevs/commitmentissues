@@ -103,7 +103,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }
         onMouseEnter={e => { e.currentTarget.style.color = '#555' }}
         onMouseLeave={e => { e.currentTarget.style.color = '#938882' }}
       >
-        or paste any dead repo — atom/atom works →
+        Try a known repo →
       </button>
     </div>
   )
