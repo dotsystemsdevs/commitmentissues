@@ -95,9 +95,12 @@ export default function CertificateCard({ cert, onReset }: Props) {
       {/* ── Page heading — clickable → home ── */}
       <button onClick={onReset} style={{ background: 'none', border: 'none', cursor: 'pointer', width: '100%', textAlign: 'center', marginTop: '44px', marginBottom: '32px', padding: 0 }}>
         <div style={{ fontSize: '56px', lineHeight: 1, marginBottom: '12px' }}>🪦</div>
-        <h1 style={{ fontFamily: 'var(--font-gothic), serif', fontSize: 'clamp(2.4rem, 7vw, 3.6rem)', color: '#160A06', lineHeight: 0.95, margin: 0 }}>
+        <h1 style={{ fontFamily: 'var(--font-gothic), serif', fontSize: 'clamp(2.4rem, 7vw, 3.6rem)', color: '#160A06', lineHeight: 0.95, margin: '0 0 16px 0' }}>
           Certificate of Death
         </h1>
+        <p style={{ fontFamily: UI, fontSize: '15px', color: '#938882', lineHeight: 1.6, margin: '0 auto', maxWidth: '420px' }}>
+          {r.fullName} didn&apos;t make it. Here&apos;s the official paperwork.
+        </p>
       </button>
 
       {/* ── Actions ── */}
