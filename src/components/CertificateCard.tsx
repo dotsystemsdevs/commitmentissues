@@ -230,9 +230,12 @@ export default function CertificateCard({ cert, onReset }: Props) {
               commitmentissues.dev
             </p>
             <div style={{ fontSize: '2.2rem', lineHeight: 1, marginBottom: '3%' }}>🪦</div>
-            <h2 style={{ fontFamily: 'var(--font-gothic), serif', fontSize: '3rem', color: '#1A0F06', lineHeight: 1.05, margin: 0 }}>
+            <h2 style={{ fontFamily: 'var(--font-gothic), serif', fontSize: '3rem', color: '#1A0F06', lineHeight: 1.05, margin: '0 0 3% 0' }}>
               Certificate of Death
             </h2>
+            <p style={{ fontFamily: MONO, fontSize: '8px', letterSpacing: '0.25em', color: '#8B6B4A', margin: 0, fontStyle: 'italic' }}>
+              official record of abandonment
+            </p>
           </div>
 
           {/* REPO */}
