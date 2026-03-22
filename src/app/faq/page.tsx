@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import SubpageShell from '@/components/SubpageShell'
-import { CTA_ISSUE, CTA_ISSUE_ARROW } from '@/lib/cta'
+import { CTA_ISSUE_ARROW } from '@/lib/cta'
 
 const FAQS = [
   { q: 'Is the data real?', a: 'Yes — we use GitHub\'s public API: commits, stars, issues, archive status.' },
