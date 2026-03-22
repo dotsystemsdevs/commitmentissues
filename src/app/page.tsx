@@ -54,8 +54,11 @@ export default function Page() {
 
       {/* Certificate — inline, no redirect */}
       {certificate && !loading && (
-        <div className="certificate-scroll-zone" style={{ width: '100%' }}>
-          <CertificateCard cert={certificate} onReset={reset} />
+        <div style={{ width: '100%' }}>
+          <div className="certificate-scroll-zone">
+            <CertificateCard cert={certificate} onReset={reset} />
+          </div>
+          <SiteFooter />
         </div>
       )}
 

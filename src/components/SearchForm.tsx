@@ -21,8 +21,8 @@ export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }
   }
 
   return (
-    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '14px' }}>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', width: '100%' }}>
+    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <form onSubmit={handleSubmit} style={{ display: 'flex', width: '100%', boxShadow: '0 2px 16px rgba(0,0,0,0.10)', borderRadius: '8px' }}>
         <input
           autoFocus
           type="text"
@@ -33,7 +33,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }
             fontFamily: FONT,
             fontSize: '16px',
             flex: 1,
-            height: '52px',
+            height: '54px',
             padding: '0 16px',
             background: '#fff',
             border: '2px solid #e0e0e0',
@@ -42,25 +42,20 @@ export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }
             color: '#160A06',
             outline: 'none',
             minWidth: 0,
-            transition: 'border-color 0.2s, box-shadow 0.2s',
+            transition: 'border-color 0.15s',
           }}
-          onFocus={e => {
-            e.currentTarget.style.borderColor = '#888'
-            e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,0,0,0.08)'
-          }}
-          onBlur={e => {
-            e.currentTarget.style.borderColor = '#e0e0e0'
-            e.currentTarget.style.boxShadow = 'none'
-          }}
+          onFocus={e => { e.currentTarget.style.borderColor = '#888' }}
+          onBlur={e => { e.currentTarget.style.borderColor = '#e0e0e0' }}
         />
         <button
           type="submit"
           disabled={loading}
+          aria-label="Issue death certificate"
           style={{
             fontFamily: FONT,
-            fontSize: '20px',
-            width: '56px',
-            height: '52px',
+            fontSize: '22px',
+            width: '64px',
+            height: '54px',
             flexShrink: 0,
             background: CTA_RED,
             color: '#fff',
@@ -70,7 +65,9 @@ export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            transition: 'background 0.15s, transform 0.12s',
+            transition: 'background 0.15s, transform 0.1s',
+            userSelect: 'none',
+            WebkitTapHighlightColor: 'transparent',
           }}
           onMouseEnter={e => {
             if (!loading) {
@@ -93,17 +90,18 @@ export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }
         style={{
           fontFamily: FONT,
           fontSize: '13px',
-          color: '#aaa',
+          color: '#6b5a50',
           background: 'none',
           border: 'none',
           cursor: 'pointer',
-          padding: '0',
+          padding: '4px 0',
           textAlign: 'left',
           transition: 'color 0.15s',
           letterSpacing: '0.01em',
+          WebkitTapHighlightColor: 'transparent',
         }}
-        onMouseEnter={e => { e.currentTarget.style.color = '#555' }}
-        onMouseLeave={e => { e.currentTarget.style.color = '#aaa' }}
+        onMouseEnter={e => { e.currentTarget.style.color = CTA_RED }}
+        onMouseLeave={e => { e.currentTarget.style.color = '#6b5a50' }}
       >
         Try on atom/atom — already dead →
       </button>
