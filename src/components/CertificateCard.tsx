@@ -11,7 +11,8 @@ interface Props {
 }
 
 export default function CertificateCard({ cert, onReset }: Props) {
-  const cardRef = useRef<HTMLDivElement>(null)
+  const cardRef    = useRef<HTMLDivElement>(null)
+  const wrapperRef = useRef<HTMLDivElement>(null)
   const [visible,   setVisible]   = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [copyLabel, setCopyLabel] = useState('Copy link')
@@ -24,8 +25,20 @@ export default function CertificateCard({ cert, onReset }: Props) {
 
   async function renderCert(): Promise<Blob | null> {
     if (!cardRef.current) return null
+    const wrapper = wrapperRef.current
+    // Remove mobile zoom so html2canvas always captures at the true 480×679 size
+    if (wrapper) wrapper.style.zoom = '1'
     const { default: html2canvas } = await import('html2canvas')
-    const canvas = await html2canvas(cardRef.current, { backgroundColor: '#FAF6EF', scale: 3, useCORS: true, logging: false })
+    const canvas = await html2canvas(cardRef.current, {
+      backgroundColor: '#FAF6EF',
+      scale: 2,
+      useCORS: true,
+      logging: false,
+      width: 480,
+      height: 679,
+      windowWidth: 1440,
+    })
+    if (wrapper) wrapper.style.zoom = ''
     return new Promise(resolve => canvas.toBlob(b => resolve(b)))
   }
 
@@ -167,7 +180,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
 
 
       {/* ── Certificate (zoomed on mobile) ── */}
-      <div className="certificate-wrapper relative" style={{ width: '480px' }}>
+      <div ref={wrapperRef} className="certificate-wrapper relative" style={{ width: '480px' }}>
 
       {/* ── Stamp — permanent, always visible ── */}
       <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
