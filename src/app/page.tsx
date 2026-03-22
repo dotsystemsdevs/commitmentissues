@@ -37,7 +37,7 @@ export default function Page() {
       {!certificate && (
         <header style={{ width: '100%', maxWidth: '680px', paddingTop: '44px', paddingBottom: '22px', textAlign: 'center' }}>
           <button onClick={handleReset} style={{ background: 'none', border: 'none', cursor: 'default', width: '100%', display: 'block' }}>
-            <div style={{ fontSize: '32px', marginBottom: '12px', lineHeight: 1 }}>🪦</div>
+            <div style={{ fontSize: '56px', marginBottom: '12px', lineHeight: 1 }}>🪦</div>
             <h1 style={{
               fontFamily: 'var(--font-gothic), serif',
               fontSize: 'clamp(2.4rem, 7vw, 3.6rem)',
