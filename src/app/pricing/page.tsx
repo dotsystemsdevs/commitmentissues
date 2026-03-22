@@ -56,21 +56,19 @@ export default function PricingPage() {
             href="/"
             style={{
               fontFamily: UI,
-              fontSize: '13px',
-              fontWeight: 700,
-              letterSpacing: '0.04em',
-              textTransform: 'uppercase',
+              fontSize: '14px',
+              fontWeight: 600,
               color: '#0a0a0a',
               textDecoration: 'none',
               border: '1.5px solid #0a0a0a',
               borderRadius: '8px',
-              padding: '13px 16px',
+              padding: '14px 16px',
               textAlign: 'center',
               display: 'block',
               transition: 'background 0.15s',
             }}
           >
-            Get started →
+            issue a certificate →
           </Link>
         </div>
 
@@ -126,20 +124,18 @@ export default function PricingPage() {
             href="/"
             style={{
               fontFamily: UI,
-              fontSize: '13px',
-              fontWeight: 700,
-              letterSpacing: '0.04em',
-              textTransform: 'uppercase',
+              fontSize: '14px',
+              fontWeight: 600,
               color: '#fff',
               textDecoration: 'none',
               background: '#0a0a0a',
               borderRadius: '8px',
-              padding: '13px 16px',
+              padding: '14px 16px',
               textAlign: 'center',
               display: 'block',
             }}
           >
-            Issue death certificate →
+            issue a certificate →
           </Link>
         </div>
 

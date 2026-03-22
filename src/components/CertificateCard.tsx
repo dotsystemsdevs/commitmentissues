@@ -169,11 +169,11 @@ function handleTweet() {
         {/* Download — primary */}
         <button
           onClick={handleDownload}
-          style={{ width: '100%', fontFamily: UI, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', background: CTA_RED, color: '#fff', border: 'none', borderRadius: '8px', padding: '15px 20px', cursor: 'pointer', textAlign: 'center', transition: 'background 0.15s' }}
+          style={{ width: '100%', fontFamily: UI, fontSize: '14px', fontWeight: 600, background: CTA_RED, color: '#fff', border: 'none', borderRadius: '8px', padding: '15px 20px', cursor: 'pointer', textAlign: 'center', transition: 'background 0.15s' }}
           onMouseEnter={e => { e.currentTarget.style.background = CTA_RED_HOVER }}
           onMouseLeave={e => { e.currentTarget.style.background = CTA_RED }}
         >
-          Get the official certificate — $4.99 →
+          get the official certificate — $4.99 →
         </button>
 
         {/* Share — plain text link */}
