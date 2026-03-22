@@ -146,27 +146,27 @@ function handleTweet() {
       />
 
       {/* ── Actions ── */}
-      <div className="cert-actions" style={{ display: 'flex', flexDirection: 'row', gap: '12px', marginBottom: '8px', flexWrap: 'wrap' }}>
+      <div className="cert-actions" style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '8px' }}>
+
+        {/* Download — filled black, paid, top = primary */}
+        <button
+          onClick={handleDownload}
+          style={{ width: '100%', fontFamily: UI, background: CTA_RED, color: '#fff', border: 'none', borderRadius: '8px', padding: '17px 20px', cursor: 'pointer', transition: 'background 0.15s, transform 0.12s, box-shadow 0.12s', transform: 'translateY(0)', boxShadow: 'none', textAlign: 'center' }}
+          onMouseEnter={e => { e.currentTarget.style.background = CTA_RED_HOVER; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.22)' }}
+          onMouseLeave={e => { e.currentTarget.style.background = CTA_RED; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none' }}
+        >
+          <div style={{ fontSize: '13px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Get the official certificate →</div>
+          <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.65)', marginTop: '4px', letterSpacing: '0.02em' }}>Printable · High-res · No watermark · $4.99</div>
+        </button>
 
         {/* Share — outlined, free */}
         <button
           onClick={handleShare}
-          style={{ flex: '1 1 140px', fontFamily: UI, background: 'transparent', color: CTA_RED, border: `1.5px solid ${CTA_RED}`, borderRadius: '8px', padding: '16px 12px', cursor: 'pointer', transition: 'border-color 0.15s, background 0.15s, transform 0.12s', transform: 'translateY(0)', textAlign: 'center' }}
+          style={{ width: '100%', fontFamily: UI, background: 'transparent', color: CTA_RED, border: `1.5px solid ${CTA_RED}`, borderRadius: '8px', padding: '15px 20px', cursor: 'pointer', transition: 'background 0.15s, transform 0.12s', transform: 'translateY(0)', textAlign: 'center' }}
           onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0,0,0,0.04)'; e.currentTarget.style.transform = 'translateY(-2px)' }}
           onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.transform = 'translateY(0)' }}
         >
           <div style={{ fontSize: '13px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Share</div>
-        </button>
-
-        {/* Download — filled, paid */}
-        <button
-          onClick={handleDownload}
-          style={{ flex: '1 1 140px', fontFamily: UI, background: CTA_RED, color: '#fff', border: 'none', borderRadius: '8px', padding: '16px 12px', cursor: 'pointer', transition: 'background 0.15s, transform 0.12s, box-shadow 0.12s', transform: 'translateY(0)', boxShadow: 'none', textAlign: 'center' }}
-          onMouseEnter={e => { e.currentTarget.style.background = CTA_RED_HOVER; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.22)' }}
-          onMouseLeave={e => { e.currentTarget.style.background = CTA_RED; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none' }}
-        >
-          <div style={{ fontSize: '13px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Get the certificate</div>
-          <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.7)', marginTop: '3px' }}>No watermark · $4.99</div>
         </button>
 
       </div>
