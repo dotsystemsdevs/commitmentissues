@@ -7,7 +7,7 @@ const SERIF = `var(--font-dm), -apple-system, sans-serif`
 const SANS  = `var(--font-dm), -apple-system, sans-serif`
 
 const NAV_LINKS = [
-  { href: '/about',   label: 'About'   },
+  { href: '/faq',     label: 'FAQ'     },
   { href: '/pricing', label: 'Pricing' },
 ]
 
@@ -60,19 +60,6 @@ export default function TopBar() {
         {/* Right — Star (desktop) + Hamburger (mobile) */}
         <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '12px' }}>
 
-          {/* Star — visible on desktop */}
-          <a
-            href="https://github.com/dotsystemsdevs/saas-commitmentissues"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="topbar-star"
-            style={{ fontFamily: SANS, fontSize: '12px', fontWeight: 600, letterSpacing: '0.04em', color: '#f5f0e8', background: 'transparent', border: '1px solid #6b4f35', borderRadius: '3px', padding: '5px 12px', cursor: 'pointer', textDecoration: 'none', transition: 'border-color 0.12s, color 0.12s', whiteSpace: 'nowrap' }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = '#8b0000'; e.currentTarget.style.color = '#fff' }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = '#6b4f35'; e.currentTarget.style.color = '#f5f0e8' }}
-          >
-            ★ Star
-          </a>
-
           {/* Hamburger — visible on mobile */}
           <button
             className="topbar-hamburger"
@@ -109,15 +96,6 @@ export default function TopBar() {
               {label}
             </Link>
           ))}
-          <a
-            href="https://github.com/dotsystemsdevs/saas-commitmentissues"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => setOpen(false)}
-            style={{ display: 'block', fontFamily: SANS, fontSize: '14px', color: '#f5f0e8', textDecoration: 'none', padding: '12px 28px', borderTop: '1px solid #2a1a0e', marginTop: '8px' }}
-          >
-            ★ Star on GitHub
-          </a>
         </div>
       )}
     </>

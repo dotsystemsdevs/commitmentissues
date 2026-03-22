@@ -11,76 +11,80 @@ interface Props {
 export default function CertificateCard({ cert, onReset }: Props) {
   const cardRef = useRef<HTMLDivElement>(null)
   const igRef  = useRef<HTMLDivElement>(null)
-  const [visible,    setVisible]    = useState(false)
-  const [shareLabel, setShareLabel] = useState('Share')
+  const [visible,   setVisible]   = useState(false)
+  const [showModal, setShowModal] = useState(false)
+  const [igBlob,    setIgBlob]    = useState<Blob | null>(null)
+  const [copyLabel, setCopyLabel] = useState('Copy link')
+  const [imgLabel,  setImgLabel]  = useState('Download image')
 
   useEffect(() => {
     const t1 = setTimeout(() => setVisible(true), 50)
     return () => clearTimeout(t1)
   }, [])
 
-  // Download → A4 PNG from the visible certificate card
+  async function renderIg(): Promise<Blob | null> {
+    if (igBlob) return igBlob
+    if (!igRef.current) return null
+    const { default: html2canvas } = await import('html2canvas')
+    const canvas = await html2canvas(igRef.current, { backgroundColor: '#FAF6EF', scale: 3, useCORS: true, logging: false })
+    return new Promise(resolve => canvas.toBlob(b => { if (b) setIgBlob(b); resolve(b) }))
+  }
+
   async function handleDownload() {
     if (!cardRef.current) return
     const { default: html2canvas } = await import('html2canvas')
-    const canvas = await html2canvas(cardRef.current, {
-      backgroundColor: '#FAF6EF',
-      scale: 3,
-      useCORS: true,
-      logging: false,
-    })
+    const canvas = await html2canvas(cardRef.current, { backgroundColor: '#FAF6EF', scale: 3, useCORS: true, logging: false })
     const a = document.createElement('a')
     a.href = canvas.toDataURL('image/png')
     a.download = `${cert.repoData.name}-death-certificate.png`
     a.click()
+    fetch('/api/stats', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ counter: 'downloaded' }) }).catch(() => {})
   }
 
-  // Share → Instagram 1080×1350 PNG from hidden ig card
   async function handleShare() {
-    if (!igRef.current) return
-    setShareLabel('…')
-    const { default: html2canvas } = await import('html2canvas')
-    // igRef is 360×450 → scale 3 = 1080×1350
-    const canvas = await html2canvas(igRef.current, {
-      backgroundColor: '#FAF6EF',
-      scale: 3,
-      useCORS: true,
-      logging: false,
-    })
-
-    if (navigator.canShare) {
-      await new Promise<void>(resolve => {
-        canvas.toBlob(async blob => {
-          if (blob) {
-            const file = new File([blob], `${cert.repoData.name}.png`, { type: 'image/png' })
-            if (navigator.canShare({ files: [file] })) {
-              try { await navigator.share({ files: [file], title: cert.repoData.name, text: cert.shareText }) }
-              catch { /* cancelled */ }
-              resolve()
-              return
-            }
-          }
-          // fallback: share URL
-          try { await navigator.share({ title: cert.repoData.name, text: cert.shareText, url: 'https://commitmentissues.dev' }) }
-          catch { /* cancelled */ }
-          resolve()
-        })
-      })
-    } else {
-      // Desktop: download the Instagram image
-      const a = document.createElement('a')
-      a.href = canvas.toDataURL('image/png')
-      a.download = `${cert.repoData.name}-ig.png`
-      a.click()
+    const blob = await renderIg()
+    if (blob && navigator.canShare) {
+      const file = new File([blob], `${cert.repoData.name}.png`, { type: 'image/png' })
+      if (navigator.canShare({ files: [file] })) {
+        try { await navigator.share({ files: [file], title: cert.repoData.name, text: cert.shareText }) }
+        catch { /* cancelled */ }
+        fetch('/api/stats', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ counter: 'shared' }) }).catch(() => {})
+        return
+      }
     }
+    setShowModal(true)
+  }
 
+  async function handleCopyLink() {
+    try {
+      await navigator.clipboard.writeText('https://commitmentissues.dev')
+      setCopyLabel('Copied!')
+      setTimeout(() => setCopyLabel('Copy link'), 2000)
+    } catch { /* ignore */ }
     fetch('/api/stats', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ counter: 'shared' }) }).catch(() => {})
-    setShareLabel('✓ done')
-    setTimeout(() => setShareLabel('Share'), 2000)
+  }
+
+  async function handleDownloadImage() {
+    const blob = await renderIg()
+    if (!blob) return
+    setImgLabel('Saving...')
+    const a = document.createElement('a')
+    a.href = URL.createObjectURL(blob)
+    a.download = `${cert.repoData.name}-ig.png`
+    a.click()
+    setImgLabel('Saved!')
+    setTimeout(() => setImgLabel('Download image'), 2000)
+    fetch('/api/stats', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ counter: 'shared' }) }).catch(() => {})
+  }
+
+  function handleTweet() {
+    const text = encodeURIComponent(`${cert.repoData.fullName} has officially died.\n\nCause of death: ${cert.causeOfDeath}\n\nRIP 🪦`)
+    const url  = encodeURIComponent('https://commitmentissues.dev')
+    window.open(`https://x.com/intent/tweet?text=${text}&url=${url}`, '_blank')
+    fetch('/api/stats', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ counter: 'shared' }) }).catch(() => {})
   }
 
   const { repoData: r } = cert
-  const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
   const MONO  = `var(--font-courier), "Courier New", monospace`
   const SERIF = `var(--font-playfair), Georgia, serif`
   const UI    = `var(--font-dm), -apple-system, sans-serif`
@@ -88,53 +92,93 @@ export default function CertificateCard({ cert, onReset }: Props) {
   return (
     <div style={{ width: '100%', maxWidth: '480px', margin: '0 auto' }}>
 
+      {/* ── Share modal ── */}
+      {showModal && (
+        <div
+          onClick={() => setShowModal(false)}
+          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.55)', zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{ background: '#fff', borderRadius: '12px', width: '100%', maxWidth: '360px', overflow: 'hidden', boxShadow: '0 20px 60px rgba(0,0,0,0.3)' }}
+          >
+            <div style={{ padding: '24px 24px 16px', borderBottom: '1px solid #eee' }}>
+              <p style={{ fontFamily: UI, fontSize: '11px', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#938882', margin: '0 0 4px 0' }}>Share</p>
+              <p style={{ fontFamily: 'var(--font-gothic), serif', fontSize: '1.4rem', color: '#160A06', margin: 0, lineHeight: 1.1 }}>{r.name} is officially dead</p>
+            </div>
+            {([
+              { label: copyLabel, sub: 'commitmentissues.dev', fn: handleCopyLink },
+              { label: imgLabel,  sub: 'Instagram-ready 1080x1350 PNG', fn: handleDownloadImage },
+              { label: 'Post on X', sub: 'Opens X with pre-filled text', fn: handleTweet },
+            ] as { label: string; sub: string; fn: () => void }[]).map(({ label, sub, fn }) => (
+              <button
+                key={label}
+                onClick={fn}
+                style={{ display: 'block', width: '100%', padding: '16px 24px', background: 'none', border: 'none', borderBottom: '1px solid #f0f0f0', cursor: 'pointer', textAlign: 'left', transition: 'background 0.12s' }}
+                onMouseEnter={e => (e.currentTarget.style.background = '#fafafa')}
+                onMouseLeave={e => (e.currentTarget.style.background = 'none')}
+              >
+                <div style={{ fontFamily: UI, fontSize: '14px', fontWeight: 600, color: '#160A06' }}>{label}</div>
+                <div style={{ fontFamily: UI, fontSize: '12px', color: '#938882', marginTop: '2px' }}>{sub}</div>
+              </button>
+            ))}
+            <button
+              onClick={() => setShowModal(false)}
+              style={{ display: 'block', width: '100%', padding: '14px 24px', background: 'none', border: 'none', cursor: 'pointer', fontFamily: UI, fontSize: '13px', color: '#938882', textAlign: 'center' }}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* ── Page heading — clickable → home ── */}
-      <button onClick={onReset} style={{ background: 'none', border: 'none', cursor: 'pointer', width: '100%', textAlign: 'center', marginTop: '44px', marginBottom: '32px', padding: 0 }}>
+      <button onClick={onReset} style={{ background: 'none', border: 'none', cursor: 'pointer', width: '100%', textAlign: 'center', marginTop: '44px', marginBottom: '8px', padding: 0 }}>
         <div style={{ fontSize: '56px', lineHeight: 1, marginBottom: '12px' }}>🪦</div>
-        <h1 style={{ fontFamily: 'var(--font-gothic), serif', fontSize: 'clamp(2.4rem, 7vw, 3.6rem)', color: '#160A06', lineHeight: 0.95, margin: '0 0 16px 0' }}>
+        <h1 style={{ fontFamily: 'var(--font-gothic), serif', fontSize: 'clamp(2.4rem, 7vw, 3.6rem)', color: '#160A06', lineHeight: 0.95, margin: 0 }}>
           Certificate of Death
         </h1>
-        <p style={{ fontFamily: UI, fontSize: '15px', color: '#938882', lineHeight: 1.6, margin: '0 auto', maxWidth: '420px' }}>
-          {r.fullName} didn&apos;t make it. Here&apos;s the official paperwork.
-        </p>
       </button>
+      <p style={{ fontFamily: UI, fontSize: '15px', color: '#938882', lineHeight: 1.5, margin: '16px auto 28px auto', maxWidth: '420px', textAlign: 'center' }}>
+        <strong style={{ color: '#160A06' }}>{r.fullName}</strong> is officially dead. Here&apos;s the certificate.
+      </p>
 
-      {/* ── Actions: Share → Download → issue another ── */}
-      <div className="cert-actions" style={{ display: 'flex', gap: '10px', marginBottom: '16px' }}>
+      {/* ── Actions ── */}
+      <div className="cert-actions" style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '8px' }}>
 
-        {/* 1. Share free */}
+        {/* 1. Share — primary, full width */}
         <button
           onClick={handleShare}
-          style={{ flex: 1, fontFamily: UI, background: '#1a1a1a', color: '#fff', border: 'none', borderRadius: '8px', padding: '16px 12px', cursor: 'pointer', transition: 'background 0.15s, transform 0.12s, box-shadow 0.12s', transform: 'translateY(0)', boxShadow: 'none', textAlign: 'center' }}
+          style={{ width: '100%', fontFamily: UI, background: '#1a1a1a', color: '#fff', border: 'none', borderRadius: '8px', padding: '18px 20px', cursor: 'pointer', transition: 'background 0.15s, transform 0.12s, box-shadow 0.12s', transform: 'translateY(0)', boxShadow: 'none', textAlign: 'center' }}
           onMouseEnter={e => { e.currentTarget.style.background = '#8b0000'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(139,0,0,0.25)' }}
           onMouseLeave={e => { e.currentTarget.style.background = '#1a1a1a'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none' }}
         >
-          <div style={{ fontSize: '13px', fontWeight: 700 }}>{shareLabel === 'Share' ? 'Share free' : shareLabel}</div>
-          <div style={{ fontSize: '11px', fontStyle: 'italic', color: '#c8b090', marginTop: '5px' }}>post it before they forget →</div>
+          <div style={{ fontSize: '15px', fontWeight: 700 }}>📤 Post this before they forget</div>
         </button>
 
-        {/* 2. Download A4 — black, high priority */}
+        {/* 2. Download A4 — outlined secondary */}
         <button
           onClick={handleDownload}
-          style={{ flex: 1, fontFamily: UI, background: '#1a1a1a', color: '#fff', border: 'none', borderRadius: '8px', padding: '16px 12px', cursor: 'pointer', transition: 'background 0.15s, transform 0.12s, box-shadow 0.12s', transform: 'translateY(0)', boxShadow: 'none', textAlign: 'center' }}
-          onMouseEnter={e => { e.currentTarget.style.background = '#8b0000'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(139,0,0,0.25)' }}
-          onMouseLeave={e => { e.currentTarget.style.background = '#1a1a1a'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none' }}
+          style={{ width: '100%', fontFamily: UI, background: 'transparent', color: '#1a1a1a', border: '1.5px solid #c8c8c8', borderRadius: '8px', padding: '16px 20px', cursor: 'pointer', transition: 'border-color 0.15s, transform 0.12s', transform: 'translateY(0)', textAlign: 'center' }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = '#1a1a1a'; e.currentTarget.style.transform = 'translateY(-2px)' }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = '#c8c8c8'; e.currentTarget.style.transform = 'translateY(0)' }}
         >
-          <div style={{ fontSize: '13px', fontWeight: 700 }}>Download A4 - $4.99</div>
-          <div style={{ fontSize: '11px', fontStyle: 'italic', color: '#c8b090', marginTop: '5px' }}>official PDF, frame it or forget it →</div>
+          <div style={{ fontSize: '14px', fontWeight: 700 }}>🪦 Get the official certificate</div>
+          <div style={{ fontSize: '11px', color: '#938882', marginTop: '4px' }}>Printable · High-res · No watermark · $4.99</div>
         </button>
 
-        {/* 3. issue another — light, viral loop */}
+      </div>
+
+      {/* 3. kill another — text link */}
+      <div style={{ textAlign: 'center', marginBottom: '20px' }}>
         <button
           onClick={onReset}
-          style={{ flex: 1, fontFamily: UI, background: 'transparent', color: '#555', border: '1.5px solid #c8c8c8', borderRadius: '8px', padding: '16px 12px', cursor: 'pointer', transition: 'color 0.15s, border-color 0.15s, transform 0.12s', transform: 'translateY(0)', textAlign: 'center' }}
-          onMouseEnter={e => { e.currentTarget.style.color = '#1a1a1a'; e.currentTarget.style.borderColor = '#555'; e.currentTarget.style.transform = 'translateY(-2px)' }}
-          onMouseLeave={e => { e.currentTarget.style.color = '#555'; e.currentTarget.style.borderColor = '#c8c8c8'; e.currentTarget.style.transform = 'translateY(0)' }}
+          style={{ fontFamily: UI, fontSize: '13px', color: '#938882', background: 'none', border: 'none', cursor: 'pointer', padding: '4px 0', textDecoration: 'underline', textDecorationStyle: 'dotted', textUnderlineOffset: '3px', transition: 'color 0.15s' }}
+          onMouseEnter={e => (e.currentTarget.style.color = '#8b0000')}
+          onMouseLeave={e => (e.currentTarget.style.color = '#938882')}
         >
-          <div style={{ fontSize: '13px', fontWeight: 600 }}>issue another</div>
-          <div style={{ fontSize: '11px', fontStyle: 'italic', color: '#aaa', marginTop: '5px' }}>kill another repo →</div>
+          ☠ Kill another repo →
         </button>
-
       </div>
 
       {/* ── Certificate (zoomed on mobile) ── */}
@@ -245,7 +289,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
           </div>
 
           {/* LAST WORDS */}
-          <div style={{ padding: '2.5% 0' }}>
+          <div style={{ padding: '2.5% 0', textAlign: 'center' }}>
             <p style={{ fontFamily: MONO, fontSize: '7px', letterSpacing: '0.5em', textTransform: 'uppercase', color: '#8B6B4A', margin: '0 0 2% 0' }}>Last words</p>
             <p style={{ fontFamily: SERIF, fontStyle: 'italic', fontSize: '0.9rem', color: '#1A0F06', lineHeight: 1.6, margin: 0 }}>
               &ldquo;{cert.lastWords}&rdquo;
@@ -255,7 +299,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
         </div>
       </div>
 
-      {/* ── Hidden Instagram card 360×450 → renders at 1080×1350 ── */}
+      {/* ── Hidden Instagram card 360x450 - renders at 1080x1350 ── */}
       <div
         ref={igRef}
         aria-hidden="true"
@@ -272,7 +316,6 @@ export default function CertificateCard({ cert, onReset }: Props) {
           overflow: 'hidden',
         }}
       >
-        {/* IG: top label */}
         <div style={{ padding: '28px 32px 20px', textAlign: 'center', borderBottom: '1px solid #DDD0B8' }}>
           <p style={{ fontFamily: MONO, fontSize: '7px', letterSpacing: '0.35em', color: '#C4A882', textTransform: 'uppercase', marginBottom: '10px' }}>commitmentissues.dev</p>
           <p style={{ fontFamily: 'var(--font-gothic), serif', fontSize: '22px', color: '#2A1A0E', lineHeight: 1 }}>Certificate of Death</p>
@@ -282,27 +325,22 @@ export default function CertificateCard({ cert, onReset }: Props) {
             <div style={{ flex: 1, height: '1px', background: '#C4A882' }} />
           </div>
         </div>
-
-        {/* IG: repo name */}
         <div style={{ padding: '20px 32px', textAlign: 'center', borderBottom: '1px solid #DDD0B8' }}>
           <p style={{ fontFamily: MONO, fontSize: '7px', color: '#C4A882', marginBottom: '4px', letterSpacing: '0.05em' }}>{r.fullName.split('/')[0]} /</p>
           <p style={{ fontFamily: SERIF, fontSize: '30px', color: '#2A1A0E', lineHeight: 1.05 }}>{r.name}</p>
         </div>
-
-        {/* IG: cause — fills remaining space */}
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '16px 32px', textAlign: 'center', borderBottom: '1px solid #DDD0B8' }}>
           <p style={{ fontFamily: MONO, fontSize: '7px', letterSpacing: '0.3em', color: '#9C7E5A', textTransform: 'uppercase', marginBottom: '12px' }}>has passed away due to</p>
           <p style={{ fontFamily: SERIF, fontStyle: 'italic', fontSize: '18px', color: '#8B1A1A', lineHeight: 1.35 }}>{cert.causeOfDeath}</p>
         </div>
-
-        {/* IG: date + footer */}
         <div style={{ padding: '14px 32px', textAlign: 'center' }}>
-          <p style={{ fontFamily: MONO, fontSize: '7px', color: '#9C7E5A', marginBottom: '6px' }}>{cert.deathDate} · {cert.age}</p>
+          <p style={{ fontFamily: MONO, fontSize: '7px', color: '#9C7E5A', marginBottom: '6px' }}>{cert.deathDate} - {cert.age}</p>
           <p style={{ fontFamily: MONO, fontSize: '6px', letterSpacing: '0.25em', color: '#C4A882', textTransform: 'uppercase' }}>commitmentissues.dev</p>
         </div>
       </div>
 
       </div>{/* end certificate-wrapper */}
+
     </div>
   )
 }

@@ -3,11 +3,11 @@ import Link from 'next/link'
 const UI = `var(--font-dm), -apple-system, sans-serif`
 
 const SECTIONS = [
-  { title: 'What we collect', body: 'We do not store GitHub URLs you paste. Each request is processed in real time and discarded. No user accounts, no email addresses, no personal data.' },
-  { title: 'GitHub API', body: 'We fetch publicly available repository metadata from the GitHub API. This data is already public. We do not access private repositories.' },
-  { title: 'Payments', body: 'Payments are handled by Stripe. We do not store your card details. Stripe may collect your payment information subject to their own privacy policy.' },
-  { title: 'Analytics', body: 'We use Plausible Analytics - a privacy-friendly, cookieless tool that collects no personal data. Aggregate pageview counts only.' },
-  { title: 'Cookies', body: 'We set no tracking cookies. Your recently analyzed repos are stored in your browser\'s localStorage and never leave your device.' },
+  { title: 'What we collect', body: 'Nothing personal. No accounts, no emails, no stored URLs.' },
+  { title: 'GitHub API', body: 'Public repo data only. We do not access private repositories.' },
+  { title: 'Payments', body: 'Handled by Stripe. We never see your card details.' },
+  { title: 'Analytics', body: 'Plausible. No cookies, no personal data, aggregate counts only.' },
+  { title: 'Cookies', body: 'None. Recently analyzed repos live in your own localStorage.' },
   { title: 'Contact', body: 'Questions? ', email: 'dot.systems@proton.me' },
 ]
 
@@ -38,8 +38,11 @@ export default function PrivacyPage() {
               </p>
             </div>
           ))}
-          <div style={{ marginTop: '48px' }}>
-            <Link href="/terms" style={{ fontFamily: UI, fontSize: '13px', fontStyle: 'italic', color: '#8b0000', textDecoration: 'none' }}>
+          <div style={{ marginTop: '48px', display: 'flex', gap: '24px', alignItems: 'center' }}>
+            <Link href="/" style={{ fontFamily: UI, fontSize: '14px', fontWeight: 700, color: '#8b0000', textDecoration: 'none' }}>
+              ☠ Try it →
+            </Link>
+            <Link href="/terms" style={{ fontFamily: UI, fontSize: '13px', fontStyle: 'italic', color: '#938882', textDecoration: 'none' }}>
               Terms of Service →
             </Link>
           </div>

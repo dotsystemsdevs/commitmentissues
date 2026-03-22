@@ -6,7 +6,7 @@ const FAQ = [
   { q: 'Is the data real?', a: 'Yes. Everything comes from GitHub\'s public API - last commit date, stars, forks, open issues, and archive status.' },
   { q: 'How is the cause of death determined?', a: 'A scoring algorithm weighs inactivity, star count, open issues, and whether the repo is archived. The highest-matching rule wins.' },
   { q: 'Can I analyze private repos?', a: 'No - we only have access to public repositories.' },
-  { q: 'How do I share the certificate?', a: 'Hit "Share free" to get a 1080×1350 image perfect for Instagram or X. Download A4 gives you a printable version.' },
+  { q: 'How do I share the certificate?', a: 'Click Share to get a 1080×1350 image for Instagram or X. Download the printable certificate for $4.99.' },
   { q: 'Is this serious?', a: 'The data is real. The certificates are not.' },
 ]
 
@@ -50,7 +50,7 @@ export default function AboutPage() {
 
           <div style={{ marginTop: '48px' }}>
             <Link href="/" style={{ fontFamily: UI, fontSize: '14px', fontStyle: 'italic', color: '#8b0000', textDecoration: 'none' }}>
-              Issue a death certificate →
+              Issue death certificate →
             </Link>
           </div>
         </div>

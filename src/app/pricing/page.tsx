@@ -23,32 +23,34 @@ export default function PricingPage() {
 
         <div style={{ borderTop: '1px solid #c8c8c8', paddingTop: '40px', paddingBottom: '64px' }}>
 
-          {/* Free */}
-          <div style={{ border: '1.5px solid #c8c8c8', borderRadius: '8px', padding: '28px', marginBottom: '16px' }}>
-            <p style={{ fontFamily: UI, fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#938882', marginBottom: '12px' }}>Free</p>
-            <p style={{ fontFamily: UI, fontSize: '2rem', fontWeight: 700, color: '#160A06', marginBottom: '16px' }}>$0</p>
-            <ul style={{ fontFamily: UI, fontSize: '14px', color: '#555', lineHeight: 2, paddingLeft: '20px', margin: 0 }}>
-              <li>Death certificates for any public repo</li>
-              <li>Share image (1080×1350px)</li>
-              <li>Instant results</li>
-            </ul>
-          </div>
-
-          {/* Paid */}
-          <div style={{ border: '2px solid #160A06', borderRadius: '8px', padding: '28px', marginBottom: '40px' }}>
+          {/* Premium — dominant */}
+          <div style={{ border: '2px solid #160A06', borderRadius: '8px', padding: '32px', marginBottom: '12px', background: '#fff' }}>
             <p style={{ fontFamily: UI, fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#8b0000', marginBottom: '12px' }}>Premium</p>
-            <p style={{ fontFamily: UI, fontSize: '2rem', fontWeight: 700, color: '#160A06', marginBottom: '4px' }}>$4.99 <span style={{ fontSize: '14px', fontWeight: 400, color: '#938882' }}>per certificate</span></p>
-            <p style={{ fontFamily: UI, fontSize: '13px', fontStyle: 'italic', color: '#938882', marginBottom: '20px' }}>one flat fee - no subscription, no nonsense</p>
-            <ul style={{ fontFamily: UI, fontSize: '14px', color: '#555', lineHeight: 2, paddingLeft: '20px', margin: '0 0 24px 0' }}>
-              <li>Everything in Free</li>
-              <li>Download as A4 PNG - print-ready</li>
-              <li>High resolution (3× scale)</li>
-              <li>official PDF, frame it or forget it</li>
+            <p style={{ fontFamily: UI, fontSize: '2.4rem', fontWeight: 700, color: '#160A06', marginBottom: '4px' }}>$4.99 <span style={{ fontSize: '14px', fontWeight: 400, color: '#938882' }}>per certificate</span></p>
+            <p style={{ fontFamily: UI, fontSize: '13px', fontStyle: 'italic', color: '#938882', marginBottom: '24px' }}>one flat fee — no subscription, no nonsense</p>
+            <ul style={{ fontFamily: UI, fontSize: '14px', color: '#555', lineHeight: 2.2, paddingLeft: '20px', margin: '0 0 28px 0' }}>
+              <li>High resolution — print quality</li>
+              <li>Clean typography, no watermark</li>
+              <li>Frame-worthy</li>
+            </ul>
+            <Link href="/" style={{ display: 'block', fontFamily: UI, fontSize: '15px', fontWeight: 700, background: '#1a1a1a', color: '#fff', textDecoration: 'none', padding: '16px', borderRadius: '6px', textAlign: 'center', letterSpacing: '0.02em' }}>
+              ☠ Generate certificate
+            </Link>
+          </div>
+
+          {/* Free — secondary */}
+          <div style={{ border: '1.5px solid #c8c8c8', borderRadius: '8px', padding: '24px', marginBottom: '40px' }}>
+            <p style={{ fontFamily: UI, fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#938882', marginBottom: '10px' }}>Free</p>
+            <p style={{ fontFamily: UI, fontSize: '1.8rem', fontWeight: 700, color: '#938882', marginBottom: '16px' }}>$0</p>
+            <ul style={{ fontFamily: UI, fontSize: '13px', color: '#888', lineHeight: 2, paddingLeft: '20px', margin: 0 }}>
+              <li>Generate certificate</li>
+              <li>Share image</li>
+              <li>Instant result</li>
             </ul>
           </div>
 
-          <Link href="/" style={{ fontFamily: UI, fontSize: '14px', fontStyle: 'italic', color: '#8b0000', textDecoration: 'none' }}>
-            Issue a death certificate →
+          <Link href="/faq" style={{ fontFamily: UI, fontSize: '13px', fontStyle: 'italic', color: '#8b0000', textDecoration: 'none' }}>
+            Questions? See FAQ →
           </Link>
         </div>
       </div>

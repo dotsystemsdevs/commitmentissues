@@ -3,12 +3,12 @@ import Link from 'next/link'
 const UI = `var(--font-dm), -apple-system, sans-serif`
 
 const SECTIONS = [
-  { title: 'What this is', body: 'commitmentissues.dev is a small indie tool that generates humorous death certificates for abandoned GitHub repositories. It is a parody product. The certificates are not legally valid documents.' },
-  { title: 'Use at your own risk', body: 'The data comes from GitHub\'s public API and is presented as-is. We make no guarantee of accuracy. Causes of death are algorithmically generated and should not be taken seriously.' },
-  { title: 'Acceptable use', body: 'You may use this service for personal, non-commercial use. Do not use it to harass, defame, or target individuals. Do not attempt to abuse the API or circumvent rate limits.' },
-  { title: 'Paid downloads', body: 'The A4 PNG download is a digital product sold for $4.99 per certificate. It is delivered immediately upon payment.' },
-  { title: 'Refund policy', body: 'Digital products are non-refundable. If your download failed or the certificate was generated incorrectly due to a technical error on our end, contact us and we will make it right. Charged but nothing arrived? Contact us with your payment confirmation and we resolve it. ', email: 'dot.systems@proton.me' },
-  { title: 'Changes', body: 'We may update these terms at any time. Continued use of the service means you accept any changes.' },
+  { title: 'What this is', body: 'A parody tool. Certificates are not legally valid documents.' },
+  { title: 'Use at your own risk', body: 'Data is from GitHub\'s public API. Causes of death are algorithmic. Do not take them seriously.' },
+  { title: 'Acceptable use', body: 'Personal use only. Do not harass, defame, or abuse the API.' },
+  { title: 'Paid downloads', body: '$4.99 per certificate. Digital product, delivered immediately.' },
+  { title: 'Refunds', body: 'Non-refundable. If it broke on our end, contact us: ', email: 'dot.systems@proton.me' },
+  { title: 'Changes', body: 'We may update these at any time. Continued use = acceptance.' },
   { title: 'Contact', body: '', email: 'dot.systems@proton.me' },
 ]
 
@@ -39,8 +39,11 @@ export default function TermsPage() {
               </p>
             </div>
           ))}
-          <div style={{ marginTop: '48px' }}>
-            <Link href="/privacy" style={{ fontFamily: UI, fontSize: '13px', fontStyle: 'italic', color: '#8b0000', textDecoration: 'none' }}>
+          <div style={{ marginTop: '48px', display: 'flex', gap: '24px', alignItems: 'center' }}>
+            <Link href="/" style={{ fontFamily: UI, fontSize: '14px', fontWeight: 700, color: '#8b0000', textDecoration: 'none' }}>
+              ☠ Declare a repo dead →
+            </Link>
+            <Link href="/privacy" style={{ fontFamily: UI, fontSize: '13px', fontStyle: 'italic', color: '#938882', textDecoration: 'none' }}>
               Privacy Policy →
             </Link>
           </div>

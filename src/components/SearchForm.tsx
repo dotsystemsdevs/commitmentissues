@@ -19,14 +19,14 @@ export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }
   }
 
   return (
-    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '16px' }}>
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0px' }}>
         <input
           autoFocus
           type="text"
           value={url}
           onChange={e => setUrl(e.target.value)}
-          placeholder="https://github.com/owner/repo"
+          placeholder="e.g. facebook/react"
           style={{
             fontFamily: FONT,
             fontSize: '16px',
@@ -58,15 +58,19 @@ export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }
             border: 'none',
             borderRadius: '0 0 6px 6px',
             cursor: loading || !url.trim() ? 'not-allowed' : 'pointer',
-            opacity: loading || !url.trim() ? 0.65 : 1,
+            opacity: loading || !url.trim() ? 0.5 : 1,
             transition: 'opacity 0.15s, background 0.15s',
           }}
-          onMouseEnter={e => { if (!e.currentTarget.disabled) e.currentTarget.style.background = '#8b0000' }}
-          onMouseLeave={e => (e.currentTarget.style.background = '#000')}
+          onMouseEnter={e => { if (!e.currentTarget.disabled) { e.currentTarget.style.background = '#8b0000'; e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 4px 14px rgba(139,0,0,0.3)' } }}
+          onMouseLeave={e => { e.currentTarget.style.background = '#000'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none' }}
         >
-          {loading ? 'Diagnosing…' : 'Issue Certificate'}
+          {loading ? 'Issuing…' : 'Issue death certificate'}
         </button>
       </form>
+
+      <p style={{ fontFamily: FONT, fontSize: '11px', color: '#b0aca8', textAlign: 'center', margin: '-8px 0 0 0', letterSpacing: '0.03em' }}>
+        no auth · no setup · instant result
+      </p>
 
       <button
         type="button"
@@ -74,7 +78,6 @@ export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }
         style={{
           fontFamily: FONT,
           fontSize: '13px',
-          fontStyle: 'italic',
           color: '#938882',
           background: 'none',
           border: 'none',
@@ -82,12 +85,14 @@ export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }
           padding: 0,
           textAlign: 'left',
           transition: 'color 0.15s',
+          textDecoration: 'underline',
+          textDecorationStyle: 'dotted',
+          textUnderlineOffset: '3px',
         }}
         onMouseEnter={e => (e.currentTarget.style.color = '#8b0000')}
         onMouseLeave={e => (e.currentTarget.style.color = '#938882')}
-
       >
-        try an example →
+        Try killing a famous repo →
       </button>
     </div>
   )
