@@ -2,6 +2,8 @@
 
 import { useRef, useState, useEffect } from 'react'
 import { DeathCertificate } from '@/lib/types'
+import { CTA_ISSUE_ARROW, CTA_RED, CTA_RED_HOVER } from '@/lib/cta'
+import PageHero from '@/components/PageHero'
 
 interface Props {
   cert: DeathCertificate
@@ -10,10 +12,8 @@ interface Props {
 
 export default function CertificateCard({ cert, onReset }: Props) {
   const cardRef = useRef<HTMLDivElement>(null)
-  const igRef  = useRef<HTMLDivElement>(null)
   const [visible,   setVisible]   = useState(false)
   const [showModal, setShowModal] = useState(false)
-  const [igBlob,    setIgBlob]    = useState<Blob | null>(null)
   const [copyLabel, setCopyLabel] = useState('Copy link')
   const [imgLabel,  setImgLabel]  = useState('Download image')
 
@@ -22,27 +22,25 @@ export default function CertificateCard({ cert, onReset }: Props) {
     return () => clearTimeout(t1)
   }, [])
 
-  async function renderIg(): Promise<Blob | null> {
-    if (igBlob) return igBlob
-    if (!igRef.current) return null
+  async function renderCert(): Promise<Blob | null> {
+    if (!cardRef.current) return null
     const { default: html2canvas } = await import('html2canvas')
-    const canvas = await html2canvas(igRef.current, { backgroundColor: '#FAF6EF', scale: 3, useCORS: true, logging: false })
-    return new Promise(resolve => canvas.toBlob(b => { if (b) setIgBlob(b); resolve(b) }))
+    const canvas = await html2canvas(cardRef.current, { backgroundColor: '#FAF6EF', scale: 3, useCORS: true, logging: false })
+    return new Promise(resolve => canvas.toBlob(b => resolve(b)))
   }
 
   async function handleDownload() {
-    if (!cardRef.current) return
-    const { default: html2canvas } = await import('html2canvas')
-    const canvas = await html2canvas(cardRef.current, { backgroundColor: '#FAF6EF', scale: 3, useCORS: true, logging: false })
+    const blob = await renderCert()
+    if (!blob) return
     const a = document.createElement('a')
-    a.href = canvas.toDataURL('image/png')
+    a.href = URL.createObjectURL(blob)
     a.download = `${cert.repoData.name}-death-certificate.png`
     a.click()
     fetch('/api/stats', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ counter: 'downloaded' }) }).catch(() => {})
   }
 
   async function handleShare() {
-    const blob = await renderIg()
+    const blob = await renderCert()
     if (blob && navigator.canShare) {
       const file = new File([blob], `${cert.repoData.name}.png`, { type: 'image/png' })
       if (navigator.canShare({ files: [file] })) {
@@ -65,12 +63,12 @@ export default function CertificateCard({ cert, onReset }: Props) {
   }
 
   async function handleDownloadImage() {
-    const blob = await renderIg()
+    const blob = await renderCert()
     if (!blob) return
     setImgLabel('Saving...')
     const a = document.createElement('a')
     a.href = URL.createObjectURL(blob)
-    a.download = `${cert.repoData.name}-ig.png`
+    a.download = `${cert.repoData.name}-certificate.png`
     a.click()
     setImgLabel('Saved!')
     setTimeout(() => setImgLabel('Download image'), 2000)
@@ -85,9 +83,8 @@ export default function CertificateCard({ cert, onReset }: Props) {
   }
 
   const { repoData: r } = cert
-  const MONO  = `var(--font-courier), "Courier New", monospace`
-  const SERIF = `var(--font-playfair), Georgia, serif`
-  const UI    = `var(--font-dm), -apple-system, sans-serif`
+  const MONO = `var(--font-courier), "Courier New", monospace`
+  const UI   = `var(--font-dm), -apple-system, sans-serif`
 
   return (
     <div style={{ width: '100%', maxWidth: '480px', margin: '0 auto' }}>
@@ -104,11 +101,11 @@ export default function CertificateCard({ cert, onReset }: Props) {
           >
             <div style={{ padding: '24px 24px 16px', borderBottom: '1px solid #eee' }}>
               <p style={{ fontFamily: UI, fontSize: '11px', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#938882', margin: '0 0 4px 0' }}>Share</p>
-              <p style={{ fontFamily: 'var(--font-gothic), serif', fontSize: '1.4rem', color: '#160A06', margin: 0, lineHeight: 1.1 }}>{r.name} is officially dead</p>
+              <p style={{ fontFamily: UI, fontSize: '1.05rem', fontWeight: 600, color: '#160A06', margin: 0, lineHeight: 1.25 }}>{r.name} is officially dead</p>
             </div>
             {([
               { label: copyLabel, sub: 'commitmentissues.dev', fn: handleCopyLink },
-              { label: imgLabel,  sub: 'Instagram-ready 1080x1350 PNG', fn: handleDownloadImage },
+              { label: imgLabel,  sub: 'Full certificate as PNG', fn: handleDownloadImage },
               { label: 'Post on X', sub: 'Opens X with pre-filled text', fn: handleTweet },
             ] as { label: string; sub: string; fn: () => void }[]).map(({ label, sub, fn }) => (
               <button
@@ -132,16 +129,15 @@ export default function CertificateCard({ cert, onReset }: Props) {
         </div>
       )}
 
-      {/* ── Page heading — clickable → home ── */}
-      <button onClick={onReset} style={{ background: 'none', border: 'none', cursor: 'pointer', width: '100%', textAlign: 'center', marginTop: '44px', marginBottom: '8px', padding: 0 }}>
-        <div style={{ fontSize: '56px', lineHeight: 1, marginBottom: '12px' }}>🪦</div>
-        <h1 style={{ fontFamily: 'var(--font-gothic), serif', fontSize: 'clamp(2.4rem, 7vw, 3.6rem)', color: '#160A06', lineHeight: 0.95, margin: 0 }}>
-          Certificate of Death
-        </h1>
-      </button>
-      <p style={{ fontFamily: UI, fontSize: '15px', color: '#938882', lineHeight: 1.5, margin: '16px auto 28px auto', maxWidth: '420px', textAlign: 'center' }}>
-        <strong style={{ color: '#160A06' }}>{r.fullName}</strong> is officially dead. Here&apos;s the certificate.
-      </p>
+      <PageHero
+        subtitle={
+          <>
+            <strong style={{ color: '#160A06' }}>{r.fullName}</strong> is officially dead. Here&apos;s the certificate.
+          </>
+        }
+        microcopy="Share it, print it, or run another repo."
+        onBrandClick={onReset}
+      />
 
       {/* ── Actions ── */}
       <div className="cert-actions" style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '8px' }}>
@@ -149,9 +145,9 @@ export default function CertificateCard({ cert, onReset }: Props) {
         {/* 1. Share — primary, full width */}
         <button
           onClick={handleShare}
-          style={{ width: '100%', fontFamily: UI, background: '#1a1a1a', color: '#fff', border: 'none', borderRadius: '8px', padding: '18px 20px', cursor: 'pointer', transition: 'background 0.15s, transform 0.12s, box-shadow 0.12s', transform: 'translateY(0)', boxShadow: 'none', textAlign: 'center' }}
-          onMouseEnter={e => { e.currentTarget.style.background = '#8b0000'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(139,0,0,0.25)' }}
-          onMouseLeave={e => { e.currentTarget.style.background = '#1a1a1a'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none' }}
+          style={{ width: '100%', fontFamily: UI, background: CTA_RED, color: '#fff', border: 'none', borderRadius: '8px', padding: '18px 20px', cursor: 'pointer', transition: 'background 0.15s, transform 0.12s, box-shadow 0.12s', transform: 'translateY(0)', boxShadow: 'none', textAlign: 'center' }}
+          onMouseEnter={e => { e.currentTarget.style.background = CTA_RED_HOVER; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(139,0,0,0.25)' }}
+          onMouseLeave={e => { e.currentTarget.style.background = CTA_RED; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none' }}
         >
           <div style={{ fontSize: '15px', fontWeight: 700 }}>📤 Post this before they forget</div>
         </button>
@@ -159,9 +155,9 @@ export default function CertificateCard({ cert, onReset }: Props) {
         {/* 2. Download A4 — outlined secondary */}
         <button
           onClick={handleDownload}
-          style={{ width: '100%', fontFamily: UI, background: 'transparent', color: '#1a1a1a', border: '1.5px solid #c8c8c8', borderRadius: '8px', padding: '16px 20px', cursor: 'pointer', transition: 'border-color 0.15s, transform 0.12s', transform: 'translateY(0)', textAlign: 'center' }}
-          onMouseEnter={e => { e.currentTarget.style.borderColor = '#1a1a1a'; e.currentTarget.style.transform = 'translateY(-2px)' }}
-          onMouseLeave={e => { e.currentTarget.style.borderColor = '#c8c8c8'; e.currentTarget.style.transform = 'translateY(0)' }}
+          style={{ width: '100%', fontFamily: UI, background: 'transparent', color: CTA_RED, border: `1.5px solid ${CTA_RED}`, borderRadius: '8px', padding: '16px 20px', cursor: 'pointer', transition: 'border-color 0.15s, color 0.15s, background 0.15s, transform 0.12s', transform: 'translateY(0)', textAlign: 'center' }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = CTA_RED_HOVER; e.currentTarget.style.color = CTA_RED_HOVER; e.currentTarget.style.background = 'rgba(139,0,0,0.06)'; e.currentTarget.style.transform = 'translateY(-2px)' }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = CTA_RED; e.currentTarget.style.color = CTA_RED; e.currentTarget.style.background = 'transparent'; e.currentTarget.style.transform = 'translateY(0)' }}
         >
           <div style={{ fontSize: '14px', fontWeight: 700 }}>🪦 Get the official certificate</div>
           <div style={{ fontSize: '11px', color: '#938882', marginTop: '4px' }}>Printable · High-res · No watermark · $4.99</div>
@@ -169,15 +165,16 @@ export default function CertificateCard({ cert, onReset }: Props) {
 
       </div>
 
-      {/* 3. kill another — text link */}
+      {/* 3. Back to issue another certificate */}
       <div style={{ textAlign: 'center', marginBottom: '20px' }}>
         <button
           onClick={onReset}
-          style={{ fontFamily: UI, fontSize: '13px', color: '#938882', background: 'none', border: 'none', cursor: 'pointer', padding: '4px 0', textDecoration: 'underline', textDecorationStyle: 'dotted', textUnderlineOffset: '3px', transition: 'color 0.15s' }}
-          onMouseEnter={e => (e.currentTarget.style.color = '#8b0000')}
-          onMouseLeave={e => (e.currentTarget.style.color = '#938882')}
+          type="button"
+          style={{ fontFamily: UI, fontSize: '13px', fontWeight: 700, color: CTA_RED, background: 'none', border: 'none', cursor: 'pointer', padding: '4px 0', textDecoration: 'underline', textDecorationStyle: 'solid', textUnderlineOffset: '3px', letterSpacing: '0.03em', transition: 'color 0.15s' }}
+          onMouseEnter={e => (e.currentTarget.style.color = CTA_RED_HOVER)}
+          onMouseLeave={e => (e.currentTarget.style.color = CTA_RED)}
         >
-          ☠ Kill another repo →
+          {CTA_ISSUE_ARROW}
         </button>
       </div>
 
@@ -187,7 +184,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
       {/* ── Stamp — permanent, always visible ── */}
       <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
         <div className="select-none" style={{ transform: 'rotate(-12deg)', border: '5px solid rgba(139,26,26,0.75)', borderRadius: '4px', padding: '12px 40px', background: 'rgba(139,26,26,0.04)' }}>
-          <span style={{ fontFamily: 'var(--font-playfair), serif', fontSize: '2.6rem', fontWeight: 900, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(139,26,26,0.72)', display: 'block', textAlign: 'center', lineHeight: 1 }}>CERTIFIED DEAD</span>
+          <span style={{ fontFamily: UI, fontSize: '2.15rem', fontWeight: 800, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(139,26,26,0.72)', display: 'block', textAlign: 'center', lineHeight: 1 }}>CERTIFIED DEAD</span>
           <p style={{ fontFamily: 'var(--font-courier), monospace', fontSize: '9px', letterSpacing: '0.4em', textAlign: 'center', marginTop: '6px', color: 'rgba(139,26,26,0.45)', textTransform: 'uppercase' }}>COMMITMENTISSUES.DEV</p>
         </div>
       </div>
@@ -219,7 +216,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
             <p style={{ fontFamily: MONO, fontSize: '7px', letterSpacing: '0.6em', color: '#8B6B4A', textTransform: 'uppercase', margin: '0 0 2% 0' }}>
               commitmentissues.dev
             </p>
-            <h2 style={{ fontFamily: 'var(--font-gothic), serif', fontSize: '2.5rem', color: '#1A0F06', lineHeight: 1.05, margin: '0 0 2% 0' }}>
+            <h2 className="certificate-of-death-title" style={{ fontSize: '2.5rem', color: '#1A0F06', lineHeight: 1.05, margin: '0 0 2% 0' }}>
               Certificate of Death
             </h2>
             <p style={{ fontFamily: MONO, fontSize: '7px', letterSpacing: '0.25em', color: '#8B6B4A', margin: 0, fontStyle: 'italic' }}>
@@ -235,7 +232,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
             <p style={{ fontFamily: MONO, fontSize: '8px', color: '#8B6B4A', margin: '0 0 1% 0' }}>
               {r.fullName.split('/')[0]} /
             </p>
-            <h3 style={{ fontFamily: SERIF, fontWeight: 700, fontSize: '2.4rem', color: '#1A0F06', lineHeight: 1.05, margin: 0 }}>
+            <h3 style={{ fontFamily: UI, fontWeight: 700, fontSize: '2.05rem', color: '#1A0F06', lineHeight: 1.08, margin: 0, letterSpacing: '-0.02em' }}>
               {r.name}
             </h3>
             {r.description && (
@@ -250,7 +247,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
             <p style={{ fontFamily: MONO, fontSize: '7px', letterSpacing: '0.55em', color: '#8B6B4A', textTransform: 'uppercase', margin: '0 0 3% 0' }}>
               cause of death
             </p>
-            <p style={{ fontFamily: SERIF, fontStyle: 'italic', fontSize: '1.5rem', color: '#8B0000', lineHeight: 1.4, maxWidth: '22ch', margin: 0 }}>
+            <p style={{ fontFamily: UI, fontStyle: 'italic', fontWeight: 500, fontSize: '1.25rem', color: '#8B0000', lineHeight: 1.45, maxWidth: '24ch', margin: 0 }}>
               {cert.causeOfDeath}
             </p>
           </div>
@@ -291,51 +288,11 @@ export default function CertificateCard({ cert, onReset }: Props) {
           {/* LAST WORDS */}
           <div style={{ padding: '2.5% 0', textAlign: 'center' }}>
             <p style={{ fontFamily: MONO, fontSize: '7px', letterSpacing: '0.5em', textTransform: 'uppercase', color: '#8B6B4A', margin: '0 0 2% 0' }}>Last words</p>
-            <p style={{ fontFamily: SERIF, fontStyle: 'italic', fontSize: '0.9rem', color: '#1A0F06', lineHeight: 1.6, margin: 0 }}>
+            <p style={{ fontFamily: UI, fontStyle: 'italic', fontSize: '0.88rem', color: '#1A0F06', lineHeight: 1.6, margin: 0 }}>
               &ldquo;{cert.lastWords}&rdquo;
             </p>
           </div>
 
-        </div>
-      </div>
-
-      {/* ── Hidden Instagram card 360x450 - renders at 1080x1350 ── */}
-      <div
-        ref={igRef}
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          left: '-9999px',
-          top: 0,
-          width: '360px',
-          height: '450px',
-          background: '#FAF6EF',
-          border: '1px solid #C4A882',
-          display: 'flex',
-          flexDirection: 'column',
-          overflow: 'hidden',
-        }}
-      >
-        <div style={{ padding: '28px 32px 20px', textAlign: 'center', borderBottom: '1px solid #DDD0B8' }}>
-          <p style={{ fontFamily: MONO, fontSize: '7px', letterSpacing: '0.35em', color: '#C4A882', textTransform: 'uppercase', marginBottom: '10px' }}>commitmentissues.dev</p>
-          <p style={{ fontFamily: 'var(--font-gothic), serif', fontSize: '22px', color: '#2A1A0E', lineHeight: 1 }}>Certificate of Death</p>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '12px' }}>
-            <div style={{ flex: 1, height: '1px', background: '#C4A882' }} />
-            <span style={{ color: '#C4A882', fontSize: '10px' }}>☠</span>
-            <div style={{ flex: 1, height: '1px', background: '#C4A882' }} />
-          </div>
-        </div>
-        <div style={{ padding: '20px 32px', textAlign: 'center', borderBottom: '1px solid #DDD0B8' }}>
-          <p style={{ fontFamily: MONO, fontSize: '7px', color: '#C4A882', marginBottom: '4px', letterSpacing: '0.05em' }}>{r.fullName.split('/')[0]} /</p>
-          <p style={{ fontFamily: SERIF, fontSize: '30px', color: '#2A1A0E', lineHeight: 1.05 }}>{r.name}</p>
-        </div>
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '16px 32px', textAlign: 'center', borderBottom: '1px solid #DDD0B8' }}>
-          <p style={{ fontFamily: MONO, fontSize: '7px', letterSpacing: '0.3em', color: '#9C7E5A', textTransform: 'uppercase', marginBottom: '12px' }}>has passed away due to</p>
-          <p style={{ fontFamily: SERIF, fontStyle: 'italic', fontSize: '18px', color: '#8B1A1A', lineHeight: 1.35 }}>{cert.causeOfDeath}</p>
-        </div>
-        <div style={{ padding: '14px 32px', textAlign: 'center' }}>
-          <p style={{ fontFamily: MONO, fontSize: '7px', color: '#9C7E5A', marginBottom: '6px' }}>{cert.deathDate} - {cert.age}</p>
-          <p style={{ fontFamily: MONO, fontSize: '6px', letterSpacing: '0.25em', color: '#C4A882', textTransform: 'uppercase' }}>commitmentissues.dev</p>
         </div>
       </div>
 

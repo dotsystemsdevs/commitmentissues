@@ -9,7 +9,8 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        serif: ['var(--font-playfair)', 'Georgia', 'serif'],
+        sans: ['var(--font-dm)', 'system-ui', 'sans-serif'],
+        serif: ['var(--font-dm)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-courier)', '"Courier New"', 'monospace'],
         gothic: ['var(--font-gothic)', 'serif'],
       },

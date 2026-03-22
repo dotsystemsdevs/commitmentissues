@@ -41,4 +41,5 @@ export interface LeaderboardEntry {
   score: number
   analyzedAt?: string  // ISO timestamp — set by backend for recently buried
   deathDate?: string   // human-readable death date for curated entries
+  lastWords?: string
 }

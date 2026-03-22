@@ -1,17 +1,27 @@
 import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
-export const alt = 'deadrepo death certificate'
+export const alt = 'Certificate of Death — commitmentissues'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
-export default function OGImage({
+/** Same face as `next/font` UnifrakturMaguntia — embedded for Satori / OG */
+const GOTHIC_FONT_URL =
+  'https://fonts.gstatic.com/s/unifrakturmaguntia/v22/WWXPlieVYwiGNomYU-ciRLRvEmK7oaVunw.ttf'
+
+const gothic = {
+  fontFamily: 'UnifrakturMaguntia',
+} as const
+
+export default async function OGImage({
   searchParams,
 }: {
   searchParams: { name?: string; cause?: string }
 }) {
   const name = searchParams.name ?? null
   const cause = searchParams.cause ?? null
+
+  const gothicData = await fetch(GOTHIC_FONT_URL).then((r) => r.arrayBuffer())
 
   return new ImageResponse(
     (
@@ -25,7 +35,7 @@ export default function OGImage({
           alignItems: 'center',
           justifyContent: 'center',
           padding: '64px',
-          fontFamily: 'serif',
+          fontFamily: 'system-ui, sans-serif',
           border: '2px solid #8b7355',
         }}
       >
@@ -35,15 +45,15 @@ export default function OGImage({
           <>
             <div
               style={{
-                fontSize: 14,
-                color: '#8b7355',
-                letterSpacing: '0.3em',
-                textTransform: 'uppercase',
-                marginBottom: 12,
-                fontFamily: 'monospace',
+                fontSize: 44,
+                color: '#f5f0e8',
+                marginBottom: 20,
+                textAlign: 'center',
+                lineHeight: 1.05,
+                ...gothic,
               }}
             >
-              CERTIFICATE OF DEATH
+              Certificate of Death
             </div>
             <div
               style={{
@@ -73,12 +83,21 @@ export default function OGImage({
           </>
         ) : (
           <>
-            <div style={{ fontSize: 64, color: '#f5f0e8', marginBottom: 16 }}>
-              deadrepo
+            <div
+              style={{
+                fontSize: 52,
+                color: '#f5f0e8',
+                marginBottom: 20,
+                textAlign: 'center',
+                lineHeight: 1.05,
+                ...gothic,
+              }}
+            >
+              Certificate of Death
             </div>
             <div
               style={{
-                fontSize: 24,
+                fontSize: 22,
                 color: '#8b7355',
                 fontFamily: 'monospace',
                 textAlign: 'center',
@@ -102,6 +121,16 @@ export default function OGImage({
         </div>
       </div>
     ),
-    { ...size }
+    {
+      ...size,
+      fonts: [
+        {
+          name: 'UnifrakturMaguntia',
+          data: gothicData,
+          weight: 400,
+          style: 'normal',
+        },
+      ],
+    }
   )
 }

@@ -1,6 +1,7 @@
 'use client'
 
 import { FormEvent } from 'react'
+import { CTA_ISSUE, CTA_ISSUING, CTA_RED, CTA_RED_HOVER } from '@/lib/cta'
 
 const FONT = `var(--font-dm), -apple-system, sans-serif`
 
@@ -15,62 +16,77 @@ interface Props {
 export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }: Props) {
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
+    if (!url.trim()) return
     onSubmit()
   }
 
   return (
-    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0px' }}>
+    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
         <input
           autoFocus
           type="text"
           value={url}
           onChange={e => setUrl(e.target.value)}
-          placeholder="e.g. facebook/react"
+          placeholder="https://github.com/facebook/react"
           style={{
             fontFamily: FONT,
             fontSize: '16px',
             width: '100%',
-            height: '48px',
-            padding: '0 18px',
+            height: '52px',
+            padding: '0 20px',
             background: '#fff',
-            border: '1.5px solid #ddd',
-            borderRadius: '6px 6px 0 0',
+            border: '2px solid #e0e0e0',
+            borderBottom: 'none',
+            borderRadius: '8px 8px 0 0',
             color: '#160A06',
             outline: 'none',
-            transition: 'border-color 0.15s',
+            transition: 'border-color 0.2s, box-shadow 0.2s',
           }}
-          onFocus={e => (e.currentTarget.style.borderColor = '#8b0000')}
-          onBlur={e => (e.currentTarget.style.borderColor = '#ddd')}
+          onFocus={e => {
+            e.currentTarget.style.borderColor = '#888'
+            e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,0,0,0.08)'
+          }}
+          onBlur={e => {
+            e.currentTarget.style.borderColor = '#e0e0e0'
+            e.currentTarget.style.boxShadow = 'none'
+          }}
         />
         <button
           type="submit"
-          disabled={loading || !url.trim()}
+          disabled={loading}
+          className="cta-btn"
           style={{
             fontFamily: FONT,
-            fontSize: '14px',
-            fontWeight: 700,
-            letterSpacing: '0.02em',
+            fontSize: '13px',
+            fontWeight: 800,
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase',
             width: '100%',
-            height: '48px',
-            background: '#000',
+            height: '52px',
+            background: CTA_RED,
             color: '#fff',
             border: 'none',
-            borderRadius: '0 0 6px 6px',
-            cursor: loading || !url.trim() ? 'not-allowed' : 'pointer',
-            opacity: loading || !url.trim() ? 0.5 : 1,
-            transition: 'opacity 0.15s, background 0.15s',
+            borderRadius: '0 0 8px 8px',
+            cursor: loading ? 'wait' : 'pointer',
+            transition: 'background 0.2s, transform 0.15s, box-shadow 0.2s',
           }}
-          onMouseEnter={e => { if (!e.currentTarget.disabled) { e.currentTarget.style.background = '#8b0000'; e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 4px 14px rgba(139,0,0,0.3)' } }}
-          onMouseLeave={e => { e.currentTarget.style.background = '#000'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none' }}
+          onMouseEnter={e => {
+            if (!loading) {
+              e.currentTarget.style.background = CTA_RED_HOVER
+              e.currentTarget.style.transform = 'translateY(-2px)'
+              e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.25)'
+            }
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.background = CTA_RED
+            e.currentTarget.style.transform = 'translateY(0)'
+            e.currentTarget.style.boxShadow = 'none'
+          }}
         >
-          {loading ? 'Issuing…' : 'Issue death certificate'}
+          {loading ? CTA_ISSUING : CTA_ISSUE}
         </button>
       </form>
-
-      <p style={{ fontFamily: FONT, fontSize: '11px', color: '#b0aca8', textAlign: 'center', margin: '-8px 0 0 0', letterSpacing: '0.03em' }}>
-        no auth · no setup · instant result
-      </p>
 
       <button
         type="button"
@@ -78,21 +94,25 @@ export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }
         style={{
           fontFamily: FONT,
           fontSize: '13px',
-          color: '#938882',
+          color: '#8a7060',
           background: 'none',
           border: 'none',
           cursor: 'pointer',
-          padding: 0,
+          padding: '0',
           textAlign: 'left',
-          transition: 'color 0.15s',
-          textDecoration: 'underline',
-          textDecorationStyle: 'dotted',
-          textUnderlineOffset: '3px',
+          transition: 'color 0.15s, letter-spacing 0.15s',
+          letterSpacing: '0.01em',
         }}
-        onMouseEnter={e => (e.currentTarget.style.color = '#8b0000')}
-        onMouseLeave={e => (e.currentTarget.style.color = '#938882')}
+        onMouseEnter={e => {
+          e.currentTarget.style.color = CTA_RED
+          e.currentTarget.style.letterSpacing = '0.03em'
+        }}
+        onMouseLeave={e => {
+          e.currentTarget.style.color = '#8a7060'
+          e.currentTarget.style.letterSpacing = '0.01em'
+        }}
       >
-        Try killing a famous repo →
+        ☠ Try it on atom/atom — already dead →
       </button>
     </div>
   )

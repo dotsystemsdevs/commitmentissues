@@ -34,7 +34,7 @@ export default function TopBar() {
         {/* Logo */}
         <Link href="/" onClick={() => setOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
           <span style={{ fontSize: '18px', lineHeight: 1 }}>🪦</span>
-          <span style={{ fontFamily: SERIF, fontSize: '15px', fontWeight: 700, fontStyle: 'italic', color: '#f5f0e8', letterSpacing: '0.01em' }}>
+          <span style={{ fontFamily: SERIF, fontSize: '15px', fontWeight: 600, color: '#f5f0e8', letterSpacing: '-0.01em' }}>
             commitmentissues
           </span>
           <span style={{ fontFamily: SANS, fontSize: '10px', color: '#a89070', letterSpacing: '0.12em', textTransform: 'uppercase', marginLeft: '2px', marginTop: '2px' }}>

@@ -6,6 +6,7 @@ import { useRepoAnalysis } from '@/hooks/useRepoAnalysis'
 import CertificateCard from '@/components/CertificateCard'
 import LoadingState from '@/components/LoadingState'
 import ErrorDisplay from '@/components/ErrorDisplay'
+import SiteFooter from '@/components/SiteFooter'
 
 function CertificateContent() {
   const searchParams = useSearchParams()
@@ -37,10 +38,14 @@ function CertificateContent() {
 
 export default function CertificatePage() {
   return (
-    <main style={{ minHeight: '100vh', background: '#f5f5f5', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 24px' }}>
-      <Suspense fallback={<LoadingState />}>
-        <CertificateContent />
-      </Suspense>
+    <main className="page-shell-main">
+      <div className="page-shell-inner">
+        <Suspense fallback={<LoadingState />}>
+          <CertificateContent />
+        </Suspense>
+
+        <SiteFooter />
+      </div>
     </main>
   )
 }
