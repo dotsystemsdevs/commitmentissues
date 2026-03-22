@@ -37,7 +37,10 @@ export default function Page() {
       {!certificate && (
         <header style={{ width: '100%', maxWidth: '680px', paddingTop: '44px', paddingBottom: '22px', textAlign: 'center' }}>
           <button onClick={handleReset} style={{ background: 'none', border: 'none', cursor: 'default', width: '100%', display: 'block' }}>
-            <div style={{ fontSize: '56px', marginBottom: '12px', lineHeight: 1 }}>🪦</div>
+            <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: '12px', position: 'relative' }}>
+              <span className="hero-glow" />
+              <span style={{ fontSize: '56px', lineHeight: 1, position: 'relative', zIndex: 1 }}>🪦</span>
+            </div>
             <h1 style={{
               fontFamily: 'var(--font-gothic), serif',
               fontSize: 'clamp(2.4rem, 7vw, 3.6rem)',

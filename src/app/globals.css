@@ -1,3 +1,17 @@
+@keyframes hero-pulse {
+  0%, 100% { transform: scale(1);   opacity: 0.18; }
+  50%       { transform: scale(1.5); opacity: 0;    }
+}
+
+.hero-glow {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #8b0000;
+  animation: hero-pulse 2.4s ease-in-out infinite;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
