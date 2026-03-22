@@ -174,19 +174,12 @@ function handleTweet() {
       {/* ── Certificate — fixed 480×679, wrapper handles mobile scale ── */}
       <div ref={wrapperRef} className="certificate-wrapper relative" style={{ width: '480px' }}>
 
-        {/* Stamp overlay — display only, not captured */}
-        <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
-          <div className="select-none" style={{ transform: 'rotate(-12deg)', border: '5px solid rgba(139,26,26,0.75)', borderRadius: '4px', padding: '12px 40px', background: 'rgba(139,26,26,0.04)' }}>
-            <span style={{ fontFamily: UI, fontSize: '2.15rem', fontWeight: 800, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(139,26,26,0.72)', display: 'block', textAlign: 'center', lineHeight: 1 }}>CERTIFIED DEAD</span>
-            <p style={{ fontFamily: 'var(--font-courier), monospace', fontSize: '9px', letterSpacing: '0.4em', textAlign: 'center', marginTop: '6px', color: 'rgba(139,26,26,0.45)', textTransform: 'uppercase' }}>COMMITMENTISSUES.DEV</p>
-          </div>
-        </div>
-
         {/* cardRef — the single source for all exports */}
         <div
           ref={cardRef}
           className="certificate-card"
           style={{
+            position: 'relative',
             opacity: visible ? 1 : 0,
             transform: visible ? 'translateY(0)' : 'translateY(12px)',
             transition: 'opacity 0.4s ease, transform 0.4s ease',
@@ -289,6 +282,15 @@ function handleTweet() {
             </div>
 
           </div>
+
+          {/* Stamp — inside cardRef so it's captured in exports */}
+          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none', userSelect: 'none' }}>
+            <div style={{ transform: 'rotate(-12deg)', border: '5px solid rgba(139,26,26,0.75)', borderRadius: '4px', padding: '12px 40px', background: 'rgba(139,26,26,0.04)' }}>
+              <span style={{ fontFamily: UI, fontSize: '2.15rem', fontWeight: 800, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(139,26,26,0.72)', display: 'block', textAlign: 'center', lineHeight: 1 }}>CERTIFIED DEAD</span>
+              <p style={{ fontFamily: MONO, fontSize: '9px', letterSpacing: '0.4em', textAlign: 'center', marginTop: '6px', color: 'rgba(139,26,26,0.45)', textTransform: 'uppercase', margin: '6px 0 0 0' }}>COMMITMENTISSUES.DEV</p>
+            </div>
+          </div>
+
         </div>
 
       </div>
