@@ -163,24 +163,43 @@ function handleTweet() {
       />
 
       {/* ── Actions ── */}
-      <div className="cert-actions" style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '8px' }}>
+      <div className="cert-actions" style={{ display: 'flex', flexDirection: 'column', gap: '0', marginBottom: '16px' }}>
 
-        {/* Download — primary */}
+        {/* Download — premium card */}
         <button
           onClick={handleDownload}
-          style={{ width: '100%', fontFamily: UI, fontSize: '14px', fontWeight: 600, background: CTA_RED, color: '#fff', border: 'none', borderRadius: '8px', padding: '15px 20px', cursor: 'pointer', textAlign: 'center', transition: 'background 0.15s' }}
-          onMouseEnter={e => { e.currentTarget.style.background = CTA_RED_HOVER }}
-          onMouseLeave={e => { e.currentTarget.style.background = CTA_RED }}
+          style={{
+            width: '100%', fontFamily: UI, background: CTA_RED, color: '#fff', border: 'none',
+            borderRadius: '14px', padding: '18px 20px', cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            transition: 'background 0.15s, transform 0.1s',
+            marginBottom: '10px',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = CTA_RED_HOVER; e.currentTarget.style.transform = 'translateY(-1px)' }}
+          onMouseLeave={e => { e.currentTarget.style.background = CTA_RED; e.currentTarget.style.transform = 'translateY(0)' }}
         >
-          get the official certificate — $4.99 →
+          <div style={{ textAlign: 'left' }}>
+            <div style={{ fontSize: '15px', fontWeight: 700, letterSpacing: '-0.01em', marginBottom: '3px' }}>Get the official certificate</div>
+            <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.55)', fontWeight: 400 }}>High-res · No watermark · Yours to keep</div>
+          </div>
+          <div style={{ fontFamily: UI, fontSize: '15px', fontWeight: 700, background: 'rgba(255,255,255,0.13)', borderRadius: '8px', padding: '7px 13px', flexShrink: 0, marginLeft: '16px', letterSpacing: '-0.01em' }}>
+            $4.99 →
+          </div>
         </button>
 
-        {/* Share — outlined, same size as buy button */}
+        {/* Divider */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+          <div style={{ flex: 1, height: '1px', background: '#e4e0db' }} />
+          <span style={{ fontFamily: UI, fontSize: '11px', color: '#b8b2ac', letterSpacing: '0.04em', textTransform: 'uppercase' }}>or</span>
+          <div style={{ flex: 1, height: '1px', background: '#e4e0db' }} />
+        </div>
+
+        {/* Share — clean text */}
         <button
           onClick={handleShare}
-          style={{ width: '100%', fontFamily: UI, fontSize: '14px', fontWeight: 600, background: '#fff', color: '#0a0a0a', border: '1.5px solid #0a0a0a', borderRadius: '8px', padding: '15px 20px', cursor: 'pointer', textAlign: 'center', transition: 'background 0.15s, color 0.15s' }}
-          onMouseEnter={e => { e.currentTarget.style.background = '#0a0a0a'; e.currentTarget.style.color = '#fff' }}
-          onMouseLeave={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.color = '#0a0a0a' }}
+          style={{ width: '100%', fontFamily: UI, fontSize: '14px', fontWeight: 600, background: 'none', border: 'none', cursor: 'pointer', padding: '4px 0', textAlign: 'center', color: '#6b6560', letterSpacing: '-0.01em', transition: 'color 0.15s' }}
+          onMouseEnter={e => { e.currentTarget.style.color = '#160A06' }}
+          onMouseLeave={e => { e.currentTarget.style.color = '#6b6560' }}
         >
           share for free →
         </button>
