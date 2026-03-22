@@ -141,7 +141,7 @@ function handleTweet() {
             The death of <strong style={{ color: '#160A06' }}>{r.fullName}</strong> has been officially recorded.
           </>
         }
-        microcopy="The record is sealed. You may now share or preserve the certificate."
+        microcopy={null}
         onBrandClick={onReset}
       />
 
