@@ -12,8 +12,7 @@ const UI = `var(--font-dm), -apple-system, sans-serif`
 export default function SuccessPage() {
   const cardRef = useRef<HTMLDivElement>(null)
   const [cert, setCert] = useState<DeathCertificate | null>(null)
-  const [downloading, setDownloading] = useState(false)
-  const [done, setDone] = useState(false)
+  const [status, setStatus] = useState<'idle' | 'generating' | 'done' | 'error'>('idle')
 
   useEffect(() => {
     try {
@@ -22,9 +21,17 @@ export default function SuccessPage() {
     } catch { /* ignore */ }
   }, [])
 
-  async function handleDownload() {
+  // Auto-trigger download once the cert is loaded and the hidden card is rendered
+  useEffect(() => {
+    if (!cert || status !== 'idle') return
+    const timer = setTimeout(triggerDownload, 600)
+    return () => clearTimeout(timer)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cert])
+
+  async function triggerDownload() {
     if (!cardRef.current || !cert) return
-    setDownloading(true)
+    setStatus('generating')
     try {
       const blob = await toBlob(cardRef.current, {
         cacheBust: true,
@@ -41,10 +48,12 @@ export default function SuccessPage() {
         a.click()
         URL.revokeObjectURL(url)
         localStorage.removeItem('pending_cert')
-        setDone(true)
+        setStatus('done')
+      } else {
+        setStatus('error')
       }
-    } finally {
-      setDownloading(false)
+    } catch {
+      setStatus('error')
     }
   }
 
@@ -60,78 +69,57 @@ export default function SuccessPage() {
         textAlign: 'center',
       }}>
         <div style={{ fontSize: '40px', marginBottom: '16px' }}>🪦</div>
+
         <p style={{ fontFamily: UI, fontSize: 'clamp(16px, 4vw, 18px)', fontWeight: 700, color: '#160A06', margin: '0 0 8px 0' }}>
-          Your certificate is ready
-        </p>
-        <p style={{ fontFamily: UI, fontSize: '14px', color: '#938882', margin: '0 0 28px 0', lineHeight: 1.6 }}>
-          High-res · Print-quality PNG · No watermark
+          {status === 'done' ? 'Certificate downloaded.' : 'Your certificate is ready.'}
         </p>
 
-        {cert ? (
-          done ? (
-            <p style={{ fontFamily: UI, fontSize: '14px', color: '#938882', margin: '0 0 20px 0' }}>
-              Downloaded. Check your downloads folder.
-            </p>
-          ) : (
-            <button
-              onClick={handleDownload}
-              disabled={downloading}
-              style={{
-                fontFamily: UI,
-                fontSize: '13px',
-                fontWeight: 700,
-                letterSpacing: '0.06em',
-                textTransform: 'uppercase',
-                color: '#fff',
-                textDecoration: 'none',
-                background: '#0a0a0a',
-                borderRadius: '8px',
-                padding: '14px 28px',
-                display: 'inline-block',
-                border: 'none',
-                cursor: downloading ? 'wait' : 'pointer',
-                transition: 'background 0.15s',
-                marginBottom: '16px',
-              }}
-            >
-              {downloading ? 'Generating…' : `Download — ${cert.repoData.name} →`}
-            </button>
-          )
-        ) : (
-          <Link
-            href="/"
+        <p style={{ fontFamily: UI, fontSize: '14px', color: '#938882', margin: '0 0 28px 0', lineHeight: 1.6 }}>
+          {status === 'generating' && 'Generating your certificate…'}
+          {status === 'done' && 'Check your downloads folder. High-res · No watermark.'}
+          {status === 'idle' && !cert && 'High-res · Print-quality PNG · No watermark.'}
+          {status === 'error' && 'Something went wrong. Try the button below.'}
+        </p>
+
+        {/* Retry / manual download button */}
+        {(status === 'error' || (status === 'idle' && !cert)) && (
+          <button
+            onClick={triggerDownload}
             style={{
               fontFamily: UI,
-              fontSize: '13px',
-              fontWeight: 700,
-              letterSpacing: '0.06em',
-              textTransform: 'uppercase',
+              fontSize: '14px',
+              fontWeight: 600,
               color: '#fff',
-              textDecoration: 'none',
               background: '#0a0a0a',
               borderRadius: '8px',
-              padding: '14px 24px',
-              display: 'inline-block',
+              padding: '14px 28px',
+              border: 'none',
+              cursor: 'pointer',
+              marginBottom: '16px',
             }}
           >
-            Issue another certificate →
+            {cert ? `download — ${cert.repoData.name} →` : 'issue a certificate →'}
+          </button>
+        )}
+
+        {status === 'done' && (
+          <Link
+            href="/"
+            style={{ fontFamily: UI, fontSize: '14px', fontWeight: 600, color: '#0a0a0a', textDecoration: 'underline', textUnderlineOffset: '3px' }}
+          >
+            issue another certificate →
           </Link>
         )}
 
-        {done && (
-          <div>
-            <Link
-              href="/"
-              style={{ fontFamily: UI, fontSize: '13px', color: '#938882', textDecoration: 'underline', textUnderlineOffset: '3px' }}
-            >
-              Issue another certificate →
-            </Link>
-          </div>
+        {status === 'idle' && cert && (
+          <p style={{ fontFamily: UI, fontSize: '13px', color: '#b0aca8' }}>
+            Preparing your download…
+          </p>
         )}
       </div>
 
       {/* Hidden certificate rendered offscreen for export — no stamp (paid version) */}
-      {cert && !done && (
+      {cert && status !== 'done' && (
         <div style={{ position: 'fixed', left: '-9999px', top: 0, pointerEvents: 'none' }}>
           <CertificateSheet
             ref={cardRef}
