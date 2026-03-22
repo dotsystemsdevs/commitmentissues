@@ -92,111 +92,53 @@ export default function CertificateCard({ cert, onReset }: Props) {
   return (
     <div style={{ width: '100%', maxWidth: '480px', margin: '0 auto' }}>
 
-      {/* ── Page heading above buttons — matches homepage hero exactly ── */}
-      <div style={{ textAlign: 'center', marginTop: '44px', marginBottom: '20px' }}>
+      {/* ── Page heading — clickable → home ── */}
+      <button onClick={onReset} style={{ background: 'none', border: 'none', cursor: 'pointer', width: '100%', textAlign: 'center', marginTop: '44px', marginBottom: '32px', padding: 0 }}>
         <div style={{ fontSize: '56px', lineHeight: 1, marginBottom: '12px' }}>🪦</div>
         <h1 style={{ fontFamily: 'var(--font-gothic), serif', fontSize: 'clamp(2.4rem, 7vw, 3.6rem)', color: '#160A06', lineHeight: 0.95, margin: 0 }}>
           Certificate of Death
         </h1>
-      </div>
+      </button>
 
-      {/* ── Actions ── 3 buttons (outside zoom wrapper so they stay full-size on mobile) */}
-      <div className="cert-actions" style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
+      {/* ── Actions ── */}
+      <div className="cert-actions" style={{ display: 'flex', gap: '10px', marginBottom: '16px' }}>
+
+        {/* Download */}
         <button
           onClick={handleDownload}
-          style={{
-            flex: 1,
-            fontFamily: UI,
-            fontSize: '13px',
-            fontWeight: 700,
-            letterSpacing: '0.06em',
-            background: '#1a1a1a',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '6px',
-            padding: '11px 12px',
-            cursor: 'pointer',
-            transition: 'background 0.15s, transform 0.12s, box-shadow 0.12s',
-            transform: 'translateY(0)',
-            boxShadow: 'none',
-          }}
-          onMouseEnter={e => {
-            e.currentTarget.style.background = '#8b0000'
-            e.currentTarget.style.transform = 'translateY(-2px)'
-            e.currentTarget.style.boxShadow = '0 4px 12px rgba(139,0,0,0.25)'
-          }}
-          onMouseLeave={e => {
-            e.currentTarget.style.background = '#1a1a1a'
-            e.currentTarget.style.transform = 'translateY(0)'
-            e.currentTarget.style.boxShadow = 'none'
-          }}
+          style={{ flex: 1, fontFamily: UI, background: '#1a1a1a', color: '#fff', border: 'none', borderRadius: '8px', padding: '14px 12px 12px', cursor: 'pointer', transition: 'background 0.15s, transform 0.12s, box-shadow 0.12s', transform: 'translateY(0)', boxShadow: 'none', textAlign: 'center' }}
+          onMouseEnter={e => { e.currentTarget.style.background = '#8b0000'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(139,0,0,0.25)' }}
+          onMouseLeave={e => { e.currentTarget.style.background = '#1a1a1a'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none' }}
         >
-          ⬇ Download A4 — $4.99
+          <div style={{ fontSize: '18px', marginBottom: '4px' }}>⬇</div>
+          <div style={{ fontSize: '13px', fontWeight: 700, letterSpacing: '0.04em' }}>Download A4</div>
+          <div style={{ fontSize: '11px', opacity: 0.65, marginTop: '2px' }}>$4.99 · high-res PNG</div>
         </button>
 
+        {/* Share */}
         <button
           onClick={handleShare}
-          style={{
-            flex: 1,
-            fontFamily: UI,
-            fontSize: '13px',
-            fontWeight: 600,
-            fontStyle: 'italic',
-            background: 'transparent',
-            color: '#1a1a1a',
-            border: '1px solid #1a1a1a',
-            borderRadius: '6px',
-            padding: '11px 12px',
-            cursor: 'pointer',
-            transition: 'background 0.15s, color 0.15s, transform 0.12s, box-shadow 0.12s',
-            transform: 'translateY(0)',
-            boxShadow: 'none',
-          }}
-          onMouseEnter={e => {
-            e.currentTarget.style.background = '#1a1a1a'
-            e.currentTarget.style.color = '#fff'
-            e.currentTarget.style.transform = 'translateY(-2px)'
-            e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)'
-          }}
-          onMouseLeave={e => {
-            e.currentTarget.style.background = 'transparent'
-            e.currentTarget.style.color = '#1a1a1a'
-            e.currentTarget.style.transform = 'translateY(0)'
-            e.currentTarget.style.boxShadow = 'none'
-          }}
+          style={{ flex: 1, fontFamily: UI, background: 'transparent', color: '#1a1a1a', border: '1.5px solid #1a1a1a', borderRadius: '8px', padding: '14px 12px 12px', cursor: 'pointer', transition: 'background 0.15s, color 0.15s, transform 0.12s, box-shadow 0.12s', transform: 'translateY(0)', boxShadow: 'none', textAlign: 'center' }}
+          onMouseEnter={e => { e.currentTarget.style.background = '#1a1a1a'; e.currentTarget.style.color = '#fff'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.12)' }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#1a1a1a'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none' }}
         >
-          {shareLabel === 'Share' ? 'Share free' : shareLabel}
+          <div style={{ fontSize: '18px', marginBottom: '4px' }}>↗</div>
+          <div style={{ fontSize: '13px', fontWeight: 600 }}>{shareLabel === 'Share' ? 'Share free' : shareLabel}</div>
+          <div style={{ fontSize: '11px', opacity: 0.5, marginTop: '2px' }}>Instagram · social</div>
         </button>
 
+        {/* New repo */}
         <button
           onClick={onReset}
-          style={{
-            flex: 1,
-            fontFamily: UI,
-            fontSize: '13px',
-            fontStyle: 'italic',
-            background: 'transparent',
-            color: '#938882',
-            border: '1px solid #b0aca8',
-            borderRadius: '6px',
-            padding: '11px 12px',
-            cursor: 'pointer',
-            transition: 'color 0.15s, border-color 0.15s, transform 0.12s',
-            transform: 'translateY(0)',
-          }}
-          onMouseEnter={e => {
-            e.currentTarget.style.color = '#1a1a1a'
-            e.currentTarget.style.borderColor = '#1a1a1a'
-            e.currentTarget.style.transform = 'translateY(-2px)'
-          }}
-          onMouseLeave={e => {
-            e.currentTarget.style.color = '#938882'
-            e.currentTarget.style.borderColor = '#b0aca8'
-            e.currentTarget.style.transform = 'translateY(0)'
-          }}
+          style={{ flex: 1, fontFamily: UI, background: 'transparent', color: '#938882', border: '1.5px solid #c8c8c8', borderRadius: '8px', padding: '14px 12px 12px', cursor: 'pointer', transition: 'color 0.15s, border-color 0.15s, transform 0.12s', transform: 'translateY(0)', textAlign: 'center' }}
+          onMouseEnter={e => { e.currentTarget.style.color = '#1a1a1a'; e.currentTarget.style.borderColor = '#1a1a1a'; e.currentTarget.style.transform = 'translateY(-2px)' }}
+          onMouseLeave={e => { e.currentTarget.style.color = '#938882'; e.currentTarget.style.borderColor = '#c8c8c8'; e.currentTarget.style.transform = 'translateY(0)' }}
         >
-          issue another →
+          <div style={{ fontSize: '18px', marginBottom: '4px' }}>↺</div>
+          <div style={{ fontSize: '13px', fontStyle: 'italic' }}>issue another</div>
+          <div style={{ fontSize: '11px', opacity: 0.5, marginTop: '2px' }}>analyze new repo</div>
         </button>
+
       </div>
 
       {/* ── Certificate (zoomed on mobile) ── */}
