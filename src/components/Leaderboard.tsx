@@ -1,6 +1,6 @@
 'use client'
 
-
+import { track } from '@vercel/analytics'
 import { LeaderboardEntry } from '@/lib/types'
 
 const HALL_OF_SHAME: LeaderboardEntry[] = [
@@ -73,7 +73,7 @@ export default function Leaderboard({ onSelect }: Props) {
             {i !== 0 && <div style={{ height: '1px', background: C_LIGHT, margin: '0' }} />}
             <button
             className="lb-row"
-            onClick={() => onSelect(`https://github.com/${entry.fullName}`)}
+            onClick={() => { track('graveyard_clicked', { repo: entry.fullName }); onSelect(`https://github.com/${entry.fullName}`) }}
             style={{
               display: 'grid',
               alignItems: 'start',

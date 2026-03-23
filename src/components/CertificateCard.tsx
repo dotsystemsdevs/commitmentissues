@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useState, useEffect } from 'react'
+import { track } from '@vercel/analytics'
 import { toBlob } from 'html-to-image'
 import { DeathCertificate } from '@/lib/types'
 import PageHero from '@/components/PageHero'
@@ -66,6 +67,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
   }
 
   async function handleShare() {
+    track('share_clicked')
     if (navigator.canShare) {
       const blob = await exportBlob(2, true)
       if (blob) {
@@ -82,6 +84,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
   }
 
   async function handleDownload() {
+    track('download_clicked')
     try {
       localStorage.setItem('pending_cert', JSON.stringify(cert))
     } catch { /* ignore */ }
@@ -267,7 +270,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
         {/* Issue another link */}
         <button
           type="button"
-          onClick={onReset}
+          onClick={() => { track('issue_another_clicked'); onReset() }}
           style={{
             fontFamily: UI,
             fontSize: '13px',

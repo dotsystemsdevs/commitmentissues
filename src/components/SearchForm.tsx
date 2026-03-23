@@ -1,6 +1,7 @@
 'use client'
 
 import { FormEvent } from 'react'
+import { track } from '@vercel/analytics'
 import { CTA_RED, CTA_RED_HOVER } from '@/lib/cta'
 
 const FONT = `var(--font-dm), -apple-system, sans-serif`
@@ -17,6 +18,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
     if (!url.trim()) return
+    track('repo_submitted')
     onSubmit()
   }
 
