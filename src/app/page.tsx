@@ -11,7 +11,6 @@ import SiteFooter from '@/components/SiteFooter'
 import PageHero from '@/components/PageHero'
 
 const FONT = `var(--font-dm), -apple-system, sans-serif`
-const EXAMPLE_URL = 'https://github.com/atom/atom'
 
 export default function Page() {
   const { url, setUrl, certificate, error, loading, analyze, reset } = useRepoAnalysis()
@@ -19,11 +18,6 @@ export default function Page() {
   function handleSelect(selectedUrl: string) {
     setUrl(selectedUrl)
     analyze(selectedUrl)
-  }
-
-  async function handleExample() {
-    setUrl(EXAMPLE_URL)
-    await analyze(EXAMPLE_URL)
   }
 
   const idle = !loading && !certificate && !error
@@ -40,9 +34,16 @@ export default function Page() {
             microcopy={null}
           />
 
-          <div style={{ width: '100%', marginBottom: 0 }}>
-            <SearchForm url={url} setUrl={setUrl} onSubmit={() => analyze(url)} onExample={handleExample} loading={loading} />
+          <div style={{ width: '100%' }}>
+            <SearchForm url={url} setUrl={setUrl} onSubmit={() => analyze(url)} onSelect={handleSelect} loading={loading} />
           </div>
+
+          {/* Social proof — right under input */}
+          {idle && (
+            <div style={{ marginTop: '20px' }}>
+              <StatsBar />
+            </div>
+          )}
         </>
       )}
 
@@ -53,16 +54,15 @@ export default function Page() {
         </div>
       )}
 
-      {/* Leaderboard — right below input as viral trigger */}
+      {/* Graveyard — right below social proof */}
       {idle && (
-        <div style={{ width: '100%', marginTop: '52px', paddingBottom: '52px' }}>
-          <StatsBar />
-          <div style={{ marginBottom: '14px', marginTop: '8px' }}>
+        <div style={{ width: '100%', marginTop: '36px', paddingBottom: '52px' }}>
+          <div style={{ marginBottom: '14px' }}>
             <p style={{ fontFamily: FONT, fontSize: '18px', fontWeight: 700, color: '#160A06', margin: '0 0 4px 0', letterSpacing: '-0.01em' }}>
               The Great GitHub Graveyard
             </p>
             <p style={{ fontFamily: FONT, fontSize: '13px', color: '#938882', margin: 0 }}>
-              Try a famous dead repo ↓
+              Click any repo to generate its certificate.
             </p>
           </div>
           <Leaderboard onSelect={handleSelect} />

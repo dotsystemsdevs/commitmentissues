@@ -7,22 +7,26 @@ import { CTA_RED, CTA_RED_HOVER } from '@/lib/cta'
 const FONT = `var(--font-dm), -apple-system, sans-serif`
 const PREFIX = 'https://github.com/'
 
+const EXAMPLES = [
+  { slug: 'atom/atom',       url: 'https://github.com/atom/atom' },
+  { slug: 'bower/bower',     url: 'https://github.com/bower/bower' },
+  { slug: 'adobe/brackets',  url: 'https://github.com/adobe/brackets' },
+]
+
 interface Props {
   url: string
   setUrl: (v: string) => void
   onSubmit: () => void
-  onExample: () => void
+  onSelect: (url: string) => void
   loading: boolean
 }
 
-export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }: Props) {
+export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }: Props) {
   const [focused, setFocused] = useState(false)
 
-  // Display just the owner/repo part
   const displayValue = url.startsWith(PREFIX) ? url.slice(PREFIX.length) : url
 
   function handleChange(val: string) {
-    // Strip any accidentally pasted full URL
     const slug = val.replace(/^https?:\/\/(www\.)?github\.com\//i, '')
     setUrl(PREFIX + slug)
   }
@@ -98,8 +102,8 @@ export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }
             fontWeight: 800,
             letterSpacing: '0.06em',
             width: 'auto',
-          minWidth: '88px',
-          padding: '0 18px',
+            minWidth: '88px',
+            padding: '0 18px',
             height: '54px',
             flexShrink: 0,
             background: CTA_RED,
@@ -150,29 +154,42 @@ export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }
         Public repos only · No login · No storage
       </p>
 
-      <button
-        type="button"
-        onClick={onExample}
-        style={{
-          fontFamily: FONT,
-          fontSize: '14px',
-          fontWeight: 600,
-          color: '#160A06',
-          background: 'none',
-          border: 'none',
-          cursor: 'pointer',
-          padding: '8px 0',
-          textAlign: 'center',
-          width: '100%',
-          transition: 'opacity 0.15s',
-          WebkitTapHighlightColor: 'transparent',
-          touchAction: 'manipulation',
-        }}
-        onMouseEnter={e => { e.currentTarget.style.opacity = '0.6' }}
-        onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}
-      >
-        Try a famous dead repo ↓
-      </button>
+      {/* Example repo chips */}
+      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'center' }}>
+        {EXAMPLES.map(({ slug, url }) => (
+          <button
+            key={slug}
+            type="button"
+            onClick={() => { track('example_chip_clicked', { repo: slug }); onSelect(url) }}
+            style={{
+              fontFamily: FONT,
+              fontSize: '12px',
+              color: '#555',
+              background: '#fff',
+              border: '1.5px solid #d8d4d0',
+              borderRadius: '100px',
+              padding: '5px 13px',
+              cursor: 'pointer',
+              transition: 'border-color 0.12s, background 0.12s, color 0.12s',
+              WebkitTapHighlightColor: 'transparent',
+              touchAction: 'manipulation',
+              letterSpacing: '0.01em',
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.borderColor = '#888'
+              e.currentTarget.style.background = '#f5f0e8'
+              e.currentTarget.style.color = '#160A06'
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.borderColor = '#d8d4d0'
+              e.currentTarget.style.background = '#fff'
+              e.currentTarget.style.color = '#555'
+            }}
+          >
+            {slug}
+          </button>
+        ))}
+      </div>
     </div>
   )
 }
