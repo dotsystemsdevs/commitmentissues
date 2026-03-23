@@ -17,7 +17,7 @@ export default function SiteFooter() {
     <footer style={{
       width: '100vw',
       marginLeft: 'calc(50% - 50vw)',
-      background: '#160A06',
+      background: '#0a0a0a',
       marginTop: 'auto',
     }}>
       {/* Nav row */}
