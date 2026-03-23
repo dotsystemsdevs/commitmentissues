@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { toBlob } from 'html-to-image'
 import Link from 'next/link'
 import SubpageShell from '@/components/SubpageShell'
@@ -10,15 +11,34 @@ import type { DeathCertificate } from '@/lib/types'
 const UI = `var(--font-dm), -apple-system, sans-serif`
 
 export default function SuccessPage() {
-  const cardRef = useRef<HTMLDivElement>(null)
-  const [cert, setCert] = useState<DeathCertificate | null>(null)
-  const [status, setStatus] = useState<'idle' | 'generating' | 'done' | 'error'>('idle')
+  return (
+    <Suspense>
+      <SuccessInner />
+    </Suspense>
+  )
+}
+
+function SuccessInner() {
+  const cardRef    = useRef<HTMLDivElement>(null)
+  const searchParams = useSearchParams()
+  const [cert,   setCert]   = useState<DeathCertificate | null>(null)
+  const [status, setStatus] = useState<'idle' | 'generating' | 'done' | 'error' | 'unauthorized'>('idle')
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem('pending_cert')
-      if (raw) setCert(JSON.parse(raw))
-    } catch { /* ignore */ }
+    const sessionId = searchParams.get('session_id')
+    if (!sessionId) { setStatus('unauthorized'); return }
+
+    fetch(`/api/verify-session?session_id=${encodeURIComponent(sessionId)}`)
+      .then(r => r.json())
+      .then(({ valid }) => {
+        if (!valid) { setStatus('unauthorized'); return }
+        try {
+          const raw = localStorage.getItem('pending_cert')
+          if (raw) setCert(JSON.parse(raw))
+        } catch { /* ignore */ }
+      })
+      .catch(() => setStatus('error'))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // Auto-trigger download once the cert is loaded and the hidden card is rendered
@@ -55,6 +75,21 @@ export default function SuccessPage() {
     } catch {
       setStatus('error')
     }
+  }
+
+  if (status === 'unauthorized') {
+    return (
+      <SubpageShell subtitle="No valid payment found." microcopy={null}>
+        <div style={{ textAlign: 'center', padding: '24px 0' }}>
+          <p style={{ fontFamily: UI, fontSize: '14px', color: '#938882', marginBottom: '24px' }}>
+            This link has already been used or is invalid.
+          </p>
+          <Link href="/" style={{ fontFamily: UI, fontSize: '14px', fontWeight: 600, color: '#0a0a0a', textDecoration: 'underline', textUnderlineOffset: '3px' }}>
+            issue a certificate →
+          </Link>
+        </div>
+      </SubpageShell>
+    )
   }
 
   return (
