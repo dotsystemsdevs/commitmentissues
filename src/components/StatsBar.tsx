@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useRef } from 'react'
 
-const FONT = `var(--font-dm), -apple-system, sans-serif`
 const MONO = `var(--font-courier), 'Courier New', monospace`
 
 // ~5 per hour = 1 every 12 minutes
