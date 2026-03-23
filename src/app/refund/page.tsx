@@ -4,7 +4,7 @@ import SubpageShell from '@/components/SubpageShell'
 const UI = `var(--font-dm), -apple-system, sans-serif`
 
 const SECTIONS = [
-  { title: 'No refunds on digital downloads', body: 'The A4 PDF certificate is a digital product delivered immediately upon payment. Because the product is delivered instantly and cannot be returned, we do not offer refunds.' },
+  { title: 'No refunds on digital downloads', body: 'The certificate is a digital PNG file delivered immediately upon payment. Because the product is delivered instantly and cannot be returned, we do not offer refunds.' },
   { title: 'Something went wrong?', body: 'If your download failed or the certificate was generated incorrectly due to a technical error on our end, contact us and we will make it right. ', email: 'dot.systems@proton.me' },
   { title: 'Charged but no download?', body: 'If you were charged but did not receive your download link, contact us immediately with your payment confirmation and we will resolve it.' },
 ]
