@@ -30,7 +30,7 @@ export default function Page() {
       {!certificate && (
         <>
           <PageHero
-            subtitle={<>Your repo is already dead.<br />This just makes it official.</>}
+            subtitle="Your repo is already dead. This just makes it official."
             microcopy={null}
           />
 
