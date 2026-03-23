@@ -3,7 +3,6 @@
 import { useRef, useState, useEffect } from 'react'
 import { toBlob } from 'html-to-image'
 import { DeathCertificate } from '@/lib/types'
-import { CTA_RED, CTA_RED_HOVER } from '@/lib/cta'
 import PageHero from '@/components/PageHero'
 import CertificateSheet from '@/components/CertificateSheet'
 
@@ -171,21 +170,26 @@ export default function CertificateCard({ cert, onReset }: Props) {
         <button
           onClick={handleDownload}
           style={{
-            width: '100%', fontFamily: UI, background: CTA_RED, color: '#fff', border: 'none',
-            borderRadius: '14px', padding: '18px 20px', cursor: 'pointer',
+            width: '100%', fontFamily: UI, background: '#160A06', color: '#fff', border: 'none',
+            borderRadius: '14px', padding: '20px 22px', cursor: 'pointer',
             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-            transition: 'background 0.15s, transform 0.1s',
+            transition: 'opacity 0.15s, transform 0.1s',
             marginBottom: '10px',
           }}
-          onMouseEnter={e => { e.currentTarget.style.background = CTA_RED_HOVER; e.currentTarget.style.transform = 'translateY(-1px)' }}
-          onMouseLeave={e => { e.currentTarget.style.background = CTA_RED; e.currentTarget.style.transform = 'translateY(0)' }}
+          onMouseEnter={e => { e.currentTarget.style.opacity = '0.85'; e.currentTarget.style.transform = 'translateY(-1px)' }}
+          onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'translateY(0)' }}
         >
           <div style={{ textAlign: 'left' }}>
-            <div style={{ fontSize: '15px', fontWeight: 700, letterSpacing: '-0.01em', marginBottom: '3px' }}>Get the official certificate</div>
-            <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.55)', fontWeight: 400 }}>High-res · No watermark · Yours to keep</div>
+            <div style={{ fontSize: '15px', fontWeight: 700, letterSpacing: '-0.02em', marginBottom: '5px' }}>
+              Print it. Frame it. Send it to the author.
+            </div>
+            <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.45)', fontWeight: 400, letterSpacing: '0.03em' }}>
+              A4 · 300 dpi · no watermark
+            </div>
           </div>
-          <div style={{ fontFamily: UI, fontSize: '15px', fontWeight: 700, background: 'rgba(255,255,255,0.13)', borderRadius: '8px', padding: '7px 13px', flexShrink: 0, marginLeft: '16px', letterSpacing: '-0.01em' }}>
-            $4.99 →
+          <div style={{ flexShrink: 0, marginLeft: '20px', textAlign: 'right' }}>
+            <div style={{ fontSize: '20px', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1 }}>$4.99</div>
+            <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.4)', marginTop: '3px', letterSpacing: '0.04em' }}>one-time</div>
           </div>
         </button>
 
