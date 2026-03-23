@@ -85,7 +85,7 @@
 }
 
 .page-hero-title {
-  font-size: clamp(3.2rem, 11vw, 6rem);
+  font-size: clamp(3rem, 10vw, 5rem);
   line-height: 0.92;
   margin: 0 0 16px 0;
   color: #160a06;
