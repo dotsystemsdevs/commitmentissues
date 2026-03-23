@@ -83,24 +83,6 @@ export default function CertificateCard({ cert, onReset }: Props) {
     setShowModal(true)
   }
 
-  async function handleDownload() {
-    track('download_clicked')
-    try {
-      localStorage.setItem('pending_cert', JSON.stringify(cert))
-    } catch { /* ignore */ }
-    try {
-      const res = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ repo: cert.repoData.fullName }),
-      })
-      const { url } = await res.json()
-      if (url) window.location.href = url
-    } catch {
-      window.location.href = '/pricing'
-    }
-  }
-
   async function handleCopyLink() {
     try {
       await navigator.clipboard.writeText('https://commitmentissues.dev')
