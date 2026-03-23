@@ -3,8 +3,6 @@ import SubpageShell from '@/components/SubpageShell'
 
 const UI = `var(--font-dm), -apple-system, sans-serif`
 
-const FREE_FEATURES    = ['Cause of death analysis', 'Full certificate preview', 'Watermarked 960px PNG']
-const PREMIUM_FEATURES = ['Watermark-free export', '2480 × 3508px · 300 DPI', 'Print-ready A4 · frame it']
 
 export default function PricingPage() {
   return (
@@ -34,11 +32,9 @@ export default function PricingPage() {
             $0
           </p>
 
-          <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px 0', flex: 1, display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {FREE_FEATURES.map(f => (
-              <li key={f} style={{ fontFamily: UI, fontSize: '13px', color: '#6b6560', lineHeight: 1.5 }}>{f}</li>
-            ))}
-          </ul>
+          <p style={{ fontFamily: UI, fontSize: '14px', color: '#6b6560', lineHeight: 1.7, margin: '0 0 28px 0', flex: 1 }}>
+            See your repo&apos;s cause of death. Share the image with a watermark.
+          </p>
 
           <Link
             href="/"
@@ -101,11 +97,9 @@ export default function PricingPage() {
             <span style={{ fontFamily: UI, fontSize: '12px', color: '#938882' }}>one-time · incl. VAT</span>
           </div>
 
-          <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px 0', flex: 1, display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {PREMIUM_FEATURES.map(f => (
-              <li key={f} style={{ fontFamily: UI, fontSize: '13px', color: '#4a3a30', lineHeight: 1.5 }}>{f}</li>
-            ))}
-          </ul>
+          <p style={{ fontFamily: UI, fontSize: '14px', color: '#4a3a30', lineHeight: 1.7, margin: '0 0 28px 0', flex: 1 }}>
+            Download a clean, print-ready PNG at 300 DPI. No watermark. Worth printing.
+          </p>
 
           <Link
             href="/"
