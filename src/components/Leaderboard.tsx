@@ -27,63 +27,96 @@ interface Props {
   onSelect: (url: string) => void
 }
 
-export default function Leaderboard({ onSelect }: Props) {
-  // Duplicate for seamless loop
-  const doubled = [...HALL_OF_SHAME, ...HALL_OF_SHAME]
-
+function RepoCard({ entry, onSelect }: { entry: LeaderboardEntry; onSelect: (url: string) => void }) {
   return (
-    <div style={{ width: '100vw', marginLeft: 'calc(50% - 50vw)', overflow: 'hidden', padding: '4px 0 8px' }}>
-      <div style={{
+    <button
+      onClick={() => { track('graveyard_clicked', { repo: entry.fullName }); onSelect(`https://github.com/${entry.fullName}`) }}
+      className="graveyard-card"
+      style={{
+        fontFamily: FONT,
         display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        gap: '8px',
+        padding: '20px',
+        background: '#fff',
+        border: '1.5px solid #d8d4d0',
+        borderRadius: '12px',
+        cursor: 'pointer',
+        textAlign: 'left',
+        transition: 'border-color 0.15s, transform 0.15s, box-shadow 0.15s',
+        boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
+      }}
+      onMouseEnter={e => {
+        e.currentTarget.style.borderColor = '#0a0a0a'
+        e.currentTarget.style.transform = 'translateY(-3px) scale(1.01)'
+        e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.12)'
+      }}
+      onMouseLeave={e => {
+        e.currentTarget.style.borderColor = '#d8d4d0'
+        e.currentTarget.style.transform = 'translateY(0) scale(1)'
+        e.currentTarget.style.boxShadow = '0 1px 4px rgba(0,0,0,0.05)'
+      }}
+    >
+      <span style={{ fontSize: '22px', lineHeight: 1 }}>🪦</span>
+      <span style={{ fontSize: '14px', fontWeight: 700, color: '#0a0a0a', lineHeight: 1.3, wordBreak: 'break-word' }}>
+        {entry.fullName}
+      </span>
+      <span style={{ fontSize: '13px', fontStyle: 'italic', color: '#938882', lineHeight: 1.5 }}>
+        {entry.cause}
+      </span>
+      <span style={{ fontSize: '11px', color: '#b0aca8', marginTop: '2px' }}>
+        {entry.deathDate}
+      </span>
+    </button>
+  )
+}
+
+export default function Leaderboard({ onSelect }: Props) {
+  return (
+    <>
+      {/* Mobile: horizontal snap scroll with fade */}
+      <div className="graveyard-mobile" style={{ position: 'relative' }}>
+        <div style={{
+          display: 'flex',
+          gap: '12px',
+          overflowX: 'auto',
+          scrollSnapType: 'x mandatory',
+          scrollBehavior: 'smooth',
+          WebkitOverflowScrolling: 'touch',
+          paddingBottom: '8px',
+          msOverflowStyle: 'none',
+        }}>
+          {HALL_OF_SHAME.map((entry, i) => (
+            <div key={i} style={{ scrollSnapAlign: 'start', flexShrink: 0, width: '280px' }}>
+              <RepoCard entry={entry} onSelect={onSelect} />
+            </div>
+          ))}
+          {/* Partial ghost card to signal more content */}
+          <div style={{ flexShrink: 0, width: '40px' }} />
+        </div>
+        {/* Fade-out right edge */}
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          bottom: 8,
+          width: '60px',
+          background: 'linear-gradient(to right, transparent, #f5f5f5)',
+          pointerEvents: 'none',
+        }} />
+      </div>
+
+      {/* Desktop: grid */}
+      <div className="graveyard-desktop" style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
         gap: '12px',
-        animation: 'marquee 80s linear infinite',
-        width: 'max-content',
       }}>
-        {doubled.map((entry, i) => (
-          <button
-            key={i}
-            onClick={() => { track('graveyard_clicked', { repo: entry.fullName }); onSelect(`https://github.com/${entry.fullName}`) }}
-            style={{
-              fontFamily: FONT,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-              gap: '6px',
-              width: '220px',
-              flexShrink: 0,
-              padding: '14px 16px',
-              background: '#fff',
-              border: '1.5px solid #e0dbd5',
-              borderRadius: '10px',
-              cursor: 'pointer',
-              textAlign: 'left',
-              transition: 'border-color 0.15s, transform 0.15s, box-shadow 0.15s',
-              boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.borderColor = '#0a0a0a'
-              e.currentTarget.style.transform = 'translateY(-3px)'
-              e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.12)'
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.borderColor = '#e0dbd5'
-              e.currentTarget.style.transform = 'translateY(0)'
-              e.currentTarget.style.boxShadow = '0 1px 4px rgba(0,0,0,0.05)'
-            }}
-          >
-            <span style={{ fontSize: '20px', lineHeight: 1 }}>🪦</span>
-            <span style={{ fontSize: '13px', fontWeight: 700, color: '#0a0a0a', lineHeight: 1.3, wordBreak: 'break-word' }}>
-              {entry.fullName}
-            </span>
-            <span style={{ fontSize: '12px', fontStyle: 'italic', color: '#938882', lineHeight: 1.4 }}>
-              {entry.cause}
-            </span>
-            <span style={{ fontSize: '11px', color: '#b0aca8', marginTop: '2px' }}>
-              {entry.deathDate}
-            </span>
-          </button>
+        {HALL_OF_SHAME.map((entry, i) => (
+          <RepoCard key={i} entry={entry} onSelect={onSelect} />
         ))}
       </div>
-    </div>
+    </>
   )
 }

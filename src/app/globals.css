@@ -251,11 +251,26 @@ button {
   transition: transform 0.15s ease;
 }
 
-/* ── Graveyard marquee ── */
+/* ── Graveyard ── */
 @keyframes marquee {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
+
+/* Mobile: horizontal scroll, Desktop: grid */
+.graveyard-mobile  { display: block; }
+.graveyard-desktop { display: none;  }
+
+@media (min-width: 640px) {
+  .graveyard-mobile  { display: none;  }
+  .graveyard-desktop { display: grid;  }
+}
+
+/* Hide scrollbar on mobile strip */
+.graveyard-mobile div::-webkit-scrollbar { display: none; }
+
+/* Card min-height for consistency */
+.graveyard-card { width: 100%; min-height: 140px; }
 
 /* ── Button spinner ── */
 @keyframes spin {
