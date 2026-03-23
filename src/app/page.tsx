@@ -33,7 +33,7 @@ export default function Page() {
             microcopy={null}
           />
 
-          <div style={{ width: '100%' }}>
+          <div style={{ width: '100%', marginTop: '12px' }}>
             <SearchForm url={url} setUrl={setUrl} onSubmit={() => analyze(url)} onSelect={handleSelect} loading={loading} />
           </div>
 
@@ -49,7 +49,7 @@ export default function Page() {
 
       {/* Graveyard — right below social proof */}
       {idle && (
-        <div style={{ width: '100%', marginTop: '36px', paddingBottom: '52px' }}>
+        <div style={{ width: '100%', marginTop: '64px', paddingBottom: '52px' }}>
           <div style={{ marginBottom: '14px', textAlign: 'center' }}>
             <p style={{ fontFamily: FONT, fontSize: '13px', fontWeight: 600, color: '#b0aca8', margin: 0, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
               The Graveyard
