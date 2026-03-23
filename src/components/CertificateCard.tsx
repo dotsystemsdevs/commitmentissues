@@ -265,7 +265,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
           Download in high resolution
         </button>
 
-        {/* Price subtext — discovered, not announced */}
+        {/* Dimensions subtext — converts technical users */}
         <p style={{
           fontFamily: UI,
           fontSize: '11px',
@@ -273,10 +273,10 @@ export default function CertificateCard({ cert, onReset }: Props) {
           textAlign: 'center',
           margin: '6px 0 0 0',
         }}>
-          $4.99 · no watermark · print-ready
+          2480 × 3508px · 300 DPI · print-ready · no watermark
         </p>
 
-        {/* Pixel pitch — honest pitch for technical users */}
+        {/* Price + pixel pitch — discovered, not announced */}
         <p style={{
           fontFamily: UI,
           fontSize: '11px',
@@ -285,7 +285,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
           fontStyle: 'italic',
           margin: '4px 0 0 0',
         }}>
-          The free version is 960px. The paid version is 2480px — the difference is visible when printed.
+          $4.99 · free share is 960px, this is 2480px
         </p>
 
         {/* Issue another link */}
