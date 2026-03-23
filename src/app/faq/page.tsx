@@ -2,6 +2,7 @@ import Link from 'next/link'
 import SubpageShell from '@/components/SubpageShell'
 
 const FONT = `var(--font-dm), -apple-system, sans-serif`
+const MONO = `var(--font-courier), "Courier New", monospace`
 
 const FAQS = [
   {
@@ -41,22 +42,47 @@ export default function FaqPage() {
         {FAQS.map(({ q, a }, i) => (
           <div
             key={q}
+            className="faq-row"
             style={{
-              padding: '20px 0',
-              borderBottom: i < FAQS.length - 1 ? '1px solid #e0e0e0' : 'none',
+              padding: '22px 0',
+              borderBottom: i < FAQS.length - 1 ? '1px solid #e8e4de' : 'none',
             }}
           >
-            <p style={{ fontFamily: FONT, fontSize: 'clamp(15px, 4vw, 16px)', fontWeight: 700, color: '#160A06', margin: '0 0 8px 0' }}>
-              {q}
-            </p>
-            <p style={{ fontFamily: FONT, fontSize: 'clamp(14px, 3.8vw, 15px)', color: '#555', lineHeight: 1.7, margin: 0 }}>
-              {a}
-            </p>
+            {/* Question */}
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px', marginBottom: '10px' }}>
+              <span style={{
+                fontFamily: MONO,
+                fontSize: '10px',
+                color: '#C4A882',
+                letterSpacing: '0.05em',
+                flexShrink: 0,
+                marginTop: '1px',
+              }}>
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <p style={{ fontFamily: FONT, fontSize: 'clamp(15px, 4vw, 16px)', fontWeight: 700, color: '#160A06', margin: 0 }}>
+                {q}
+              </p>
+            </div>
+            {/* Answer */}
+            <div style={{ paddingLeft: '24px' }}>
+              <p style={{
+                fontFamily: FONT,
+                fontSize: 'clamp(14px, 3.8vw, 15px)',
+                color: '#6b6560',
+                lineHeight: 1.75,
+                margin: 0,
+                borderLeft: '2px solid #EDE5D8',
+                paddingLeft: '14px',
+              }}>
+                {a}
+              </p>
+            </div>
           </div>
         ))}
       </div>
 
-      <div style={{ paddingTop: '32px', paddingBottom: '8px', textAlign: 'center' }}>
+      <div style={{ paddingTop: '36px', paddingBottom: '8px', textAlign: 'center' }}>
         <Link href="/" className="subpage-faq-cta">
           issue a certificate →
         </Link>

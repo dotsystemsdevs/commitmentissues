@@ -237,15 +237,13 @@ export default function CertificateCard({ cert, onReset }: Props) {
           Share the obituary →
         </button>
 
-        {/* Download — SECONDARY: outlined, price as subtext below */}
+        {/* Download — SECONDARY: outlined, all info self-contained inside button */}
         <button
           onClick={handleDownload}
           className="cert-buy-btn"
           style={{
             width: '100%',
             fontFamily: UI,
-            fontSize: '14px',
-            fontWeight: 600,
             background: 'transparent',
             color: '#0a0a0a',
             border: '1.5px solid #c8c8c8',
@@ -262,31 +260,9 @@ export default function CertificateCard({ cert, onReset }: Props) {
           onMouseDown={e => { e.currentTarget.style.transform = 'scale(0.97)' }}
           onMouseUp={e => { e.currentTarget.style.transform = 'translateY(-1px)' }}
         >
-          Download in high resolution
+          <div style={{ fontSize: '14px', fontWeight: 600, lineHeight: 1 }}>Download in high resolution</div>
+          <div style={{ fontSize: '11px', color: '#938882', marginTop: '5px', lineHeight: 1 }}>$4.99 · 2480 × 3508px · 300 DPI · no watermark</div>
         </button>
-
-        {/* Dimensions subtext — converts technical users */}
-        <p style={{
-          fontFamily: UI,
-          fontSize: '11px',
-          color: '#b0aca8',
-          textAlign: 'center',
-          margin: '6px 0 0 0',
-        }}>
-          2480 × 3508px · 300 DPI · print-ready · no watermark
-        </p>
-
-        {/* Price + pixel pitch — discovered, not announced */}
-        <p style={{
-          fontFamily: UI,
-          fontSize: '11px',
-          color: '#b0aca8',
-          textAlign: 'center',
-          fontStyle: 'italic',
-          margin: '4px 0 0 0',
-        }}>
-          $4.99 · free share is 960px, this is 2480px
-        </p>
 
         {/* Issue another link */}
         <button

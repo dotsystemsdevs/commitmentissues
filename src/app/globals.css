@@ -134,6 +134,18 @@
   flex: 0 0 auto;
 }
 
+/* FAQ / Terms / Privacy numbered rows — hover highlight */
+.faq-row {
+  transition: background 0.12s;
+  border-radius: 6px;
+  margin: 0 -8px;
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+}
+.faq-row:hover {
+  background: #faf7f3;
+}
+
 /* FAQ accordion */
 .subpage-details details {
   border-bottom: 1px solid #e0e0e0;

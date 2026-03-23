@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import SubpageShell from '@/components/SubpageShell'
 
-const UI = `var(--font-dm), -apple-system, sans-serif`
+const UI   = `var(--font-dm), -apple-system, sans-serif`
+const MONO = `var(--font-courier), "Courier New", monospace`
 
 const SECTIONS = [
   { title: 'What we collect', body: 'Nothing personal. No accounts, no emails, no stored URLs.' },
@@ -19,28 +20,53 @@ export default function PrivacyPage() {
       subtitle="We don't want your data. We only want your abandoned repos. No accounts, no tracking, no ghosts in the machine."
       microcopy="Last updated March 2026"
     >
-      {SECTIONS.map(({ title, body, email }, i) => (
-        <div
-          key={title}
-          style={{
-            padding: '18px 0',
-            borderBottom: i < SECTIONS.length - 1 ? '1px solid #e0e0e0' : 'none',
-          }}
-        >
-          <p style={{ fontFamily: UI, fontSize: 'clamp(15px, 4vw, 16px)', fontWeight: 700, color: '#160A06', marginBottom: '8px' }}>
-            {title}
-          </p>
-          <p style={{ fontFamily: UI, fontSize: 'clamp(14px, 3.8vw, 15px)', color: '#555', lineHeight: 1.75, margin: 0 }}>
-            {body}
-            {email ? (
-              <a href={`mailto:${email}`} className="subpage-inline-mail">
-                {email}
-              </a>
-            ) : null}
-          </p>
-        </div>
-      ))}
-      <div style={{ paddingTop: '32px', paddingBottom: '8px', textAlign: 'center' }}>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        {SECTIONS.map(({ title, body, email }, i) => (
+          <div
+            key={title}
+            className="faq-row"
+            style={{
+              padding: '22px 0',
+              borderBottom: i < SECTIONS.length - 1 ? '1px solid #e8e4de' : 'none',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px', marginBottom: '10px' }}>
+              <span style={{
+                fontFamily: MONO,
+                fontSize: '10px',
+                color: '#C4A882',
+                letterSpacing: '0.05em',
+                flexShrink: 0,
+              }}>
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <p style={{ fontFamily: UI, fontSize: 'clamp(15px, 4vw, 16px)', fontWeight: 700, color: '#160A06', margin: 0 }}>
+                {title}
+              </p>
+            </div>
+            <div style={{ paddingLeft: '24px' }}>
+              <p style={{
+                fontFamily: UI,
+                fontSize: 'clamp(14px, 3.8vw, 15px)',
+                color: '#6b6560',
+                lineHeight: 1.75,
+                margin: 0,
+                borderLeft: '2px solid #EDE5D8',
+                paddingLeft: '14px',
+              }}>
+                {body}
+                {email ? (
+                  <a href={`mailto:${email}`} className="subpage-inline-mail">
+                    {email}
+                  </a>
+                ) : null}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div style={{ paddingTop: '36px', paddingBottom: '8px', textAlign: 'center' }}>
         <Link href="/" className="subpage-faq-cta">
           issue a certificate →
         </Link>

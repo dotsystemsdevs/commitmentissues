@@ -1,7 +1,11 @@
 import Link from 'next/link'
 import SubpageShell from '@/components/SubpageShell'
 
-const UI = `var(--font-dm), -apple-system, sans-serif`
+const UI   = `var(--font-dm), -apple-system, sans-serif`
+const MONO = `var(--font-courier), "Courier New", monospace`
+
+const FREE_FEATURES    = ['Cause of death analysis', 'Full certificate preview', 'Watermarked 960px PNG']
+const PREMIUM_FEATURES = ['Watermark-free export', '2480 × 3508px · 300 DPI', 'Print-ready A4 · frame it']
 
 export default function PricingPage() {
   return (
@@ -31,9 +35,14 @@ export default function PricingPage() {
             $0
           </p>
 
-          <p style={{ fontFamily: UI, fontSize: '14px', color: '#555', lineHeight: 1.7, margin: '0 0 28px 0', flex: 1 }}>
-            See your repo&apos;s cause of death. Share the image with a watermark.
-          </p>
+          <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px 0', flex: 1, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            {FREE_FEATURES.map(f => (
+              <li key={f} style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
+                <span style={{ fontFamily: MONO, fontSize: '10px', color: '#C4A882', flexShrink: 0 }}>—</span>
+                <span style={{ fontFamily: UI, fontSize: '13px', color: '#6b6560', lineHeight: 1.5 }}>{f}</span>
+              </li>
+            ))}
+          </ul>
 
           <Link
             href="/"
@@ -60,12 +69,12 @@ export default function PricingPage() {
         {/* Premium */}
         <div className="subpage-pricing-tier--premium" style={{
           flex: '1 1 220px',
-          border: '2px solid #0a0a0a',
+          border: '2px solid #8b0000',
           borderRadius: '12px',
           padding: 'clamp(20px, 5vw, 28px)',
           display: 'flex',
           flexDirection: 'column',
-          background: '#fff',
+          background: '#FAF3E8',
           position: 'relative',
           transition: 'transform 0.2s ease, box-shadow 0.2s ease',
         }}>
@@ -73,12 +82,12 @@ export default function PricingPage() {
             position: 'absolute',
             top: '-1px',
             left: '20px',
-            background: '#0a0a0a',
+            background: '#8b0000',
             color: '#fff',
-            fontFamily: UI,
-            fontSize: '10px',
+            fontFamily: MONO,
+            fontSize: '9px',
             fontWeight: 700,
-            letterSpacing: '0.1em',
+            letterSpacing: '0.12em',
             textTransform: 'uppercase',
             padding: '4px 10px',
             borderRadius: '0 0 6px 6px',
@@ -86,19 +95,24 @@ export default function PricingPage() {
             Recommended
           </div>
 
-          <p style={{ fontFamily: UI, fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', color: '#0a0a0a', margin: '8px 0 16px 0', fontWeight: 600 }}>
+          <p style={{ fontFamily: UI, fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', color: '#8b0000', margin: '8px 0 16px 0', fontWeight: 600 }}>
             Premium
           </p>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '24px' }}>
-            <p style={{ fontFamily: UI, fontSize: 'clamp(1.6rem, 6vw, 2rem)', fontWeight: 500, color: '#160A06', lineHeight: 1, margin: 0 }}>
+            <p style={{ fontFamily: UI, fontSize: 'clamp(2rem, 8vw, 2.4rem)', fontWeight: 700, color: '#160A06', lineHeight: 1, margin: 0 }}>
               $4.99
             </p>
-            <span style={{ fontFamily: UI, fontSize: '12px', color: '#b0aca8' }}>one-time · incl. VAT</span>
+            <span style={{ fontFamily: UI, fontSize: '12px', color: '#938882' }}>one-time · incl. VAT</span>
           </div>
 
-          <p style={{ fontFamily: UI, fontSize: '14px', color: '#555', lineHeight: 1.7, margin: '0 0 28px 0', flex: 1 }}>
-            Download a clean, print-ready PNG at 300 DPI. No watermark. Worth printing.
-          </p>
+          <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px 0', flex: 1, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            {PREMIUM_FEATURES.map(f => (
+              <li key={f} style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
+                <span style={{ fontFamily: MONO, fontSize: '10px', color: '#8b0000', flexShrink: 0 }}>—</span>
+                <span style={{ fontFamily: UI, fontSize: '13px', color: '#4a3a30', lineHeight: 1.5 }}>{f}</span>
+              </li>
+            ))}
+          </ul>
 
           <Link
             href="/"
@@ -108,7 +122,7 @@ export default function PricingPage() {
               fontWeight: 600,
               color: '#fff',
               textDecoration: 'none',
-              background: '#0a0a0a',
+              background: '#8b0000',
               borderRadius: '8px',
               padding: '14px 16px',
               textAlign: 'center',
