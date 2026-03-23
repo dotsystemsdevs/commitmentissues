@@ -1,8 +1,7 @@
 import Link from 'next/link'
 import SubpageShell from '@/components/SubpageShell'
 
-const UI   = `var(--font-dm), -apple-system, sans-serif`
-const MONO = `var(--font-courier), "Courier New", monospace`
+const UI = `var(--font-dm), -apple-system, sans-serif`
 
 const SECTIONS = [
   { title: 'What we collect', body: 'Nothing personal. No accounts, no emails, no stored URLs.' },
@@ -30,21 +29,10 @@ export default function PrivacyPage() {
               borderBottom: i < SECTIONS.length - 1 ? '1px solid #e8e4de' : 'none',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px', marginBottom: '10px' }}>
-              <span style={{
-                fontFamily: MONO,
-                fontSize: '10px',
-                color: '#C4A882',
-                letterSpacing: '0.05em',
-                flexShrink: 0,
-              }}>
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <p style={{ fontFamily: UI, fontSize: 'clamp(15px, 4vw, 16px)', fontWeight: 700, color: '#160A06', margin: 0 }}>
-                {title}
-              </p>
-            </div>
-            <div style={{ paddingLeft: '24px' }}>
+            <p style={{ fontFamily: UI, fontSize: 'clamp(15px, 4vw, 16px)', fontWeight: 700, color: '#160A06', margin: '0 0 10px 0' }}>
+              {title}
+            </p>
+            <div>
               <p style={{
                 fontFamily: UI,
                 fontSize: 'clamp(14px, 3.8vw, 15px)',

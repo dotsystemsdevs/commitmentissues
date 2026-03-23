@@ -2,7 +2,6 @@ import Link from 'next/link'
 import SubpageShell from '@/components/SubpageShell'
 
 const FONT = `var(--font-dm), -apple-system, sans-serif`
-const MONO = `var(--font-courier), "Courier New", monospace`
 
 const FAQS = [
   {
@@ -48,24 +47,10 @@ export default function FaqPage() {
               borderBottom: i < FAQS.length - 1 ? '1px solid #e8e4de' : 'none',
             }}
           >
-            {/* Question */}
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px', marginBottom: '10px' }}>
-              <span style={{
-                fontFamily: MONO,
-                fontSize: '10px',
-                color: '#C4A882',
-                letterSpacing: '0.05em',
-                flexShrink: 0,
-                marginTop: '1px',
-              }}>
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <p style={{ fontFamily: FONT, fontSize: 'clamp(15px, 4vw, 16px)', fontWeight: 700, color: '#160A06', margin: 0 }}>
-                {q}
-              </p>
-            </div>
-            {/* Answer */}
-            <div style={{ paddingLeft: '24px' }}>
+            <p style={{ fontFamily: FONT, fontSize: 'clamp(15px, 4vw, 16px)', fontWeight: 700, color: '#160A06', margin: '0 0 10px 0' }}>
+              {q}
+            </p>
+            <div>
               <p style={{
                 fontFamily: FONT,
                 fontSize: 'clamp(14px, 3.8vw, 15px)',
