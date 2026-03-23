@@ -45,7 +45,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
         {/* Prefix + input combined */}
         <div style={{
           flex: 1,
-          height: '54px',
+          height: '60px',
           display: 'flex',
           alignItems: 'center',
           background: '#fff',
@@ -98,13 +98,13 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
           aria-label="Issue death certificate"
           style={{
             fontFamily: FONT,
-            fontSize: '13px',
+            fontSize: '14px',
             fontWeight: 800,
-            letterSpacing: '0.06em',
+            letterSpacing: '0.05em',
             width: 'auto',
             minWidth: '88px',
             padding: '0 18px',
-            height: '54px',
+            height: '60px',
             flexShrink: 0,
             background: CTA_RED,
             color: '#fff',

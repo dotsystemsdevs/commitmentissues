@@ -42,19 +42,19 @@
 .page-hero {
   width: 100%;
   text-align: center;
-  padding-bottom: 28px;
+  padding-bottom: 20px;
 }
 
 .page-hero-slot {
   width: 100%;
-  min-height: 44px;
+  min-height: 28px;
   display: flex;
   align-items: center;
   margin-bottom: 0;
 }
 
 .page-hero-slot-spacer {
-  min-height: 44px;
+  min-height: 28px;
   width: 100%;
   flex-shrink: 0;
 }
@@ -79,25 +79,26 @@
 }
 
 .page-hero-emoji {
-  font-size: clamp(48px, 12vw, 56px);
+  font-size: clamp(36px, 8vw, 44px);
   line-height: 1;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 
 .page-hero-title {
-  font-size: clamp(2.4rem, 7vw, 3.6rem);
-  line-height: 0.95;
-  margin: 0 0 20px 0;
+  font-size: clamp(3.2rem, 11vw, 6rem);
+  line-height: 0.92;
+  margin: 0 0 16px 0;
   color: #160a06;
 }
 
 .page-hero-sub {
   font-family: var(--font-dm), system-ui, sans-serif;
-  font-size: clamp(14px, 3.8vw, 15px);
-  color: #938882;
-  line-height: 1.6;
+  font-size: clamp(15px, 4vw, 18px);
+  font-weight: 600;
+  color: #160a06;
+  line-height: 1.4;
   margin: 0 auto;
-  max-width: 420px;
+  max-width: 480px;
 }
 
 .page-hero-micro {
