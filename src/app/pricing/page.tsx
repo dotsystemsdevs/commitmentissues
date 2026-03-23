@@ -1,8 +1,7 @@
 import Link from 'next/link'
 import SubpageShell from '@/components/SubpageShell'
 
-const UI   = `var(--font-dm), -apple-system, sans-serif`
-const MONO = `var(--font-courier), "Courier New", monospace`
+const UI = `var(--font-dm), -apple-system, sans-serif`
 
 const FREE_FEATURES    = ['Cause of death analysis', 'Full certificate preview', 'Watermarked 960px PNG']
 const PREMIUM_FEATURES = ['Watermark-free export', '2480 × 3508px · 300 DPI', 'Print-ready A4 · frame it']
@@ -37,10 +36,7 @@ export default function PricingPage() {
 
           <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px 0', flex: 1, display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {FREE_FEATURES.map(f => (
-              <li key={f} style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
-                <span style={{ fontFamily: MONO, fontSize: '10px', color: '#C4A882', flexShrink: 0 }}>—</span>
-                <span style={{ fontFamily: UI, fontSize: '13px', color: '#6b6560', lineHeight: 1.5 }}>{f}</span>
-              </li>
+              <li key={f} style={{ fontFamily: UI, fontSize: '13px', color: '#6b6560', lineHeight: 1.5 }}>{f}</li>
             ))}
           </ul>
 
@@ -84,7 +80,7 @@ export default function PricingPage() {
             left: '20px',
             background: '#8b0000',
             color: '#fff',
-            fontFamily: MONO,
+            fontFamily: UI,
             fontSize: '9px',
             fontWeight: 700,
             letterSpacing: '0.12em',
@@ -107,10 +103,7 @@ export default function PricingPage() {
 
           <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px 0', flex: 1, display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {PREMIUM_FEATURES.map(f => (
-              <li key={f} style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
-                <span style={{ fontFamily: MONO, fontSize: '10px', color: '#8b0000', flexShrink: 0 }}>—</span>
-                <span style={{ fontFamily: UI, fontSize: '13px', color: '#4a3a30', lineHeight: 1.5 }}>{f}</span>
-              </li>
+              <li key={f} style={{ fontFamily: UI, fontSize: '13px', color: '#4a3a30', lineHeight: 1.5 }}>{f}</li>
             ))}
           </ul>
 
