@@ -56,12 +56,9 @@ export default function Page() {
       {/* Graveyard — right below social proof */}
       {idle && (
         <div style={{ width: '100%', marginTop: '36px', paddingBottom: '52px' }}>
-          <div style={{ marginBottom: '14px' }}>
-            <p style={{ fontFamily: FONT, fontSize: '18px', fontWeight: 700, color: '#160A06', margin: '0 0 4px 0', letterSpacing: '-0.01em' }}>
-              The Great GitHub Graveyard
-            </p>
-            <p style={{ fontFamily: FONT, fontSize: '13px', color: '#938882', margin: 0 }}>
-              Click any repo to see how it died.
+          <div style={{ marginBottom: '14px', textAlign: 'center' }}>
+            <p style={{ fontFamily: FONT, fontSize: '13px', fontWeight: 600, color: '#b0aca8', margin: 0, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
+              The Graveyard
             </p>
           </div>
           <Leaderboard onSelect={handleSelect} />
