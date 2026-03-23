@@ -55,7 +55,8 @@ export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }
           <span style={{
             fontFamily: FONT,
             fontSize: '16px',
-            color: '#b0aca8',
+            color: '#160A06',
+            fontWeight: 700,
             paddingLeft: '16px',
             paddingRight: '2px',
             whiteSpace: 'nowrap',
