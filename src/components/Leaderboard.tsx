@@ -27,9 +27,56 @@ interface Props {
   onSelect: (url: string) => void
 }
 
-export default function Leaderboard({ onSelect }: Props) {
-  const doubled = [...HALL_OF_SHAME, ...HALL_OF_SHAME]
+function GraveyardCard({ entry, onSelect }: { entry: LeaderboardEntry; onSelect: (url: string) => void }) {
+  return (
+    <button
+      onClick={() => { track('graveyard_clicked', { repo: entry.fullName }); onSelect(`https://github.com/${entry.fullName}`) }}
+      style={{
+        fontFamily: FONT,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        gap: '6px',
+        width: '260px',
+        flexShrink: 0,
+        padding: '20px',
+        background: '#fff',
+        border: '1.5px solid #e0dbd5',
+        borderRadius: '12px',
+        cursor: 'pointer',
+        textAlign: 'left',
+        transition: 'border-color 0.15s, transform 0.15s, box-shadow 0.15s',
+        boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
+      }}
+      onMouseEnter={e => {
+        e.currentTarget.style.borderColor = '#0a0a0a'
+        e.currentTarget.style.transform = 'translateY(-3px)'
+        e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.12)'
+      }}
+      onMouseLeave={e => {
+        e.currentTarget.style.borderColor = '#e0dbd5'
+        e.currentTarget.style.transform = 'translateY(0)'
+        e.currentTarget.style.boxShadow = '0 1px 4px rgba(0,0,0,0.05)'
+      }}
+    >
+      <span style={{ fontSize: '20px', lineHeight: 1 }}>🪦</span>
+      <span style={{ fontSize: '14px', fontWeight: 700, color: '#0a0a0a', lineHeight: 1.3, wordBreak: 'break-word' }}>
+        {entry.fullName}
+      </span>
+      <span style={{ fontFamily: `var(--font-courier), 'Courier New', monospace`, fontSize: '9px', letterSpacing: '0.15em', color: '#b0aca8', textTransform: 'uppercase' as const, marginTop: '2px' }}>
+        Cause of death
+      </span>
+      <span style={{ fontSize: '12px', fontStyle: 'italic', color: '#938882', lineHeight: 1.5 }}>
+        {entry.cause}
+      </span>
+      <span style={{ fontSize: '11px', color: '#b0aca8', marginTop: '2px' }}>
+        {entry.deathDate}
+      </span>
+    </button>
+  )
+}
 
+export default function Leaderboard({ onSelect }: Props) {
   return (
     <div style={{ width: '100vw', marginLeft: 'calc(50% - 50vw)', overflow: 'hidden', padding: '4px 0 8px' }}>
       <div style={{
@@ -38,50 +85,15 @@ export default function Leaderboard({ onSelect }: Props) {
         animation: 'marquee 80s linear infinite',
         width: 'max-content',
       }}>
-        {doubled.map((entry, i) => (
-          <button
-            key={i}
-            onClick={() => { track('graveyard_clicked', { repo: entry.fullName }); onSelect(`https://github.com/${entry.fullName}`) }}
-            style={{
-              fontFamily: FONT,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-              gap: '8px',
-              width: '260px',
-              flexShrink: 0,
-              padding: '20px',
-              background: '#fff',
-              border: '1.5px solid #e0dbd5',
-              borderRadius: '12px',
-              cursor: 'pointer',
-              textAlign: 'left',
-              transition: 'border-color 0.15s, transform 0.15s, box-shadow 0.15s',
-              boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.borderColor = '#0a0a0a'
-              e.currentTarget.style.transform = 'translateY(-3px)'
-              e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.12)'
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.borderColor = '#e0dbd5'
-              e.currentTarget.style.transform = 'translateY(0)'
-              e.currentTarget.style.boxShadow = '0 1px 4px rgba(0,0,0,0.05)'
-            }}
-          >
-            <span style={{ fontSize: '20px', lineHeight: 1 }}>🪦</span>
-            <span style={{ fontSize: '14px', fontWeight: 700, color: '#0a0a0a', lineHeight: 1.3, wordBreak: 'break-word' }}>
-              {entry.fullName}
-            </span>
-            <span style={{ fontSize: '12px', fontStyle: 'italic', color: '#938882', lineHeight: 1.5 }}>
-              {entry.cause}
-            </span>
-            <span style={{ fontSize: '11px', color: '#b0aca8', marginTop: '2px' }}>
-              {entry.deathDate}
-            </span>
-          </button>
+        {HALL_OF_SHAME.map((entry) => (
+          <GraveyardCard key={entry.fullName} entry={entry} onSelect={onSelect} />
         ))}
+        {/* Duplicate for seamless loop */}
+        <div aria-hidden style={{ display: 'contents' }}>
+          {HALL_OF_SHAME.map((entry) => (
+            <GraveyardCard key={`loop-${entry.fullName}`} entry={entry} onSelect={onSelect} />
+          ))}
+        </div>
       </div>
     </div>
   )

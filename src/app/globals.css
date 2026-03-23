@@ -45,19 +45,6 @@
   padding-bottom: 20px;
 }
 
-.page-hero-slot {
-  width: 100%;
-  min-height: 28px;
-  display: flex;
-  align-items: center;
-  margin-bottom: 0;
-}
-
-.page-hero-slot-spacer {
-  min-height: 28px;
-  width: 100%;
-  flex-shrink: 0;
-}
 
 .page-hero-brand {
   text-decoration: none;
@@ -251,26 +238,44 @@ button {
   transition: transform 0.15s ease;
 }
 
+/* ── Home layout: hero column + cert preview column on desktop ── */
+.home-layout {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.home-main {
+  width: 100%;
+}
+
+.home-cert-preview {
+  display: none;
+}
+
+@media (min-width: 600px) {
+  .home-layout {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 28px;
+  }
+  .home-main {
+    flex: 1;
+    min-width: 0;
+  }
+  .home-cert-preview {
+    display: block;
+    flex-shrink: 0;
+    padding-top: 12px;
+  }
+}
+
 /* ── Graveyard ── */
 @keyframes marquee {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
 
-/* Mobile: horizontal scroll, Desktop: grid */
-.graveyard-mobile  { display: block; }
-.graveyard-desktop { display: none;  }
-
-@media (min-width: 640px) {
-  .graveyard-mobile  { display: none;  }
-  .graveyard-desktop { display: grid;  }
-}
-
-/* Hide scrollbar on mobile strip */
-.graveyard-mobile div::-webkit-scrollbar { display: none; }
-
-/* Card min-height for consistency */
-.graveyard-card { width: 100%; min-height: 140px; }
 
 /* ── Button spinner ── */
 @keyframes spin {
@@ -304,34 +309,6 @@ button {
   animation: stamp-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.6s both;
 }
 
-/* ── Pricing cards hover lift ── */
-.subpage-pricing-tier--premium:hover,
-.subpage-pricing-tier--free:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
-}
-
-/* Pricing page bottom CTA button */
-.pricing-cta-btn {
-  display: inline-block;
-  font-family: var(--font-dm), -apple-system, sans-serif;
-  font-size: 15px;
-  font-weight: 600;
-  color: #fff;
-  background: #0a0a0a;
-  border-radius: 8px;
-  padding: 15px 36px;
-  text-decoration: none;
-  transition: background 0.15s, transform 0.12s;
-}
-.pricing-cta-btn:hover {
-  background: #2a2a2a;
-  transform: translateY(-2px);
-}
-.pricing-cta-btn:active {
-  transform: translateY(0);
-}
 
 /* Terms / Privacy / Pricing bottom link rows */
 .subpage-bottom-links {
@@ -384,45 +361,6 @@ button {
   }
 }
 
-/* Pricing cards — comfortable on narrow screens */
-.subpage-pricing-tier {
-  border-radius: 10px;
-  margin-bottom: 12px;
-}
-
-.subpage-pricing-tier--premium {
-  border: 2px solid #160a06;
-  padding: clamp(20px, 5vw, 32px);
-  background: #fff;
-}
-
-.subpage-pricing-tier--free {
-  border: 1.5px solid #c8c8c8;
-  padding: clamp(18px, 4.5vw, 24px);
-  margin-bottom: 28px;
-}
-
-.subpage-pricing-cta {
-  font-family: var(--font-dm), system-ui, sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  background: #0a0a0a;
-  color: #fff !important;
-  text-decoration: none;
-  text-align: center;
-  padding: 16px 18px;
-  border-radius: 8px;
-  min-height: 52px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.subpage-pricing-cta:active {
-  filter: brightness(0.92);
-}
 
 .subpage-faq-cta {
   display: inline-flex;
@@ -446,21 +384,6 @@ button {
   filter: brightness(0.92);
 }
 
-.subpage-faq-bottom-cta {
-  font-family: var(--font-dm), system-ui, sans-serif;
-  font-size: 15px;
-  font-weight: 700;
-  color: #0a0a0a;
-  text-decoration: none;
-  letter-spacing: 0.03em;
-  min-height: 52px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 16px;
-  border-radius: 8px;
-  -webkit-tap-highlight-color: transparent;
-}
 
 a.subpage-inline-mail {
   color: #0a0a0a;
@@ -516,49 +439,6 @@ a.subpage-inline-mail {
   margin: 0;
 }
 
-/* Leaderboard: no scroll, full height, layout follows column width */
-.lb-scroll {
-  overflow: visible;
-  container-type: inline-size;
-  container-name: leaderboard;
-}
-
-.lb-table { min-width: 0; }
-
-.lb-row {
-  grid-template-columns: auto minmax(0, 1fr) minmax(0, 1.6fr) auto;
-  grid-template-areas: 'icon name cause date';
-}
-
-.lb-icon { grid-area: icon; }
-.lb-name {
-  grid-area: name;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.lb-cause { grid-area: cause; overflow-wrap: anywhere; }
-.lb-date { grid-area: date; justify-self: end; }
-
-@container leaderboard (max-width: 520px) {
-  .lb-row {
-    grid-template-columns: auto 1fr;
-    grid-template-rows: auto auto auto;
-    grid-template-areas:
-      'icon name'
-      'icon cause'
-      'icon date';
-    row-gap: 3px;
-    padding: 10px 12px !important;
-  }
-  .lb-name { white-space: normal; font-size: 14px !important; }
-  .lb-cause span:first-child { font-size: 13px !important; }
-  .lb-date { justify-self: start; margin-top: 0 !important; font-size: 12px !important; }
-  .lb-icon { font-size: 15px !important; }
-  .lb-commit-msg { display: none !important; }
-  .lb-last-words { display: none !important; }
-  .lb-commit-bar { padding: 8px 12px !important; }
-}
 
 @layer base {
   html { scroll-behavior: smooth; }
@@ -589,12 +469,6 @@ a.subpage-inline-mail {
 
 /* ── Mobile ── */
 @media (max-width: 640px) {
-  /* TopBar: hide center nav + star, show hamburger */
-  .topbar-nav { display: none !important; }
-  .topbar { padding: 0 16px !important; }
-  .topbar-star { display: none !important; }
-  .topbar-hamburger { display: flex !important; }
-
   /* Page padding */
   main { padding-left: 16px !important; padding-right: 16px !important; }
 

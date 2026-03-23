@@ -8,7 +8,7 @@ const FAQ = [
   { q: 'Is the data real?', a: 'Yes. Everything comes from GitHub\'s public API - last commit date, stars, forks, open issues, and archive status.' },
   { q: 'How is the cause of death determined?', a: 'A scoring algorithm weighs inactivity, star count, open issues, and whether the repo is archived. The highest-matching rule wins.' },
   { q: 'Can I analyze private repos?', a: 'No - we only have access to public repositories.' },
-  { q: 'How do I share the certificate?', a: 'Click Share to get a 1080×1350 image for Instagram or X. Download the printable certificate for $4.99.' },
+  { q: 'How do I share the certificate?', a: 'Hit the share button → pick your option. Copy the link, post on X, or download a watermarked PNG. One click.' },
   { q: 'Is this serious?', a: 'The data is real. The certificates are not.' },
 ]
 

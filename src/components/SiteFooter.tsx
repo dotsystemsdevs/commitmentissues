@@ -14,7 +14,7 @@ export default function SiteFooter() {
           <a key={href} href={href} style={{ fontFamily: FONT }}>{label}</a>
         ))}
       </nav>
-      <p className="site-footer-copy" style={{ fontFamily: FONT }}>© commitmentissues.dev</p>
+      <p className="site-footer-copy" style={{ fontFamily: FONT }}>For projects that were "almost done". · © commitmentissues.dev</p>
     </footer>
   )
 }

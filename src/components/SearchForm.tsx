@@ -121,14 +121,19 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
           onMouseEnter={e => { if (!loading) e.currentTarget.style.background = CTA_RED_HOVER }}
           onMouseLeave={e => { e.currentTarget.style.background = CTA_RED }}
         >
-          {loading ? <span className="btn-spinner" /> : 'Generate certificate →'}
+          {loading ? <span className="btn-spinner" /> : 'Issue death certificate →'}
         </button>
       </div>
 
+      {/* Microcopy */}
+      <p style={{ fontFamily: MONO, fontSize: '11px', color: '#b0aca8', textAlign: 'center', margin: '-6px 0 0', letterSpacing: '0.05em' }}>
+        No login. No storage. Just closure.
+      </p>
+
       {/* TRY ONE OF THESE chips */}
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', marginTop: '6px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', marginTop: '2px' }}>
         <span style={{ fontFamily: MONO, fontSize: '10px', letterSpacing: '0.18em', color: '#b0aca8', textTransform: 'uppercase' }}>
-          try one of these
+          try a famous corpse:
         </span>
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'center' }}>
           {EXAMPLES.map(({ owner, repo, url, color }) => (

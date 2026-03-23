@@ -22,11 +22,11 @@ const FAQS = [
   },
   {
     q: 'How do I share the certificate?',
-    a: 'Generate → click "Share the obituary" → pick your option. One click.',
+    a: 'Generate → hit the share button → pick your option. One click.',
   },
   {
-    q: 'What does the $4.99 get me?',
-    a: 'A pristine, watermark-free document fit for a frame. Think of it as a premium mahogany casket for your code. High-res, 300 DPI, zero regrets.',
+    q: 'Can I remove the watermark?',
+    a: 'Currently no — but if enough people buy me a coffee, we\'ll figure something out.',
   },
 ]
 

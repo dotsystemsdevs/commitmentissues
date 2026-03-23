@@ -58,9 +58,6 @@ export default function PageHero({
 
   return (
     <header className="page-hero">
-      <div className="page-hero-slot">
-        <div className="page-hero-slot-spacer" aria-hidden />
-      </div>
       {brand}
       <div className="page-hero-sub">{subtitle}</div>
       {microcopy != null && microcopy !== false ? <p className="page-hero-micro">{microcopy}</p> : null}

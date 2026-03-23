@@ -93,7 +93,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
   }
 
   function handleTweet() {
-    const text = encodeURIComponent(`${cert.repoData.fullName} has officially died.\n\nCause of death: ${cert.causeOfDeath}\n\nRIP 🪦`)
+    const text = encodeURIComponent(`RIP ${cert.repoData.fullName}.\n\nCause of death: ${cert.causeOfDeath}\n\n💀`)
     const url  = encodeURIComponent('https://commitmentissues.dev')
     window.open(`https://x.com/intent/tweet?text=${text}&url=${url}`, '_blank')
     fetch('/api/stats', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ counter: 'shared' }) }).catch(() => {})
@@ -219,6 +219,34 @@ export default function CertificateCard({ cert, onReset }: Props) {
           onMouseUp={e => { e.currentTarget.style.transform = 'translateY(-1px)' }}
         >
           💀 This is painfully accurate. Send it to a dev →
+        </button>
+
+        {/* Post on X — direct, no modal */}
+        <button
+          type="button"
+          onClick={handleTweet}
+          style={{
+            width: '100%',
+            fontFamily: UI,
+            fontSize: '14px',
+            fontWeight: 600,
+            background: '#fff',
+            color: '#0a0a0a',
+            border: '1.5px solid #0a0a0a',
+            borderRadius: '10px',
+            padding: '14px 24px',
+            cursor: 'pointer',
+            textAlign: 'center',
+            transition: 'background 0.15s, transform 0.1s',
+            WebkitTapHighlightColor: 'transparent',
+            touchAction: 'manipulation',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = '#f5f5f5'; e.currentTarget.style.transform = 'translateY(-1px)' }}
+          onMouseLeave={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.transform = 'translateY(0)' }}
+          onMouseDown={e => { e.currentTarget.style.transform = 'scale(0.97)' }}
+          onMouseUp={e => { e.currentTarget.style.transform = 'translateY(-1px)' }}
+        >
+          Post on X →
         </button>
 
         {/* Coffee */}
