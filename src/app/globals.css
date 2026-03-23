@@ -251,6 +251,12 @@ button {
   transition: transform 0.15s ease;
 }
 
+/* ── Graveyard marquee ── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
 /* ── Button spinner ── */
 @keyframes spin {
   to { transform: rotate(360deg); }

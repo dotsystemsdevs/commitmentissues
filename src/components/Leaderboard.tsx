@@ -21,126 +21,68 @@ const HALL_OF_SHAME: LeaderboardEntry[] = [
   { fullName: 'knockout/knockout',      cause: 'Vue arrived and everyone forgot their vows',                 score: 8,  deathDate: 'Oct 2015', lastWords: 'ko.observable. ko.computed. ko.gone.' },
 ]
 
-
 const FONT = `var(--font-dm), -apple-system, sans-serif`
-const C_WARM_GR = '#555555'
-const C_LIGHT   = '#c8c8c8'
-const C_DARK    = '#222222'
-const C_DARKEST = '#111111'
-
 
 interface Props {
   onSelect: (url: string) => void
 }
 
 export default function Leaderboard({ onSelect }: Props) {
-  const list = HALL_OF_SHAME
+  // Duplicate for seamless loop
+  const doubled = [...HALL_OF_SHAME, ...HALL_OF_SHAME]
 
   return (
-    <div style={{ fontFamily: FONT, width: '100%', border: `1.5px solid ${C_LIGHT}`, borderRadius: '10px', overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.07)' }}>
-
-      <div className="lb-scroll">
-      {/* Table */}
-      <div className="lb-table">
-
-        {/* Commit bar */}
-        <div className="lb-commit-bar" style={{
-          display: 'flex',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: '10px',
-          padding: '9px 16px',
-          background: '#ebebeb',
-          borderBottom: `1.5px solid ${C_LIGHT}`,
-        }}>
-          <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#111', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            <span style={{ fontSize: '13px', lineHeight: 1 }}>💀</span>
-          </div>
-          <span style={{ fontSize: '13px', fontWeight: 700, color: C_DARKEST }}>the_grim_reaper</span>
-          <span className="lb-commit-msg" style={{ fontSize: '13px', fontStyle: 'italic', color: C_WARM_GR, marginLeft: 'auto', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-            {'chore: collect souls and close issues permanently'}
-          </span>
-        </div>
-
-        {list.length === 0 ? (
-          <div style={{ padding: '56px 20px', textAlign: 'center' }}>
-            <div style={{ fontSize: '32px', marginBottom: '12px' }}>🪦</div>
-            <p style={{ fontSize: '15px', fontWeight: 600, color: C_DARK, marginBottom: '6px' }}>No repos buried yet</p>
-            <p style={{ fontSize: '14px', fontStyle: 'italic', color: C_WARM_GR }}>Paste a GitHub URL above to issue your first death certificate.</p>
-          </div>
-        ) : list.map((entry, i) => (
-          <div key={entry.fullName + i} style={{ position: 'relative' }}>
-            {i !== 0 && <div style={{ height: '1px', background: C_LIGHT, margin: '0' }} />}
-            <button
-            className="lb-row"
+    <div style={{ width: '100vw', marginLeft: 'calc(50% - 50vw)', overflow: 'hidden', padding: '4px 0 8px' }}>
+      <div style={{
+        display: 'flex',
+        gap: '12px',
+        animation: 'marquee 40s linear infinite',
+        width: 'max-content',
+      }}>
+        {doubled.map((entry, i) => (
+          <button
+            key={i}
             onClick={() => { track('graveyard_clicked', { repo: entry.fullName }); onSelect(`https://github.com/${entry.fullName}`) }}
             style={{
-              display: 'grid',
-              alignItems: 'start',
-              columnGap: '14px',
-              rowGap: '6px',
-              width: '100%',
-              padding: '12px 16px',
-              background: 'transparent',
-              border: 'none',
-              borderLeft: '3px solid transparent',
+              fontFamily: FONT,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              gap: '6px',
+              width: '220px',
+              flexShrink: 0,
+              padding: '14px 16px',
+              background: '#fff',
+              border: '1.5px solid #e0dbd5',
+              borderRadius: '10px',
               cursor: 'pointer',
               textAlign: 'left',
-              transition: 'background 0.15s ease, border-left-color 0.15s ease, transform 0.12s ease',
+              transition: 'border-color 0.15s, transform 0.15s, box-shadow 0.15s',
+              boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
             }}
             onMouseEnter={e => {
-              e.currentTarget.style.background = '#f0ece6'
-              e.currentTarget.style.borderLeftColor = '#8b0000'
-              e.currentTarget.style.transform = 'translateX(2px)'
+              e.currentTarget.style.borderColor = '#0a0a0a'
+              e.currentTarget.style.transform = 'translateY(-3px)'
+              e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.12)'
             }}
             onMouseLeave={e => {
-              e.currentTarget.style.background = 'transparent'
-              e.currentTarget.style.borderLeftColor = 'transparent'
-              e.currentTarget.style.transform = 'translateX(0)'
+              e.currentTarget.style.borderColor = '#e0dbd5'
+              e.currentTarget.style.transform = 'translateY(0)'
+              e.currentTarget.style.boxShadow = '0 1px 4px rgba(0,0,0,0.05)'
             }}
           >
-            <span className="lb-icon" style={{ fontSize: '20px', lineHeight: '1.4', marginTop: '1px', filter: 'brightness(0.7)' }}>🪦</span>
-
-            <span className="lb-name" style={{
-              fontFamily: FONT,
-              fontSize: '15px',
-              fontWeight: 700,
-              color: '#0a0a0a',
-              lineHeight: '1.5',
-              minWidth: 0,
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-            }}>
+            <span style={{ fontSize: '20px', lineHeight: 1 }}>🪦</span>
+            <span style={{ fontSize: '13px', fontWeight: 700, color: '#0a0a0a', lineHeight: 1.3, wordBreak: 'break-word' }}>
               {entry.fullName}
             </span>
-
-            <div className="lb-cause" style={{ minWidth: 0 }}>
-              <span style={{
-                fontFamily: FONT,
-                fontSize: '15px',
-                fontStyle: 'italic',
-                color: C_WARM_GR,
-                lineHeight: '1.5',
-                display: 'block',
-              }}>
-                {entry.cause}
-              </span>
-            </div>
-
-            <span className="lb-date" style={{
-              fontFamily: FONT,
-              fontSize: '13px',
-              color: C_DARK,
-              lineHeight: '1.5',
-              marginTop: '2px',
-              whiteSpace: 'nowrap',
-            }}>
-              {entry.deathDate ?? ''}
+            <span style={{ fontSize: '12px', fontStyle: 'italic', color: '#938882', lineHeight: 1.4 }}>
+              {entry.cause}
+            </span>
+            <span style={{ fontSize: '11px', color: '#b0aca8', marginTop: '2px' }}>
+              {entry.deathDate}
             </span>
           </button>
-          </div>
         ))}
-      </div>
       </div>
     </div>
   )
