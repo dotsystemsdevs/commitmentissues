@@ -61,7 +61,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
   async function handleShare() {
     // Only attempt native share if the API is available
     if (navigator.canShare) {
-      const blob = await exportBlob(3, true)
+      const blob = await exportBlob(2, true)
       if (blob) {
         const file = new File([blob], `${cert.repoData.name}.png`, { type: 'image/png' })
         if (navigator.canShare({ files: [file] })) {

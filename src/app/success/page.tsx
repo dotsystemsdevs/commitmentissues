@@ -35,7 +35,7 @@ export default function SuccessPage() {
     try {
       const blob = await toBlob(cardRef.current, {
         cacheBust: true,
-        pixelRatio: 3,
+        pixelRatio: 5,        // 480×5 = 2400px wide — ~300dpi on A4
         backgroundColor: '#FAF6EF',
         width: 480,
         height: 679,
