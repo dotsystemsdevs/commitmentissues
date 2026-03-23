@@ -210,16 +210,16 @@ export default function CertificateCard({ cert, onReset }: Props) {
       </div>
 
       {/* ── Actions ── */}
-      <div className="cert-actions" style={{ display: 'flex', flexDirection: 'column', gap: '0', marginBottom: '16px' }}>
+      <div className="cert-actions" style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}>
 
-        {/* Share — PRIMARY: full width, black, 18px */}
+        {/* Share */}
         <button
           onClick={handleShare}
           className="cert-share-btn"
           style={{
             width: '100%',
             fontFamily: UI,
-            fontSize: '18px',
+            fontSize: '17px',
             fontWeight: 700,
             background: '#0a0a0a',
             color: '#fff',
@@ -231,44 +231,43 @@ export default function CertificateCard({ cert, onReset }: Props) {
             transition: 'opacity 0.15s, transform 0.1s',
             WebkitTapHighlightColor: 'transparent',
             touchAction: 'manipulation',
-            marginBottom: '16px',
           }}
           onMouseEnter={e => { e.currentTarget.style.opacity = '0.88'; e.currentTarget.style.transform = 'translateY(-1px)' }}
           onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'translateY(0)' }}
           onMouseDown={e => { e.currentTarget.style.transform = 'scale(0.97)' }}
           onMouseUp={e => { e.currentTarget.style.transform = 'translateY(-1px)' }}
         >
-          💀 This is too accurate. Share it →
+          💀 This is painfully accurate. Send it to a dev →
         </button>
 
-        {/* Download — SECONDARY: outlined, all info self-contained inside button */}
+        {/* Download — premium */}
         <button
           onClick={handleDownload}
           className="cert-buy-btn"
           style={{
             width: '100%',
             fontFamily: UI,
-            background: 'transparent',
-            color: '#0a0a0a',
-            border: '1.5px solid #c8c8c8',
+            background: '#FAF6EF',
+            color: '#160A06',
+            border: '2px solid #160A06',
             borderRadius: '10px',
             padding: '14px 24px',
             cursor: 'pointer',
             textAlign: 'center',
-            transition: 'border-color 0.15s, background 0.15s, transform 0.1s',
+            transition: 'background 0.15s, transform 0.1s',
             WebkitTapHighlightColor: 'transparent',
             touchAction: 'manipulation',
           }}
-          onMouseEnter={e => { e.currentTarget.style.borderColor = '#888'; e.currentTarget.style.background = 'rgba(0,0,0,0.02)'; e.currentTarget.style.transform = 'translateY(-1px)' }}
-          onMouseLeave={e => { e.currentTarget.style.borderColor = '#c8c8c8'; e.currentTarget.style.background = 'transparent'; e.currentTarget.style.transform = 'translateY(0)' }}
+          onMouseEnter={e => { e.currentTarget.style.background = '#f0e8d8'; e.currentTarget.style.transform = 'translateY(-1px)' }}
+          onMouseLeave={e => { e.currentTarget.style.background = '#FAF6EF'; e.currentTarget.style.transform = 'translateY(0)' }}
           onMouseDown={e => { e.currentTarget.style.transform = 'scale(0.97)' }}
           onMouseUp={e => { e.currentTarget.style.transform = 'translateY(-1px)' }}
         >
-          <div style={{ fontSize: '14px', fontWeight: 600, lineHeight: 1 }}>Print it. Frame it. Never touch the repo again.</div>
-          <div style={{ fontSize: '11px', color: '#938882', marginTop: '5px', lineHeight: 1 }}>$4.99 · no watermark · 300 DPI · print-ready</div>
+          <div style={{ fontSize: '14px', fontWeight: 700, lineHeight: 1 }}>Print it. Frame it. Never open the repo again.</div>
+          <div style={{ fontSize: '11px', color: '#8B6B4A', marginTop: '5px', lineHeight: 1 }}>$4.99 · no watermark · 300 DPI · Watermark stays unless you upgrade.</div>
         </button>
 
-        {/* Issue another link */}
+        {/* Bury another */}
         <button
           type="button"
           onClick={() => { track('issue_another_clicked'); onReset() }}
@@ -279,7 +278,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
             background: 'none',
             border: 'none',
             cursor: 'pointer',
-            padding: '12px 0 4px',
+            padding: '6px 0 4px',
             textAlign: 'center',
             width: '100%',
             transition: 'color 0.15s',
@@ -289,7 +288,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
           onMouseEnter={e => { e.currentTarget.style.color = '#160A06'; e.currentTarget.style.textDecoration = 'underline'; e.currentTarget.style.textUnderlineOffset = '3px' }}
           onMouseLeave={e => { e.currentTarget.style.color = '#938882'; e.currentTarget.style.textDecoration = 'none' }}
         >
-          issue another →
+          Bury another →
         </button>
 
       </div>
