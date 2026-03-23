@@ -7,10 +7,14 @@ import { CTA_RED, CTA_RED_HOVER } from '@/lib/cta'
 const FONT = `var(--font-dm), -apple-system, sans-serif`
 const PREFIX = 'https://github.com/'
 
+const MONO = `var(--font-courier), 'Courier New', monospace`
+
 const EXAMPLES = [
-  { slug: 'atom/atom',       url: 'https://github.com/atom/atom' },
-  { slug: 'bower/bower',     url: 'https://github.com/bower/bower' },
-  { slug: 'adobe/brackets',  url: 'https://github.com/adobe/brackets' },
+  { owner: 'atom',    repo: 'atom',      url: 'https://github.com/atom/atom',      color: '#8B6B4A' },
+  { owner: 'bower',   repo: 'bower',     url: 'https://github.com/bower/bower',    color: '#7a5c8a' },
+  { owner: 'adobe',   repo: 'brackets',  url: 'https://github.com/adobe/brackets', color: '#4a7a6a' },
+  { owner: 'meteor',  repo: 'meteor',    url: 'https://github.com/meteor/meteor',  color: '#8a4a4a' },
+  { owner: 'gruntjs', repo: 'grunt',     url: 'https://github.com/gruntjs/grunt',  color: '#5a6a8a' },
 ]
 
 interface Props {
@@ -155,40 +159,45 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
       </p>
 
       {/* Example repo chips */}
-      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'center' }}>
-        {EXAMPLES.map(({ slug, url }) => (
-          <button
-            key={slug}
-            type="button"
-            onClick={() => { track('example_chip_clicked', { repo: slug }); onSelect(url) }}
-            style={{
-              fontFamily: FONT,
-              fontSize: '12px',
-              color: '#555',
-              background: '#fff',
-              border: '1.5px solid #d8d4d0',
-              borderRadius: '100px',
-              padding: '5px 13px',
-              cursor: 'pointer',
-              transition: 'border-color 0.12s, background 0.12s, color 0.12s',
-              WebkitTapHighlightColor: 'transparent',
-              touchAction: 'manipulation',
-              letterSpacing: '0.01em',
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.borderColor = '#888'
-              e.currentTarget.style.background = '#f5f0e8'
-              e.currentTarget.style.color = '#160A06'
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.borderColor = '#d8d4d0'
-              e.currentTarget.style.background = '#fff'
-              e.currentTarget.style.color = '#555'
-            }}
-          >
-            {slug}
-          </button>
-        ))}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
+        <span style={{ fontFamily: MONO, fontSize: '10px', letterSpacing: '0.18em', color: '#b0aca8', textTransform: 'uppercase' }}>
+          try one of these
+        </span>
+        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'center' }}>
+          {EXAMPLES.map(({ owner, repo, url, color }) => (
+            <button
+              key={owner + repo}
+              type="button"
+              onClick={() => { track('example_chip_clicked', { repo: `${owner}/${repo}` }); onSelect(url) }}
+              style={{
+                fontFamily: MONO,
+                fontSize: '12px',
+                background: '#fff',
+                border: '1.5px solid #d8d4d0',
+                borderRadius: '5px',
+                padding: '6px 12px',
+                cursor: 'pointer',
+                transition: 'border-color 0.12s, background 0.12s, transform 0.12s',
+                WebkitTapHighlightColor: 'transparent',
+                touchAction: 'manipulation',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.borderColor = '#888'
+                e.currentTarget.style.background = '#faf7f3'
+                e.currentTarget.style.transform = 'translateY(-1px)'
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.borderColor = '#d8d4d0'
+                e.currentTarget.style.background = '#fff'
+                e.currentTarget.style.transform = 'translateY(0)'
+              }}
+            >
+              <span style={{ color }}>{owner}</span>
+              <span style={{ color: '#b0aca8' }}>/</span>
+              <span style={{ color: '#160A06', fontWeight: 600 }}>{repo}</span>
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   )
