@@ -36,8 +36,8 @@ export default function Page() {
       {!certificate && (
         <>
           <PageHero
-            subtitle="Paste any GitHub URL. Get an official death certificate for your abandoned repo."
-            microcopy={null}
+            subtitle="Your repo is dead. Bury it properly."
+            microcopy="Paste any GitHub repo → get its official cause of death + last words · No login · No storage"
           />
 
           <div style={{ width: '100%', marginBottom: 0 }}>
@@ -62,7 +62,7 @@ export default function Page() {
               The Great GitHub Graveyard
             </p>
             <p style={{ fontFamily: FONT, fontSize: '13px', color: '#938882', margin: 0 }}>
-              Click any repo to instantly generate its certificate.
+              Try a famous dead repo ↓
             </p>
           </div>
           <Leaderboard onSelect={handleSelect} />

@@ -96,7 +96,9 @@ export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }
             fontSize: '13px',
             fontWeight: 800,
             letterSpacing: '0.06em',
-            width: '88px',
+            width: 'auto',
+          minWidth: '88px',
+          padding: '0 18px',
             height: '54px',
             flexShrink: 0,
             background: CTA_RED,
@@ -133,7 +135,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }
             e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.25)'
           }}
         >
-          {loading ? '…' : 'BURY IT'}
+          {loading ? '…' : 'GENERATE →'}
         </button>
       </form>
 

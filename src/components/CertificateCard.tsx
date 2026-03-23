@@ -237,7 +237,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
           onMouseDown={e => { e.currentTarget.style.transform = 'scale(0.97)' }}
           onMouseUp={e => { e.currentTarget.style.transform = 'translateY(-1px)' }}
         >
-          Share the obituary →
+          💀 This is too accurate. Share it →
         </button>
 
         {/* Download — SECONDARY: outlined, all info self-contained inside button */}
@@ -263,8 +263,8 @@ export default function CertificateCard({ cert, onReset }: Props) {
           onMouseDown={e => { e.currentTarget.style.transform = 'scale(0.97)' }}
           onMouseUp={e => { e.currentTarget.style.transform = 'translateY(-1px)' }}
         >
-          <div style={{ fontSize: '14px', fontWeight: 600, lineHeight: 1 }}>Download in high resolution</div>
-          <div style={{ fontSize: '11px', color: '#938882', marginTop: '5px', lineHeight: 1 }}>$4.99 · 2480 × 3508px · 300 DPI · no watermark</div>
+          <div style={{ fontSize: '14px', fontWeight: 600, lineHeight: 1 }}>Print it. Frame it. Never touch the repo again.</div>
+          <div style={{ fontSize: '11px', color: '#938882', marginTop: '5px', lineHeight: 1 }}>$4.99 · no watermark · 300 DPI · print-ready</div>
         </button>
 
         {/* Issue another link */}
