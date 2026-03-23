@@ -35,7 +35,7 @@ export default function Page() {
           />
 
           <div style={{ width: '100%' }}>
-            <SearchForm url={url} setUrl={setUrl} onSubmit={() => analyze(url)} loading={loading} />
+            <SearchForm url={url} setUrl={setUrl} onSubmit={() => analyze(url)} onSelect={handleSelect} loading={loading} />
           </div>
 
           {/* Social proof — right under input */}

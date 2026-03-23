@@ -79,9 +79,9 @@
 }
 
 .page-hero-emoji {
-  font-size: clamp(36px, 8vw, 44px);
+  font-size: clamp(52px, 12vw, 72px);
   line-height: 1;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .page-hero-title {
