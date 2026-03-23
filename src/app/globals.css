@@ -465,6 +465,13 @@ a.subpage-inline-mail {
 }
 
 
+/* ── Certificate scale — proportional scaling on small screens ── */
+:root { --cert-scale: 1; }
+
+@media (max-width: 520px) {
+  :root { --cert-scale: calc(100vw / 520px); }
+}
+
 /* ── Mobile ── */
 @media (max-width: 640px) {
   /* TopBar: hide center nav + star, show hamburger */
@@ -476,9 +483,8 @@ a.subpage-inline-mail {
   /* Page padding */
   main { padding-left: 16px !important; padding-right: 16px !important; }
 
-  /* Certificate: zoom to fit, keep internal A4 dimensions */
+  /* Certificate: handled by CSS var --cert-scale */
   .certificate-scroll-zone { width: 100%; padding: 0; margin: 0; overflow: visible; }
-  .certificate-wrapper { zoom: 0.62; margin: 0 auto; width: fit-content; }
 
   /* Certificate action buttons: outside zoom wrapper, full width */
   .cert-actions { flex-direction: column !important; width: 100% !important; }

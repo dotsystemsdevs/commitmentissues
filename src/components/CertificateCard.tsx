@@ -208,15 +208,25 @@ export default function CertificateCard({ cert, onReset }: Props) {
 
       </div>
 
-      {/* ── Certificate — fixed 480×679, wrapper handles mobile scale ── */}
-      <div ref={wrapperRef} className="certificate-wrapper relative" style={{ width: '480px' }}>
-        <CertificateSheet
-          ref={cardRef}
-          cert={cert}
-          visible={visible}
-          showStamp={true}
-          stampRef={stampRef}
-        />
+      {/* ── Certificate — fixed 480×679, CSS var scales on mobile ── */}
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'flex-start' }}>
+        <div
+          ref={wrapperRef}
+          style={{
+            width: '480px',
+            transformOrigin: 'top center',
+            transform: 'scale(var(--cert-scale, 1))',
+            marginBottom: 'calc((679px * var(--cert-scale, 1)) - 679px)',
+          }}
+        >
+          <CertificateSheet
+            ref={cardRef}
+            cert={cert}
+            visible={visible}
+            showStamp={true}
+            stampRef={stampRef}
+          />
+        </div>
       </div>
 
     </div>
