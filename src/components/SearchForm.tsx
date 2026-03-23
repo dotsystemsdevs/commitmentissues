@@ -136,7 +136,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }
             e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.25)'
           }}
         >
-          {loading ? '…' : 'GENERATE →'}
+          {loading ? '…' : 'Generate certificate →'}
         </button>
       </form>
 
@@ -155,29 +155,23 @@ export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }
         onClick={onExample}
         style={{
           fontFamily: FONT,
-          fontSize: '13px',
-          color: '#938882',
+          fontSize: '14px',
+          fontWeight: 600,
+          color: '#160A06',
           background: 'none',
           border: 'none',
           cursor: 'pointer',
-          padding: '4px 0',
+          padding: '8px 0',
           textAlign: 'center',
           width: '100%',
-          transition: 'color 0.15s',
+          transition: 'opacity 0.15s',
           WebkitTapHighlightColor: 'transparent',
           touchAction: 'manipulation',
         }}
-        onMouseEnter={e => {
-          e.currentTarget.style.color = '#555'
-          e.currentTarget.style.textDecoration = 'underline'
-          e.currentTarget.style.textUnderlineOffset = '3px'
-        }}
-        onMouseLeave={e => {
-          e.currentTarget.style.color = '#938882'
-          e.currentTarget.style.textDecoration = 'none'
-        }}
+        onMouseEnter={e => { e.currentTarget.style.opacity = '0.6' }}
+        onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}
       >
-        Try a known repo →
+        Try a famous dead repo ↓
       </button>
     </div>
   )
