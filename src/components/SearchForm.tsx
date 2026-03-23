@@ -140,7 +140,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
             e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.25)'
           }}
         >
-          {loading ? '…' : 'Generate certificate →'}
+          {loading ? <span className="btn-spinner" /> : 'Generate certificate →'}
         </button>
       </form>
 

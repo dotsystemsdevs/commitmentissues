@@ -251,6 +251,20 @@ button {
   transition: transform 0.15s ease;
 }
 
+/* ── Button spinner ── */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.btn-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2.5px solid rgba(255,255,255,0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
 /* ── Share modal fade-in ── */
 @keyframes modal-fadein {
   from { opacity: 0; transform: translateY(8px) scale(0.98); }
