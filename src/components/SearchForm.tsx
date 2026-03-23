@@ -1,10 +1,11 @@
 'use client'
 
-import { FormEvent } from 'react'
+import { FormEvent, useState } from 'react'
 import { track } from '@vercel/analytics'
 import { CTA_RED, CTA_RED_HOVER } from '@/lib/cta'
 
 const FONT = `var(--font-dm), -apple-system, sans-serif`
+const PREFIX = 'https://github.com/'
 
 interface Props {
   url: string
@@ -15,9 +16,20 @@ interface Props {
 }
 
 export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }: Props) {
+  const [focused, setFocused] = useState(false)
+
+  // Display just the owner/repo part
+  const displayValue = url.startsWith(PREFIX) ? url.slice(PREFIX.length) : url
+
+  function handleChange(val: string) {
+    // Strip any accidentally pasted full URL
+    const slug = val.replace(/^https?:\/\/(www\.)?github\.com\//i, '')
+    setUrl(PREFIX + slug)
+  }
+
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
-    if (!url.trim()) return
+    if (!displayValue.trim()) return
     track('repo_submitted')
     onSubmit()
   }
@@ -25,38 +37,56 @@ export default function SearchForm({ url, setUrl, onSubmit, onExample, loading }
   return (
     <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '16px' }}>
       <form onSubmit={handleSubmit} style={{ display: 'flex', width: '100%', boxShadow: '0 2px 12px rgba(0,0,0,0.1)', borderRadius: '8px' }}>
-        <input
-          autoFocus
-          type="text"
-          value={url}
-          onChange={e => setUrl(e.target.value)}
-          placeholder="https://github.com/owner/repo"
-          style={{
+
+        {/* Prefix + input combined */}
+        <div style={{
+          flex: 1,
+          height: '54px',
+          display: 'flex',
+          alignItems: 'center',
+          background: '#fff',
+          border: `2px solid ${focused ? '#888' : '#e0e0e0'}`,
+          borderRight: 'none',
+          borderRadius: '8px 0 0 8px',
+          boxShadow: focused ? '0 0 0 3px rgba(22,10,6,0.08)' : 'none',
+          transition: 'border-color 0.15s, box-shadow 0.15s',
+          overflow: 'hidden',
+        }}>
+          <span style={{
             fontFamily: FONT,
             fontSize: '16px',
-            flex: 1,
-            height: '54px',
-            padding: '0 16px',
-            background: '#fff',
-            border: '2px solid #e0e0e0',
-            borderRight: 'none',
-            borderRadius: '8px 0 0 8px',
-            color: '#160A06',
-            outline: 'none',
-            minWidth: 0,
-            transition: 'border-color 0.15s',
-          }}
-          onFocus={e => {
-            e.currentTarget.style.borderColor = '#888'
-            e.currentTarget.style.boxShadow = '0 0 0 3px rgba(22,10,6,0.08)'
-            e.currentTarget.style.transform = 'scale(1.01)'
-          }}
-          onBlur={e => {
-            e.currentTarget.style.borderColor = '#e0e0e0'
-            e.currentTarget.style.boxShadow = 'none'
-            e.currentTarget.style.transform = 'scale(1)'
-          }}
-        />
+            color: '#b0aca8',
+            paddingLeft: '16px',
+            paddingRight: '2px',
+            whiteSpace: 'nowrap',
+            userSelect: 'none',
+            flexShrink: 0,
+          }}>
+            github.com/
+          </span>
+          <input
+            autoFocus
+            type="text"
+            value={displayValue}
+            onChange={e => handleChange(e.target.value)}
+            placeholder="owner/repo"
+            onFocus={() => setFocused(true)}
+            onBlur={() => setFocused(false)}
+            style={{
+              fontFamily: FONT,
+              fontSize: '16px',
+              flex: 1,
+              height: '100%',
+              padding: '0 12px 0 0',
+              background: 'transparent',
+              border: 'none',
+              outline: 'none',
+              color: '#160A06',
+              minWidth: 0,
+            }}
+          />
+        </div>
+
         <button
           type="submit"
           disabled={loading}
