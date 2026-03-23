@@ -125,6 +125,11 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
         </button>
       </div>
 
+      {/* Microcopy */}
+      <p style={{ fontFamily: MONO, fontSize: '11px', color: '#ccc8c4', textAlign: 'center', margin: '-6px 0 0', letterSpacing: '0.05em' }}>
+        No login. No storage. Just closure.
+      </p>
+
       {/* TRY ONE OF THESE chips */}
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', marginTop: '2px' }}>
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'center' }}>
