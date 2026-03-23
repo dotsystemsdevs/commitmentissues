@@ -80,9 +80,9 @@
 
 .page-hero-sub {
   font-family: var(--font-dm), system-ui, sans-serif;
-  font-size: clamp(15px, 4vw, 18px);
-  font-weight: 600;
-  color: #160a06;
+  font-size: clamp(14px, 3.5vw, 16px);
+  font-weight: 400;
+  color: #938882;
   line-height: 1.4;
   margin: 0 auto;
   max-width: 480px;
