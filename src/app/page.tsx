@@ -9,39 +9,10 @@ import Leaderboard from '@/components/Leaderboard'
 import CertificateCard from '@/components/CertificateCard'
 import SiteFooter from '@/components/SiteFooter'
 import PageHero from '@/components/PageHero'
-import CertificateSheet from '@/components/CertificateSheet'
-import { DeathCertificate } from '@/lib/types'
 
 const FONT = `var(--font-dm), -apple-system, sans-serif`
 const MONO = `var(--font-courier), 'Courier New', monospace`
 const BASE_COUNT = 1449
-const CERT_PREVIEW: DeathCertificate = {
-  repoData: {
-    name: 'atom',
-    fullName: 'atom/atom',
-    description: 'The hackable text editor',
-    createdAt: '2014-02-24T00:00:00Z',
-    pushedAt: '2022-12-15T00:00:00Z',
-    isArchived: true,
-    stargazersCount: 59800,
-    forksCount: 12800,
-    openIssuesCount: 0,
-    language: 'TypeScript',
-    topics: [],
-    isFork: false,
-    commitCount: 1,
-    lastCommitMessage: 'archive repository',
-    lastCommitDate: '2022-12-15T00:00:00Z',
-  },
-  deathIndex: 95,
-  deathLabel: 'Very Dead',
-  causeOfDeath: 'GitHub built VS Code and forgot this existed.',
-  deathDate: 'Dec 2022',
-  age: '8 years',
-  lastWords: 'At least I had good themes.',
-  mourners: '59,800 stars, 12,800 forks',
-  shareText: 'RIP atom/atom',
-}
 
 export default function Page() {
   const { url, setUrl, certificate, error, loading, analyze, reset } = useRepoAnalysis()
@@ -70,17 +41,10 @@ export default function Page() {
       {/* Hero + Search — hidden once certificate is shown */}
       {!certificate && (
         <>
-          <div style={{ width: '100%', marginTop: '4px' }}>
-            <div className="homepage-cert-preview">
-              <CertificateSheet cert={CERT_PREVIEW} visible={true} showStamp={false} />
-            </div>
-          </div>
-
           <div style={{ marginTop: '0px' }}>
             <PageHero
               subtitle="Paste a repo. We'll write the obituary it deserves."
               microcopy={null}
-              hideEmoji={true}
             />
           </div>
 
