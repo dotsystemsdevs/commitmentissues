@@ -26,6 +26,7 @@ export default function SiteFooter() {
         style={{
           display: 'inline-flex',
           alignItems: 'center',
+          justifyContent: 'center',
           gap: '6px',
           fontFamily: MONO,
           fontSize: '11px',
@@ -33,6 +34,7 @@ export default function SiteFooter() {
           textDecoration: 'none',
           letterSpacing: '0.04em',
           padding: '4px 0',
+          width: '100%',
         }}
       >
         <GitHubIcon />
