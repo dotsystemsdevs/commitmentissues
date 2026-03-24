@@ -30,6 +30,25 @@ function buildShareCopy(cert: DeathCertificate, shareUrl: string): string {
   return `${repo} is on life support. Cause of death: ${cause}. ${shareUrl}`
 }
 
+async function loadImageForCanvas(blob: Blob): Promise<ImageBitmap | HTMLImageElement> {
+  if (typeof createImageBitmap === 'function') {
+    return createImageBitmap(blob)
+  }
+
+  const img = new Image()
+  const objectUrl = URL.createObjectURL(blob)
+  try {
+    await new Promise<void>((resolve, reject) => {
+      img.onload = () => resolve()
+      img.onerror = () => reject(new Error('Failed to decode exported image'))
+      img.src = objectUrl
+    })
+    return img
+  } finally {
+    URL.revokeObjectURL(objectUrl)
+  }
+}
+
 export default function CertificateCard({ cert, onReset }: Props) {
   const cardRef    = useRef<HTMLDivElement>(null)
   const wrapperRef = useRef<HTMLDivElement>(null)
@@ -62,19 +81,24 @@ export default function CertificateCard({ cert, onReset }: Props) {
     if (wrapper) wrapper.style.zoom = ''
     if (!blob || !watermark) return blob
 
-    // Stamp "commitmentissues.dev" across the bottom of the shared image
-    const img = await createImageBitmap(blob)
-    const canvas = document.createElement('canvas')
-    canvas.width = img.width
-    canvas.height = img.height
-    const ctx = canvas.getContext('2d')!
-    ctx.drawImage(img, 0, 0)
-    ctx.fillStyle = 'rgba(0,0,0,0.22)'
-    ctx.font = `${9 * pixelRatio}px "Courier New", monospace`
-    ctx.letterSpacing = `${0.12 * pixelRatio}px`
-    ctx.textAlign = 'center'
-    ctx.fillText('COMMITMENTISSUES.DEV', canvas.width / 2, canvas.height - 10 * pixelRatio)
-    return new Promise(resolve => canvas.toBlob(b => resolve(b), 'image/png'))
+    try {
+      // Stamp "commitmentissues.dev" across the bottom of the shared image
+      const img = await loadImageForCanvas(blob)
+      const canvas = document.createElement('canvas')
+      canvas.width = img.width
+      canvas.height = img.height
+      const ctx = canvas.getContext('2d')
+      if (!ctx) return blob
+      ctx.drawImage(img, 0, 0)
+      ctx.fillStyle = 'rgba(0,0,0,0.22)'
+      ctx.font = `${9 * pixelRatio}px "Courier New", monospace`
+      ctx.textAlign = 'center'
+      ctx.fillText('COMMITMENTISSUES.DEV', canvas.width / 2, canvas.height - 10 * pixelRatio)
+      return new Promise(resolve => canvas.toBlob(b => resolve(b ?? blob), 'image/png'))
+    } catch {
+      // Fallback: keep export working even if watermark post-process fails on this browser.
+      return blob
+    }
   }
 
   const stat = (counter: string) => fetch('/api/stats', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ counter }) }).catch(() => {})
@@ -84,7 +108,10 @@ export default function CertificateCard({ cert, onReset }: Props) {
     const a = document.createElement('a')
     a.href = url
     a.download = filename
+    a.rel = 'noopener'
+    document.body.appendChild(a)
     a.click()
+    a.remove()
     URL.revokeObjectURL(url)
   }
 
