@@ -1,5 +1,21 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      { source: '/pricing', destination: '/', permanent: true },
+      { source: '/pricing/', destination: '/', permanent: true },
+      { source: '/faq', destination: '/', permanent: true },
+      { source: '/faq/', destination: '/', permanent: true },
+      { source: '/privacy', destination: '/terms', permanent: true },
+      { source: '/privacy/', destination: '/terms', permanent: true },
+      { source: '/success', destination: '/', permanent: true },
+      { source: '/success/', destination: '/', permanent: true },
+      { source: '/cancel', destination: '/', permanent: true },
+      { source: '/cancel/', destination: '/', permanent: true },
+      { source: '/refund', destination: '/terms', permanent: true },
+      { source: '/refund/', destination: '/terms', permanent: true },
+    ]
+  },
   async headers() {
     return [
       {

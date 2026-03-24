@@ -7,6 +7,7 @@ const MONO = `var(--font-courier), 'Courier New', monospace`
 
 const LINKS = [
   { href: '/about', label: 'About' },
+  { href: '/terms', label: 'Terms' },
 ] as const
 
 const GitHubIcon = () => (
