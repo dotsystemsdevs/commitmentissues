@@ -74,10 +74,10 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+    <form onSubmit={handleSubmit} style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '8px' }}>
 
       {/* Input + button — single row */}
-      <div className="input-button-wrapper" style={{
+      <div className="input-button-wrapper input-block" style={{
         display: 'flex',
         border: `2px solid ${focused ? '#888' : '#e0e0e0'}`,
         borderRadius: '14px',
@@ -158,7 +158,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
       )}
 
       {/* TRY ONE OF THESE chips */}
-      <div className="chips-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', marginTop: 0, marginBottom: '8px' }}>
+      <div className="chips-container chips-section" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', marginTop: '6px', marginBottom: '8px' }}>
         <span style={{ fontFamily: MONO, fontSize: '10px', letterSpacing: '0.18em', color: '#b0aca8', textTransform: 'uppercase' }}>
           try one of these
         </span>
@@ -169,6 +169,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
               type="button"
               onClick={(e) => {
                 e.preventDefault()
+                e.stopPropagation()
                 track('example_chip_clicked', { repo: `${owner}/${repo}` })
                 onSelect(url)
               }}

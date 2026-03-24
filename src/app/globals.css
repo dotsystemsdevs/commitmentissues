@@ -544,7 +544,7 @@ a.subpage-inline-mail {
   }
 
   .input-button-wrapper:focus-within {
-    margin-bottom: 120px;
+    margin-bottom: 12px;
   }
 
   /* Prevent iOS Safari auto-zoom on focused text inputs */
