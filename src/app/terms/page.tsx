@@ -7,8 +7,6 @@ const SECTIONS = [
   { title: 'What this is', body: 'A parody tool. Certificates are not legally valid documents.' },
   { title: 'Use at your own risk', body: 'Data is from GitHub\'s public API. Causes of death are algorithmic. Do not take them seriously.' },
   { title: 'Acceptable use', body: 'Personal use only. Do not harass, defame, or abuse the API.' },
-  { title: 'Paid downloads', body: '$4.99 per certificate. Digital product, delivered immediately.' },
-  { title: 'Refunds', body: 'Non-refundable. If it broke on our end, contact us: ', email: 'dot.systems@proton.me' },
   { title: 'Changes', body: 'We may update these at any time. Continued use = acceptance.' },
   { title: 'Contact', body: '', email: 'dot.systems@proton.me' },
 ]

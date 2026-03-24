@@ -6,9 +6,8 @@ const UI = `var(--font-dm), -apple-system, sans-serif`
 const SECTIONS = [
   { title: 'What we collect', body: 'Nothing personal. No accounts, no emails, no stored URLs.' },
   { title: 'GitHub API', body: 'Public repo data only. We do not access private repositories.' },
-  { title: 'Payments', body: 'Handled by Stripe. We never see your card details.' },
-  { title: 'Analytics', body: 'None. We do not track individual users.' },
-  { title: 'Cookies', body: 'None. Recently analyzed repos live in your own localStorage.' },
+  { title: 'Analytics', body: 'Anonymous usage counters only (repos buried, certificates shared). No individual tracking.' },
+  { title: 'Cookies', body: 'None. Recently analyzed repos live in your own localStorage — we never see them.' },
   { title: 'Contact', body: 'Questions? ', email: 'dot.systems@proton.me' },
 ]
 
