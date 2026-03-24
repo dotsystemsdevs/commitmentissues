@@ -633,6 +633,10 @@ a.subpage-inline-mail {
     width: 100%;
     border-left: none !important;
     border-top: none !important;
+    margin-top: -1px !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+    padding-left: 14px !important;
   }
 
   .input-button-wrapper:focus-within {
