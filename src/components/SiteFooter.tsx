@@ -40,7 +40,7 @@ export default function SiteFooter() {
         <GitHubIcon />
         my not-so-dead repo
       </a>
-      <p className="site-footer-copy" style={{ fontFamily: FONT }}>For projects that were &ldquo;almost done&rdquo;. · © commitmentissues.dev</p>
+      <p className="site-footer-copy" style={{ fontFamily: FONT }}>For projects that were &ldquo;almost done&rdquo;.</p>
     </footer>
   )
 }
