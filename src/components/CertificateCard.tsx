@@ -146,12 +146,11 @@ export default function CertificateCard({ cert, onReset }: Props) {
     stat('downloaded')
   }
 
-  const { repoData: r } = cert
   const UI = `var(--font-dm), -apple-system, sans-serif`
 
   return (
     <div className="certificate-card-shell" style={{ width: '100%', maxWidth: '480px', margin: '0 auto' }}>
-      {/* ── Top actions: back left, repo/share right ── */}
+      {/* ── Top actions: back left, download/share right ── */}
       <div
         className="certificate-top-actions"
         style={{
@@ -166,79 +165,37 @@ export default function CertificateCard({ cert, onReset }: Props) {
         }}
       >
         <button
-          className="certificate-action-back"
+          className="certificate-action-back certificate-action-back-link"
           type="button"
           onClick={() => { track('issue_another_clicked'); onReset() }}
           aria-label="Back"
           style={{
-            width: '44px',
-            height: '44px',
-            border: '2px solid #0a0a0a',
-            background: '#fff',
+            minHeight: '44px',
+            padding: '10px 14px',
+            border: '1px solid #0a0a0a',
+            background: '#f3f3f3',
             color: '#0a0a0a',
             borderRadius: '0px',
             display: 'inline-flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '22px',
-            lineHeight: 1,
+            fontFamily: UI,
+            fontSize: '13px',
+            fontWeight: 600,
+            lineHeight: 1.1,
           }}
         >
-          ←
+          back
         </button>
 
         <div className="certificate-actions-right" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <a
-            href="/about"
-            className="certificate-action-about"
-            style={{
-              border: '2px solid #0a0a0a',
-              background: '#f6f6f6',
-              color: '#0a0a0a',
-              minHeight: '44px',
-              padding: '0 10px',
-              display: 'inline-flex',
-              alignItems: 'center',
-              textDecoration: 'none',
-              fontFamily: UI,
-              fontSize: '12px',
-              fontWeight: 700,
-              letterSpacing: '0.03em',
-            }}
-          >
-            ABOUT
-          </a>
-          <a
-            className="certificate-action-repo"
-            href={`https://github.com/${r.fullName}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              border: '2px solid #0a0a0a',
-              background: '#f6f6f6',
-              color: '#0a0a0a',
-              minHeight: '44px',
-              padding: '0 12px',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '8px',
-              textDecoration: 'none',
-              fontFamily: UI,
-              fontSize: '15px',
-              fontWeight: 600,
-            }}
-          >
-            {r.name}
-            <span aria-hidden style={{ fontSize: '14px', lineHeight: 1 }}>↗</span>
-          </a>
-
           <button
             className="certificate-action-a4"
             type="button"
             onClick={() => handleDownload(3, 'certificate')}
             aria-label="Download A4"
             style={{
-              border: '2px solid #0a0a0a',
+              border: '1px solid #0a0a0a',
               background: '#f6f6f6',
               color: '#0a0a0a',
               minHeight: '44px',
@@ -261,7 +218,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
             style={{
               width: '44px',
               height: '44px',
-              border: '2px solid #0a0a0a',
+              border: '1px solid #0a0a0a',
               background: '#f6f6f6',
               color: '#0a0a0a',
               display: 'inline-flex',
