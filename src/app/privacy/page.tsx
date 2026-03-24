@@ -4,12 +4,27 @@ import SubpageShell from '@/components/SubpageShell'
 const UI = `var(--font-dm), -apple-system, sans-serif`
 
 const SECTIONS = [
-  { title: 'What we collect', body: 'Nothing personal. No accounts, no emails, no private repo data. We only process the GitHub URL you submit.' },
-  { title: 'GitHub API', body: 'Public repo data only. We do not access private repositories.' },
-  { title: 'Retention', body: 'No permanent server-side history of analyzed repos. We keep a short in-memory recent list (max 20) for live UX and it resets on deploy/restart.' },
-  { title: 'Analytics', body: 'No personal data. We count anonymous events only — how many certificates are generated, downloaded, and shared. No individual is tracked.' },
-  { title: 'Cookies', body: 'None. Recently analyzed repos live in your own localStorage — we never see them.' },
-  { title: 'Contact', body: 'Questions? ', email: 'dot.systems@proton.me' },
+  {
+    title: 'What we collect',
+    body: 'No accounts. No emails. No names. When you submit a repo URL, we fetch its public GitHub metadata (stars, last commit date, open issues) to generate the certificate. That is all we touch.',
+  },
+  {
+    title: 'What we store',
+    body: 'The last 10 repos analyzed are saved to our database to power the "Recently Buried" section on the homepage. We store: the repo name (e.g. owner/repo), the generated cause of death, the death score, and a timestamp. No IP addresses, no user IDs, nothing personal. These entries are visible to everyone who visits the site.',
+  },
+  {
+    title: 'GitHub API',
+    body: 'Public repos only. We read metadata that is already public on GitHub. We never request OAuth access and cannot see private repositories.',
+  },
+  {
+    title: 'Analytics',
+    body: 'We count anonymous aggregate events — how many certificates are generated, downloaded, and shared. No individual is tracked. No cookies are set for this.',
+  },
+  {
+    title: 'Cookies & localStorage',
+    body: 'We set no tracking cookies. Your browser may store the last repo you analyzed in localStorage so the page remembers your session — this never leaves your device.',
+  },
+  { title: 'Contact', body: 'Questions or removal requests: ', email: 'dot.systems@proton.me' },
 ]
 
 export default function PrivacyPage() {
