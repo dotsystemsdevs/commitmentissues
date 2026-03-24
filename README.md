@@ -11,14 +11,17 @@ Drop a GitHub URL. Get a shareable certificate in seconds.
 
 ## Screenshots
 
-Drop product screenshots and one short export GIF here before launch:
+Home:
 
-- `docs/screenshots/home.png`
-- `docs/screenshots/certificate.png`
-- `docs/screenshots/leaderboard.png`
-- `docs/screenshots/export.gif`
+![Homepage screenshot](docs/screenshots/homepage.png)
 
-Use lowercase file names for docs assets to keep paths predictable across platforms.
+Certificate view:
+
+![Certificate screenshot](docs/screenshots/certificate.png)
+
+About page:
+
+![About page screenshot](docs/screenshots/about.png)
 
 ## How it works
 
@@ -30,16 +33,17 @@ Use lowercase file names for docs assets to keep paths predictable across platfo
 ## Features
 
 - A4-style death certificate with cause, last words, age, and stats
-- PNG export for sharing and print
-- Share-to-X flow with prefilled text
+- Multi-format social exports (Instagram 4:5 / square, X, Facebook, Story)
+- Native mobile Story/Reel-friendly share (9:16 on mobile)
 - Hall of Shame leaderboard of famously abandoned repos
+- Recently Buried live feed (latest public burials)
 
 ## Privacy
 
 - No login required
 - Only public GitHub data is used
-- No analyzed repository data is stored server-side
-- Anonymous usage counters only (Vercel KV)
+- Recently Buried stores the latest public burial entries (repo, cause, score, timestamp)
+- Anonymous aggregate analytics are used for product metrics
 
 ## Leaderboard data
 
@@ -86,7 +90,6 @@ src/
 │   ├── page.tsx
 │   ├── about/
 │   ├── terms/
-│   ├── privacy/
 │   └── api/
 │       ├── repo/
 │       ├── stats/
