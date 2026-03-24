@@ -7,6 +7,7 @@ import ClickSpark from '@/components/ClickSpark'
 
 const FONT = `var(--font-dm), -apple-system, sans-serif`
 const MONO = `var(--font-courier), 'Courier New', monospace`
+const PREFIX = 'github.com/'
 
 const EXAMPLES = [
   { owner: 'atom',   repo: 'atom',     url: 'https://github.com/atom/atom',      color: '#8B6B4A' },
@@ -25,6 +26,12 @@ interface Props {
 
 export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }: Props) {
   const [focused, setFocused] = useState(false)
+
+  function displayValueFromInput(value: string): string {
+    return value
+      .replace(/^https?:\/\/(www\.)?github\.com\//i, '')
+      .replace(/^github\.com\//i, '')
+  }
 
   function normalizeGithubInput(value: string): string | null {
     const trimmed = value.trim()
@@ -48,7 +55,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
   }
 
   function handleChange(val: string) {
-    setUrl(val)
+    setUrl(displayValueFromInput(val))
   }
 
   function handleSubmit(e: FormEvent) {
@@ -75,12 +82,25 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
       }}>
         {/* Input */}
         <div style={{ flex: 1, display: 'flex', alignItems: 'center', minWidth: 0 }}>
+          <span style={{
+            fontFamily: FONT,
+            fontSize: '14px',
+            color: '#160A06',
+            fontWeight: 700,
+            paddingLeft: '14px',
+            paddingRight: '3px',
+            whiteSpace: 'nowrap',
+            userSelect: 'none',
+            flexShrink: 0,
+          }}>
+            {PREFIX}
+          </span>
           <input
             autoFocus
             type="text"
-            value={url}
+            value={displayValueFromInput(url)}
             onChange={e => handleChange(e.target.value)}
-            placeholder="paste repo url or user/repo"
+            placeholder="user/repo"
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
             style={{
@@ -88,7 +108,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
               fontSize: '14px',
               flex: 1,
               height: '52px',
-              padding: '0 12px 0 14px',
+              padding: '0 12px 0 0',
               background: 'transparent',
               border: 'none',
               outline: 'none',

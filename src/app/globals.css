@@ -405,7 +405,7 @@ a.subpage-inline-mail {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  height: 300px;
+  height: 255px;
   overflow: hidden;
   transform: scale(0.7);
   transform-origin: top center;
@@ -539,7 +539,7 @@ a.subpage-inline-mail {
   }
 
   .homepage-cert-preview {
-    height: 260px;
+    height: 220px;
   }
 
   /* Footer: larger tap targets */

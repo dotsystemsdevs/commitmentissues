@@ -76,7 +76,7 @@ export default function Page() {
             </div>
           </div>
 
-          <div style={{ marginTop: '8px' }}>
+          <div style={{ marginTop: '0px' }}>
             <PageHero
               subtitle="Paste a repo. See what killed it."
               microcopy={null}
