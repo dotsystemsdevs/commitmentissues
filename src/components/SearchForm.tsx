@@ -44,28 +44,24 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
   return (
     <form onSubmit={handleSubmit} style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '16px' }}>
 
-      {/* Input + button — stacked, connected as one block */}
+      {/* Input + button — single row */}
       <div style={{
+        display: 'flex',
         border: `2px solid ${focused ? '#888' : '#e0e0e0'}`,
         borderRadius: '10px',
         overflow: 'hidden',
         boxShadow: focused ? '0 0 0 3px rgba(22,10,6,0.08)' : '0 2px 12px rgba(0,0,0,0.1)',
         transition: 'border-color 0.15s, box-shadow 0.15s',
+        background: '#fff',
       }}>
         {/* Input */}
-        <div style={{
-          height: '56px',
-          display: 'flex',
-          alignItems: 'center',
-          background: '#fff',
-          borderBottom: `1.5px solid #e0e0e0`,
-        }}>
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center', minWidth: 0 }}>
           <span style={{
             fontFamily: FONT,
-            fontSize: '16px',
+            fontSize: '14px',
             color: '#160A06',
             fontWeight: 700,
-            paddingLeft: '16px',
+            paddingLeft: '14px',
             paddingRight: '2px',
             whiteSpace: 'nowrap',
             userSelect: 'none',
@@ -83,10 +79,10 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
             onBlur={() => setFocused(false)}
             style={{
               fontFamily: FONT,
-              fontSize: '16px',
+              fontSize: '14px',
               flex: 1,
-              height: '100%',
-              padding: '0 16px 0 0',
+              height: '52px',
+              padding: '0 8px 0 0',
               background: 'transparent',
               border: 'none',
               outline: 'none',
@@ -104,18 +100,21 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
           aria-label="Issue death certificate"
           style={{
             fontFamily: FONT,
-            fontSize: '14px',
+            fontSize: '13px',
             fontWeight: 800,
             letterSpacing: '0.05em',
-            width: '100%',
+            flexShrink: 0,
+            padding: '0 20px',
             height: '52px',
             background: CTA_RED,
             color: '#fff',
             border: 'none',
+            borderLeft: '2px solid rgba(0,0,0,0.08)',
             cursor: loading ? 'wait' : 'pointer',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            whiteSpace: 'nowrap',
             transition: 'background 0.15s',
             userSelect: 'none',
             WebkitTapHighlightColor: 'transparent',
