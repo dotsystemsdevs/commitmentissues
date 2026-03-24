@@ -85,6 +85,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
   const exportStampRef = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
   const [uiScale, setUiScale] = useState(DESKTOP_CERT_UI_SCALE)
+  const [isMobileViewport, setIsMobileViewport] = useState(false)
   const [isGeneratingShare, setIsGeneratingShare] = useState(false)
   const [showInlineShare, setShowInlineShare] = useState(false)
   const [copied, setCopied] = useState(false)
@@ -96,7 +97,10 @@ export default function CertificateCard({ cert, onReset }: Props) {
 
   useEffect(() => {
     if (typeof window === 'undefined') return
-    const applyScale = () => setUiScale(getCertificateUiScale(window.innerWidth))
+    const applyScale = () => {
+      setUiScale(getCertificateUiScale(window.innerWidth))
+      setIsMobileViewport(window.innerWidth <= 640)
+    }
     applyScale()
     window.addEventListener('resize', applyScale)
     return () => window.removeEventListener('resize', applyScale)
@@ -183,20 +187,25 @@ export default function CertificateCard({ cert, onReset }: Props) {
   const shareUrl = `https://commitmentissues.dev/?repo=${encodeURIComponent(cert.repoData.fullName)}`
   const shareText = buildShareCopy(cert, shareUrl)
 
-  async function generateShareBlob() {
+  async function generateSocialBlob(formatKey: SocialFormatKey) {
     const masterBlob = await exportBlob(2.5, true)
     if (!masterBlob) return null
-    return composeSocialBlob(masterBlob, SOCIAL_EXPORT_FORMATS.instagramPortrait)
+    return composeSocialBlob(masterBlob, SOCIAL_EXPORT_FORMATS[formatKey])
+  }
+
+  async function generateShareBlob() {
+    return generateSocialBlob('instagramPortrait')
   }
 
   async function handleShare() {
     track('share_clicked')
     setIsGeneratingShare(true)
     try {
-      const blob = await generateShareBlob()
+      const shareFormat: SocialFormatKey = isMobileViewport ? 'story' : 'instagramPortrait'
+      const blob = await generateSocialBlob(shareFormat)
       if (!blob) return
 
-      const file = new File([blob], `${cert.repoData.name}-certificate-of-death.png`, { type: 'image/png' })
+      const file = new File([blob], `${cert.repoData.name}-${SOCIAL_EXPORT_FORMATS[shareFormat].filename}.png`, { type: 'image/png' })
       const hasNativeShare = typeof navigator !== 'undefined' && 'share' in navigator
       const hasCanShare = typeof navigator !== 'undefined' && 'canShare' in navigator
       const canNativeShareFiles = hasNativeShare && (!hasCanShare || navigator.canShare({ files: [file] }))
@@ -212,7 +221,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
           stat('shared')
         } catch (error) {
           if (!(error instanceof DOMException && error.name === 'AbortError')) {
-            triggerDownload(blob, `${cert.repoData.name}-share.png`)
+            triggerDownload(blob, `${cert.repoData.name}-${SOCIAL_EXPORT_FORMATS[shareFormat].filename}.png`)
             stat('downloaded')
           }
         }
@@ -378,7 +387,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
             onMouseUp={e => { e.currentTarget.style.opacity = '1' }}
             onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}
           >
-            {isGeneratingShare ? <span className="btn-spinner" /> : 'Share →'}
+            {isGeneratingShare ? <span className="btn-spinner" /> : (isMobileViewport ? 'Share Story (9:16) →' : 'Share →')}
           </button>
         )}
 
