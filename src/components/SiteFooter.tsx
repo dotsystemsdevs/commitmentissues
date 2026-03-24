@@ -13,9 +13,13 @@ const GitHubIcon = () => (
   </svg>
 )
 
-export default function SiteFooter() {
+interface SiteFooterProps {
+  compact?: boolean
+}
+
+export default function SiteFooter({ compact = false }: SiteFooterProps) {
   return (
-    <footer className="site-footer">
+    <footer className={`site-footer${compact ? ' site-footer--compact' : ''}`}>
       <nav className="site-footer-nav" aria-label="Footer">
         {LINKS.map(({ href, label }) => (
           <a key={href} href={href} style={{ fontFamily: FONT }}>{label}</a>

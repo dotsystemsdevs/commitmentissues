@@ -68,7 +68,10 @@ export default function CertificateCard({ cert, onReset }: Props) {
 
   function handleTweet() {
     track('tweet_clicked')
-    const text = encodeURIComponent(`RIP ${cert.repoData.fullName}.\n\nCause of death: ${cert.causeOfDeath}\n\n💀`)
+    const repoUrl = `https://github.com/${cert.repoData.fullName}`
+    const text = encodeURIComponent(
+      `RIP ${cert.repoData.fullName}\nCause of death: ${cert.causeOfDeath}\n${repoUrl}\n\nBury yours:`
+    )
     const url  = encodeURIComponent('https://commitmentissues.dev')
     window.open(`https://x.com/intent/tweet?text=${text}&url=${url}`, '_blank')
     stat('shared')

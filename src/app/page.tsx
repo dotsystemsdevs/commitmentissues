@@ -41,7 +41,7 @@ export default function Page() {
         <>
           <div style={{ marginTop: '32px' }}>
             <PageHero
-              subtitle="Paste a GitHub URL. We'll write the obituary it deserves."
+              subtitle="Paste a repo. See what killed it."
               microcopy={null}
             />
           </div>
@@ -68,7 +68,7 @@ export default function Page() {
 
       {/* Graveyard — right below social proof */}
       {idle && (
-        <div style={{ width: '100%', marginTop: '64px', paddingBottom: '52px' }}>
+        <div style={{ width: '100%', marginTop: '64px', paddingBottom: '20px' }}>
           <div style={{ marginBottom: '14px', textAlign: 'center' }}>
             <p style={{ fontFamily: FONT, fontSize: '13px', fontWeight: 600, color: '#b0aca8', margin: 0, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
               The Graveyard
@@ -81,7 +81,7 @@ export default function Page() {
       {loading && <LoadingState />}
       {error && !loading && <ErrorDisplay error={error} onRetry={() => analyze(url)} />}
 
-      <SiteFooter />
+      <SiteFooter compact={idle} />
       </div>
     </main>
   )

@@ -1,5 +1,14 @@
 import { RepoData } from './types'
 
+const KNOWN_REPO_CAUSES: Record<string, string> = {
+  'bower/bower': 'npm and Yarn took over, then the maintainers published the eulogy themselves',
+  'atom/atom': 'GitHub shipped VS Code, then sunset Atom in public',
+  'adobe/brackets': 'Adobe handed it to the community after VS Code won the editor war',
+  'angularjs/angular.js': 'AngularJS hit official end-of-life when modern Angular replaced it',
+  'mikeal/request': 'The maintainers deprecated it as native fetch and modern clients took over',
+  'ariya/phantomjs': 'Chrome went headless and erased the reason this existed',
+}
+
 export function computeDeathIndex(repo: RepoData): number {
   const now = new Date()
   const lastCommit = new Date(repo.lastCommitDate)
@@ -26,6 +35,9 @@ export function getDeathLabel(index: number): string {
 }
 
 export function determineCauseOfDeath(repo: RepoData): string {
+  const knownRepoCause = KNOWN_REPO_CAUSES[repo.fullName.toLowerCase()]
+  if (knownRepoCause) return knownRepoCause
+
   const now = new Date()
   const lastCommit = new Date(repo.lastCommitDate)
   const daysSince = (now.getTime() - lastCommit.getTime()) / (1000 * 60 * 60 * 24)

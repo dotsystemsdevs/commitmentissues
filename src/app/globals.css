@@ -395,6 +395,11 @@ a.subpage-inline-mail {
   gap: 12px;
 }
 
+.site-footer--compact {
+  margin-top: 24px;
+  padding-top: 28px;
+}
+
 .site-footer-nav {
   display: flex;
   flex-wrap: wrap;
