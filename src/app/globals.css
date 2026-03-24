@@ -399,18 +399,29 @@ a.subpage-inline-mail {
 
 .site-footer {
   margin-top: auto;
-  padding-top: 32px;
+  padding-top: 26px;
   padding-bottom: max(24px, env(safe-area-inset-bottom));
   text-align: center;
   display: flex;
   flex-direction: column;
   gap: 6px;
+  width: 100%;
+  position: relative;
 }
 
 .site-footer--compact {
-  margin-top: 10px;
-  padding-top: 18px;
-  border-top: 1px solid #c6c6c6;
+  margin-top: auto;
+  padding-top: 26px;
+}
+
+.site-footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: calc(50% - 50vw);
+  width: 100vw;
+  height: 1px;
+  background: #c6c6c6;
 }
 
 .homepage-cert-preview {
