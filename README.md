@@ -12,51 +12,18 @@
   <img src="https://img.shields.io/badge/deployed%20on-Vercel-black?style=flat-square&logo=vercel" />
 </p>
 
----
-
 ## What it does
 
-Paste a GitHub repo URL. A **death index scoring algorithm** analyzes commit history, archive status, and issue count — then generates a downloadable death certificate complete with cause of death, last words, and a score from 0–10.
+Paste a GitHub repo URL. The app fetches commit history, archive status, and issue count from the public GitHub API — then generates a downloadable **Certificate of Death** complete with cause of death, last words, and time of death.
 
-```
-https://github.com/atom/atom
-            ↓
-  Fetches repo metadata + latest commit
-  via GitHub public API
-            ↓
-  Calculates death index (0–10)
-            ↓
-  ☠️ Certificate of Death
-```
-
----
-
-## Death Index
-
-| Condition | Points |
-|-----------|--------|
-| Last commit > 2 years ago | +4 |
-| Last commit 1–2 years ago | +2 |
-| Repo is `archived: true` | +3 |
-| 20+ open issues AND inactive 6+ months | +1 |
-| 100+ stars but no activity for 1+ year | +1 |
-
-**Maximum: 10.** 0 = alive. 10 = fossil.
-
-**Cause of death** is rule-based — the highest-scoring match wins. See [`src/lib/scoring.ts`](src/lib/scoring.ts) for the full ruleset.
-
----
+No account required. No data stored.
 
 ## Features
 
-- Death certificate with cause of death, last words, age, mourners, and language
-- Circular "REST IN PRODUCTION" stamp with animation
-- Download as PNG (share-ready or A4 print)
+- A4 death certificate with cause of death, last words, age, and repo stats
+- Download as PNG — share-ready or print-quality
 - Share on X with pre-filled text
-- Hall of Shame leaderboard + recently buried repos
-- No account required. No data stored.
-
----
+- Hall of Shame leaderboard of 30 famously dead repos
 
 ## Stack
 
@@ -67,8 +34,6 @@ https://github.com/atom/atom
 | Deploy | Vercel |
 | Storage | Vercel KV (usage counters only) |
 | Data | GitHub Public API |
-
----
 
 ## Run locally
 
@@ -87,8 +52,6 @@ Open [http://localhost:3000](http://localhost:3000).
 GITHUB_TOKEN=ghp_yourtoken
 ```
 
----
-
 ## Project structure
 
 ```
@@ -100,22 +63,18 @@ src/
 │   ├── privacy/              ← privacy policy
 │   └── api/
 │       ├── repo/             ← GitHub API proxy + death scoring
-│       ├── stats/            ← usage counters (buried/shared/downloaded)
+│       ├── stats/            ← usage counters
 │       └── recent/           ← recently analyzed repos
 ├── components/
 │   ├── CertificateCard.tsx   ← certificate UI + export + share
 │   ├── CertificateSheet.tsx  ← printable A4 certificate (480×679px)
 │   ├── Leaderboard.tsx       ← Hall of Shame marquee
 │   ├── SearchForm.tsx        ← URL input + example chips
-│   ├── LoadingState.tsx      ← loading animation
-│   └── PageHero.tsx          ← page header component
+│   └── LoadingState.tsx      ← loading animation
 └── lib/
     ├── scoring.ts            ← death index logic, no side effects
     ├── rateLimit.ts          ← per-IP rate limiting
-    ├── recentStore.ts        ← in-memory recent repos store
     └── types.ts              ← TypeScript interfaces
 ```
-
----
 
 Built by [Dot Systems](https://github.com/dotsystemsdevs)
