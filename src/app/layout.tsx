@@ -97,7 +97,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             WebkitTapHighlightColor: 'transparent',
           }}
         >
-          ☕ keep me alive
+          🔌 server plug
         </a>
         {children}
         <Analytics />

@@ -66,7 +66,7 @@ export default function AboutPage() {
               ) : null}
               {coffee ? (
                 <a href="https://buymeacoffee.com/commitmentissues" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', marginTop: '12px', fontFamily: `var(--font-courier), monospace`, fontSize: '12px', color: '#938882', textDecoration: 'none', letterSpacing: '0.04em' }}>
-                  ☕ buy me a coffee →
+                  🔌 pull the server plug →
                 </a>
               ) : null}
             </p>
