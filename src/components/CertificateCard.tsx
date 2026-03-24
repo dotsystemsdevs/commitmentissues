@@ -158,10 +158,11 @@ export default function CertificateCard({ cert, onReset }: Props) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
+          flexWrap: 'wrap',
           gap: '12px',
           paddingBottom: '12px',
           marginBottom: '14px',
-          borderBottom: '1px solid #d8d4d0',
+          borderBottom: '1px solid #cfcfcf',
         }}
       >
         <button
@@ -192,7 +193,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
             className="certificate-action-about"
             style={{
               border: '2px solid #0a0a0a',
-              background: '#fff',
+              background: '#f6f6f6',
               color: '#0a0a0a',
               minHeight: '44px',
               padding: '0 10px',
@@ -214,7 +215,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
             rel="noopener noreferrer"
             style={{
               border: '2px solid #0a0a0a',
-              background: '#fff',
+              background: '#f6f6f6',
               color: '#0a0a0a',
               minHeight: '44px',
               padding: '0 12px',
@@ -238,7 +239,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
             aria-label="Download A4"
             style={{
               border: '2px solid #0a0a0a',
-              background: '#fff',
+              background: '#f6f6f6',
               color: '#0a0a0a',
               minHeight: '44px',
               padding: '0 10px',
@@ -261,7 +262,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
               width: '44px',
               height: '44px',
               border: '2px solid #0a0a0a',
-              background: '#fff',
+              background: '#f6f6f6',
               color: '#0a0a0a',
               display: 'inline-flex',
               alignItems: 'center',

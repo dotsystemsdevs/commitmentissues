@@ -53,12 +53,12 @@ export default function Page() {
           </div>
 
           {statsLoading && (
-            <p style={{ fontFamily: MONO, fontSize: '11px', color: '#a19a95', textAlign: 'center', margin: '8px 0 0 0', letterSpacing: '0.06em' }}>
+            <p style={{ fontFamily: MONO, fontSize: '11px', color: '#7f7f7f', textAlign: 'center', margin: '8px 0 0 0', letterSpacing: '0.06em' }}>
               counting graves...
             </p>
           )}
           {!statsLoading && buried !== null && buried >= 100 && (
-            <p style={{ fontFamily: FONT, fontSize: '14px', fontWeight: 600, color: '#5c5651', opacity: 0.92, textAlign: 'center', margin: '8px 0 0 0', letterSpacing: '0.02em' }}>
+            <p style={{ fontFamily: FONT, fontSize: '14px', fontWeight: 600, color: '#4f4f4f', opacity: 0.92, textAlign: 'center', margin: '8px 0 0 0', letterSpacing: '0.02em' }}>
               {buried.toLocaleString()} repos buried
             </p>
           )}
@@ -77,7 +77,7 @@ export default function Page() {
       {idle && (
         <div style={{ width: '100%', marginTop: '34px', paddingBottom: 0 }}>
           <div style={{ marginBottom: '14px', textAlign: 'center' }}>
-            <p style={{ fontFamily: FONT, fontSize: '13px', fontWeight: 700, color: '#8f8680', margin: 0, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
+            <p style={{ fontFamily: FONT, fontSize: '13px', fontWeight: 700, color: '#727272', margin: 0, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
               Famous Casualties
             </p>
           </div>

@@ -35,10 +35,10 @@ export default function TermsPage() {
               <p style={{
                 fontFamily: UI,
                 fontSize: 'clamp(14px, 3.8vw, 15px)',
-                color: '#6b6560',
+                color: '#555',
                 lineHeight: 1.75,
                 margin: 0,
-                borderLeft: '2px solid #EDE5D8',
+                borderLeft: '2px solid #cfcfcf',
                 paddingLeft: '14px',
               }}>
                 {body}

@@ -22,10 +22,11 @@ export default function SiteFooter({ compact = false }: SiteFooterProps) {
     <footer className={`site-footer${compact ? ' site-footer--compact' : ''}`}>
       <nav className="site-footer-nav" aria-label="Footer">
         {LINKS.map(({ href, label }) => (
-          <a key={href} href={href} style={{ fontFamily: FONT, border: '2px solid #0a0a0a', padding: '8px 14px', borderRadius: '0', color: '#0a0a0a' }}>{label}</a>
+          <a key={href} href={href} style={{ fontFamily: FONT }}>{label}</a>
         ))}
       </nav>
       <a
+        className="site-footer-source-link"
         href="https://github.com/dotsystemsdevs/saas-commitmentissues"
         target="_blank"
         rel="noopener noreferrer"
@@ -36,17 +37,15 @@ export default function SiteFooter({ compact = false }: SiteFooterProps) {
           gap: '6px',
           fontFamily: MONO,
           fontSize: '12px',
-          color: '#0a0a0a',
-          border: '2px solid #0a0a0a',
-          borderRadius: '0',
+          color: '#5f5f5f',
           textDecoration: 'none',
           letterSpacing: '0.04em',
-          padding: '8px 14px',
+          padding: '4px 8px',
           width: 'auto',
           margin: '0 auto',
         }}
-        onMouseEnter={e => (e.currentTarget.style.background = '#f4f1ed')}
-        onMouseLeave={e => (e.currentTarget.style.background = '#fff')}
+        onMouseEnter={e => (e.currentTarget.style.color = '#1f1f1f')}
+        onMouseLeave={e => (e.currentTarget.style.color = '#5f5f5f')}
       >
         <GitHubIcon />
         Open source on GitHub

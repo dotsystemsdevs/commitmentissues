@@ -57,8 +57,8 @@ export default function Leaderboard({ onSelect }: Props) {
           minHeight: '184px',
           flexShrink: 0,
           padding: '20px',
-          background: '#fff',
-          border: '2px solid #0a0a0a',
+          background: '#f2f2f2',
+          border: '2px solid #8c8c8c',
           borderRadius: '0px',
           cursor: 'pointer',
           textAlign: 'left',
@@ -71,7 +71,7 @@ export default function Leaderboard({ onSelect }: Props) {
           e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.16)'
         }}
         onMouseLeave={e => {
-          e.currentTarget.style.borderColor = '#d0cac4'
+          e.currentTarget.style.borderColor = '#8c8c8c'
           e.currentTarget.style.transform = 'translateY(0)'
           e.currentTarget.style.boxShadow = '0 1px 4px rgba(0,0,0,0.05)'
         }}
@@ -86,10 +86,10 @@ export default function Leaderboard({ onSelect }: Props) {
         <span style={{ fontSize: '15px', fontWeight: 700, color: '#0a0a0a', lineHeight: 1.3, wordBreak: 'break-word' }}>
           {entry.fullName}
         </span>
-        <span style={{ fontSize: '14px', fontStyle: 'italic', color: '#4f4a46', lineHeight: 1.6, fontWeight: 500, marginTop: '2px' }}>
+        <span style={{ fontSize: '14px', fontStyle: 'italic', color: '#4d4d4d', lineHeight: 1.6, fontWeight: 500, marginTop: '2px' }}>
           {entry.cause}
         </span>
-        <span style={{ fontSize: '12px', color: '#8f8680', marginTop: '4px' }}>
+        <span style={{ fontSize: '12px', color: '#787878', marginTop: '4px' }}>
           {entry.deathDate}
         </span>
       </button>

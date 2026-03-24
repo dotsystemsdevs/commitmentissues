@@ -44,10 +44,10 @@ export default function AboutPage() {
             key={title}
             style={{
               padding: '18px 16px',
-              border: '1px solid #e8e4de',
-              borderRadius: '14px',
-              background: '#fff',
-              boxShadow: i === 0 ? '0 1px 8px rgba(0,0,0,0.03)' : 'none',
+              border: '1px solid #c9c9c9',
+              borderRadius: '0',
+              background: '#f3f3f3',
+              boxShadow: i === 0 ? '0 1px 6px rgba(0,0,0,0.04)' : 'none',
             }}
           >
             <p style={{ fontFamily: UI, fontSize: 'clamp(16px, 4.2vw, 17px)', fontWeight: 700, color: '#160A06', margin: '0 0 10px 0' }}>
@@ -56,7 +56,7 @@ export default function AboutPage() {
             <p style={{
               fontFamily: UI,
               fontSize: 'clamp(15px, 4vw, 16px)',
-              color: '#6b6560',
+              color: '#555',
               lineHeight: 1.7,
               margin: 0,
             }}>
@@ -66,7 +66,7 @@ export default function AboutPage() {
               ) : null}
             </p>
             {coffee ? (
-              <a href="https://buymeacoffee.com/commitmentissues" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', marginTop: '12px', fontFamily: `var(--font-courier), monospace`, fontSize: '12px', color: '#7b736d', textDecoration: 'none', letterSpacing: '0.04em' }}>
+              <a href="https://buymeacoffee.com/commitmentissues" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', marginTop: '12px', fontFamily: `var(--font-courier), monospace`, fontSize: '12px', color: '#555', textDecoration: 'none', letterSpacing: '0.04em' }}>
                 Keep the server alive →
               </a>
             ) : null}
