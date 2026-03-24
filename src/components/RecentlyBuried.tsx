@@ -25,7 +25,7 @@ export default function RecentlyBuried({ onSelect }: Props) {
   if (entries.length === 0) return null
 
   // Match Famous Casualties px/s: 36 cards × 310px in 80s = 139.5 px/s
-  const duration = Math.round((entries.length * 310) / 139.5)
+  const duration = Math.round((entries.length * 310) / 69.75)
 
   function Card({ entry }: { entry: typeof entries[number] }) {
     return (
