@@ -454,15 +454,13 @@ a.subpage-inline-mail {
 
 .site-footer-nav a {
   font-size: 13px;
-  color: #f5f5f5;
+  color: #5f5f5f;
   text-decoration: none;
-  padding: 0 12px;
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  background: #3f3f3f;
+  padding: 0;
+  min-height: 0;
+  display: inline;
+  border: 0;
+  background: transparent;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
@@ -477,9 +475,9 @@ a.subpage-inline-mail {
   transform: none;
 }
 .site-footer-nav a:hover {
-  color: #ffffff;
-  background: #2f2f2f;
-  text-decoration: none !important;
+  color: #1f1f1f;
+  background: transparent;
+  text-decoration: underline;
 }
 
 .site-footer-nav a:active {
@@ -543,7 +541,8 @@ a.subpage-inline-mail {
 }
 
 .site-footer-source-link:hover,
-.site-footer-nav a:hover {
+.site-footer-nav a:hover,
+.site-footer-copy-btn:hover {
   transform: translateY(-1px);
 }
 
@@ -558,7 +557,8 @@ a.subpage-inline-mail {
 
 .site-footer-copy-btn:hover {
   color: #1f1f1f;
-  background: rgba(10,10,10,0.05);
+  background: transparent;
+  text-decoration: underline;
 }
 
 .site-footer-copy--alive {
@@ -637,6 +637,11 @@ a.subpage-inline-mail {
     font-size: 14px;
     color: #160A06;
     background-color: #e8e8e8;
+  }
+  html,
+  body,
+  * {
+    cursor: default !important;
   }
   * { box-sizing: border-box; }
   input::placeholder { color: #aaa; opacity: 1; }
