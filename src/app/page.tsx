@@ -9,10 +9,10 @@ import Leaderboard from '@/components/Leaderboard'
 import CertificateCard from '@/components/CertificateCard'
 import SiteFooter from '@/components/SiteFooter'
 import PageHero from '@/components/PageHero'
+import RecentlyBuried from '@/components/RecentlyBuried'
 
 const FONT = `var(--font-dm), -apple-system, sans-serif`
 const MONO = `var(--font-courier), 'Courier New', monospace`
-const BASE_COUNT = 1449
 
 export default function Page() {
   const { url, setUrl, certificate, error, loading, analyze, reset } = useRepoAnalysis()
@@ -23,7 +23,7 @@ export default function Page() {
   useEffect(() => {
     fetch('/api/stats')
       .then(r => r.json())
-      .then((d: { buried: number }) => setBuried(BASE_COUNT + (d.buried ?? 0)))
+      .then((d: { buried: number }) => setBuried(d.buried ?? 0))
       .catch(() => {})
       .finally(() => setStatsLoading(false))
   }, [])
@@ -94,6 +94,7 @@ export default function Page() {
             </p>
           </div>
           <Leaderboard onSelect={handleSelect} />
+          <RecentlyBuried onSelect={handleSelect} />
         </div>
       )}
 

@@ -173,7 +173,7 @@ export async function GET(request: NextRequest) {
     cause: causeOfDeath,
     score: deathIndex,
     analyzedAt: new Date().toISOString(),
-  })
+  }).catch(() => {})
 
   return NextResponse.json(certificate)
 }
