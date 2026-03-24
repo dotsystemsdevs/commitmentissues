@@ -165,7 +165,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
       />
 
       {/* ── Certificate — fixed 480×679, CSS var scales on mobile ── */}
-      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'flex-start', marginBottom: '24px' }}>
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'flex-start', marginBottom: '14px' }}>
         <div
           ref={wrapperRef}
           style={{
@@ -187,13 +187,26 @@ export default function CertificateCard({ cert, onReset }: Props) {
 
       {/* ── Actions ── */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}>
+        <p
+          style={{
+            margin: '0 0 2px 0',
+            textAlign: 'center',
+            fontFamily: UI,
+            fontSize: '13px',
+            color: '#8f8680',
+            fontWeight: 500,
+            letterSpacing: '0.02em',
+          }}
+        >
+          Send this to a maintainer.
+        </p>
 
         {/* Share + Download row */}
         <div style={{ display: 'flex', gap: '8px' }}>
 
           {/* Share */}
           <button type="button" onClick={handleShare}
-            style={{ flex: 1, fontFamily: UI, fontSize: '14px', fontWeight: 700, background: '#0a0a0a', color: '#fff', border: '1.5px solid #000', borderRadius: '10px', padding: '14px 10px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', transition: 'opacity 0.15s, transform 0.1s', WebkitTapHighlightColor: 'transparent', touchAction: 'manipulation' }}
+            style={{ flex: 1, fontFamily: UI, fontSize: '14px', fontWeight: 700, background: '#0a0a0a', color: '#fff', border: '1.5px solid #000', borderRadius: '10px', minHeight: '50px', padding: '14px 10px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', transition: 'opacity 0.15s, transform 0.1s', WebkitTapHighlightColor: 'transparent', touchAction: 'manipulation' }}
             disabled={isGeneratingShare}
             onMouseEnter={e => { e.currentTarget.style.opacity = '0.9'; e.currentTarget.style.transform = 'translateY(-1px)' }}
             onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'translateY(0)' }}
@@ -205,7 +218,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
 
           {/* Download */}
           <button type="button" onClick={() => handleDownload(3, 'certificate')}
-            style={{ flex: 1, fontFamily: UI, fontSize: '14px', fontWeight: 700, background: '#fff', color: '#160A06', border: '1.5px solid #000', borderRadius: '10px', padding: '14px 10px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', transition: 'background 0.15s, border-color 0.15s, transform 0.1s', WebkitTapHighlightColor: 'transparent', touchAction: 'manipulation' }}
+            style={{ flex: 1, fontFamily: UI, fontSize: '14px', fontWeight: 700, background: '#fff', color: '#160A06', border: '1.5px solid #000', borderRadius: '10px', minHeight: '50px', padding: '14px 10px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', transition: 'background 0.15s, border-color 0.15s, transform 0.1s', WebkitTapHighlightColor: 'transparent', touchAction: 'manipulation' }}
             onMouseEnter={e => { e.currentTarget.style.borderColor = '#888'; e.currentTarget.style.transform = 'translateY(-1px)' }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = '#000'; e.currentTarget.style.transform = 'translateY(0)' }}
             onMouseDown={e => { e.currentTarget.style.transform = 'scale(0.97)' }}
@@ -230,7 +243,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
             border: '1px solid #d0cac4',
             borderRadius: '10px',
             cursor: 'pointer',
-            padding: '12px 16px',
+            padding: '13px 16px',
             textAlign: 'center',
             width: '100%',
             transition: 'border-color 0.15s, box-shadow 0.15s, transform 0.12s',
@@ -285,8 +298,8 @@ export default function CertificateCard({ cert, onReset }: Props) {
             }}
             onClick={e => e.stopPropagation()}
           >
-            <p style={{ margin: '0 0 4px 0', fontFamily: UI, fontSize: '14px', fontWeight: 700, color: '#160A06' }}>
-              Share this certificate
+            <p style={{ margin: '0 0 4px 0', fontFamily: UI, fontSize: '14px', fontWeight: 700, color: '#160A06', letterSpacing: '0.01em' }}>
+              Share this death certificate
             </p>
 
             <button
