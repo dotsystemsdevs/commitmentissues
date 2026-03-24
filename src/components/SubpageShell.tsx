@@ -22,8 +22,6 @@ export default function SubpageShell({ subtitle, title, microcopy, headerExtra, 
         <PageHero subtitle={subtitle} title={title} microcopy={microcopy} brandHref="/" />
         {headerExtra ? <div className="page-hero-extra">{headerExtra}</div> : null}
 
-        <div className="page-shell-rule" role="presentation" />
-
         <div className="page-shell-body page-shell-body--subpage">{children}</div>
 
         <SiteFooter />
