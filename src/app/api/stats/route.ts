@@ -2,6 +2,12 @@ import { NextRequest, NextResponse } from 'next/server'
 
 const BURIED_HISTORICAL_BASELINE = 800
 
+function normalizeBuriedCount(rawBuried: number | null | undefined) {
+  const value = rawBuried ?? 0
+  // Backward compatibility: old counters started from 0 before baseline existed.
+  return value < BURIED_HISTORICAL_BASELINE ? value + BURIED_HISTORICAL_BASELINE : value
+}
+
 async function getRedis() {
   if (!process.env.KV_REST_API_URL || !process.env.KV_REST_API_TOKEN) return null
   try {
@@ -22,7 +28,7 @@ export async function GET() {
       redis.get<number>('stats:downloaded'),
     ])
     return NextResponse.json({
-      buried:     buried     ?? BURIED_HISTORICAL_BASELINE,
+      buried:     normalizeBuriedCount(buried),
       shared:     shared     ?? 0,
       downloaded: downloaded ?? 0,
     })
