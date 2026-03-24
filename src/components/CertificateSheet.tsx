@@ -102,19 +102,15 @@ const CertificateSheet = forwardRef<HTMLDivElement, Props>(
               {cert.causeOfDeath}
             </p>
             {showStamp && (
-              <div ref={stampRef} style={{ position: 'absolute', bottom: '6px', right: '8px', pointerEvents: 'none', userSelect: 'none' }}>
-                <svg className="stamp-animate" width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    <path id="ripArc" d="M 4,45 A 41,41 0 0,1 86,45" />
-                  </defs>
-                  <circle cx="45" cy="45" r="42" stroke="rgba(139,26,26,0.68)" strokeWidth="2" />
-                  <circle cx="45" cy="45" r="35" stroke="rgba(139,26,26,0.35)" strokeWidth="1" strokeDasharray="2 3" />
-                  <text fontFamily="'Courier New', monospace" fontSize="7.5" fill="rgba(139,26,26,0.72)" fontWeight="700" letterSpacing="1.8">
-                    <textPath href="#ripArc" startOffset="50%" textAnchor="middle">REST IN PRODUCTION</textPath>
-                  </text>
-                  <text x="45" y="56" textAnchor="middle" fontSize="16" fill="rgba(139,26,26,0.45)">✝</text>
-                  <text x="45" y="72" textAnchor="middle" fontFamily="'Courier New', monospace" fontSize="5" fill="rgba(139,26,26,0.38)" letterSpacing="0.8">COMMITMENTISSUES.DEV</text>
-                </svg>
+              <div ref={stampRef} style={{ position: 'absolute', bottom: '10px', right: '10px', transform: 'rotate(-7deg)', pointerEvents: 'none', userSelect: 'none' }}>
+                <div className="stamp-animate" style={{ border: '3px solid rgba(139,26,26,0.68)', borderRadius: '3px', padding: '6px 16px', background: 'rgba(139,26,26,0.03)' }}>
+                  <span style={{ fontFamily: MONO, fontSize: '11px', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(139,26,26,0.72)', display: 'block', textAlign: 'center', lineHeight: 1.25 }}>
+                    REST IN<br />PRODUCTION
+                  </span>
+                  <p style={{ fontFamily: MONO, fontSize: '6px', letterSpacing: '0.3em', textAlign: 'center', color: 'rgba(139,26,26,0.42)', textTransform: 'uppercase', margin: '5px 0 0 0' }}>
+                    commitmentissues.dev
+                  </p>
+                </div>
               </div>
             )}
           </div>
