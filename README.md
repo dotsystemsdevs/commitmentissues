@@ -96,7 +96,6 @@ src/
 │       └── recent/
 ├── components/
 │   ├── CertificateCard.tsx
-│   ├── CertificateSheet.tsx
 │   ├── Leaderboard.tsx
 │   ├── SearchForm.tsx
 │   └── LoadingState.tsx
