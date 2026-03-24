@@ -511,7 +511,8 @@ a.subpage-inline-mail {
   .certificate-scroll-zone {
     width: 100vw;
     margin-left: calc(50% - 50vw);
-    padding: 0;
+    padding: 0 16px;
+    box-sizing: border-box;
     overflow: visible;
   }
 
