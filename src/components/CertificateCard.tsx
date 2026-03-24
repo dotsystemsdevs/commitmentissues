@@ -209,7 +209,6 @@ export default function CertificateCard({ cert, onReset }: Props) {
           gap: '12px',
           paddingBottom: '12px',
           marginBottom: '14px',
-          borderBottom: '1px solid #cfcfcf',
         }}
       >
         <button
