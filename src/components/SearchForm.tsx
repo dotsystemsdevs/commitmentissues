@@ -94,7 +94,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
             inputMode="url"
             value={url}
             onChange={e => { if (invalid) setInvalid(false); handleChange(e.target.value) }}
-            placeholder="user/repo or full GitHub URL"
+            placeholder="paste-your-repo-url-here"
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
             style={{
