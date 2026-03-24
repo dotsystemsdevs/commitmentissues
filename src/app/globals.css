@@ -601,7 +601,7 @@ a.subpage-inline-mail {
 
 @media (max-width: 640px) {
   /* Scale only the fixed canvas visually; layout stays pixel-locked. */
-  :root { --cert-ui-scale: clamp(0.34, calc((100vw - 56px) / 794), 0.50); }
+  :root { --cert-ui-scale: clamp(0.26, calc((100vw - 72px) / 794), 0.40); }
 }
 
 /* ── Mobile ── */
