@@ -31,11 +31,11 @@ export default function SiteFooter({ compact = false }: SiteFooterProps) {
     <footer className={`site-footer${compact ? ' site-footer--compact' : ''}`}>
       <nav className="site-footer-nav" aria-label="Footer">
         {LINKS.map(({ href, label }) => (
-          <a key={href} href={href} style={{ fontFamily: FONT }}>{label}</a>
+          <a key={href} href={href} className="alive-interactive" style={{ fontFamily: FONT }}>{label}</a>
         ))}
       </nav>
       <a
-        className="site-footer-source-link"
+        className="site-footer-source-link alive-interactive"
         href="https://github.com/dotsystemsdevs/saas-commitmentissues"
         target="_blank"
         rel="noopener noreferrer"
@@ -61,7 +61,7 @@ export default function SiteFooter({ compact = false }: SiteFooterProps) {
       </a>
       <button
         type="button"
-        className={`site-footer-copy site-footer-copy-btn${aliveFlash ? ' site-footer-copy--alive' : ''}`}
+        className={`site-footer-copy site-footer-copy-btn alive-interactive${aliveFlash ? ' site-footer-copy--alive' : ''}`}
         onClick={handleRestClick}
         style={{ fontFamily: FONT }}
       >

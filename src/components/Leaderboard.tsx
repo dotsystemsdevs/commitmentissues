@@ -45,6 +45,7 @@ export default function Leaderboard({ onSelect }: Props) {
   function GraveyardCard({ entry }: { entry: LeaderboardEntry }) {
     return (
       <button
+        className="alive-card"
         type="button"
         onClick={() => { track('graveyard_clicked', { repo: entry.fullName }); onSelect(`https://github.com/${entry.fullName}`) }}
         style={{

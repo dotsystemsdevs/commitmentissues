@@ -41,6 +41,7 @@ export default function RecentlyBuried({ onSelect }: Props) {
   function Card({ entry }: { entry: typeof entries[number] }) {
     return (
       <button
+        className="alive-card"
         type="button"
         onClick={() => {
           track('recent_clicked', { repo: entry.fullName })

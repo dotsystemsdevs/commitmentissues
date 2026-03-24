@@ -20,6 +20,7 @@ export default function ErrorDisplay({ error, onRetry }: Props) {
           <p style={{ fontSize: '13px', color: '#7A5C38', margin: 0 }}>retry in {error.retryAfter}s</p>
         ) : (
           <button
+            className="alive-interactive"
             onClick={onRetry}
             style={{
               fontFamily: FONT,

@@ -237,6 +237,36 @@ button {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Shared micro-interactions for a livelier feel */
+.alive-interactive {
+  transition: transform 0.16s ease, opacity 0.16s ease, box-shadow 0.18s ease, color 0.15s ease, background 0.15s ease;
+}
+
+.alive-interactive:active {
+  transform: translateY(1px) scale(0.985);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .alive-interactive:hover {
+    transform: translateY(-1px);
+  }
+}
+
+.alive-card {
+  transition: transform 0.18s ease, box-shadow 0.2s ease, border-color 0.15s ease, opacity 0.12s ease;
+  will-change: transform;
+}
+
+.alive-card:active {
+  transform: translateY(1px) scale(0.988);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .alive-card:hover {
+    transform: translateY(-2px);
+  }
+}
+
 /* ── Graveyard ── */
 @keyframes marquee {
   from { transform: translateX(0); }
@@ -536,6 +566,10 @@ a.subpage-inline-mail {
   animation: section-fade-up 420ms ease-out both;
 }
 
+.ux-live-section {
+  animation: section-fade-up 420ms ease-out both;
+}
+
 .certificate-card-shell {
   animation: section-fade-up 380ms ease-out both;
 }
@@ -562,6 +596,7 @@ a.subpage-inline-mail {
   .page-hero,
   .input-block,
   .chips-section,
+  .ux-live-section,
   .certificate-card-shell,
   .site-footer,
   .about-cards > div,
@@ -646,6 +681,11 @@ a.subpage-inline-mail {
     justify-content: flex-start !important;
     text-align: left !important;
     padding-left: 14px !important;
+  }
+
+  .alive-interactive:active,
+  .alive-card:active {
+    transform: scale(0.99);
   }
 
   .input-button-wrapper:focus-within {

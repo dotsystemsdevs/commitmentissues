@@ -124,7 +124,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
         {/* Button */}
         <ClickSpark color="#2b2b2b">
         <button
-          className="input-submit-button"
+          className="input-submit-button alive-interactive"
           type="submit"
           disabled={loading}
           aria-label="Issue death certificate"
@@ -168,6 +168,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
       {/* Random dead repo */}
       <div className="chips-section" style={{ display: 'flex', justifyContent: 'center', marginTop: '6px', marginBottom: '8px' }}>
         <button
+          className="alive-interactive"
           type="button"
           onClick={handleRandom}
           disabled={randomLoading || loading}

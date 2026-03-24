@@ -75,7 +75,7 @@ export default function Page() {
             />
           </div>
 
-          <div style={{ width: '100%', marginTop: '10px' }}>
+          <div className="ux-live-section" style={{ width: '100%', marginTop: '10px' }}>
             <SearchForm url={url} setUrl={setUrl} onSubmit={analyze} onSelect={handleSelect} loading={loading} />
           </div>
 
@@ -95,13 +95,13 @@ export default function Page() {
 
       {/* Certificate — inline, no redirect */}
       {certificate && !loading && (
-        <div className="certificate-scroll-zone" style={{ width: '100%' }}>
+        <div className="certificate-scroll-zone ux-live-section" style={{ width: '100%' }}>
           <CertificateCard cert={certificate} onReset={reset} />
         </div>
       )}
 
       {idle && (
-        <div style={{ width: '100%', marginTop: '34px', paddingBottom: 0 }}>
+        <div className="ux-live-section" style={{ width: '100%', marginTop: '34px', paddingBottom: 0 }}>
           <div style={{ marginBottom: '14px', textAlign: 'center' }}>
             <p style={{ fontFamily: FONT, fontSize: '13px', fontWeight: 700, color: '#727272', margin: 0, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
               Recently Buried

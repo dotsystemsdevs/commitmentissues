@@ -21,6 +21,7 @@ export default function SubpageShell({ subtitle, title, microcopy, headerExtra, 
           <Link
             href="/"
             aria-label="Back to home"
+            className="subpage-back-link alive-interactive"
             style={{
               fontFamily: UI,
               display: 'inline-flex',
