@@ -5,7 +5,6 @@ import { track } from '@vercel/analytics'
 import type { LeaderboardEntry } from '@/lib/types'
 
 const FONT = `var(--font-dm), -apple-system, sans-serif`
-const MONO = `var(--font-courier), 'Courier New', monospace`
 
 interface Props {
   onSelect: (url: string) => void
@@ -43,7 +42,7 @@ export default function RecentlyBuried({ onSelect }: Props) {
           minHeight: '184px',
           flexShrink: 0,
           padding: '20px',
-          background: '#ebebeb',
+          background: '#f2f2f2',
           border: '2px solid #8c8c8c',
           borderRadius: '0px',
           cursor: 'pointer',
@@ -63,22 +62,17 @@ export default function RecentlyBuried({ onSelect }: Props) {
         onMouseUp={e => { e.currentTarget.style.opacity = '1' }}
       >
         <span style={{ fontSize: '20px', lineHeight: 1 }}>🪦</span>
-        <span style={{ fontFamily: MONO, fontSize: '15px', fontWeight: 700, color: '#0a0a0a', lineHeight: 1.3, wordBreak: 'break-word' }}>
+        <span style={{ fontSize: '15px', fontWeight: 700, color: '#0a0a0a', lineHeight: 1.3, wordBreak: 'break-word' }}>
           {entry.fullName}
         </span>
         <span style={{ fontSize: '14px', fontStyle: 'italic', color: '#4d4d4d', lineHeight: 1.6, fontWeight: 500, marginTop: '2px' }}>
           {entry.cause}
         </span>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', marginTop: 'auto' }}>
-          <span style={{ fontSize: '12px', color: '#787878' }}>
-            {entry.analyzedAt
-              ? new Date(entry.analyzedAt).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })
-              : ''}
-          </span>
-          <span style={{ fontFamily: MONO, fontSize: '13px', fontWeight: 700, color: '#8B0000' }}>
-            {entry.score}/10
-          </span>
-        </div>
+        <span style={{ fontSize: '12px', color: '#787878', marginTop: '4px' }}>
+          {entry.analyzedAt
+            ? new Date(entry.analyzedAt).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })
+            : ''}
+        </span>
       </button>
     )
   }
