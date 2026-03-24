@@ -17,9 +17,8 @@ export default function CertificateCard({ cert, onReset }: Props) {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const stampRef   = useRef<HTMLDivElement>(null)
   const topRef     = useRef<HTMLDivElement>(null)
-  const [visible,   setVisible]   = useState(false)
-  const [showModal, setShowModal] = useState(false)
-  const [copyLabel, setCopyLabel] = useState('Copy link')
+  const [visible,    setVisible]    = useState(false)
+  const [shareLabel, setShareLabel] = useState<string | null>(null)
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 50)
@@ -32,14 +31,6 @@ export default function CertificateCard({ cert, onReset }: Props) {
       topRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
   }, [visible])
-
-  // ESC closes share modal
-  useEffect(() => {
-    if (!showModal) return
-    function onKey(e: KeyboardEvent) { if (e.key === 'Escape') setShowModal(false) }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [showModal])
 
   // watermark=false → paid clean export (stamp hidden, pixelRatio 5.167 = 2480px, true 300 DPI on A4)
   // watermark=true  → free share export (pixelRatio 2 = 960px, stamp visible)
@@ -74,6 +65,8 @@ export default function CertificateCard({ cert, onReset }: Props) {
     return new Promise(resolve => canvas.toBlob(b => resolve(b), 'image/png'))
   }
 
+  const stat = (counter: string) => fetch('/api/stats', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ counter }) }).catch(() => {})
+
   async function handleShare() {
     track('share_clicked')
     if (navigator.canShare) {
@@ -83,41 +76,37 @@ export default function CertificateCard({ cert, onReset }: Props) {
         if (navigator.canShare({ files: [file] })) {
           try { await navigator.share({ files: [file], title: cert.repoData.name, text: cert.shareText }) }
           catch { /* cancelled */ }
-          fetch('/api/stats', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ counter: 'shared' }) }).catch(() => {})
+          stat('shared')
           return
         }
       }
     }
-    setShowModal(true)
-  }
-
-  async function handleCopyLink() {
     try {
       await navigator.clipboard.writeText('https://commitmentissues.dev')
-      setCopyLabel('Copied!')
-      setTimeout(() => setCopyLabel('Copy link'), 2000)
+      setShareLabel('Link copied!')
+      setTimeout(() => setShareLabel(null), 2000)
     } catch { /* ignore */ }
-    fetch('/api/stats', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ counter: 'shared' }) }).catch(() => {})
+    stat('shared')
   }
 
   function handleTweet() {
+    track('tweet_clicked')
     const text = encodeURIComponent(`RIP ${cert.repoData.fullName}.\n\nCause of death: ${cert.causeOfDeath}\n\n💀`)
     const url  = encodeURIComponent('https://commitmentissues.dev')
     window.open(`https://x.com/intent/tweet?text=${text}&url=${url}`, '_blank')
-    fetch('/api/stats', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ counter: 'shared' }) }).catch(() => {})
+    stat('shared')
   }
 
-  async function handleDownloadWatermarked() {
-    const blob = await exportBlob(2, true)
+  async function handleDownload(pixelRatio: number, suffix: string) {
+    const blob = await exportBlob(pixelRatio, true)
     if (!blob) return
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `${cert.repoData.name}-death-certificate.png`
+    a.download = `${cert.repoData.name}-${suffix}.png`
     a.click()
     URL.revokeObjectURL(url)
-    fetch('/api/stats', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ counter: 'shared' }) }).catch(() => {})
-    setShowModal(false)
+    stat('downloaded')
   }
 
   const { repoData: r } = cert
@@ -125,46 +114,6 @@ export default function CertificateCard({ cert, onReset }: Props) {
 
   return (
     <div ref={topRef} style={{ width: '100%', maxWidth: '480px', margin: '0 auto' }}>
-
-      {/* ── Share modal ── */}
-      {showModal && (
-        <div
-          onClick={() => setShowModal(false)}
-          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.55)', zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px', backdropFilter: 'blur(4px)' }}
-        >
-          <div
-            onClick={e => e.stopPropagation()}
-            style={{ background: '#fff', borderRadius: '12px', width: '100%', maxWidth: '360px', overflow: 'hidden', boxShadow: '0 20px 60px rgba(0,0,0,0.3)', animation: 'modal-fadein 0.18s ease' }}
-          >
-            <div style={{ padding: '24px 24px 16px', borderBottom: '1px solid #eee' }}>
-              <p style={{ fontFamily: UI, fontSize: '11px', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#938882', margin: '0 0 4px 0' }}>Share</p>
-              <p style={{ fontFamily: UI, fontSize: '1.05rem', fontWeight: 600, color: '#160A06', margin: 0, lineHeight: 1.25 }}>{r.name} is officially dead</p>
-            </div>
-            {([
-              { key: 'copy',     label: copyLabel,                     sub: 'commitmentissues.dev',           fn: handleCopyLink },
-              { key: 'tweet',    label: 'Post on X',                   sub: 'Opens X with pre-filled text',   fn: handleTweet },
-              { key: 'download', label: 'Download image (watermarked)', sub: 'Free PNG · 960px · includes site URL', fn: handleDownloadWatermarked },
-            ] as { key: string; label: string; sub: string; fn: () => void }[]).map(({ key, label, sub, fn }) => (
-              <button
-                key={key}
-                onClick={fn}
-                style={{ display: 'block', width: '100%', padding: '16px 24px', background: 'none', border: 'none', borderBottom: '1px solid #f0f0f0', cursor: 'pointer', textAlign: 'left', transition: 'background 0.12s', WebkitTapHighlightColor: 'transparent', touchAction: 'manipulation' }}
-                onMouseEnter={e => (e.currentTarget.style.background = '#fafafa')}
-                onMouseLeave={e => (e.currentTarget.style.background = 'none')}
-              >
-                <div style={{ fontFamily: UI, fontSize: '14px', fontWeight: 600, color: '#160A06' }}>{label}</div>
-                <div style={{ fontFamily: UI, fontSize: '12px', color: '#938882', marginTop: '2px' }}>{sub}</div>
-              </button>
-            ))}
-            <button
-              onClick={() => setShowModal(false)}
-              style={{ display: 'block', width: '100%', padding: '14px 24px', background: 'none', border: 'none', cursor: 'pointer', fontFamily: UI, fontSize: '13px', color: '#938882', textAlign: 'center', WebkitTapHighlightColor: 'transparent', touchAction: 'manipulation' }}
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
 
       {/* ── Title ── */}
       <PageHero
@@ -199,106 +148,66 @@ export default function CertificateCard({ cert, onReset }: Props) {
       </div>
 
       {/* ── Actions ── */}
-      <div className="cert-actions" style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}>
 
-        {/* Share */}
+        {/* Primary: Share */}
         <button
           onClick={handleShare}
-          className="cert-share-btn"
           style={{
-            width: '100%',
-            fontFamily: UI,
-            fontSize: '17px',
-            fontWeight: 700,
-            background: '#0a0a0a',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '10px',
-            padding: '18px 24px',
-            cursor: 'pointer',
-            textAlign: 'center',
+            width: '100%', fontFamily: UI, fontSize: '17px', fontWeight: 700,
+            background: '#0a0a0a', color: '#fff', border: 'none', borderRadius: '10px',
+            padding: '18px 24px', cursor: 'pointer', textAlign: 'center',
             transition: 'opacity 0.15s, transform 0.1s',
-            WebkitTapHighlightColor: 'transparent',
-            touchAction: 'manipulation',
+            WebkitTapHighlightColor: 'transparent', touchAction: 'manipulation',
           }}
           onMouseEnter={e => { e.currentTarget.style.opacity = '0.88'; e.currentTarget.style.transform = 'translateY(-1px)' }}
           onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'translateY(0)' }}
           onMouseDown={e => { e.currentTarget.style.transform = 'scale(0.97)' }}
           onMouseUp={e => { e.currentTarget.style.transform = 'translateY(-1px)' }}
         >
-          💀 Share this certificate →
+          💀 {shareLabel ?? 'Share this certificate →'}
         </button>
 
-        {/* Post on X — direct, no modal */}
-        <button
-          type="button"
-          onClick={handleTweet}
-          style={{
-            width: '100%',
-            fontFamily: UI,
-            fontSize: '14px',
-            fontWeight: 600,
-            background: '#fff',
-            color: '#0a0a0a',
-            border: '1.5px solid #0a0a0a',
-            borderRadius: '10px',
-            padding: '14px 24px',
-            cursor: 'pointer',
-            textAlign: 'center',
-            transition: 'background 0.15s, transform 0.1s',
-            WebkitTapHighlightColor: 'transparent',
-            touchAction: 'manipulation',
-          }}
-          onMouseEnter={e => { e.currentTarget.style.background = '#f5f5f5'; e.currentTarget.style.transform = 'translateY(-1px)' }}
-          onMouseLeave={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.transform = 'translateY(0)' }}
-          onMouseDown={e => { e.currentTarget.style.transform = 'scale(0.97)' }}
-          onMouseUp={e => { e.currentTarget.style.transform = 'translateY(-1px)' }}
-        >
-          Post on X →
-        </button>
-
-        {/* Coffee */}
-        <a
-          href="https://buymeacoffee.com/commitmentissues"
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => track('coffee_clicked')}
-          style={{
-            display: 'block',
-            width: '100%',
-            fontFamily: UI,
-            fontSize: '13px',
-            color: '#938882',
-            textAlign: 'center',
-            textDecoration: 'none',
-            padding: '10px 0 2px',
-            transition: 'color 0.15s',
-          }}
-          onMouseEnter={e => (e.currentTarget.style.color = '#160A06')}
-          onMouseLeave={e => (e.currentTarget.style.color = '#938882')}
-        >
-          This runs on vibes and cheap hosting ☕
-        </a>
+        {/* Platform row */}
+        <div style={{ display: 'flex', gap: '8px' }}>
+          {([
+            { label: '𝕏  Post on X',       sub: 'Pre-filled tweet',          fn: handleTweet },
+            { label: '📷  Instagram',        sub: 'Download optimised image',  fn: () => handleDownload(2, 'instagram') },
+            { label: '↓  Download A4',      sub: 'High-res PNG',              fn: () => handleDownload(3, 'certificate') },
+          ] as { label: string; sub: string; fn: () => void }[]).map(({ label, sub, fn }) => (
+            <button
+              key={label}
+              type="button"
+              onClick={fn}
+              style={{
+                flex: 1, fontFamily: UI, fontSize: '12px', fontWeight: 600,
+                background: '#fff', color: '#0a0a0a',
+                border: '1.5px solid #d0cac4', borderRadius: '10px',
+                padding: '10px 6px', cursor: 'pointer', textAlign: 'center',
+                transition: 'background 0.12s, border-color 0.12s, transform 0.1s',
+                WebkitTapHighlightColor: 'transparent', touchAction: 'manipulation',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = '#888'; e.currentTarget.style.transform = 'translateY(-1px)' }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = '#d0cac4'; e.currentTarget.style.transform = 'translateY(0)' }}
+              onMouseDown={e => { e.currentTarget.style.transform = 'scale(0.97)' }}
+              onMouseUp={e => { e.currentTarget.style.transform = 'translateY(-1px)' }}
+            >
+              <div>{label}</div>
+              <div style={{ fontSize: '10px', fontWeight: 400, color: '#938882', marginTop: '2px' }}>{sub}</div>
+            </button>
+          ))}
+        </div>
 
         {/* Bury another */}
         <button
           type="button"
           onClick={() => { track('issue_another_clicked'); onReset() }}
           style={{
-            fontFamily: UI,
-            fontSize: '13px',
-            color: '#938882',
-            background: '#fff',
-            border: '1.5px solid #e0dbd5',
-            borderRadius: '10px',
-            cursor: 'pointer',
-            padding: '14px 24px',
-            minHeight: '48px',
-            textAlign: 'center',
-            width: '100%',
-            transition: 'color 0.15s',
-            WebkitTapHighlightColor: 'transparent',
-            touchAction: 'manipulation',
+            fontFamily: UI, fontSize: '13px', color: '#938882',
+            background: '#fff', border: '1.5px solid #e0dbd5', borderRadius: '10px',
+            cursor: 'pointer', padding: '14px 24px', minHeight: '48px',
+            textAlign: 'center', width: '100%', transition: 'color 0.15s, border-color 0.15s',
+            WebkitTapHighlightColor: 'transparent', touchAction: 'manipulation',
           }}
           onMouseEnter={e => { e.currentTarget.style.color = '#160A06'; e.currentTarget.style.borderColor = '#888' }}
           onMouseLeave={e => { e.currentTarget.style.color = '#938882'; e.currentTarget.style.borderColor = '#e0dbd5' }}
