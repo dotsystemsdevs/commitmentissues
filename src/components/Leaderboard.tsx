@@ -58,7 +58,7 @@ export default function Leaderboard({ onSelect }: Props) {
           flexShrink: 0,
           padding: '20px',
           background: '#f2f2f2',
-          border: '2px solid #8c8c8c',
+          border: '2px solid #1a1a1a',
           borderRadius: '0px',
           cursor: 'pointer',
           textAlign: 'left',
@@ -70,7 +70,7 @@ export default function Leaderboard({ onSelect }: Props) {
           e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.10)'
         }}
         onMouseLeave={e => {
-          e.currentTarget.style.borderColor = '#8c8c8c'
+          e.currentTarget.style.borderColor = '#1a1a1a'
           e.currentTarget.style.boxShadow = '0 1px 4px rgba(0,0,0,0.05)'
         }}
         onMouseDown={e => {

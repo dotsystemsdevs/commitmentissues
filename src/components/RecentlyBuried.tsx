@@ -24,6 +24,9 @@ export default function RecentlyBuried({ onSelect }: Props) {
 
   if (entries.length === 0) return null
 
+  // Match Famous Casualties px/s: 36 cards × 310px in 80s = 139.5 px/s
+  const duration = Math.round((entries.length * 310) / 139.5)
+
   function Card({ entry }: { entry: typeof entries[number] }) {
     return (
       <button
@@ -43,7 +46,7 @@ export default function RecentlyBuried({ onSelect }: Props) {
           flexShrink: 0,
           padding: '20px',
           background: '#f2f2f2',
-          border: '2px solid #8c8c8c',
+          border: '2px solid #1a1a1a',
           borderRadius: '0px',
           cursor: 'pointer',
           textAlign: 'left',
@@ -55,7 +58,7 @@ export default function RecentlyBuried({ onSelect }: Props) {
           e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.10)'
         }}
         onMouseLeave={e => {
-          e.currentTarget.style.borderColor = '#8c8c8c'
+          e.currentTarget.style.borderColor = '#1a1a1a'
           e.currentTarget.style.boxShadow = '0 1px 4px rgba(0,0,0,0.05)'
         }}
         onMouseDown={e => { e.currentTarget.style.opacity = '0.9' }}
@@ -94,7 +97,7 @@ export default function RecentlyBuried({ onSelect }: Props) {
           style={{
             display: 'flex',
             gap: '14px',
-            animation: 'marquee-reverse 22s linear infinite',
+            animation: `marquee-reverse ${duration}s linear infinite`,
             width: 'max-content',
           }}
         >
