@@ -61,7 +61,7 @@ const jsonLd = {
   url: 'https://commitmentissues.dev',
   applicationCategory: 'DeveloperApplication',
   operatingSystem: 'Web',
-  offers: { '@type': 'Offer', price: '4.99', priceCurrency: 'USD' },
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
