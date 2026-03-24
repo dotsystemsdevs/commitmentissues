@@ -401,20 +401,22 @@ a.subpage-inline-mail {
 }
 
 .homepage-cert-preview {
+  --hero-cert-scale: 0.62;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  height: 255px;
-  overflow: hidden;
-  transform: scale(0.7);
-  transform-origin: top center;
-  opacity: 0.85;
+  height: calc(679px * var(--hero-cert-scale));
+  overflow: visible;
+  opacity: 0.92;
   margin-top: 12px;
   margin-bottom: 0;
   pointer-events: none;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
+}
+
+.homepage-cert-preview > * {
+  transform: scale(var(--hero-cert-scale));
+  transform-origin: top center;
 }
 
 .site-footer-nav {
@@ -544,7 +546,7 @@ a.subpage-inline-mail {
   }
 
   .homepage-cert-preview {
-    height: 220px;
+    --hero-cert-scale: 0.52;
   }
 
   .page-shell-body--subpage {
