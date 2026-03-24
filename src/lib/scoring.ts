@@ -69,7 +69,7 @@ export function determineCauseOfDeath(repo: RepoData): string {
       cause: 'Too ambitious for its own good',
     },
     {
-      score: isJS ? 5 : 0,
+      score: isJS && daysSince > 365 ? 5 : 0,
       cause: 'Lost in dependency hell',
     },
     {
