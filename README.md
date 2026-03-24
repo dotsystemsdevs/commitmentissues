@@ -1,29 +1,33 @@
-# commitmentissues.dev ☠️
+# ☠️ commitmentissues.dev
 
-> Official death certificates for abandoned GitHub repos.
+<p align="center">
+  <strong>Official death certificates for abandoned GitHub repos.</strong><br/>
+  Paste a URL. Find out how dead it is.
+</p>
 
-Paste any public GitHub repo URL. Get a beautifully formatted death certificate — cause of death, last words, death index score, and more.
-
-**Live at [commitmentissues.dev](https://commitmentissues.dev)**
+<p align="center">
+  <a href="https://commitmentissues.dev"><img src="https://img.shields.io/badge/live-commitmentissues.dev-black?style=flat-square" /></a>
+  <img src="https://img.shields.io/github/license/dotsystemsdevs/saas-commitmentissues?style=flat-square" />
+  <img src="https://img.shields.io/badge/built%20with-Next.js%2014-black?style=flat-square&logo=next.js" />
+  <img src="https://img.shields.io/badge/deployed%20on-Vercel-black?style=flat-square&logo=vercel" />
+</p>
 
 ---
 
-## How it works
+## What it does
+
+You paste a GitHub repo URL. We run it through our **death index scoring algorithm** and generate an official, downloadable death certificate — complete with cause of death, last words, and a score from 0 to 10.
 
 ```
-User pastes: https://github.com/facebook/react
-                        ↓
-          Extracts owner + repo name
-                        ↓
-     Calls GitHub public API (no key required)
-       — repo metadata + latest commit —
-                        ↓
-        Scores the repo: 0–10 death index
-                        ↓
-          Renders the death certificate
+https://github.com/facebook/react
+              ↓
+  Fetches repo metadata + latest commit
+  via GitHub public API (no key needed)
+              ↓
+  Calculates death index (0–10)
+              ↓
+  ☠️ Certificate of Death
 ```
-
-No database. No login required for public repos. Just the GitHub API and rule-based logic.
 
 ---
 
@@ -33,50 +37,46 @@ No database. No login required for public repos. Just the GitHub API and rule-ba
 |-----------|--------|
 | Last commit > 2 years ago | +4 |
 | Last commit 1–2 years ago | +2 |
-| Repo is archived | +3 |
+| Repo is `archived: true` | +3 |
 | 20+ open issues AND inactive 6+ months | +1 |
-| 100+ stars but no activity 1+ year | +1 |
+| 100+ stars but no activity for 1+ year | +1 |
 
-**Cause of death** is determined by matching the highest-scoring rule — from `"Officially declared dead by author"` to `"Side project syndrome"`.
+**Maximum: 10.** 0 = alive. 10 = fossil.
+
+**Cause of death** is rule-based — the highest-scoring match wins:
+
+| Condition | Cause of Death |
+|-----------|---------------|
+| `archived = true` | "Officially declared dead by author" |
+| Last commit: "fix typo" or "update readme" | "Died whispering: one last fix" |
+| Only 1–3 commits total | "Died after 3 commits and a burst of motivation" |
+| 200+ stars but inactive | "Started strong. Never finished." |
+| No description | "No README. No hope." |
+| Default | "Side project syndrome" |
+
+---
+
+## Features
+
+- **Death certificate** with cause, last words, age, mourners (stars/forks), and language
+- **CERTIFIED DEAD stamp** animation on certificate entry
+- **Download as PNG** — frame it, send it, post it
+- **Share on X** with pre-filled text
+- **Leaderboard** — Hall of Shame (curated) + Recently Buried (localStorage)
+- **Premium features** via Stripe
 
 ---
 
 ## Stack
 
-- **Framework:** Next.js 14 (App Router)
-- **Styling:** Tailwind CSS
-- **Fonts:** Geist (sans) + Geist Mono (mono) via `next/font`
-- **Payments:** Stripe (premium features)
-- **Deploy:** Vercel
-
----
-
-## Project Structure
-
-```
-src/
-├── app/
-│   ├── page.tsx              ← main UI: search + certificate
-│   ├── certificate/          ← certificate view
-│   ├── pricing/              ← premium plans
-│   ├── faq/                  ← FAQ page
-│   ├── about/                ← about page
-│   └── api/
-│       ├── repo/             ← proxies GitHub API (avoids CORS)
-│       ├── generate-cert/    ← certificate generation
-│       ├── stats/            ← usage stats
-│       ├── recent/           ← recently analyzed repos
-│       └── checkout/         ← Stripe payment flow
-├── components/
-│   ├── CertificateCard.tsx   ← certificate UI + download + animation
-│   ├── Leaderboard.tsx       ← Hall of Shame + Recently Buried
-│   ├── SearchForm.tsx        ← URL input
-│   ├── LoadingState.tsx      ← skeleton loading
-│   └── ErrorDisplay.tsx      ← error states
-└── lib/
-    ├── scoring.ts            ← all death logic
-    └── types.ts              ← TypeScript interfaces
-```
+| | |
+|---|---|
+| Framework | Next.js 14 (App Router) |
+| Styling | Tailwind CSS |
+| Fonts | Geist Sans + Geist Mono |
+| Payments | Stripe |
+| Deploy | Vercel |
+| Data | GitHub Public API (no key required) |
 
 ---
 
@@ -91,23 +91,36 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-Add a `GITHUB_TOKEN` in `.env.local` to raise rate limit from 60 to 5,000 req/hr:
+**Optional:** Add `GITHUB_TOKEN` to `.env.local` to raise API rate limit from 60 → 5,000 req/hr:
 
-```
+```env
 GITHUB_TOKEN=your_token_here
 ```
 
 ---
 
-## Features
+## Project structure
 
-- Death certificate with cause of death, last words, death index
-- Download certificate as PNG
-- Share on X with pre-filled text
-- Leaderboard — Hall of Shame + Recently Buried (localStorage)
-- Entry animation + "CERTIFIED DEAD" stamp
-- Premium features via Stripe
-- SEO: sitemap, robots, OpenGraph image
+```
+src/
+├── app/
+│   ├── page.tsx                 ← search + certificate UI
+│   ├── certificate/             ← certificate view
+│   ├── pricing/                 ← plans
+│   ├── faq/                     ← FAQ
+│   └── api/
+│       ├── repo/                ← GitHub API proxy (CORS)
+│       ├── generate-cert/       ← certificate logic
+│       ├── stats/               ← usage stats
+│       └── checkout/            ← Stripe
+├── components/
+│   ├── CertificateCard.tsx      ← certificate UI + animation + download
+│   ├── Leaderboard.tsx          ← Hall of Shame + Recently Buried
+│   └── SearchForm.tsx           ← URL input
+└── lib/
+    ├── scoring.ts               ← all death logic, no side effects
+    └── types.ts                 ← TypeScript interfaces
+```
 
 ---
 
