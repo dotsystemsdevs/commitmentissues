@@ -1,18 +1,12 @@
 'use client'
 
-import { FormEvent, useState } from 'react'
+import { FormEvent, useState, useCallback } from 'react'
 import { track } from '@vercel/analytics'
 import ClickSpark from '@/components/ClickSpark'
 
 const FONT = `var(--font-dm), -apple-system, sans-serif`
 const MONO = `var(--font-courier), 'Courier New', monospace`
 
-const EXAMPLES = [
-  { owner: 'atom',   repo: 'atom',     url: 'https://github.com/atom/atom',      color: '#8B6B4A' },
-  { owner: 'bower',  repo: 'bower',    url: 'https://github.com/bower/bower',    color: '#7a5c8a' },
-  { owner: 'adobe',  repo: 'brackets', url: 'https://github.com/adobe/brackets', color: '#4a7a6a' },
-]
-const TILTS = [-1.5, 1, -1]
 
 interface Props {
   url: string
@@ -25,6 +19,23 @@ interface Props {
 export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }: Props) {
   const [focused, setFocused] = useState(false)
   const [invalid, setInvalid] = useState(false)
+  const [randomLoading, setRandomLoading] = useState(false)
+
+  const handleRandom = useCallback(async () => {
+    setRandomLoading(true)
+    try {
+      const res = await fetch('/api/random')
+      const data = await res.json() as { url?: string }
+      if (data.url) {
+        track('random_repo_clicked')
+        onSelect(data.url)
+      }
+    } catch {
+      // silently fail
+    } finally {
+      setRandomLoading(false)
+    }
+  }, [onSelect])
 
   function normalizeGithubInput(value: string): string | null {
     const trimmed = value.trim()
@@ -155,53 +166,39 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
         </p>
       )}
 
-      {/* TRY ONE OF THESE chips */}
-      <div className="chips-container chips-section" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', marginTop: '8px', marginBottom: '8px' }}>
-        <span style={{ fontFamily: MONO, fontSize: '10px', letterSpacing: '0.18em', color: '#968d86', textTransform: 'uppercase' }}>
-          start with a known corpse:
-        </span>
-        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'center' }}>
-          {EXAMPLES.map(({ owner, repo, url, color }, i) => (
-            <button
-              key={owner + repo}
-              type="button"
-              onClick={(e) => {
-                e.preventDefault()
-                e.stopPropagation()
-                track('example_chip_clicked', { repo: `${owner}/${repo}` })
-                onSelect(url)
-              }}
-              style={{
-                fontFamily: MONO,
-                fontSize: '12px',
-                background: '#fff',
-                border: '1px solid #0a0a0a',
-                borderRadius: '0px',
-                padding: '10px 14px',
-                minHeight: '44px',
-                cursor: 'pointer',
-                transition: 'border-color 0.12s, background 0.12s, opacity 0.12s',
-                WebkitTapHighlightColor: 'transparent',
-                touchAction: 'manipulation',
-                transform: `rotate(${TILTS[i]}deg)`,
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.borderColor = '#888'
-                e.currentTarget.style.background = '#faf7f3'
-                e.currentTarget.style.opacity = '0.95'
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.borderColor = '#0a0a0a'
-                e.currentTarget.style.background = '#fff'
-                e.currentTarget.style.opacity = '1'
-              }}
-            >
-              <span style={{ color }}>{owner}</span>
-              <span style={{ color: '#b0aca8' }}>/</span>
-              <span style={{ color: '#160A06', fontWeight: 600 }}>{repo}</span>
-            </button>
-          ))}
-        </div>
+      {/* Random dead repo button */}
+      <div className="chips-section" style={{ display: 'flex', justifyContent: 'center', marginTop: '8px', marginBottom: '8px' }}>
+        <button
+          type="button"
+          onClick={handleRandom}
+          disabled={randomLoading || loading}
+          style={{
+            fontFamily: MONO,
+            fontSize: '12px',
+            letterSpacing: '0.06em',
+            background: '#fff',
+            border: '1px solid #0a0a0a',
+            borderRadius: '0px',
+            padding: '10px 20px',
+            minHeight: '44px',
+            cursor: randomLoading || loading ? 'wait' : 'pointer',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            transition: 'background 0.12s, opacity 0.12s',
+            WebkitTapHighlightColor: 'transparent',
+            touchAction: 'manipulation',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = '#faf7f3' }}
+          onMouseLeave={e => { e.currentTarget.style.background = '#fff' }}
+          onMouseDown={e => { e.currentTarget.style.opacity = '0.85' }}
+          onMouseUp={e => { e.currentTarget.style.opacity = '1' }}
+        >
+          {randomLoading
+            ? <><span className="btn-spinner" style={{ borderColor: 'rgba(0,0,0,0.2)', borderTopColor: '#0a0a0a' }} />fetching a corpse...</>
+            : <>🎲 bury a random dead repo</>
+          }
+        </button>
       </div>
 
     </form>
