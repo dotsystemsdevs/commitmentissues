@@ -11,6 +11,19 @@ interface Props {
   onReset: () => void
 }
 
+const DESKTOP_CERT_UI_SCALE = 0.604
+const CERT_RENDER_WIDTH = 794
+const CERT_RENDER_HEIGHT = 1123
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, value))
+}
+
+function getCertificateUiScale(viewportWidth: number) {
+  if (viewportWidth > 900) return DESKTOP_CERT_UI_SCALE
+  return clamp((viewportWidth - 170) / CERT_RENDER_WIDTH, 0.18, 0.32)
+}
+
 const SOCIAL_BG = '#E8E8E8'
 const SOCIAL_EXPORT_FORMATS = {
   instagramPortrait: { width: 1080, height: 1350, padding: 64, filename: 'instagram-portrait' },
@@ -66,6 +79,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
   const visibleStampRef = useRef<HTMLDivElement>(null)
   const exportStampRef = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
+  const [uiScale, setUiScale] = useState(DESKTOP_CERT_UI_SCALE)
   const [isGeneratingShare, setIsGeneratingShare] = useState(false)
   const [showInlineShare, setShowInlineShare] = useState(false)
   const [copied, setCopied] = useState(false)
@@ -73,6 +87,14 @@ export default function CertificateCard({ cert, onReset }: Props) {
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 50)
     return () => clearTimeout(t)
+  }, [])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const applyScale = () => setUiScale(getCertificateUiScale(window.innerWidth))
+    applyScale()
+    window.addEventListener('resize', applyScale)
+    return () => window.removeEventListener('resize', applyScale)
   }, [])
 
   async function exportBlob(pixelRatio: number, watermark = false): Promise<Blob | null> {
@@ -84,8 +106,8 @@ export default function CertificateCard({ cert, onReset }: Props) {
       cacheBust: true,
       pixelRatio,
       backgroundColor: '#FAF6EF',
-      width: 794,
-      height: 1123,
+      width: CERT_RENDER_WIDTH,
+      height: CERT_RENDER_HEIGHT,
     })
     if (!watermark && exportStampRef.current) exportStampRef.current.style.visibility = ''
     if (wrapper) wrapper.style.zoom = ''
@@ -280,11 +302,11 @@ export default function CertificateCard({ cert, onReset }: Props) {
         <div
           ref={wrapperRef}
           style={{
-            width: '794px',
+            width: `${CERT_RENDER_WIDTH}px`,
             flexShrink: 0,
             transformOrigin: 'top center',
-            transform: 'scale(var(--cert-ui-scale, 0.604))',
-            marginBottom: 'calc((1123px * var(--cert-ui-scale, 0.604)) - 1123px)',
+            transform: `scale(${uiScale})`,
+            marginBottom: `calc((${CERT_RENDER_HEIGHT}px * ${uiScale}) - ${CERT_RENDER_HEIGHT}px)`,
           }}
         >
           <CertificateFixed
@@ -305,8 +327,8 @@ export default function CertificateCard({ cert, onReset }: Props) {
           position: 'fixed',
           left: '-10000px',
           top: 0,
-          width: '794px',
-          height: '1123px',
+          width: `${CERT_RENDER_WIDTH}px`,
+          height: `${CERT_RENDER_HEIGHT}px`,
           opacity: 0,
           pointerEvents: 'none',
           overflow: 'hidden',
