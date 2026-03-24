@@ -5,7 +5,6 @@ import { track } from '@vercel/analytics'
 import ClickSpark from '@/components/ClickSpark'
 
 const FONT = `var(--font-dm), -apple-system, sans-serif`
-const MONO = `var(--font-courier), 'Courier New', monospace`
 
 
 interface Props {
