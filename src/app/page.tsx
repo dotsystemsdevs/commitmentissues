@@ -78,7 +78,7 @@ export default function Page() {
         <div style={{ width: '100%', marginTop: '34px', paddingBottom: 0 }}>
           <div style={{ marginBottom: '14px', textAlign: 'center' }}>
             <p style={{ fontFamily: FONT, fontSize: '13px', fontWeight: 700, color: '#8f8680', margin: 0, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
-              Fresh Graves
+              Famous Casualties
             </p>
           </div>
           <Leaderboard onSelect={handleSelect} />
