@@ -178,17 +178,23 @@ export default function CertificateCard({ cert, onReset }: Props) {
             className="certificate-action-a4"
             type="button"
             onClick={() => handleDownload(3, 'certificate')}
-            aria-label="Download certificate"
+            aria-label="Download A4 certificate"
             style={{
-              width: '44px',
+              minHeight: '44px',
               height: '44px',
               border: '1px solid #0a0a0a',
               background: '#f6f6f6',
               color: '#0a0a0a',
-              padding: 0,
+              padding: '0 10px',
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
+              gap: '6px',
+              fontFamily: UI,
+              fontSize: '11px',
+              fontWeight: 700,
+              letterSpacing: '0.03em',
+              whiteSpace: 'nowrap',
             }}
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -196,6 +202,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
               <path d="M7 10l5 5 5-5"></path>
               <path d="M4 20h16"></path>
             </svg>
+            <span>A4</span>
           </button>
 
           <button
