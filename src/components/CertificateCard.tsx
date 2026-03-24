@@ -11,6 +11,16 @@ interface Props {
   onReset: () => void
 }
 
+const SOCIAL_BG = '#E8E8E8'
+const SOCIAL_EXPORT_FORMATS = {
+  instagramPortrait: { width: 1080, height: 1350, padding: 64, filename: 'instagram-portrait' },
+  instagramSquare: { width: 1080, height: 1080, padding: 48, filename: 'instagram-square' },
+  xLandscape: { width: 1200, height: 675, padding: 40, filename: 'x-landscape' },
+  facebookFeed: { width: 1200, height: 630, padding: 40, filename: 'facebook-feed' },
+  story: { width: 1080, height: 1920, padding: 80, filename: 'story' },
+} as const
+type SocialFormatKey = keyof typeof SOCIAL_EXPORT_FORMATS
+
 function buildShareCopy(cert: DeathCertificate, shareUrl: string): string {
   const repo = cert.repoData.fullName
   const cause = cert.causeOfDeath
@@ -99,6 +109,36 @@ export default function CertificateCard({ cert, onReset }: Props) {
     }
   }
 
+  async function composeSocialBlob(
+    masterBlob: Blob,
+    format: { width: number; height: number; padding: number }
+  ): Promise<Blob | null> {
+    try {
+      const img = await loadImageForCanvas(masterBlob)
+      const canvas = document.createElement('canvas')
+      canvas.width = format.width
+      canvas.height = format.height
+      const ctx = canvas.getContext('2d')
+      if (!ctx) return null
+
+      ctx.fillStyle = SOCIAL_BG
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+      const availableWidth = canvas.width - format.padding * 2
+      const availableHeight = canvas.height - format.padding * 2
+      const scale = Math.min(availableWidth / img.width, availableHeight / img.height)
+      const drawWidth = img.width * scale
+      const drawHeight = img.height * scale
+      const x = (canvas.width - drawWidth) / 2
+      const y = (canvas.height - drawHeight) / 2
+
+      ctx.drawImage(img, x, y, drawWidth, drawHeight)
+      return await new Promise(resolve => canvas.toBlob(b => resolve(b), 'image/png'))
+    } catch {
+      return null
+    }
+  }
+
   const stat = (counter: string) => fetch('/api/stats', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ counter }) }).catch(() => {})
 
   function triggerDownload(blob: Blob, filename: string) {
@@ -117,7 +157,9 @@ export default function CertificateCard({ cert, onReset }: Props) {
   const shareText = buildShareCopy(cert, shareUrl)
 
   async function generateShareBlob() {
-    return exportBlob(2.5, true)
+    const masterBlob = await exportBlob(2.5, true)
+    if (!masterBlob) return null
+    return composeSocialBlob(masterBlob, SOCIAL_EXPORT_FORMATS.instagramPortrait)
   }
 
   async function handleShare() {
@@ -177,10 +219,21 @@ export default function CertificateCard({ cert, onReset }: Props) {
   async function handleDownloadShareImage() {
     const blob = await generateShareBlob()
     if (!blob) return
-    triggerDownload(blob, `${cert.repoData.name}-share.png`)
+    triggerDownload(blob, `${cert.repoData.name}-${SOCIAL_EXPORT_FORMATS.instagramPortrait.filename}.png`)
     stat('downloaded')
     setShowInlineShare(false)
   }
+
+  async function handleDownloadFormat(formatKey: SocialFormatKey) {
+    const masterBlob = await exportBlob(2.5, true)
+    if (!masterBlob) return
+    const format = SOCIAL_EXPORT_FORMATS[formatKey]
+    const blob = await composeSocialBlob(masterBlob, format)
+    if (!blob) return
+    triggerDownload(blob, `${cert.repoData.name}-${format.filename}.png`)
+    stat('downloaded')
+  }
+
 
   async function handleDownloadA4() {
     const blob = await exportBlob(3, true)
@@ -375,7 +428,103 @@ export default function CertificateCard({ cert, onReset }: Props) {
               onMouseUp={e => { e.currentTarget.style.opacity = '1' }}
               onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}
             >
-              Download image
+              Download Instagram (4:5)
+            </button>
+            <button
+              type="button"
+              onClick={() => handleDownloadFormat('instagramSquare')}
+              style={{
+                fontFamily: UI,
+                fontSize: '14px',
+                fontWeight: 600,
+                width: '100%',
+                height: '52px',
+                background: '#fff',
+                color: '#0a0a0a',
+                border: '2px solid #0a0a0a',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'opacity 0.12s',
+              }}
+              onMouseDown={e => { e.currentTarget.style.opacity = '0.85' }}
+              onMouseUp={e => { e.currentTarget.style.opacity = '1' }}
+              onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}
+            >
+              Download Square (1:1)
+            </button>
+            <button
+              type="button"
+              onClick={() => handleDownloadFormat('xLandscape')}
+              style={{
+                fontFamily: UI,
+                fontSize: '14px',
+                fontWeight: 600,
+                width: '100%',
+                height: '52px',
+                background: '#fff',
+                color: '#0a0a0a',
+                border: '2px solid #0a0a0a',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'opacity 0.12s',
+              }}
+              onMouseDown={e => { e.currentTarget.style.opacity = '0.85' }}
+              onMouseUp={e => { e.currentTarget.style.opacity = '1' }}
+              onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}
+            >
+              Download X (16:9)
+            </button>
+            <button
+              type="button"
+              onClick={() => handleDownloadFormat('facebookFeed')}
+              style={{
+                fontFamily: UI,
+                fontSize: '14px',
+                fontWeight: 600,
+                width: '100%',
+                height: '52px',
+                background: '#fff',
+                color: '#0a0a0a',
+                border: '2px solid #0a0a0a',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'opacity 0.12s',
+              }}
+              onMouseDown={e => { e.currentTarget.style.opacity = '0.85' }}
+              onMouseUp={e => { e.currentTarget.style.opacity = '1' }}
+              onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}
+            >
+              Download Facebook (1.91:1)
+            </button>
+            <button
+              type="button"
+              onClick={() => handleDownloadFormat('story')}
+              style={{
+                fontFamily: UI,
+                fontSize: '14px',
+                fontWeight: 600,
+                width: '100%',
+                height: '52px',
+                background: '#fff',
+                color: '#0a0a0a',
+                border: '2px solid #0a0a0a',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'opacity 0.12s',
+              }}
+              onMouseDown={e => { e.currentTarget.style.opacity = '0.85' }}
+              onMouseUp={e => { e.currentTarget.style.opacity = '1' }}
+              onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}
+            >
+              Download Story (9:16)
             </button>
             <button
               type="button"
