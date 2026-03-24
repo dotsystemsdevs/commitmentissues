@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from 'react'
 import { track } from '@vercel/analytics'
 import { toBlob } from 'html-to-image'
 import { DeathCertificate } from '@/lib/types'
-import CertificateSheet from '@/components/CertificateSheet'
+import CertificateFixed from '@/components/CertificateFixed'
 
 interface Props {
   cert: DeathCertificate
@@ -50,9 +50,11 @@ async function loadImageForCanvas(blob: Blob): Promise<ImageBitmap | HTMLImageEl
 }
 
 export default function CertificateCard({ cert, onReset }: Props) {
-  const cardRef    = useRef<HTMLDivElement>(null)
+  const visibleCardRef = useRef<HTMLDivElement>(null)
+  const exportCardRef = useRef<HTMLDivElement>(null)
   const wrapperRef = useRef<HTMLDivElement>(null)
-  const stampRef   = useRef<HTMLDivElement>(null)
+  const visibleStampRef = useRef<HTMLDivElement>(null)
+  const exportStampRef = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
   const [isGeneratingShare, setIsGeneratingShare] = useState(false)
   const [showDesktopShareMenu, setShowDesktopShareMenu] = useState(false)
@@ -66,18 +68,18 @@ export default function CertificateCard({ cert, onReset }: Props) {
   // watermark=false → paid clean export (stamp hidden, pixelRatio 5.167 = 2480px, true 300 DPI on A4)
   // watermark=true  → free share export (pixelRatio 2 = 960px, stamp visible)
   async function exportBlob(pixelRatio: number, watermark = false): Promise<Blob | null> {
-    if (!cardRef.current) return null
+    if (!exportCardRef.current) return null
     const wrapper = wrapperRef.current
     if (wrapper) wrapper.style.zoom = '1'
-    if (!watermark && stampRef.current) stampRef.current.style.visibility = 'hidden'
-    const blob = await toBlob(cardRef.current, {
+    if (!watermark && exportStampRef.current) exportStampRef.current.style.visibility = 'hidden'
+    const blob = await toBlob(exportCardRef.current, {
       cacheBust: true,
       pixelRatio,
       backgroundColor: '#FAF6EF',
-      width: 480,
-      height: 679,
+      width: 794,
+      height: 1123,
     })
-    if (!watermark && stampRef.current) stampRef.current.style.visibility = ''
+    if (!watermark && exportStampRef.current) exportStampRef.current.style.visibility = ''
     if (wrapper) wrapper.style.zoom = ''
     if (!blob || !watermark) return blob
 
@@ -289,20 +291,43 @@ export default function CertificateCard({ cert, onReset }: Props) {
         <div
           ref={wrapperRef}
           style={{
-            width: '480px',
+            width: '794px',
             transformOrigin: 'top center',
-            transform: 'scale(var(--cert-scale, 1))',
-            marginBottom: 'calc((679px * var(--cert-scale, 1)) - 679px)',
+            transform: 'scale(var(--cert-ui-scale, 0.604))',
+            marginBottom: 'calc((1123px * var(--cert-ui-scale, 0.604)) - 1123px)',
           }}
         >
-          <CertificateSheet
-            ref={cardRef}
+          <CertificateFixed
+            ref={visibleCardRef}
             cert={cert}
             visible={visible}
             showStamp={true}
-            stampRef={stampRef}
+            stampRef={visibleStampRef}
           />
         </div>
+      </div>
+
+      {/* Hidden fixed export source - always identical across devices */}
+      <div
+        aria-hidden
+        style={{
+          position: 'fixed',
+          left: '-10000px',
+          top: 0,
+          width: '794px',
+          height: '1123px',
+          opacity: 0,
+          pointerEvents: 'none',
+          overflow: 'hidden',
+        }}
+      >
+        <CertificateFixed
+          ref={exportCardRef}
+          cert={cert}
+          visible={true}
+          showStamp={true}
+          stampRef={exportStampRef}
+        />
       </div>
 
       {showDesktopShareMenu && (
