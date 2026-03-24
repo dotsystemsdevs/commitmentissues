@@ -21,10 +21,6 @@ const SECTIONS = [
     body: "Nothing. No accounts, no emails, no stored URLs. No cookies, no tracking. The repo URL you type never leaves your browser until you hit submit — and we don't store it after.",
   },
   {
-    title: 'Acceptable use',
-    body: "Personal use, sharing, laughing. Not for harassment, defamation, or anything that would make a real lawyer nervous.",
-  },
-  {
     title: 'Contact',
     body: '',
     email: 'dot.systems@proton.me',
