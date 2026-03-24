@@ -112,7 +112,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
         </div>
 
         {/* Button */}
-        <ClickSpark color="#fff">
+        <ClickSpark color="#2b2b2b">
         <button
           className="input-submit-button"
           type="submit"
