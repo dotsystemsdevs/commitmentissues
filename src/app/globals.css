@@ -601,7 +601,7 @@ a.subpage-inline-mail {
 
 @media (max-width: 640px) {
   /* Scale only the fixed canvas visually; layout stays pixel-locked. */
-  :root { --cert-ui-scale: clamp(0.28, calc((100vw - 108px) / 794), 0.36); }
+  :root { --cert-ui-scale: clamp(0.20, calc((100vw - 148px) / 794), 0.30); }
 }
 
 /* ── Mobile ── */
@@ -615,7 +615,7 @@ a.subpage-inline-mail {
   .certificate-scroll-zone {
     width: 100%;
     margin-left: 0;
-    padding: 8px 20px 0;
+    padding: 14px 28px 0;
     box-sizing: border-box;
     overflow-x: hidden;
   }
