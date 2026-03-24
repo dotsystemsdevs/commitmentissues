@@ -20,6 +20,9 @@
 .DS_Store
 *.pem
 
+# local agent / IDE worktrees (do not commit)
+.claude/
+
 # debug
 npm-debug.log*
 yarn-debug.log*
