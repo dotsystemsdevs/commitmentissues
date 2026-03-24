@@ -78,6 +78,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
   async function handleShare() {
     track('share_clicked')
     const shareText = `RIP ${cert.repoData.fullName}. Cause of death: ${cert.causeOfDeath} 💀 commitmentissues.dev`
+    const shareUrl = `https://commitmentissues.dev/?repo=${encodeURIComponent(cert.repoData.fullName)}`
 
     try {
       const blob = await exportBlob(2, true)
@@ -88,6 +89,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
         await navigator.share({
           title: 'Certificate of Death',
           text: shareText,
+          url: shareUrl,
           files: [file],
         })
         stat('shared')
@@ -97,8 +99,11 @@ export default function CertificateCard({ cert, onReset }: Props) {
       // Desktop / unsupported share fallback: download image.
       triggerDownload(blob, `${cert.repoData.name}-share.png`)
       stat('downloaded')
-    } catch {
-      // If sharing fails (cancel/error), fallback to download.
+    } catch (error) {
+      // User cancelled share dialog; do nothing.
+      if (error instanceof DOMException && error.name === 'AbortError') return
+
+      // If sharing truly fails, fallback to download.
       const blob = await exportBlob(2, true)
       if (!blob) return
       triggerDownload(blob, `${cert.repoData.name}-share.png`)
@@ -165,7 +170,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
             onMouseDown={e => { e.currentTarget.style.transform = 'scale(0.97)' }}
             onMouseUp={e => { e.currentTarget.style.transform = 'translateY(-1px)' }}
           >
-            Dela →
+            Share →
           </button>
 
           {/* Download */}
