@@ -1,13 +1,34 @@
-# ☠️ commitmentissues.dev
+# Commitment Issues
 
-Official death certificates for abandoned GitHub repos.
+Official death certificates for abandoned GitHub repositories.
 
-**Live demo:** [https://commitmentissues.dev](https://commitmentissues.dev)
-
-Drop a GitHub URL. Get a shareable certificate in seconds.
+**Live:** [commitmentissues.dev](https://commitmentissues.dev)
 
 ![MIT License](https://img.shields.io/github/license/dotsystemsdevs/commitmentissues?style=flat-square)
 ![Vercel Deploy](https://img.shields.io/badge/deployed%20on-Vercel-black?style=flat-square&logo=vercel)
+
+## What is Commitment Issues?
+
+Paste a public GitHub repository URL and get a shareable **Certificate of Death**: a tongue-in-cheek summary of how “dead” the repo looks, with a score, cause of death, last words, and exportable graphics for social posts. No account required.
+
+## Features
+
+- **Certificate of Death** — A4-style layout with cause, last words, repo age, and derived stats
+- **Exports** — Multiple aspect ratios (feed, square, story-style) for common social platforms
+- **Mobile share** — Native share uses a tall story-friendly format on small screens to reduce bad crops
+- **Hall of Shame** — Curated leaderboard of famously abandoned repositories
+- **Recently Buried** — Live feed of the latest public burials (repo, cause, score, time)
+
+## How scoring works (high level)
+
+| Step | What happens |
+|------|----------------|
+| Input | You provide a public repo URL |
+| Data | The app reads public metadata from the GitHub API |
+| Score | A death score and narrative (cause, last words) are computed in `src/lib/scoring.ts` |
+| Output | You get an on-screen certificate and optional image exports |
+
+Hall of Shame entries are curated for recognizable repos and fast first paint; Recently Buried reflects real recent usage.
 
 ## Screenshots
 
@@ -15,54 +36,35 @@ Home:
 
 ![Homepage screenshot](docs/screenshots/homepage.png)
 
-Certificate view:
+Certificate:
 
 ![Certificate screenshot](docs/screenshots/certificate.png)
 
-About page:
+About:
 
 ![About page screenshot](docs/screenshots/about.png)
-
-## How it works
-
-1. Paste a GitHub repository URL.
-2. Fetch public repo metadata from the GitHub API.
-3. Calculate a death score and cause-of-death.
-4. Generate and export a Certificate of Death.
-
-## Features
-
-- A4-style death certificate with cause, last words, age, and stats
-- Multi-format social exports (Instagram 4:5 / square, X, Facebook, Story)
-- Native mobile Story/Reel-friendly share (9:16 on mobile)
-- Hall of Shame leaderboard of famously abandoned repos
-- Recently Buried live feed (latest public burials)
 
 ## Privacy
 
 - No login required
 - Only public GitHub data is used
-- Recently Buried stores the latest public burial entries (repo, cause, score, timestamp)
-- Anonymous aggregate analytics are used for product metrics
+- Recently Buried stores recent public burial entries (repo, cause, score, timestamp)
+- Anonymous aggregate analytics may be used for product metrics
 
-## Leaderboard data
-
-The Hall of Shame list is currently curated for recognizable dead repos and fast first-load UX.
-
-## Stack
+## Tech stack
 
 | | |
 |---|---|
 | Framework | Next.js 14 (App Router) |
-| Fonts | UnifrakturMaguntia · Courier Prime · Inter |
-| Deploy | Vercel |
-| Storage | Vercel KV (usage counters only) |
-| Data | GitHub Public API |
+| Fonts | UnifrakturMaguntia, Courier Prime, Inter |
+| Hosting | Vercel |
+| Storage | Upstash Redis (usage counters and recent burials) |
+| Data | GitHub public API |
 
-## Run locally
+## Getting started
 
 ```bash
-git clone https://github.com/dotsystemsdevs/commitmentissues
+git clone https://github.com/dotsystemsdevs/commitmentissues.git
 cd commitmentissues
 npm install
 npm run dev
@@ -70,11 +72,15 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-Optional: add a `GITHUB_TOKEN` in `.env.local` to raise GitHub API limits.
+### Environment
+
+Optional: add a GitHub token to raise API rate limits.
 
 ```env
 GITHUB_TOKEN=ghp_yourtoken
 ```
+
+Create a token under GitHub **Settings → Developer settings → Personal access tokens**. Fine-grained tokens work if you limit scope to what this app needs; classic tokens are also fine for local dev.
 
 ## Testing
 
@@ -85,8 +91,8 @@ npm test
 ## Contributing
 
 - Read `.github/CONTRIBUTING.md` before opening a PR
-- Use the issue templates and PR template
-- CI runs lint, tests, and build on `master` PRs
+- Use the issue and PR templates
+- CI runs lint, tests, and build on pull requests to `master`
 
 ## Project structure
 
@@ -112,12 +118,16 @@ src/
     └── types.ts
 ```
 
-Scoring logic is isolated in `src/lib/scoring.ts` so it is easy to test and iterate.
+Scoring logic lives in `src/lib/scoring.ts` so it stays easy to test and change.
 
 ## Docs
 
 - Release notes: `docs/releases/`
-- Screenshots and GIFs: `docs/screenshots/`
-- Naming and structure rules: `docs/repository-conventions.md`
+- Screenshots: `docs/screenshots/`
+- Repository conventions: `docs/repository-conventions.md`
 
-Built by [Dot Systems](https://github.com/dotsystemsdevs)
+## License
+
+MIT — see repository license file.
+
+Built by [Dot Systems](https://github.com/dotsystemsdevs).
