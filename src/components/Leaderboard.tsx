@@ -19,6 +19,20 @@ const HALL_OF_SHAME: LeaderboardEntry[] = [
   { fullName: 'microsoft/winjs',        cause: 'Windows Phone died and took everything with it',             score: 10, deathDate: 'Sep 2015', lastWords: 'Windows Phone had 3% market share. I had 3% of that.' },
   { fullName: 'jashkenas/coffeescript', cause: 'ES6 stole all its ideas and left',                          score: 7,  deathDate: 'Sep 2015', lastWords: 'I made JavaScript beautiful. JavaScript made me irrelevant.' },
   { fullName: 'knockout/knockout',      cause: 'Vue arrived and everyone forgot their vows',                 score: 8,  deathDate: 'Oct 2015', lastWords: 'ko.observable. ko.computed. ko.gone.' },
+  { fullName: 'nicowillis/ratchet',     cause: 'Bootstrap Mobile never shipped. Neither did this.',           score: 7,  deathDate: 'Aug 2015', lastWords: 'I was mobile-first before mobile-first was cool. Then I wasn\'t.' },
+  { fullName: 'adobe/phonegap',         cause: 'Cordova forked it. React Native buried them both.',           score: 8,  deathDate: 'Oct 2020', lastWords: 'I was Cordova before Cordova. Nobody remembers.' },
+  { fullName: 'postcss/autoprefixer',   cause: 'Browsers finally agreed on things. Took them long enough.',   score: 7,  deathDate: 'Jan 2023', lastWords: 'I added -webkit- to everything. Even things that didn\'t need it.' },
+  { fullName: 'joyent/node',            cause: 'io.js forked it, then everyone made up and pretended nothing happened', score: 7, deathDate: 'May 2015', lastWords: 'The fork was mostly about a callback style disagreement. We don\'t talk about it.' },
+  { fullName: 'twbs/ratchet',           cause: 'Nobody actually built apps with Bootstrap anyway',            score: 6,  deathDate: 'Mar 2016', lastWords: 'I had 11,000 stars. Zero shipped apps.' },
+  { fullName: 'mattdesl/budo',          cause: 'Webpack devServer ate the entire category',                   score: 6,  deathDate: 'Feb 2018', lastWords: 'browserify was already losing. I never stood a chance.' },
+  { fullName: 'strongloop/loopback',    cause: 'Express stayed simple. This did not.',                        score: 7,  deathDate: 'Jun 2019', lastWords: 'I had a visual API composer. I thought that was good.' },
+  { fullName: 'yahoo/mojito',           cause: 'Yahoo slowly forgot it existed, then forgot everything else', score: 9,  deathDate: 'Dec 2014', lastWords: 'I was isomorphic JavaScript in 2012. Too early. Also Yahoo.' },
+  { fullName: 'dojo/dojo',             cause: 'jQuery won the 2008 framework wars. Dojo was not informed.',   score: 8,  deathDate: 'Dec 2021', lastWords: 'I had AMD modules before AMD was a thing. Nobody used them.' },
+  { fullName: 'Polymer/polymer',        cause: 'Web Components were supposed to be the future. They were not.', score: 8, deathDate: 'Apr 2021', lastWords: 'HTML Imports. I thought that was a good idea. It was not.' },
+  { fullName: 'tencent/wepy',           cause: 'WeChat\'s own framework killed its own ecosystem',            score: 7,  deathDate: 'Nov 2019', lastWords: 'Even Tencent forgot about me.' },
+  { fullName: 'marionettejs/backbone.marionette', cause: 'Backbone died. So did everything built on Backbone.', score: 8, deathDate: 'Mar 2020', lastWords: 'I was Backbone but organized. Backbone wasn\'t organized. Or alive.' },
+  { fullName: 'mikeal/request',         cause: 'fetch() shipped natively and deprecated an entire generation', score: 9, deathDate: 'Feb 2020', lastWords: 'I was downloaded 30 million times a week. Then fetch happened.' },
+  { fullName: 'nicolo-ribaudo/jest-light-runner', cause: 'Vitest arrived and made everyone feel bad about Jest', score: 6, deathDate: 'Jan 2023', lastWords: 'I was faster Jest. Vitest was even faster. Also had a UI.' },
 ]
 
 const FONT = `var(--font-dm), -apple-system, sans-serif`
@@ -75,11 +89,15 @@ function GraveyardCard({ entry, onSelect }: { entry: LeaderboardEntry; onSelect:
 
 export default function Leaderboard({ onSelect }: Props) {
   return (
-    <div style={{ width: '100vw', marginLeft: 'calc(50% - 50vw)', overflow: 'hidden', padding: '4px 0 8px' }}>
-      <div style={{
+    <div
+      style={{ width: '100vw', marginLeft: 'calc(50% - 50vw)', overflow: 'hidden', padding: '4px 0 8px' }}
+      onMouseEnter={e => { (e.currentTarget.querySelector('.marquee-track') as HTMLElement).style.animationPlayState = 'paused' }}
+      onMouseLeave={e => { (e.currentTarget.querySelector('.marquee-track') as HTMLElement).style.animationPlayState = 'running' }}
+    >
+      <div className="marquee-track" style={{
         display: 'flex',
         gap: '12px',
-        animation: 'marquee 80s linear infinite',
+        animation: 'marquee 120s linear infinite',
         width: 'max-content',
       }}>
         {HALL_OF_SHAME.map((entry) => (
