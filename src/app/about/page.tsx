@@ -39,15 +39,14 @@ export default function AboutPage() {
       microcopy="Last updated March 2026"
     >
       <div className="about-cards" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-        {SECTIONS.map(({ title, body, email, coffee }, i) => (
+        {SECTIONS.map(({ title, body, email, coffee }) => (
           <div
             key={title}
             style={{
-              padding: '18px 16px',
-              border: '1px solid #c9c9c9',
+              padding: '20px 18px',
+              border: '2px solid #1a1a1a',
               borderRadius: '0',
-              background: '#f3f3f3',
-              boxShadow: i === 0 ? '0 1px 6px rgba(0,0,0,0.04)' : 'none',
+              background: '#f2f2f2',
             }}
           >
             <p style={{ fontFamily: UI, fontSize: 'clamp(16px, 4.2vw, 17px)', fontWeight: 700, color: '#160A06', margin: '0 0 10px 0' }}>

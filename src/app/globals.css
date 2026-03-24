@@ -210,40 +210,20 @@
 }
 
 /* Subpage ← back link */
-.subpage-back-link,
-.certificate-action-back-link,
-.certificate-action-a4,
-.certificate-action-share {
+.subpage-back-link {
   font-family: var(--font-dm), -apple-system, sans-serif;
-  font-size: 20px;
+  font-size: 13px;
+  font-weight: 600;
   color: #0a0a0a;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  border: 1px solid #0a0a0a;
-  border-radius: 0;
-  background: #f6f6f6;
-  transition: color 0.15s, background 0.15s;
-  font-weight: 500;
-  line-height: 1;
-}
-
-.subpage-back-link {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2;
-}
-.subpage-back-link:hover,
-.certificate-action-back-link:hover,
-.certificate-action-a4:hover,
-.certificate-action-share:hover {
-  color: #0a0a0a;
-  background: #e9e9e9;
+  gap: 6px;
+  padding: 4px 0;
+  background: none;
+  border: none;
+  -webkit-tap-highlight-color: transparent;
+  letter-spacing: 0.02em;
 }
 
 /* ── Base interaction defaults ── */
@@ -283,11 +263,6 @@ button {
   flex-shrink: 0;
 }
 
-/* ── Share modal fade-in ── */
-@keyframes modal-fadein {
-  from { opacity: 0; transform: translateY(8px) scale(0.98); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
-}
 
 /* ── Stamp: rubber-stamp impact animation ── */
 @keyframes stamp-in {
@@ -489,15 +464,6 @@ a.subpage-inline-mail {
   width: min(100%, 480px);
 }
 
-.certificate-top-actions {
-  width: 100%;
-}
-
-.certificate-actions-right {
-  min-width: 0;
-  justify-content: flex-end;
-}
-
 .site-footer-source-link {
   opacity: 0.9;
 }
@@ -508,12 +474,6 @@ a.subpage-inline-mail {
   100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(10,10,10,0); }
 }
 
-.certificate-action-a4:hover,
-.certificate-action-share:hover,
-.certificate-action-back-link:hover {
-  box-shadow: 0 0 0 1px rgba(0,0,0,0.2);
-}
-
 .input-submit-button:hover {
   box-shadow: 0 0 0 1px rgba(0,0,0,0.22);
 }
@@ -522,9 +482,6 @@ a.subpage-inline-mail {
   opacity: 0.9;
 }
 
-.certificate-action-a4:active,
-.certificate-action-share:active,
-.certificate-action-back-link:active,
 .site-footer-nav a:active,
 .site-footer-source-link:active {
   opacity: 0.82;
@@ -579,10 +536,6 @@ a.subpage-inline-mail {
   animation: section-fade-up 420ms ease-out both;
 }
 
-.certificate-top-actions {
-  animation: section-fade-up 280ms ease-out both;
-}
-
 .certificate-card-shell {
   animation: section-fade-up 380ms ease-out both;
 }
@@ -609,7 +562,6 @@ a.subpage-inline-mail {
   .page-hero,
   .input-block,
   .chips-section,
-  .certificate-top-actions,
   .certificate-card-shell,
   .site-footer,
   .about-cards > div,
@@ -672,44 +624,6 @@ a.subpage-inline-mail {
     max-width: 100% !important;
     margin: 0 auto !important;
   }
-
-  .certificate-top-actions {
-    gap: 8px !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-  }
-
-  .certificate-actions-right {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: flex-end !important;
-    flex-wrap: nowrap !important;
-    gap: 8px !important;
-    min-width: 0 !important;
-    flex: 1 1 auto !important;
-  }
-
-  .certificate-action-a4,
-  .certificate-action-share {
-    min-height: 44px !important;
-    height: 44px !important;
-  }
-
-  .certificate-action-share {
-    width: 44px !important;
-    min-width: 44px !important;
-  }
-
-  .certificate-action-a4 {
-    min-width: 92px !important;
-    padding: 0 10px !important;
-    flex: 0 0 auto !important;
-  }
-
-
-  /* Certificate action buttons: outside zoom wrapper, full width */
-  .cert-actions { flex-direction: column !important; width: 100% !important; }
-  .cert-buy-btn, .cert-share-btn { width: 100% !important; }
 
   /* Hero: keep CTA above the fold on small screens */
   .page-hero { padding-bottom: 10px; }
