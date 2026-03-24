@@ -65,9 +65,6 @@ const CertificateSheet = forwardRef<HTMLDivElement, Props>(
 
           {/* HEADER */}
           <div style={{ textAlign: 'center', paddingBottom: '3%', borderBottom: '2px solid #1A0F06' }}>
-            <p style={{ ...LABEL, fontSize: '7px', letterSpacing: '0.5em', margin: '0 0 2% 0' }}>
-              issued by commitmentissues.dev
-            </p>
             <h2 className="certificate-of-death-title" style={{ fontSize: '2.2rem', color: '#1A0F06', lineHeight: 1.05, margin: '0 0 2% 0', whiteSpace: 'nowrap' }}>
               Certificate of Death
             </h2>
