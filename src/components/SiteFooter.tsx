@@ -2,9 +2,7 @@ const FONT = `var(--font-dm), -apple-system, sans-serif`
 const MONO = `var(--font-courier), 'Courier New', monospace`
 
 const LINKS = [
-  { href: '/faq',     label: 'FAQ'     },
-  { href: '/terms',   label: 'Terms'   },
-  { href: '/privacy', label: 'Privacy' },
+  { href: '/about', label: 'About' },
 ] as const
 
 const GitHubIcon = () => (

@@ -1,46 +1,77 @@
 import Link from 'next/link'
 import SubpageShell from '@/components/SubpageShell'
-import { CTA_ISSUE_ARROW } from '@/lib/cta'
 
 const UI = `var(--font-dm), -apple-system, sans-serif`
 
-const FAQ = [
-  { q: 'Is the data real?', a: 'Yes. Everything comes from GitHub\'s public API - last commit date, stars, forks, open issues, and archive status.' },
-  { q: 'How is the cause of death determined?', a: 'A scoring algorithm weighs inactivity, star count, open issues, and whether the repo is archived. The highest-matching rule wins.' },
-  { q: 'Can I analyze private repos?', a: 'No - we only have access to public repositories.' },
-  { q: 'How do I share the certificate?', a: 'Hit the share button → pick your option. Copy the link, post on X, or download a watermarked PNG. One click.' },
-  { q: 'Is this serious?', a: 'The data is real. The certificates are not.' },
+const SECTIONS = [
+  {
+    title: 'What is this?',
+    body: "A parody tool. Paste a GitHub URL and get an official-looking death certificate for your abandoned repo. Certificates are not legally valid documents. Do not use at a real funeral.",
+  },
+  {
+    title: 'Is the data real?',
+    body: "Yes — we use GitHub's public API: commits, stars, issues, archive status. Causes of death are algorithmic. A scoring model based on inactivity, open issues, and archive status picks the best match.",
+  },
+  {
+    title: 'Private repos?',
+    body: "No. We don't break into houses. Public repos only.",
+  },
+  {
+    title: 'What we collect',
+    body: "Nothing. No accounts, no emails, no stored URLs. No cookies, no tracking. The repo URL you type never leaves your browser until you hit submit — and we don't store it after.",
+  },
+  {
+    title: 'Acceptable use',
+    body: "Personal use, sharing, laughing. Not for harassment, defamation, or anything that would make a real lawyer nervous.",
+  },
+  {
+    title: 'Contact',
+    body: '',
+    email: 'dot.systems@proton.me',
+  },
 ]
 
 export default function AboutPage() {
   return (
     <SubpageShell
-      subtitle="We issue official death certificates for the repos the internet forgot."
-      microcopy="About · commitmentissues.dev"
+      title="About"
+      subtitle="Everything you need to know. It fits on one page."
+      microcopy="Last updated March 2026"
     >
-      <div style={{ marginBottom: '40px' }}>
-        <p style={{ fontFamily: UI, fontSize: '17px', color: '#160A06', lineHeight: 1.8, marginBottom: '16px' }}>
-          Official death certificates for abandoned GitHub repos.
-        </p>
-        <p style={{ fontFamily: UI, fontSize: '15px', fontStyle: 'italic', color: '#555', lineHeight: 1.8, marginBottom: '16px' }}>
-          Paste any public GitHub URL. We analyze commit history, stars, open issues, and archive status — then issue a certified cause of death.
-        </p>
-        <p style={{ fontFamily: UI, fontSize: '15px', color: '#555', lineHeight: 1.8 }}>
-          Download the certificate. Share it. Mourn accordingly.
-        </p>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        {SECTIONS.map(({ title, body, email }, i) => (
+          <div
+            key={title}
+            className="faq-row"
+            style={{
+              padding: '22px 0',
+              borderBottom: i < SECTIONS.length - 1 ? '1px solid #e8e4de' : 'none',
+            }}
+          >
+            <p style={{ fontFamily: UI, fontSize: 'clamp(15px, 4vw, 16px)', fontWeight: 700, color: '#160A06', margin: '0 0 10px 0' }}>
+              {title}
+            </p>
+            <p style={{
+              fontFamily: UI,
+              fontSize: 'clamp(14px, 3.8vw, 15px)',
+              color: '#6b6560',
+              lineHeight: 1.75,
+              margin: 0,
+              borderLeft: '2px solid #EDE5D8',
+              paddingLeft: '14px',
+            }}>
+              {body}
+              {email ? (
+                <a href={`mailto:${email}`} className="subpage-inline-mail">{email}</a>
+              ) : null}
+            </p>
+          </div>
+        ))}
       </div>
 
-      <p style={{ fontFamily: UI, fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: '#938882', marginBottom: '24px' }}>FAQ</p>
-      {FAQ.map(({ q, a }, i) => (
-        <div key={q} style={{ padding: '20px 0', borderBottom: i < FAQ.length - 1 ? '1px solid #e0e0e0' : 'none' }}>
-          <p style={{ fontFamily: UI, fontSize: '15px', fontWeight: 700, color: '#160A06', marginBottom: '8px' }}>{q}</p>
-          <p style={{ fontFamily: UI, fontSize: '14px', color: '#555', lineHeight: 1.75, margin: 0 }}>{a}</p>
-        </div>
-      ))}
-
-      <div className="subpage-bottom-links" style={{ marginTop: '40px' }}>
-        <Link href="/" className="subpage-bottom-primary">
-          {CTA_ISSUE_ARROW}
+      <div style={{ paddingTop: '36px', paddingBottom: '8px', textAlign: 'center' }}>
+        <Link href="/" className="subpage-faq-cta">
+          issue a certificate →
         </Link>
       </div>
     </SubpageShell>
