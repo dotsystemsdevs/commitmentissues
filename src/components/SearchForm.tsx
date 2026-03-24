@@ -134,15 +134,15 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
             alignItems: 'center',
             justifyContent: 'center',
             whiteSpace: 'nowrap',
-            transition: 'background 0.15s, transform 0.08s',
+              transition: 'background 0.15s, opacity 0.12s',
             userSelect: 'none',
             WebkitTapHighlightColor: 'transparent',
             touchAction: 'manipulation',
           }}
           onMouseEnter={e => { e.currentTarget.style.background = '#0a0a0a' }}
           onMouseLeave={e => { e.currentTarget.style.background = '#0a0a0a' }}
-          onMouseDown={e => { e.currentTarget.style.transform = 'translateY(1px)' }}
-          onMouseUp={e => { e.currentTarget.style.transform = 'translateY(0)' }}
+          onMouseDown={e => { e.currentTarget.style.opacity = '0.9' }}
+          onMouseUp={e => { e.currentTarget.style.opacity = '1' }}
         >
           {loading ? <span className="btn-spinner" /> : 'Issue Death Certificate →'}
         </button>
@@ -180,7 +180,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
                 padding: '10px 14px',
                 minHeight: '44px',
                 cursor: 'pointer',
-                transition: 'border-color 0.12s, background 0.12s, transform 0.15s',
+                transition: 'border-color 0.12s, background 0.12s, opacity 0.12s',
                 WebkitTapHighlightColor: 'transparent',
                 touchAction: 'manipulation',
                 transform: `rotate(${TILTS[i]}deg)`,
@@ -188,12 +188,12 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
               onMouseEnter={e => {
                 e.currentTarget.style.borderColor = '#888'
                 e.currentTarget.style.background = '#faf7f3'
-                e.currentTarget.style.transform = 'translateY(-2px) rotate(0deg)'
+                e.currentTarget.style.opacity = '0.95'
               }}
               onMouseLeave={e => {
                 e.currentTarget.style.borderColor = '#0a0a0a'
                 e.currentTarget.style.background = '#fff'
-                e.currentTarget.style.transform = `rotate(${TILTS[i]}deg)`
+                e.currentTarget.style.opacity = '1'
               }}
             >
               <span style={{ color }}>{owner}</span>

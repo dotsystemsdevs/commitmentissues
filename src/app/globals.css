@@ -356,10 +356,9 @@ button {
   color: #160A06 !important;
   border-color: #888 !important;
   box-shadow: 0 4px 12px rgba(0,0,0,0.10);
-  transform: translateY(-1px);
 }
 .coffee-btn:active {
-  transform: scale(0.96);
+  opacity: 0.9;
 }
 
 .subpage-faq-cta {
@@ -381,11 +380,10 @@ button {
 }
 
 .subpage-faq-cta:hover {
-  opacity: 0.88;
-  transform: translateY(-1px);
+  opacity: 0.9;
 }
 .subpage-faq-cta:active {
-  transform: scale(0.97);
+  opacity: 0.86;
 }
 
 
@@ -508,18 +506,15 @@ a.subpage-inline-mail {
 .certificate-action-a4:hover,
 .certificate-action-share:hover,
 .certificate-action-back-link:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.2);
 }
 
 .input-submit-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.22);
 }
 
 .input-submit-button:active {
-  transform: translateY(1px);
-  box-shadow: none;
+  opacity: 0.9;
 }
 
 .certificate-action-a4:active,
@@ -527,13 +522,13 @@ a.subpage-inline-mail {
 .certificate-action-back-link:active,
 .site-footer-nav a:active,
 .site-footer-source-link:active {
-  transform: scale(0.97);
+  opacity: 0.82;
 }
 
 .site-footer-source-link:hover,
 .site-footer-nav a:hover,
 .site-footer-copy-btn:hover {
-  transform: translateY(-1px);
+  opacity: 0.9;
 }
 
 .site-footer-copy-btn {

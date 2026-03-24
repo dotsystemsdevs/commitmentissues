@@ -62,24 +62,22 @@ export default function Leaderboard({ onSelect }: Props) {
           borderRadius: '0px',
           cursor: 'pointer',
           textAlign: 'left',
-          transition: 'border-color 0.15s, transform 0.15s, box-shadow 0.15s',
+          transition: 'border-color 0.15s, box-shadow 0.15s, opacity 0.12s',
           boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
         }}
         onMouseEnter={e => {
           e.currentTarget.style.borderColor = '#0a0a0a'
-          e.currentTarget.style.transform = 'translateY(-3px)'
-          e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.16)'
+          e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.10)'
         }}
         onMouseLeave={e => {
           e.currentTarget.style.borderColor = '#8c8c8c'
-          e.currentTarget.style.transform = 'translateY(0)'
           e.currentTarget.style.boxShadow = '0 1px 4px rgba(0,0,0,0.05)'
         }}
         onMouseDown={e => {
-          e.currentTarget.style.transform = 'scale(0.99)'
+          e.currentTarget.style.opacity = '0.9'
         }}
         onMouseUp={e => {
-          e.currentTarget.style.transform = 'translateY(-1px)'
+          e.currentTarget.style.opacity = '1'
         }}
       >
         <span style={{ fontSize: '20px', lineHeight: 1 }}>🪦</span>
