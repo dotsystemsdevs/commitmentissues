@@ -1,5 +1,5 @@
 blank_issues_enabled: false
 contact_links:
   - name: Security disclosure
-    url: https://github.com/dotsystemsdevs/saas-commitmentissues/security
+    url: https://github.com/dotsystemsdevs/commitmentissues/security
     about: Report security issues privately.

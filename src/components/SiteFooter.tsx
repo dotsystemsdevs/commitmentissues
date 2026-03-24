@@ -36,7 +36,7 @@ export default function SiteFooter({ compact = false }: SiteFooterProps) {
       </nav>
       <a
         className="site-footer-source-link alive-interactive"
-        href="https://github.com/dotsystemsdevs/saas-commitmentissues"
+        href="https://github.com/dotsystemsdevs/commitmentissues"
         target="_blank"
         rel="noopener noreferrer"
         style={{

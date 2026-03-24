@@ -6,7 +6,7 @@ Official death certificates for abandoned GitHub repos.
 
 Drop a GitHub URL. Get a shareable certificate in seconds.
 
-![MIT License](https://img.shields.io/github/license/dotsystemsdevs/saas-commitmentissues?style=flat-square)
+![MIT License](https://img.shields.io/github/license/dotsystemsdevs/commitmentissues?style=flat-square)
 ![Vercel Deploy](https://img.shields.io/badge/deployed%20on-Vercel-black?style=flat-square&logo=vercel)
 
 ## Screenshots
@@ -62,8 +62,8 @@ The Hall of Shame list is currently curated for recognizable dead repos and fast
 ## Run locally
 
 ```bash
-git clone https://github.com/dotsystemsdevs/saas-commitmentissues
-cd saas-commitmentissues
+git clone https://github.com/dotsystemsdevs/commitmentissues
+cd commitmentissues
 npm install
 npm run dev
 ```
