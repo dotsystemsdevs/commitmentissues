@@ -17,8 +17,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const stampRef   = useRef<HTMLDivElement>(null)
   const topRef     = useRef<HTMLDivElement>(null)
-  const [visible,    setVisible]    = useState(false)
-  const [shareLabel, setShareLabel] = useState<string | null>(null)
+  const [visible, setVisible] = useState(false)
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 50)
@@ -66,28 +65,6 @@ export default function CertificateCard({ cert, onReset }: Props) {
   }
 
   const stat = (counter: string) => fetch('/api/stats', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ counter }) }).catch(() => {})
-
-  async function handleShare() {
-    track('share_clicked')
-    if (navigator.canShare) {
-      const blob = await exportBlob(2, true)
-      if (blob) {
-        const file = new File([blob], `${cert.repoData.name}.png`, { type: 'image/png' })
-        if (navigator.canShare({ files: [file] })) {
-          try { await navigator.share({ files: [file], title: cert.repoData.name, text: cert.shareText }) }
-          catch { /* cancelled */ }
-          stat('shared')
-          return
-        }
-      }
-    }
-    try {
-      await navigator.clipboard.writeText('https://commitmentissues.dev')
-      setShareLabel('Link copied!')
-      setTimeout(() => setShareLabel(null), 2000)
-    } catch { /* ignore */ }
-    stat('shared')
-  }
 
   function handleTweet() {
     track('tweet_clicked')
