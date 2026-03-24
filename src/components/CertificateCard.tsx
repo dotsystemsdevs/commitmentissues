@@ -18,6 +18,9 @@ export default function CertificateCard({ cert, onReset }: Props) {
   const stampRef   = useRef<HTMLDivElement>(null)
   const topRef     = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
+  const [isGeneratingShare, setIsGeneratingShare] = useState(false)
+  const [showDesktopShareMenu, setShowDesktopShareMenu] = useState(false)
+  const [copied, setCopied] = useState(false)
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 50)
@@ -75,40 +78,74 @@ export default function CertificateCard({ cert, onReset }: Props) {
     URL.revokeObjectURL(url)
   }
 
+  const shareText = `RIP ${cert.repoData.fullName}. Cause of death: ${cert.causeOfDeath} 🪦 commitmentissues.dev`
+  const shareUrl = `https://commitmentissues.dev/?repo=${encodeURIComponent(cert.repoData.fullName)}`
+
+  async function generateShareBlob() {
+    // 480 * 2.5 = 1200px, 679 * 2.5 ≈ 1700px
+    return exportBlob(2.5, true)
+  }
+
   async function handleShare() {
     track('share_clicked')
-    const shareText = `RIP ${cert.repoData.fullName}. Cause of death: ${cert.causeOfDeath} 💀 commitmentissues.dev`
-    const shareUrl = `https://commitmentissues.dev/?repo=${encodeURIComponent(cert.repoData.fullName)}`
-
+    setIsGeneratingShare(true)
     try {
-      const blob = await exportBlob(2, true)
+      const blob = await generateShareBlob()
       if (!blob) return
 
       const file = new File([blob], `${cert.repoData.name}-certificate-of-death.png`, { type: 'image/png' })
-      if (navigator.share && (!navigator.canShare || navigator.canShare({ files: [file] }))) {
-        await navigator.share({
-          title: 'Certificate of Death',
-          text: shareText,
-          url: shareUrl,
-          files: [file],
-        })
-        stat('shared')
+      const canNativeShareFiles = Boolean(
+        navigator.share && (!navigator.canShare || navigator.canShare({ files: [file] }))
+      )
+
+      if (canNativeShareFiles) {
+        try {
+          await navigator.share({
+            title: 'Certificate of Death',
+            text: shareText,
+            url: shareUrl,
+            files: [file],
+          })
+          stat('shared')
+        } catch (error) {
+          if (!(error instanceof DOMException && error.name === 'AbortError')) {
+            triggerDownload(blob, `${cert.repoData.name}-share.png`)
+            stat('downloaded')
+          }
+        }
         return
       }
 
-      // Desktop / unsupported share fallback: download image.
-      triggerDownload(blob, `${cert.repoData.name}-share.png`)
-      stat('downloaded')
-    } catch (error) {
-      // User cancelled share dialog; do nothing.
-      if (error instanceof DOMException && error.name === 'AbortError') return
-
-      // If sharing truly fails, fallback to download.
-      const blob = await exportBlob(2, true)
-      if (!blob) return
-      triggerDownload(blob, `${cert.repoData.name}-share.png`)
-      stat('downloaded')
+      // Desktop path: open action menu instead of direct download.
+      setShowDesktopShareMenu(true)
+    } finally {
+      setIsGeneratingShare(false)
     }
+  }
+
+  function handleShareToX() {
+    const tweet = encodeURIComponent(`RIP ${cert.repoData.fullName}. Cause of death: ${cert.causeOfDeath}. 🪦 ${shareUrl}`)
+    window.open(`https://twitter.com/intent/tweet?text=${tweet}`, '_blank')
+    stat('shared')
+    setShowDesktopShareMenu(false)
+  }
+
+  async function handleCopyLink() {
+    try {
+      await navigator.clipboard.writeText(shareUrl)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch {
+      // ignore clipboard errors
+    }
+  }
+
+  async function handleDownloadShareImage() {
+    const blob = await generateShareBlob()
+    if (!blob) return
+    triggerDownload(blob, `${cert.repoData.name}-share.png`)
+    stat('downloaded')
+    setShowDesktopShareMenu(false)
   }
 
   async function handleDownload(pixelRatio: number, suffix: string) {
@@ -165,12 +202,13 @@ export default function CertificateCard({ cert, onReset }: Props) {
           {/* Share */}
           <button type="button" onClick={handleShare}
             style={{ flex: 1, fontFamily: UI, fontSize: '14px', fontWeight: 700, background: '#0a0a0a', color: '#fff', border: '1.5px solid #000', borderRadius: '10px', padding: '14px 10px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', transition: 'opacity 0.15s, transform 0.1s', WebkitTapHighlightColor: 'transparent', touchAction: 'manipulation' }}
+            disabled={isGeneratingShare}
             onMouseEnter={e => { e.currentTarget.style.opacity = '0.9'; e.currentTarget.style.transform = 'translateY(-1px)' }}
             onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'translateY(0)' }}
             onMouseDown={e => { e.currentTarget.style.transform = 'scale(0.97)' }}
             onMouseUp={e => { e.currentTarget.style.transform = 'translateY(-1px)' }}
           >
-            Send to maintainer →
+            {isGeneratingShare ? 'Generating...' : 'Send to maintainer →'}
           </button>
 
           {/* Download */}
@@ -205,6 +243,68 @@ export default function CertificateCard({ cert, onReset }: Props) {
         </button>
 
       </div>
+
+      {showDesktopShareMenu && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0,0,0,0.45)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000,
+            padding: '16px',
+          }}
+          onClick={() => setShowDesktopShareMenu(false)}
+        >
+          <div
+            style={{
+              width: '100%',
+              maxWidth: '360px',
+              background: '#fff',
+              borderRadius: '12px',
+              border: '1px solid #d0cac4',
+              boxShadow: '0 10px 30px rgba(0,0,0,0.2)',
+              padding: '14px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '10px',
+            }}
+            onClick={e => e.stopPropagation()}
+          >
+            <p style={{ margin: '0 0 4px 0', fontFamily: UI, fontSize: '14px', fontWeight: 700, color: '#160A06' }}>
+              Share this certificate
+            </p>
+
+            <button
+              type="button"
+              onClick={handleShareToX}
+              style={{ fontFamily: UI, fontSize: '14px', fontWeight: 600, border: '1px solid #000', background: '#0a0a0a', color: '#fff', borderRadius: '9px', minHeight: '44px' }}
+            >
+              Post on X
+            </button>
+
+            <button
+              type="button"
+              onClick={handleCopyLink}
+              style={{ fontFamily: UI, fontSize: '14px', fontWeight: 600, border: '1px solid #000', background: '#fff', color: '#160A06', borderRadius: '9px', minHeight: '44px' }}
+            >
+              {copied ? 'Copied ✓' : 'Copy link'}
+            </button>
+
+            <button
+              type="button"
+              onClick={handleDownloadShareImage}
+              style={{ fontFamily: UI, fontSize: '14px', fontWeight: 600, border: '1px solid #000', background: '#fff', color: '#160A06', borderRadius: '9px', minHeight: '44px' }}
+            >
+              Download image
+            </button>
+          </div>
+        </div>
+      )}
 
     </div>
   )
