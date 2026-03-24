@@ -6,11 +6,11 @@ const UI = `var(--font-dm), -apple-system, sans-serif`
 const SECTIONS = [
   {
     title: 'What we collect',
-    body: 'No accounts. No emails. No names. When you submit a repo URL, we fetch its public GitHub metadata (stars, last commit date, open issues) to generate the certificate. That is all we touch.',
+    body: 'No accounts, passwords, or profile setup. When you submit a repo URL, we fetch public GitHub metadata (for example stars, commits, issues, archive status) to generate the certificate.',
   },
   {
     title: 'What we store',
-    body: 'The last 10 repos analyzed are saved to our database to power the "Recently Buried" section on the homepage. We store: the repo name (e.g. owner/repo), the generated cause of death, the death score, and a timestamp. No IP addresses, no user IDs, nothing personal. These entries are visible to everyone who visits the site.',
+    body: 'To power "Recently Buried", we store up to 10 recent public entries: repo name (owner/repo), generated cause, score, and timestamp. These entries are public on the homepage.',
   },
   {
     title: 'GitHub API',
@@ -18,11 +18,15 @@ const SECTIONS = [
   },
   {
     title: 'Analytics',
-    body: 'We count anonymous aggregate events — how many certificates are generated, downloaded, and shared. No individual is tracked. No cookies are set for this.',
+    body: 'We use privacy-focused analytics (Vercel Analytics and Plausible) for aggregate product metrics such as visits and feature events (e.g. generated, downloaded, shared). We do not use this for advertising profiles.',
   },
   {
     title: 'Cookies & localStorage',
-    body: 'We set no tracking cookies. Your browser may store the last repo you analyzed in localStorage so the page remembers your session — this never leaves your device.',
+    body: 'We do not set our own marketing cookies. Your browser may store the last analyzed repo in localStorage so your session can be restored. Analytics providers may process technical request metadata to deliver aggregate stats.',
+  },
+  {
+    title: 'Legal basis & consent',
+    body: 'We process data to deliver the service you request (certificate generation) and to run the site securely. For aggregate analytics, we rely on legitimate interest where permitted. If we ever enable consent-required tracking in your region, we will add consent controls first.',
   },
   { title: 'Contact', body: 'Questions or removal requests: ', email: 'dot.systems@proton.me' },
 ]
