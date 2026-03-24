@@ -36,77 +36,84 @@ const HALL_OF_SHAME: LeaderboardEntry[] = [
 ]
 
 const FONT = `var(--font-dm), -apple-system, sans-serif`
-const MONO = `var(--font-courier), 'Courier New', monospace`
 
 interface Props {
   onSelect: (url: string) => void
 }
 
 export default function Leaderboard({ onSelect }: Props) {
+  function GraveyardCard({ entry }: { entry: LeaderboardEntry }) {
+    return (
+      <button
+        type="button"
+        onClick={() => { track('graveyard_clicked', { repo: entry.fullName }); onSelect(`https://github.com/${entry.fullName}`) }}
+        style={{
+          fontFamily: FONT,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+          gap: '6px',
+          width: '296px',
+          minHeight: '184px',
+          flexShrink: 0,
+          padding: '20px',
+          background: '#fff',
+          border: '1.5px solid #d0cac4',
+          borderRadius: '12px',
+          cursor: 'pointer',
+          textAlign: 'left',
+          transition: 'border-color 0.15s, transform 0.15s, box-shadow 0.15s',
+          boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
+        }}
+        onMouseEnter={e => {
+          e.currentTarget.style.borderColor = '#0a0a0a'
+          e.currentTarget.style.transform = 'translateY(-3px)'
+          e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.12)'
+        }}
+        onMouseLeave={e => {
+          e.currentTarget.style.borderColor = '#d0cac4'
+          e.currentTarget.style.transform = 'translateY(0)'
+          e.currentTarget.style.boxShadow = '0 1px 4px rgba(0,0,0,0.05)'
+        }}
+        onMouseDown={e => {
+          e.currentTarget.style.transform = 'scale(0.99)'
+        }}
+        onMouseUp={e => {
+          e.currentTarget.style.transform = 'translateY(-1px)'
+        }}
+      >
+        <span style={{ fontSize: '20px', lineHeight: 1 }}>🪦</span>
+        <span style={{ fontSize: '15px', fontWeight: 700, color: '#0a0a0a', lineHeight: 1.3, wordBreak: 'break-word' }}>
+          {entry.fullName}
+        </span>
+        <span style={{ fontSize: '14px', fontStyle: 'italic', color: '#4f4a46', lineHeight: 1.6, fontWeight: 500, marginTop: '2px' }}>
+          {entry.cause}
+        </span>
+        <span style={{ fontSize: '12px', color: '#8f8680', marginTop: '4px' }}>
+          {entry.deathDate}
+        </span>
+      </button>
+    )
+  }
+
   return (
-    <div style={{ width: '100%', marginTop: '2px' }}>
-      <p style={{ fontFamily: FONT, fontSize: '26px', fontWeight: 700, color: '#160A06', margin: '0 0 2px 0', letterSpacing: '-0.01em' }}>
-        The Great GitHub Graveyard
-      </p>
-      <p style={{ fontFamily: FONT, fontSize: '13px', color: '#938882', margin: '0 0 10px 0' }}>
-        Click any repo to instantly generate its certificate.
-      </p>
-
-      <div style={{ overflowX: 'auto', borderRadius: '12px' }}>
-        <div style={{ minWidth: '620px', border: '1px solid #d8d4d0', borderRadius: '12px', overflow: 'hidden', background: '#fff', boxShadow: '0 1px 4px rgba(0,0,0,0.05)' }}>
-          <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '32px minmax(160px, 1fr) minmax(220px, 2fr) 90px',
-            gap: '10px',
-            alignItems: 'center',
-            padding: '10px 12px',
-            borderBottom: '1px solid #e8e4de',
-            background: '#f8f7f5',
-            fontFamily: MONO,
-            fontSize: '11px',
-            color: '#8f8680',
-            letterSpacing: '0.04em',
-          }}
-        >
-          <span>☠</span>
-          <span>repo</span>
-          <span>cause of death</span>
-          <span>died</span>
-        </div>
-
-          {HALL_OF_SHAME.map((entry, i) => (
-            <button
-            key={entry.fullName}
-            type="button"
-            onClick={() => { track('graveyard_clicked', { repo: entry.fullName }); onSelect(`https://github.com/${entry.fullName}`) }}
-            style={{
-              width: '100%',
-              border: 'none',
-              borderBottom: i < HALL_OF_SHAME.length - 1 ? '1px solid #efebe6' : 'none',
-              background: '#fff',
-              padding: '10px 12px',
-              textAlign: 'left',
-              cursor: 'pointer',
-              fontFamily: FONT,
-            }}
-            onMouseEnter={e => { e.currentTarget.style.background = '#faf7f3' }}
-            onMouseLeave={e => { e.currentTarget.style.background = '#fff' }}
-          >
-            <span
-              style={{
-                display: 'grid',
-                gridTemplateColumns: '32px minmax(160px, 1fr) minmax(220px, 2fr) 90px',
-                gap: '10px',
-                alignItems: 'center',
-              }}
-            >
-              <span style={{ fontSize: '15px', color: '#6f6761' }}>🪦</span>
-              <span style={{ fontSize: '15px', fontWeight: 700, color: '#160A06', lineHeight: 1.25 }}>{entry.fullName}</span>
-              <span style={{ fontSize: '14px', color: '#5d5752', fontStyle: 'italic', lineHeight: 1.35 }}>{entry.cause}</span>
-              <span style={{ fontSize: '13px', color: '#8f8680', textAlign: 'right' }}>{entry.deathDate}</span>
-            </span>
-            </button>
+    <div
+      style={{ width: '100vw', marginLeft: 'calc(50% - 50vw)', overflow: 'hidden', padding: '4px 20px 8px', scrollPaddingInline: '20px' }}
+      onMouseEnter={e => { (e.currentTarget.querySelector('.marquee-track') as HTMLElement).style.animationPlayState = 'paused' }}
+      onMouseLeave={e => { (e.currentTarget.querySelector('.marquee-track') as HTMLElement).style.animationPlayState = 'running' }}
+    >
+      <div className="marquee-track" style={{
+        display: 'flex',
+        gap: '14px',
+        animation: 'marquee 120s linear infinite',
+        width: 'max-content',
+      }}>
+        {HALL_OF_SHAME.map((entry) => (
+          <GraveyardCard key={entry.fullName} entry={entry} />
+        ))}
+        <div aria-hidden style={{ display: 'contents' }}>
+          {HALL_OF_SHAME.map((entry) => (
+            <GraveyardCard key={`loop-${entry.fullName}`} entry={entry} />
           ))}
         </div>
       </div>
