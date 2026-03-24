@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# commitmentissues.dev ☠️
 
-## Getting Started
+> Official death certificates for abandoned GitHub repos.
 
-First, run the development server:
+Paste any public GitHub repo URL. Get a beautifully formatted death certificate — cause of death, last words, death index score, and more.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+**Live at [commitmentissues.dev](https://commitmentissues.dev)**
+
+---
+
+## How it works
+
+```
+User pastes: https://github.com/facebook/react
+                        ↓
+          Extracts owner + repo name
+                        ↓
+     Calls GitHub public API (no key required)
+       — repo metadata + latest commit —
+                        ↓
+        Scores the repo: 0–10 death index
+                        ↓
+          Renders the death certificate
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+No database. No login required for public repos. Just the GitHub API and rule-based logic.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Death Index
 
-## Learn More
+| Condition | Points |
+|-----------|--------|
+| Last commit > 2 years ago | +4 |
+| Last commit 1–2 years ago | +2 |
+| Repo is archived | +3 |
+| 20+ open issues AND inactive 6+ months | +1 |
+| 100+ stars but no activity 1+ year | +1 |
 
-To learn more about Next.js, take a look at the following resources:
+**Cause of death** is determined by matching the highest-scoring rule — from `"Officially declared dead by author"` to `"Side project syndrome"`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Stack
 
-## Deploy on Vercel
+- **Framework:** Next.js 14 (App Router)
+- **Styling:** Tailwind CSS
+- **Fonts:** Geist (sans) + Geist Mono (mono) via `next/font`
+- **Payments:** Stripe (premium features)
+- **Deploy:** Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── page.tsx              ← main UI: search + certificate
+│   ├── certificate/          ← certificate view
+│   ├── pricing/              ← premium plans
+│   ├── faq/                  ← FAQ page
+│   ├── about/                ← about page
+│   └── api/
+│       ├── repo/             ← proxies GitHub API (avoids CORS)
+│       ├── generate-cert/    ← certificate generation
+│       ├── stats/            ← usage stats
+│       ├── recent/           ← recently analyzed repos
+│       └── checkout/         ← Stripe payment flow
+├── components/
+│   ├── CertificateCard.tsx   ← certificate UI + download + animation
+│   ├── Leaderboard.tsx       ← Hall of Shame + Recently Buried
+│   ├── SearchForm.tsx        ← URL input
+│   ├── LoadingState.tsx      ← skeleton loading
+│   └── ErrorDisplay.tsx      ← error states
+└── lib/
+    ├── scoring.ts            ← all death logic
+    └── types.ts              ← TypeScript interfaces
+```
+
+---
+
+## Run locally
+
+```bash
+git clone https://github.com/dotsystemsdevs/saas-commitmentissues
+cd saas-commitmentissues
+npm install
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+Add a `GITHUB_TOKEN` in `.env.local` to raise rate limit from 60 to 5,000 req/hr:
+
+```
+GITHUB_TOKEN=your_token_here
+```
+
+---
+
+## Features
+
+- Death certificate with cause of death, last words, death index
+- Download certificate as PNG
+- Share on X with pre-filled text
+- Leaderboard — Hall of Shame + Recently Buried (localStorage)
+- Entry animation + "CERTIFIED DEAD" stamp
+- Premium features via Stripe
+- SEO: sitemap, robots, OpenGraph image
+
+---
+
+Built by [Dot Systems](https://github.com/dotsystemsdevs)
