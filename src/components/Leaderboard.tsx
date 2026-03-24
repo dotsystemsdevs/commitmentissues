@@ -103,7 +103,7 @@ export default function Leaderboard({ onSelect }: Props) {
       <div className="marquee-track" style={{
         display: 'flex',
         gap: '14px',
-        animation: 'marquee 160s linear infinite',
+        animation: 'marquee 80s linear infinite',
         width: 'max-content',
       }}>
         {HALL_OF_SHAME.map((entry) => (
