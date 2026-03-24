@@ -55,7 +55,7 @@ function GraveyardCard({ entry, onSelect }: { entry: LeaderboardEntry; onSelect:
         flexShrink: 0,
         padding: '20px',
         background: '#fff',
-        border: '1.5px solid #e0dbd5',
+        border: '1.5px solid #d0cac4',
         borderRadius: '12px',
         cursor: 'pointer',
         textAlign: 'left',
@@ -68,7 +68,7 @@ function GraveyardCard({ entry, onSelect }: { entry: LeaderboardEntry; onSelect:
         e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.12)'
       }}
       onMouseLeave={e => {
-        e.currentTarget.style.borderColor = '#e0dbd5'
+        e.currentTarget.style.borderColor = '#d0cac4'
         e.currentTarget.style.transform = 'translateY(0)'
         e.currentTarget.style.boxShadow = '0 1px 4px rgba(0,0,0,0.05)'
       }}

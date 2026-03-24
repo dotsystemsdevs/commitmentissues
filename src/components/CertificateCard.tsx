@@ -33,6 +33,14 @@ export default function CertificateCard({ cert, onReset }: Props) {
     }
   }, [visible])
 
+  // ESC closes share modal
+  useEffect(() => {
+    if (!showModal) return
+    function onKey(e: KeyboardEvent) { if (e.key === 'Escape') setShowModal(false) }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [showModal])
+
   // watermark=false → paid clean export (stamp hidden, pixelRatio 5.167 = 2480px, true 300 DPI on A4)
   // watermark=true  → free share export (pixelRatio 2 = 960px, stamp visible)
   async function exportBlob(pixelRatio: number, watermark = false): Promise<Blob | null> {
@@ -218,7 +226,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
           onMouseDown={e => { e.currentTarget.style.transform = 'scale(0.97)' }}
           onMouseUp={e => { e.currentTarget.style.transform = 'translateY(-1px)' }}
         >
-          💀 This is painfully accurate. Send it to a dev →
+          💀 Share this certificate →
         </button>
 
         {/* Post on X — direct, no modal */}
@@ -280,18 +288,20 @@ export default function CertificateCard({ cert, onReset }: Props) {
             fontFamily: UI,
             fontSize: '13px',
             color: '#938882',
-            background: 'none',
-            border: 'none',
+            background: '#fff',
+            border: '1.5px solid #e0dbd5',
+            borderRadius: '10px',
             cursor: 'pointer',
-            padding: '6px 0 4px',
+            padding: '14px 24px',
+            minHeight: '48px',
             textAlign: 'center',
             width: '100%',
             transition: 'color 0.15s',
             WebkitTapHighlightColor: 'transparent',
             touchAction: 'manipulation',
           }}
-          onMouseEnter={e => { e.currentTarget.style.color = '#160A06'; e.currentTarget.style.textDecoration = 'underline'; e.currentTarget.style.textUnderlineOffset = '3px' }}
-          onMouseLeave={e => { e.currentTarget.style.color = '#938882'; e.currentTarget.style.textDecoration = 'none' }}
+          onMouseEnter={e => { e.currentTarget.style.color = '#160A06'; e.currentTarget.style.borderColor = '#888' }}
+          onMouseLeave={e => { e.currentTarget.style.color = '#938882'; e.currentTarget.style.borderColor = '#e0dbd5' }}
         >
           Bury another →
         </button>
