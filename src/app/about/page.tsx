@@ -17,7 +17,7 @@ const SECTIONS = [
   },
   {
     title: 'What we collect',
-    body: "No accounts and no signup. We process the GitHub URL you submit, store the latest public burials shown on the homepage (repo name, generated cause, score, timestamp), and collect anonymous usage metrics to understand feature usage. See Privacy for full details.",
+    body: "No accounts and no signup. We process the GitHub URL you submit, store the latest public burials shown on the homepage (repo name, generated cause, score, timestamp), and collect anonymous usage metrics to understand feature usage.",
   },
   {
     title: 'Support the Undertaker ⚰️',

@@ -6,7 +6,7 @@ const UI = `var(--font-dm), -apple-system, sans-serif`
 const SECTIONS = [
   { title: 'What this is', body: 'A parody tool. Certificates are not legally valid documents.' },
   { title: 'Use at your own risk', body: 'Data is from GitHub\'s public API. Causes of death are algorithmic. Do not take them seriously.' },
-  { title: 'Privacy and data use', body: 'By using the service, you acknowledge data handling described in the Privacy page, including public "Recently Buried" entries and anonymous aggregate analytics needed to operate and improve the product.' },
+  { title: 'Data use', body: 'By using the service, you acknowledge that we process submitted public repo URLs, publish recent public burials on the homepage, and collect anonymous aggregate analytics needed to operate and improve the product.' },
   { title: 'Acceptable use', body: 'Personal use only. Do not harass, defame, or abuse the API.' },
   { title: 'Changes', body: 'We may update these at any time. Continued use = acceptance.' },
   { title: 'Contact', body: '', email: 'dot.systems@proton.me' },
