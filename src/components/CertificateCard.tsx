@@ -16,7 +16,6 @@ export default function CertificateCard({ cert, onReset }: Props) {
   const cardRef    = useRef<HTMLDivElement>(null)
   const wrapperRef = useRef<HTMLDivElement>(null)
   const stampRef   = useRef<HTMLDivElement>(null)
-  const topRef     = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
   const [isGeneratingShare, setIsGeneratingShare] = useState(false)
   const [showDesktopShareMenu, setShowDesktopShareMenu] = useState(false)
@@ -26,13 +25,6 @@ export default function CertificateCard({ cert, onReset }: Props) {
     const t = setTimeout(() => setVisible(true), 50)
     return () => clearTimeout(t)
   }, [])
-
-  // Auto-scroll so certificate top is visible after load
-  useEffect(() => {
-    if (visible && topRef.current) {
-      topRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
-  }, [visible])
 
   // watermark=false → paid clean export (stamp hidden, pixelRatio 5.167 = 2480px, true 300 DPI on A4)
   // watermark=true  → free share export (pixelRatio 2 = 960px, stamp visible)
@@ -159,7 +151,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
   const UI = `var(--font-dm), -apple-system, sans-serif`
 
   return (
-    <div ref={topRef} style={{ width: '100%', maxWidth: '480px', margin: '0 auto' }}>
+    <div style={{ width: '100%', maxWidth: '480px', margin: '0 auto' }}>
 
       {/* ── Title ── */}
       <PageHero

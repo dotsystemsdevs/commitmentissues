@@ -89,12 +89,12 @@ export default function Page() {
           </div>
 
           {statsLoading && (
-            <p style={{ fontFamily: MONO, fontSize: '11px', color: '#b0aca8', textAlign: 'center', margin: '14px 0 0 0', letterSpacing: '0.06em' }}>
+            <p style={{ fontFamily: MONO, fontSize: '11px', color: '#b0aca8', textAlign: 'center', margin: '4px 0 0 0', letterSpacing: '0.06em' }}>
               loading burials...
             </p>
           )}
           {!statsLoading && buried !== null && buried >= 100 && (
-            <p style={{ fontFamily: FONT, fontSize: '14px', fontWeight: 600, color: '#6b6560', opacity: 0.9, textAlign: 'center', margin: '14px 0 0 0', letterSpacing: '0.02em' }}>
+            <p style={{ fontFamily: FONT, fontSize: '14px', fontWeight: 600, color: '#6b6560', opacity: 0.9, textAlign: 'center', margin: '4px 0 0 0', letterSpacing: '0.02em' }}>
               {buried.toLocaleString()} repos buried
             </p>
           )}
