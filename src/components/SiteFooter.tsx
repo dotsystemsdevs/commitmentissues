@@ -35,8 +35,8 @@ export default function SiteFooter({ compact = false }: SiteFooterProps) {
           justifyContent: 'center',
           gap: '6px',
           fontFamily: MONO,
-          fontSize: '11px',
-          color: '#b0aca8',
+          fontSize: '12px',
+          color: '#938882',
           textDecoration: 'none',
           letterSpacing: '0.04em',
           padding: '4px 0',
@@ -46,9 +46,9 @@ export default function SiteFooter({ compact = false }: SiteFooterProps) {
         onMouseLeave={e => (e.currentTarget.style.color = '#b0aca8')}
       >
         <GitHubIcon />
-        view source on GitHub
+        Open source on GitHub
       </a>
-      <p className="site-footer-copy" style={{ fontFamily: FONT }}>REST in production.</p>
+      <p className="site-footer-copy" style={{ fontFamily: FONT }}>REST IN PRODUCTION.</p>
     </footer>
   )
 }

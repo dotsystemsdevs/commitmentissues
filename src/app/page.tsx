@@ -48,17 +48,17 @@ export default function Page() {
             />
           </div>
 
-          <div style={{ width: '100%', marginTop: '12px' }}>
+          <div style={{ width: '100%', marginTop: '10px' }}>
             <SearchForm url={url} setUrl={setUrl} onSubmit={analyze} onSelect={handleSelect} loading={loading} />
           </div>
 
           {statsLoading && (
-            <p style={{ fontFamily: MONO, fontSize: '11px', color: '#b0aca8', textAlign: 'center', margin: '4px 0 0 0', letterSpacing: '0.06em' }}>
+            <p style={{ fontFamily: MONO, fontSize: '11px', color: '#a19a95', textAlign: 'center', margin: '8px 0 0 0', letterSpacing: '0.06em' }}>
               counting graves...
             </p>
           )}
           {!statsLoading && buried !== null && buried >= 100 && (
-            <p style={{ fontFamily: FONT, fontSize: '14px', fontWeight: 600, color: '#6b6560', opacity: 0.9, textAlign: 'center', margin: '4px 0 0 0', letterSpacing: '0.02em' }}>
+            <p style={{ fontFamily: FONT, fontSize: '14px', fontWeight: 600, color: '#5c5651', opacity: 0.92, textAlign: 'center', margin: '8px 0 0 0', letterSpacing: '0.02em' }}>
               {buried.toLocaleString()} repos buried
             </p>
           )}
@@ -75,9 +75,9 @@ export default function Page() {
 
       {/* Graveyard — right below social proof */}
       {idle && (
-        <div style={{ width: '100%', marginTop: '40px', paddingBottom: 0 }}>
+        <div style={{ width: '100%', marginTop: '34px', paddingBottom: 0 }}>
           <div style={{ marginBottom: '14px', textAlign: 'center' }}>
-            <p style={{ fontFamily: FONT, fontSize: '13px', fontWeight: 600, color: '#b0aca8', margin: 0, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
+            <p style={{ fontFamily: FONT, fontSize: '13px', fontWeight: 700, color: '#8f8680', margin: 0, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
               Fresh Graves
             </p>
           </div>

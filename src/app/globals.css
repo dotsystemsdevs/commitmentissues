@@ -394,17 +394,18 @@ a.subpage-inline-mail {
 
 .site-footer {
   margin-top: auto;
-  padding-top: 40px;
+  padding-top: 32px;
   padding-bottom: max(24px, env(safe-area-inset-bottom));
   text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .site-footer--compact {
-  margin-top: 6px;
-  padding-top: 14px;
+  margin-top: 10px;
+  padding-top: 18px;
+  border-top: 1px solid #e4dfd9;
 }
 
 .homepage-cert-preview {
@@ -474,8 +475,9 @@ a.subpage-inline-mail {
 }
 
 .site-footer-copy {
-  font-size: 11px;
-  color: #b0aca8;
+  font-size: 12px;
+  color: #968d86;
+  letter-spacing: 0.04em;
   margin: 0;
 }
 
@@ -544,7 +546,7 @@ a.subpage-inline-mail {
   }
 
   .input-button-wrapper:focus-within {
-    margin-bottom: 12px;
+    margin-bottom: 8px;
   }
 
   /* Prevent iOS Safari auto-zoom on focused text inputs */

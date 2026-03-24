@@ -74,7 +74,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+    <form onSubmit={handleSubmit} style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '10px' }}>
 
       {/* Input + button — single row */}
       <div className="input-button-wrapper input-block" style={{
@@ -158,7 +158,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
       )}
 
       {/* TRY ONE OF THESE chips */}
-      <div className="chips-container chips-section" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', marginTop: '6px', marginBottom: '8px' }}>
+      <div className="chips-container chips-section" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', marginTop: '8px', marginBottom: '8px' }}>
         <span style={{ fontFamily: MONO, fontSize: '10px', letterSpacing: '0.18em', color: '#b0aca8', textTransform: 'uppercase' }}>
           start with a known corpse:
         </span>
