@@ -17,9 +17,9 @@ const MONO = `var(--font-courier), 'Courier New', monospace`
 const BASE_COUNT = 1449
 const CERT_PREVIEW: DeathCertificate = {
   repoData: {
-    name: 'brackets',
-    fullName: 'adobe/brackets',
-    description: 'A modern open-source code editor for web design and frontend development.',
+    name: 'your-repo',
+    fullName: 'yourname/your-repo',
+    description: 'Your repository description appears here.',
     createdAt: '2012-09-04T00:00:00Z',
     pushedAt: '2021-09-01T00:00:00Z',
     isArchived: true,
@@ -38,9 +38,9 @@ const CERT_PREVIEW: DeathCertificate = {
   causeOfDeath: 'Started strong. Never finished.',
   deathDate: 'Sep 2021',
   age: '9 years',
-  lastWords: 'At least I had good themes.',
+  lastWords: 'It worked on my machine.',
   mourners: '35,200 stars, 7,500 forks',
-  shareText: 'RIP adobe/brackets',
+  shareText: 'RIP yourname/your-repo',
 }
 
 export default function Page() {
@@ -74,15 +74,13 @@ export default function Page() {
             <div className="homepage-cert-preview">
               <CertificateSheet cert={CERT_PREVIEW} visible={true} showStamp={false} />
             </div>
-            <p style={{ fontFamily: MONO, fontSize: '11px', color: '#938882', textAlign: 'center', margin: '6px 0 0 0', letterSpacing: '0.06em' }}>
-              Example death certificate
-            </p>
           </div>
 
           <div style={{ marginTop: '8px' }}>
             <PageHero
               subtitle="Paste a repo. See what killed it."
               microcopy={null}
+              hideEmoji={true}
             />
           </div>
 
