@@ -169,21 +169,6 @@ export default function CertificateCard({ cert, onReset }: Props) {
           type="button"
           onClick={() => { track('issue_another_clicked'); onReset() }}
           aria-label="Back"
-          style={{
-            minHeight: '44px',
-            padding: '10px 14px',
-            border: '1px solid #0a0a0a',
-            background: '#f3f3f3',
-            color: '#0a0a0a',
-            borderRadius: '0px',
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontFamily: UI,
-            fontSize: '13px',
-            fontWeight: 600,
-            lineHeight: 1.1,
-          }}
         >
           back
         </button>
