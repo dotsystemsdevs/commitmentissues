@@ -82,7 +82,7 @@ export default function RecentlyBuried({ onSelect }: Props) {
         <span style={{ fontSize: '14px', fontStyle: 'italic', color: '#4d4d4d', lineHeight: 1.6, fontWeight: 500, marginTop: '2px' }}>
           {entry.cause}
         </span>
-        <span style={{ fontSize: '12px', color: '#787878', marginTop: '4px' }}>
+        <span style={{ fontSize: '12px', color: '#787878', marginTop: 'auto' }}>
           {entry.analyzedAt ? timeAgo(entry.analyzedAt) : ''}
         </span>
       </button>
