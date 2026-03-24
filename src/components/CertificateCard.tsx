@@ -11,6 +11,25 @@ interface Props {
   onReset: () => void
 }
 
+function buildShareCopy(cert: DeathCertificate, shareUrl: string): string {
+  const repo = cert.repoData.fullName
+  const cause = cert.causeOfDeath
+
+  if (cert.repoData.isArchived) {
+    return `Archived and buried: ${repo}. Cause: ${cause}. ${shareUrl}`
+  }
+
+  if (cert.deathIndex >= 9) {
+    return `Postmortem complete: ${repo} flatlined. Cause: ${cause}. ${shareUrl}`
+  }
+
+  if (cert.deathIndex >= 7) {
+    return `RIP ${repo}. Official cause of death: ${cause}. ${shareUrl}`
+  }
+
+  return `${repo} is on life support. Cause of death: ${cause}. ${shareUrl}`
+}
+
 export default function CertificateCard({ cert, onReset }: Props) {
   const cardRef    = useRef<HTMLDivElement>(null)
   const wrapperRef = useRef<HTMLDivElement>(null)
@@ -69,8 +88,8 @@ export default function CertificateCard({ cert, onReset }: Props) {
     URL.revokeObjectURL(url)
   }
 
-  const shareText = `RIP ${cert.repoData.fullName}. Cause of death: ${cert.causeOfDeath} 🪦 commitmentissues.dev`
   const shareUrl = `https://commitmentissues.dev/?repo=${encodeURIComponent(cert.repoData.fullName)}`
+  const shareText = buildShareCopy(cert, shareUrl)
 
   async function generateShareBlob() {
     // 480 * 2.5 = 1200px, 679 * 2.5 ≈ 1700px
@@ -115,7 +134,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
   }
 
   function handleShareToX() {
-    const tweet = encodeURIComponent(`RIP ${cert.repoData.fullName}. Cause of death: ${cert.causeOfDeath}. 🪦 ${shareUrl}`)
+    const tweet = encodeURIComponent(shareText)
     window.open(`https://twitter.com/intent/tweet?text=${tweet}`, '_blank')
     stat('shared')
     setShowDesktopShareMenu(false)

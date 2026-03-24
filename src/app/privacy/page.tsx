@@ -4,8 +4,9 @@ import SubpageShell from '@/components/SubpageShell'
 const UI = `var(--font-dm), -apple-system, sans-serif`
 
 const SECTIONS = [
-  { title: 'What we collect', body: 'Nothing personal. No accounts, no emails, no stored URLs.' },
+  { title: 'What we collect', body: 'Nothing personal. No accounts, no emails, no private repo data. We only process the GitHub URL you submit.' },
   { title: 'GitHub API', body: 'Public repo data only. We do not access private repositories.' },
+  { title: 'Retention', body: 'No permanent server-side history of analyzed repos. We keep a short in-memory recent list (max 20) for live UX and it resets on deploy/restart.' },
   { title: 'Analytics', body: 'No personal data. We count anonymous events only — how many certificates are generated, downloaded, and shared. No individual is tracked.' },
   { title: 'Cookies', body: 'None. Recently analyzed repos live in your own localStorage — we never see them.' },
   { title: 'Contact', body: 'Questions? ', email: 'dot.systems@proton.me' },
