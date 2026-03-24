@@ -25,6 +25,7 @@ interface Props {
 
 export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }: Props) {
   const [focused, setFocused] = useState(false)
+  const [invalid, setInvalid] = useState(false)
 
   function normalizeGithubInput(value: string): string | null {
     const trimmed = value.trim()
@@ -44,6 +45,14 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
       return `https://github.com/${owner}/${repo}`
     }
 
+    // Also support loose pastes like "owner/repo/blob/main/..."
+    const looseParts = trimmed.split('/').filter(Boolean)
+    if (looseParts.length >= 2 && !trimmed.includes('github.com')) {
+      const owner = looseParts[0]
+      const repo = looseParts[1].replace(/\.git$/i, '')
+      if (owner && repo) return `https://github.com/${owner}/${repo}`
+    }
+
     return null
   }
 
@@ -54,7 +63,11 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
     const normalizedUrl = normalizeGithubInput(url)
-    if (!normalizedUrl) return
+    if (!normalizedUrl) {
+      setInvalid(true)
+      return
+    }
+    setInvalid(false)
     setUrl(normalizedUrl)
     track('repo_submitted')
     onSubmit(normalizedUrl)
@@ -80,8 +93,8 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
             type="url"
             inputMode="url"
             value={url}
-            onChange={e => handleChange(e.target.value)}
-            placeholder="user/repo or URL"
+            onChange={e => { if (invalid) setInvalid(false); handleChange(e.target.value) }}
+            placeholder="user/repo or full GitHub URL"
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
             style={{
@@ -137,6 +150,12 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
         </button>
         </ClickSpark>
       </div>
+
+      {invalid && (
+        <p style={{ margin: '-2px 2px 0', fontFamily: FONT, fontSize: '12px', color: '#8B0000' }}>
+          Paste a valid GitHub URL or user/repo.
+        </p>
+      )}
 
       {/* TRY ONE OF THESE chips */}
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', marginTop: '2px' }}>

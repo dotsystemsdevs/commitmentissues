@@ -24,7 +24,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 56px 24px 0;
+  padding: calc(env(safe-area-inset-top) + 24px) 24px 0;
   padding-left: max(16px, env(safe-area-inset-left));
   padding-right: max(16px, env(safe-area-inset-right));
   padding-bottom: env(safe-area-inset-bottom, 0);
@@ -79,8 +79,8 @@
 
 .page-hero-title {
   font-size: clamp(3rem, 10vw, 5rem);
-  line-height: 0.92;
-  margin: 0 0 16px 0;
+  line-height: 0.95;
+  margin: 12px 0 16px 0;
   color: #160a06;
 }
 
@@ -503,7 +503,7 @@ a.subpage-inline-mail {
 @media (max-width: 640px) {
   /* Page padding */
   main { padding-left: 16px !important; padding-right: 16px !important; }
-  .page-shell-main { padding-top: 34px; }
+  .page-shell-main { padding-top: calc(env(safe-area-inset-top) + 20px); }
 
   /* Certificate: handled by CSS var --cert-scale */
   .certificate-scroll-zone {

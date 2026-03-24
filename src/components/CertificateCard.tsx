@@ -170,7 +170,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
             onMouseDown={e => { e.currentTarget.style.transform = 'scale(0.97)' }}
             onMouseUp={e => { e.currentTarget.style.transform = 'translateY(-1px)' }}
           >
-            Post this death →
+            Send to maintainer →
           </button>
 
           {/* Download */}
