@@ -71,10 +71,26 @@
 }
 
 .page-hero-emoji {
-  font-size: clamp(52px, 12vw, 72px);
   line-height: 1;
   margin-bottom: 12px;
   animation: hero-float 3.2s ease-in-out infinite;
+  display: flex;
+  justify-content: center;
+}
+
+.tombstone-icon {
+  color: #1A0F06;
+  display: block;
+}
+
+.page-hero-emoji .tombstone-icon {
+  width: clamp(52px, 12vw, 72px);
+  height: clamp(52px, 12vw, 72px);
+}
+
+.tombstone-icon--fade-bottom {
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
 }
 
 .page-hero-title {
@@ -512,7 +528,7 @@ a.subpage-inline-mail {
 
   /* Hero: keep CTA above the fold on small screens */
   .page-hero { padding-bottom: 10px; }
-  .page-hero-emoji { font-size: 46px; margin-bottom: 8px; }
+  .page-hero-emoji { margin-bottom: 8px; }
   .page-hero-title { font-size: clamp(2.2rem, 12vw, 2.8rem); margin-bottom: 10px; }
   .page-hero-sub { font-size: 15px; }
 
@@ -528,6 +544,12 @@ a.subpage-inline-mail {
 
   .input-button-wrapper:focus-within {
     margin-bottom: 120px;
+  }
+
+  /* Prevent iOS Safari auto-zoom on focused text inputs */
+  .input-button-wrapper input[type="text"],
+  .input-button-wrapper input[type="url"] {
+    font-size: 16px !important;
   }
 
   .homepage-cert-preview {

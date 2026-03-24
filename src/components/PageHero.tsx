@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import Link from 'next/link'
+import TombstoneIcon from '@/components/TombstoneIcon'
 
 type Props = {
   subtitle: ReactNode
@@ -30,7 +31,7 @@ export default function PageHero({
     <>
       {!hideEmoji && (
         <div className="page-hero-emoji" aria-hidden>
-          🪦
+          <TombstoneIcon className="tombstone-icon tombstone-icon--fade-bottom" />
         </div>
       )}
       <h1 className={`page-hero-title${isGothic ? ' certificate-of-death-title' : ' page-hero-title--sans'}`}>

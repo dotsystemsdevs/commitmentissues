@@ -2,6 +2,7 @@
 
 import { track } from '@vercel/analytics'
 import { LeaderboardEntry } from '@/lib/types'
+import TombstoneIcon from '@/components/TombstoneIcon'
 
 const HALL_OF_SHAME: LeaderboardEntry[] = [
   { fullName: 'atom/atom',              cause: 'GitHub built VS Code and forgot this existed',               score: 10, deathDate: 'Dec 2022', lastWords: 'At least I had good themes.' },
@@ -73,7 +74,9 @@ function GraveyardCard({ entry, onSelect }: { entry: LeaderboardEntry; onSelect:
         e.currentTarget.style.boxShadow = '0 1px 4px rgba(0,0,0,0.05)'
       }}
     >
-      <span style={{ fontSize: '20px', lineHeight: 1 }}>🪦</span>
+      <span style={{ lineHeight: 1, display: 'inline-flex' }}>
+        <TombstoneIcon size={22} className="tombstone-icon tombstone-icon--fade-bottom" />
+      </span>
       <span style={{ fontSize: '13px', fontWeight: 700, color: '#0a0a0a', lineHeight: 1.3, wordBreak: 'break-word' }}>
         {entry.fullName}
       </span>
