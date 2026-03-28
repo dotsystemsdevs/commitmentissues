@@ -76,25 +76,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Buy me a coffee"
+          className="coffee-btn-fixed"
           style={{
             position: 'fixed',
             top: '12px',
             right: '14px',
             zIndex: 999,
-            fontFamily: `var(--font-courier), monospace`,
-            fontSize: '11px',
-            fontWeight: 700,
-            letterSpacing: '0.06em',
-            textTransform: 'uppercase',
+            fontFamily: `var(--font-dm), -apple-system, sans-serif`,
+            fontSize: '12px',
+            fontWeight: 600,
+            letterSpacing: '0.01em',
             color: '#1a1a1a',
             textDecoration: 'none',
-            padding: '6px 10px',
+            padding: '7px 12px',
             border: '1.5px solid #1a1a1a',
             background: '#f6f6f6',
             whiteSpace: 'nowrap',
           }}
         >
-          ☕ Keep the lights on
+          ☕ Don&apos;t let us die too
         </a>
         {children}
         <Analytics />

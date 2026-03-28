@@ -371,6 +371,19 @@ button {
   opacity: 0.9;
 }
 
+.coffee-btn-fixed {
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s, transform 0.12s;
+}
+.coffee-btn-fixed:hover {
+  background: #1a1a1a !important;
+  color: #f6f6f6 !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.coffee-btn-fixed:active {
+  transform: scale(0.97);
+}
+
 .subpage-faq-cta {
   display: inline-flex;
   align-items: center;
