@@ -384,6 +384,33 @@ button {
   transform: scale(0.97);
 }
 
+/* Certificate action buttons */
+.cert-btn-primary {
+  transition: background 0.15s, opacity 0.12s, transform 0.12s;
+}
+@media (hover: hover) and (pointer: fine) {
+  .cert-btn-primary:hover {
+    background: #2a2a2a !important;
+  }
+}
+.cert-btn-primary:active {
+  transform: scale(0.985);
+  opacity: 0.88;
+}
+
+.cert-btn-secondary {
+  transition: background 0.15s, color 0.15s, opacity 0.12s, transform 0.12s;
+}
+@media (hover: hover) and (pointer: fine) {
+  .cert-btn-secondary:hover {
+    background: #f0f0f0 !important;
+  }
+}
+.cert-btn-secondary:active {
+  transform: scale(0.985);
+  opacity: 0.88;
+}
+
 .subpage-faq-cta {
   display: inline-flex;
   align-items: center;

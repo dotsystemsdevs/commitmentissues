@@ -366,6 +366,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
             type="button"
             onClick={handleShare}
             disabled={isGeneratingShare}
+            className="cert-btn-primary"
             style={{
               fontFamily: UI,
               fontSize: '14px',
@@ -381,11 +382,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
               alignItems: 'center',
               justifyContent: 'center',
               gap: '8px',
-              transition: 'opacity 0.12s',
             }}
-            onMouseDown={e => { e.currentTarget.style.opacity = '0.85' }}
-            onMouseUp={e => { e.currentTarget.style.opacity = '1' }}
-            onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}
           >
             {isGeneratingShare ? <span className="btn-spinner" /> : (isMobileViewport ? 'Share Story (9:16) →' : 'Share →')}
           </button>
