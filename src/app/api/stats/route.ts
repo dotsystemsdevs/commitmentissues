@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+// Repos buried before the Vercel migration — always added on top of the Redis counter.
+// Redis only stores new burials since migration; the baseline is never baked in.
 const BURIED_HISTORICAL_BASELINE = 800
 
 function normalizeBuriedCount(rawBuried: number | null | undefined) {
-  const value = rawBuried ?? 0
-  // Backward compatibility: old counters started from 0 before baseline existed.
-  return value < BURIED_HISTORICAL_BASELINE ? value + BURIED_HISTORICAL_BASELINE : value
+  return (rawBuried ?? 0) + BURIED_HISTORICAL_BASELINE
 }
 
 async function getRedis() {
@@ -45,12 +45,6 @@ export async function POST(req: NextRequest) {
     }
     const redis = await getRedis()
     if (!redis) return NextResponse.json({ ok: true })
-    if (counter === 'buried') {
-      const currentBuried = await redis.get<number>('stats:buried')
-      if (currentBuried == null) {
-        await redis.set('stats:buried', BURIED_HISTORICAL_BASELINE)
-      }
-    }
     await redis.incr(`stats:${counter}`)
     return NextResponse.json({ ok: true })
   } catch {
