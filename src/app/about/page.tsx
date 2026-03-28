@@ -1,4 +1,16 @@
+import type { Metadata } from 'next'
 import SubpageShell from '@/components/SubpageShell'
+
+export const metadata: Metadata = {
+  title: 'About — commitmentissues',
+  description: 'How commitmentissues works: real GitHub data, a death score algorithm, and a healthy dose of dark humor for your abandoned repos.',
+  alternates: { canonical: 'https://commitmentissues.dev/about' },
+  openGraph: {
+    title: 'About — commitmentissues',
+    description: 'How commitmentissues works: real GitHub data, a death score algorithm, and a healthy dose of dark humor for your abandoned repos.',
+    url: 'https://commitmentissues.dev/about',
+  },
+}
 
 const UI = `var(--font-dm), -apple-system, sans-serif`
 
