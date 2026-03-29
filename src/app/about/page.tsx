@@ -82,7 +82,7 @@ export default function AboutPage() {
             </p>
             {coffee ? (
               <a
-                className="coffee-btn"
+                className="coffee-btn-fixed"
                 href="https://buymeacoffee.com/commitmentissues"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -91,20 +91,19 @@ export default function AboutPage() {
                   alignItems: 'center',
                   justifyContent: 'center',
                   marginTop: '12px',
-                  minHeight: '42px',
-                  padding: '0 14px',
-                  border: '1px solid #0a0a0a',
+                  padding: '7px 12px',
+                  border: '1.5px solid #1a1a1a',
                   background: '#f6f6f6',
-                  color: '#1f1f1f',
+                  color: '#1a1a1a',
                   textDecoration: 'none',
-                  fontFamily: `var(--font-courier), monospace`,
+                  fontFamily: `var(--font-dm), -apple-system, sans-serif`,
                   fontSize: '12px',
-                  fontWeight: 700,
-                  letterSpacing: '0.05em',
-                  textTransform: 'uppercase',
+                  fontWeight: 600,
+                  letterSpacing: '0.01em',
+                  whiteSpace: 'nowrap',
                 }}
               >
-                Keep the server alive →
+                ☕ Don&apos;t let us die too
               </a>
             ) : null}
           </div>

@@ -1,34 +1,13 @@
 # Commitment Issues
 
-Official death certificates for abandoned GitHub repositories.
+Your abandoned repos deserve a proper funeral.
 
 **Live:** [commitmentissues.dev](https://commitmentissues.dev)
 
 ![MIT License](https://img.shields.io/github/license/dotsystemsdevs/commitmentissues?style=flat-square)
 ![Vercel Deploy](https://img.shields.io/badge/deployed%20on-Vercel-black?style=flat-square&logo=vercel)
 
-## What is Commitment Issues?
-
-Paste a public GitHub repository URL and get a shareable **Certificate of Death**: a tongue-in-cheek summary of how "dead" the repo looks, with a score, cause of death, last words, and exportable graphics for social posts. No account required.
-
-## Features
-
-- **Certificate of Death** - A4-style layout with cause, last words, repo age, and derived stats
-- **Exports** - Multiple aspect ratios (feed, square, story-style) for common social platforms
-- **Mobile share** - Native share uses a tall story-friendly format on small screens to reduce bad crops
-- **Hall of Shame** - Curated leaderboard of famously abandoned repositories
-- **Recently Buried** - Live feed of the latest public burials (repo, cause, score, time)
-
-## How scoring works (high level)
-
-| Step | What happens |
-|------|----------------|
-| Input | You provide a public repo URL |
-| Data | The app reads public metadata from the GitHub API |
-| Score | A death score and narrative (cause, last words) are computed in `src/lib/scoring.ts` |
-| Output | You get an on-screen certificate and optional image exports |
-
-Hall of Shame entries are curated for recognizable repos and fast first paint; Recently Buried reflects real recent usage.
+Paste a public GitHub URL. Get a shareable **Certificate of Death** — cause of death, last words, repo age, exportable graphics. No account required.
 
 ## Screenshots
 
@@ -44,12 +23,14 @@ About:
 
 ![About page screenshot](docs/screenshots/about.png)
 
-## Privacy
+## Features
 
-- No login required
-- Only public GitHub data is used
-- Recently Buried stores recent public burial entries (repo, cause, score, timestamp)
-- Anonymous aggregate analytics may be used for product metrics
+- **Certificate of Death** — A4-style layout with cause, last words, repo age, and derived stats
+- **Exports** — Multiple aspect ratios (feed, square, story-style) for Instagram, X, Facebook
+- **Mobile share** — Native share sheet on mobile with story-friendly format
+- **Hall of Shame** — Curated leaderboard of famously abandoned repos
+- **Recently Buried** — Live feed of the latest public burials
+- **Chrome extension** — Tombstone badge injected on any GitHub repo page (MVP)
 
 ## Tech stack
 
@@ -58,10 +39,12 @@ About:
 | Framework | Next.js 14 (App Router) |
 | Fonts | UnifrakturMaguntia, Courier Prime, Inter |
 | Hosting | Vercel |
-| Storage | Upstash Redis (usage counters and recent burials) |
+| Storage | Upstash Redis (counters + recent burials) |
 | Data | GitHub public API |
 
 ## Getting started
+
+Prerequisites: Node 18+
 
 ```bash
 git clone https://github.com/dotsystemsdevs/commitmentissues.git
@@ -74,13 +57,26 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ### Environment
 
-Optional: add a GitHub token to raise API rate limits.
+Add a GitHub token to raise API rate limits (optional but recommended):
 
 ```env
 GITHUB_TOKEN=ghp_yourtoken
 ```
 
-Create a token under GitHub **Settings -> Developer settings -> Personal access tokens**. Fine-grained tokens work if you limit scope to what this app needs; classic tokens are also fine for local dev.
+Generate one at **GitHub → Settings → Developer settings → Personal access tokens**. Fine-grained or classic tokens both work.
+
+> **Note:** The Recently Buried feed requires Upstash Redis (`KV_REST_API_URL` + `KV_REST_API_TOKEN`). Without it, the feed is hidden and the buried counter falls back to the historical baseline.
+
+## How we pronounce repos dead
+
+| Step | What happens |
+|------|----------------|
+| Input | You submit a public GitHub URL |
+| Data | The app fetches public metadata via the GitHub API |
+| Score | A death index and narrative are computed in `src/lib/scoring.ts` |
+| Output | Certificate rendered on-screen, exportable as PNG |
+
+Hall of Shame entries are hand-curated; Recently Buried reflects real usage.
 
 ## Testing
 
@@ -98,27 +94,44 @@ npm test
 
 ```text
 src/
-+-- app/
-�   +-- page.tsx
-�   +-- about/
-�   +-- terms/
-�   +-- api/
-�       +-- repo/
-�       +-- stats/
-�       +-- recent/
-+-- components/
-�   +-- CertificateCard.tsx
-�   +-- Leaderboard.tsx
-�   +-- SearchForm.tsx
-�   +-- LoadingState.tsx
-+-- lib/
-    +-- scoring.ts
-    +-- rateLimit.ts
-    +-- recentStore.ts
-    +-- types.ts
+├── app/
+│   ├── page.tsx
+│   ├── about/
+│   └── api/
+│       ├── repo/
+│       ├── stats/
+│       └── recent/
+├── components/
+│   ├── CertificateCard.tsx
+│   ├── Leaderboard.tsx
+│   ├── SearchForm.tsx
+│   └── LoadingState.tsx
+└── lib/
+    ├── scoring.ts
+    ├── rateLimit.ts
+    ├── recentStore.ts
+    └── types.ts
+extension/          ← Chrome extension (MV3, load unpacked)
 ```
 
-Scoring logic lives in `src/lib/scoring.ts` so it stays easy to test and change.
+## Chrome extension (MVP)
+
+A MV3 extension lives under `extension/`. It injects a tombstone badge on GitHub repo pages and links to the full certificate.
+
+### Load unpacked in Chrome
+
+1. Open `chrome://extensions/`
+2. Enable **Developer mode**
+3. Click **Load unpacked** and select the `extension/` subfolder
+
+### Test flow
+
+1. Open a GitHub repo page (e.g. `https://github.com/vercel/next.js`)
+2. Verify a tombstone badge appears near the repo header
+3. Click the badge to open the full certificate on `commitmentissues.dev`
+4. Navigate to another repo without a full reload; verify no duplicate badge appears
+
+If the API is rate-limited or unavailable, the badge falls back to `Reaper busy`.
 
 ## Docs
 
@@ -128,26 +141,6 @@ Scoring logic lives in `src/lib/scoring.ts` so it stays easy to test and change.
 
 ## License
 
-MIT - see repository license file.
+MIT — see repository license file.
 
 Built by [Dot Systems](https://github.com/dotsystemsdevs).
-
-## Chrome extension (MVP)
-
-A local MV3 extension is included under `extension/`.
-
-### Load unpacked in Chrome
-
-1. Open `chrome://extensions/`
-2. Enable **Developer mode**
-3. Click **Load unpacked**
-4. Select the repository folder `extension/`
-
-### Test flow
-
-1. Open a GitHub repo root page such as `https://github.com/vercel/next.js`
-2. Verify a tombstone badge appears near the repo header
-3. Click the badge to open the full certificate on `commitmentissues.dev`
-4. Navigate to another repo without full reload; verify no duplicate badge appears
-
-If the API is rate-limited or unavailable, the badge falls back to `Reaper busy`.

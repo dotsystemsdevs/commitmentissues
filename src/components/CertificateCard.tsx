@@ -394,169 +394,91 @@ export default function CertificateCard({ cert, onReset }: Props) {
             <button
               type="button"
               onClick={handleShareToX}
+              className="cert-btn-primary"
               style={{
-                fontFamily: UI,
-                fontSize: '14px',
-                fontWeight: 700,
-                letterSpacing: '0.04em',
-                width: '100%',
-                height: '52px',
-                background: '#0a0a0a',
-                color: '#fff',
-                border: '2px solid #0a0a0a',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'opacity 0.12s',
+                fontFamily: UI, fontSize: '14px', fontWeight: 700, letterSpacing: '0.04em',
+                width: '100%', height: '52px', background: '#0a0a0a', color: '#fff',
+                border: '2px solid #0a0a0a', cursor: 'pointer',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
-              onMouseDown={e => { e.currentTarget.style.opacity = '0.85' }}
-              onMouseUp={e => { e.currentTarget.style.opacity = '1' }}
-              onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}
             >
               Post on X →
             </button>
             <button
               type="button"
               onClick={handleCopyLink}
+              className="cert-btn-secondary"
               style={{
-                fontFamily: UI,
-                fontSize: '14px',
-                fontWeight: 600,
-                width: '100%',
-                height: '52px',
-                background: '#fff',
-                color: '#0a0a0a',
-                border: '2px solid #0a0a0a',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'opacity 0.12s',
+                fontFamily: UI, fontSize: '14px', fontWeight: 600,
+                width: '100%', height: '52px', background: '#fff', color: '#0a0a0a',
+                border: '2px solid #0a0a0a', cursor: 'pointer',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
-              onMouseDown={e => { e.currentTarget.style.opacity = '0.85' }}
-              onMouseUp={e => { e.currentTarget.style.opacity = '1' }}
-              onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}
             >
               {copied ? 'Copied ✓' : 'Copy link'}
             </button>
             <button
               type="button"
               onClick={handleDownloadShareImage}
+              className="cert-btn-secondary"
               style={{
-                fontFamily: UI,
-                fontSize: '14px',
-                fontWeight: 600,
-                width: '100%',
-                height: '52px',
-                background: '#fff',
-                color: '#0a0a0a',
-                border: '2px solid #0a0a0a',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'opacity 0.12s',
+                fontFamily: UI, fontSize: '14px', fontWeight: 600,
+                width: '100%', height: '52px', background: '#fff', color: '#0a0a0a',
+                border: '2px solid #0a0a0a', cursor: 'pointer',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
-              onMouseDown={e => { e.currentTarget.style.opacity = '0.85' }}
-              onMouseUp={e => { e.currentTarget.style.opacity = '1' }}
-              onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}
             >
               Download Instagram (4:5)
             </button>
             <button
               type="button"
               onClick={() => handleDownloadFormat('instagramSquare')}
+              className="cert-btn-secondary"
               style={{
-                fontFamily: UI,
-                fontSize: '14px',
-                fontWeight: 600,
-                width: '100%',
-                height: '52px',
-                background: '#fff',
-                color: '#0a0a0a',
-                border: '2px solid #0a0a0a',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'opacity 0.12s',
+                fontFamily: UI, fontSize: '14px', fontWeight: 600,
+                width: '100%', height: '52px', background: '#fff', color: '#0a0a0a',
+                border: '2px solid #0a0a0a', cursor: 'pointer',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
-              onMouseDown={e => { e.currentTarget.style.opacity = '0.85' }}
-              onMouseUp={e => { e.currentTarget.style.opacity = '1' }}
-              onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}
             >
               Download Square (1:1)
             </button>
             <button
               type="button"
               onClick={() => handleDownloadFormat('xLandscape')}
+              className="cert-btn-secondary"
               style={{
-                fontFamily: UI,
-                fontSize: '14px',
-                fontWeight: 600,
-                width: '100%',
-                height: '52px',
-                background: '#fff',
-                color: '#0a0a0a',
-                border: '2px solid #0a0a0a',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'opacity 0.12s',
+                fontFamily: UI, fontSize: '14px', fontWeight: 600,
+                width: '100%', height: '52px', background: '#fff', color: '#0a0a0a',
+                border: '2px solid #0a0a0a', cursor: 'pointer',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
-              onMouseDown={e => { e.currentTarget.style.opacity = '0.85' }}
-              onMouseUp={e => { e.currentTarget.style.opacity = '1' }}
-              onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}
             >
               Download X (16:9)
             </button>
             <button
               type="button"
               onClick={() => handleDownloadFormat('facebookFeed')}
+              className="cert-btn-secondary"
               style={{
-                fontFamily: UI,
-                fontSize: '14px',
-                fontWeight: 600,
-                width: '100%',
-                height: '52px',
-                background: '#fff',
-                color: '#0a0a0a',
-                border: '2px solid #0a0a0a',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'opacity 0.12s',
+                fontFamily: UI, fontSize: '14px', fontWeight: 600,
+                width: '100%', height: '52px', background: '#fff', color: '#0a0a0a',
+                border: '2px solid #0a0a0a', cursor: 'pointer',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
-              onMouseDown={e => { e.currentTarget.style.opacity = '0.85' }}
-              onMouseUp={e => { e.currentTarget.style.opacity = '1' }}
-              onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}
             >
               Download Facebook (1.91:1)
             </button>
             <button
               type="button"
               onClick={() => handleDownloadFormat('story')}
+              className="cert-btn-secondary"
               style={{
-                fontFamily: UI,
-                fontSize: '14px',
-                fontWeight: 600,
-                width: '100%',
-                height: '52px',
-                background: '#fff',
-                color: '#0a0a0a',
-                border: '2px solid #0a0a0a',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'opacity 0.12s',
+                fontFamily: UI, fontSize: '14px', fontWeight: 600,
+                width: '100%', height: '52px', background: '#fff', color: '#0a0a0a',
+                border: '2px solid #0a0a0a', cursor: 'pointer',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
-              onMouseDown={e => { e.currentTarget.style.opacity = '0.85' }}
-              onMouseUp={e => { e.currentTarget.style.opacity = '1' }}
-              onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}
             >
               Download Story (9:16)
             </button>
@@ -586,26 +508,14 @@ export default function CertificateCard({ cert, onReset }: Props) {
           <button
             type="button"
             onClick={handleDownloadA4}
+            className="cert-btn-secondary"
             style={{
-              fontFamily: UI,
-              fontSize: '13px',
-              fontWeight: 600,
-              width: '100%',
-              height: '44px',
-              background: '#fff',
-              color: '#0a0a0a',
-              border: '2px solid #0a0a0a',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '6px',
-              letterSpacing: '0.02em',
-              transition: 'opacity 0.12s',
+              fontFamily: UI, fontSize: '13px', fontWeight: 600,
+              width: '100%', height: '44px', background: '#fff', color: '#0a0a0a',
+              border: '2px solid #0a0a0a', cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              gap: '6px', letterSpacing: '0.02em',
             }}
-            onMouseDown={e => { e.currentTarget.style.opacity = '0.85' }}
-            onMouseUp={e => { e.currentTarget.style.opacity = '1' }}
-            onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}
           >
             Download A4
           </button>
