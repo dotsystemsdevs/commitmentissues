@@ -8,8 +8,8 @@ const KNOWN_REPO_CAUSES: Record<string, string> = {
   'bower/bower': 'npm install happened and nobody looked back',
   'atom/atom': 'GitHub shipped VS Code, then sunset Atom in public',
   'adobe/brackets': 'Adobe handed it to the community after VS Code won the editor war',
-  'angularjs/angular.js': 'AngularJS hit official end-of-life when modern Angular replaced it',
-  'mikeal/request': 'The maintainers deprecated it as native fetch and modern clients took over',
+  'angular/angular.js': 'AngularJS hit official end-of-life when modern Angular replaced it',
+  'request/request': 'The maintainers deprecated it as native fetch and modern clients took over',
   'ariya/phantomjs': 'Chrome went headless and erased the reason this existed',
 }
 
