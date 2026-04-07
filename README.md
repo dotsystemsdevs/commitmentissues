@@ -1,4 +1,5 @@
-[![commitmentissues](https://img.shields.io/badge/%E2%9A%B0%20commitmentissues-struggling-5a3e00?style=for-the-badge&labelColor=1a0f06)](https://commitmentissues.dev/?repo=blueminder%2Fflycast-netplay-savestates)
+[![flycast-netplay-savestates — Certificate of Death](https://commitmentissues.dev/api/certificate-image/blueminder/flycast-netplay-savestates)](https://commitmentissues.dev/?repo=blueminder%2Fflycast-netplay-savestates)
+
 # Commitment Issues
 
 Your abandoned repos deserve a proper funeral.
