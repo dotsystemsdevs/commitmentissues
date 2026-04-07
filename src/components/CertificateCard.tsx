@@ -569,49 +569,6 @@ export default function CertificateCard({ cert, onReset }: Props) {
           </button>
         )}
 
-        {!showInlineShare && (
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              border: '2px solid #0a0a0a',
-              background: '#FAF6EF',
-              overflow: 'hidden',
-            }}
-          >
-            <span style={{
-              fontFamily: `var(--font-courier), 'Courier New', monospace`,
-              fontSize: '12px',
-              color: '#5f5f5f',
-              flex: 1,
-              padding: '0 12px',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
-            }}>
-              {shareUrl}
-            </span>
-            <button
-              type="button"
-              onClick={handleCopyLink}
-              style={{
-                fontFamily: UI, fontSize: '12px', fontWeight: 700,
-                flexShrink: 0,
-                height: '40px',
-                padding: '0 14px',
-                background: copied ? '#2a5a2a' : '#0a0a0a',
-                color: '#fff',
-                border: 'none',
-                borderLeft: '2px solid #0a0a0a',
-                cursor: 'pointer',
-                letterSpacing: '0.04em',
-                transition: 'background 0.15s',
-              }}
-            >
-              {copied ? '✓' : 'Copy'}
-            </button>
-          </div>
-        )}
 
         {/* Badge copy */}
         {!showInlineShare && (() => {
