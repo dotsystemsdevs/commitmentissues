@@ -1,7 +1,3 @@
-[![commitmentissues](https://img.shields.io/badge/%E2%9A%B0%20commitmentissues-declared%20dead-cc0000?style=for-the-badge&labelColor=1a0f06)](https://commitmentissues.dev/?repo=atom%2Fatom)
-
-[![atom — Certificate of Death](https://commitmentissues.dev/api/certificate-image/atom/atom)](https://commitmentissues.dev/?repo=atom%2Fatom)
-
 # Commitment Issues
 
 Your abandoned repos deserve a proper funeral.
