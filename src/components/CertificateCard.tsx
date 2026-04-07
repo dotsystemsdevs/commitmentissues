@@ -92,6 +92,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
   const [exportError, setExportError] = useState<string | null>(null)
   const [showInlineShare, setShowInlineShare] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [badgeCopied, setBadgeCopied] = useState(false)
 
   function getPixelRatio(highQuality = false): number {
     if (typeof navigator === 'undefined') return 2
@@ -611,6 +612,37 @@ export default function CertificateCard({ cert, onReset }: Props) {
             </button>
           </div>
         )}
+
+        {/* Badge copy */}
+        {!showInlineShare && (() => {
+          const repoUrl = `https://commitmentissues.dev/?repo=${encodeURIComponent(cert.repoData.fullName)}`
+          const shieldsUrl = `https://img.shields.io/badge/%F0%9F%AA%A6%20declared%20dead-view%20certificate-555?style=for-the-badge&labelColor=cc0000`
+          const badgeMd = `[![commitmentissues](${shieldsUrl})](${repoUrl})`
+          return (
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={shieldsUrl} alt="commitmentissues badge" style={{ height: '20px', display: 'block', flexShrink: 0 }} />
+              <button
+                type="button"
+                onClick={async () => { try { await navigator.clipboard.writeText(badgeMd); setBadgeCopied(true); setTimeout(() => setBadgeCopied(false), 2000) } catch { /* ignore */ } }}
+                style={{
+                  fontFamily: UI, fontSize: '11px', fontWeight: 700,
+                  flexShrink: 0,
+                  height: '28px',
+                  padding: '0 10px',
+                  background: badgeCopied ? '#2a5a2a' : '#0a0a0a',
+                  color: '#fff',
+                  border: 'none',
+                  cursor: 'pointer',
+                  letterSpacing: '0.04em',
+                  transition: 'background 0.15s',
+                }}
+              >
+                {badgeCopied ? '✓ Copied' : 'Copy badge'}
+              </button>
+            </div>
+          )
+        })()}
 
         {/* Export error */}
         {exportError && (
