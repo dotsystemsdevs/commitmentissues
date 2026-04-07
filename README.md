@@ -16,10 +16,10 @@ Paste a public GitHub URL. Get a shareable **Certificate of Death** — algorith
 
 Got a dead repo? Add the badge to your README:
 
-[![🪦 declared dead](https://img.shields.io/badge/%F0%9F%AA%A6%20declared%20dead-view%20certificate-C4A882?style=for-the-badge&labelColor=cc0000)](https://commitmentissues.dev)
+[![🪦 declared dead](https://img.shields.io/badge/%F0%9F%AA%A6%20declared%20dead-view%20certificate-555?style=for-the-badge&labelColor=cc0000)](https://commitmentissues.dev)
 
 ```markdown
-[![🪦 declared dead](https://img.shields.io/badge/%F0%9F%AA%A6%20declared%20dead-view%20certificate-C4A882?style=for-the-badge&labelColor=cc0000)](https://commitmentissues.dev/?repo=YOUR_OWNER/YOUR_REPO)
+[![🪦 declared dead](https://img.shields.io/badge/%F0%9F%AA%A6%20declared%20dead-view%20certificate-555?style=for-the-badge&labelColor=cc0000)](https://commitmentissues.dev/?repo=YOUR_OWNER/YOUR_REPO)
 ```
 
 The badge and full certificate embed markdown are generated automatically on the certificate page — just hit **Copy** after analyzing your repo.
