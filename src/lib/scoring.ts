@@ -138,6 +138,15 @@ export function generateLastWords(repo: RepoData): string {
   if (msgLower.includes('update readme')) return 'at least the docs are good'
   if (msgLower.includes('wip') || msgLower.includes('work in progress')) return "i'll finish this later"
   if (msgLower.includes('merge')) return 'dying in a merge conflict'
+  if (msgLower.includes('initial commit')) return 'it was only ever the beginning'
+  if (msgLower.includes('revert')) return 'nevermind'
+  if (msgLower.includes('hotfix')) return 'this is fine'
+  if (msgLower.includes('cleanup') || msgLower.includes('clean up')) return 'just tidying up before i go'
+  if (msgLower.includes('bump version') || msgLower.includes('bump to')) return 'one last release into the void'
+  if (msgLower.includes('remove') || msgLower.includes('delete')) return 'burning the evidence'
+  if (msgLower.includes('refactor')) return 'i swear this time the architecture is right'
+  if (msgLower.includes('todo') || msgLower.includes('fixme')) return 'someone else will handle it'
+  if (msgLower.includes('dependency') || msgLower.includes('dependencies')) return 'trapped in dependency hell'
   if (daysSince > 730 && repo.stargazersCount === 0) return "i'll finish this later"
   if (repo.stargazersCount > 200 && daysSince > 365) return 'i thought people liked me'
 
