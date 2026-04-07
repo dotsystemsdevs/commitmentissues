@@ -568,6 +568,23 @@ export default function CertificateCard({ cert, onReset }: Props) {
           </button>
         )}
 
+        {!showInlineShare && (
+          <button
+            type="button"
+            onClick={handleCopyLink}
+            className="cert-btn-secondary"
+            style={{
+              fontFamily: UI, fontSize: '13px', fontWeight: 600,
+              width: '100%', height: '44px', background: '#FAF6EF', color: '#0a0a0a',
+              border: '2px solid #0a0a0a', cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              gap: '6px', letterSpacing: '0.02em',
+            }}
+          >
+            {copied ? 'Copied ✓' : 'Copy link'}
+          </button>
+        )}
+
         {/* Export error */}
         {exportError && (
           <p style={{ fontFamily: UI, fontSize: '12px', color: '#8B1A1A', textAlign: 'center', margin: '0' }}>
