@@ -140,13 +140,6 @@ const CertificateFixed = forwardRef<HTMLDivElement, Props>(
 
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '34px 0', borderBottom: '2px solid #C4A882' }}>
             <p style={{ ...labelStyle, margin: '0 0 14px 0', fontSize: '16px' }}>CAUSE OF DEATH</p>
-            {cert.deathLabel !== 'too soon to tell' && (
-              <div style={{ border: '3px solid rgba(139,26,26,0.65)', padding: '5px 18px', marginBottom: '18px', background: 'rgba(139,26,26,0.04)' }}>
-                <span style={{ fontFamily: MONO, fontSize: '12px', fontWeight: 700, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(139,26,26,0.80)' }}>
-                  {cert.deathLabel}
-                </span>
-              </div>
-            )}
             <p style={{ fontFamily: UI, fontStyle: 'italic', fontWeight: 600, fontSize: '36px', color: '#8B0000', lineHeight: 1.35, maxWidth: '560px', margin: '0' }}>
               {cert.causeOfDeath}
             </p>
@@ -177,6 +170,18 @@ const CertificateFixed = forwardRef<HTMLDivElement, Props>(
                 {i < arr.length - 1 && <div style={{ width: '1px', background: '#C4A882', flexShrink: 0 }} />}
               </div>
             ))}
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', padding: '18px 0', borderBottom: '2px solid #C4A882', gap: '0' }}>
+            <div style={{ flex: 1, textAlign: 'center' }}>
+              <span style={{ fontFamily: MONO, fontWeight: 700, fontSize: '24px', color: '#1A0F06', lineHeight: 1 }}>{r.commitCount.toLocaleString()}</span>
+              <p style={{ fontFamily: MONO, fontSize: '12px', color: '#8B6B4A', letterSpacing: '0.3em', textTransform: 'uppercase', margin: '8px 0 0 0' }}>commits</p>
+            </div>
+            <div style={{ width: '1px', background: '#C4A882', alignSelf: 'stretch' }} />
+            <div style={{ flex: 1, textAlign: 'center' }}>
+              <span style={{ fontFamily: MONO, fontWeight: 700, fontSize: '24px', color: '#1A0F06', lineHeight: 1 }}>{r.openIssuesCount.toLocaleString()}</span>
+              <p style={{ fontFamily: MONO, fontSize: '12px', color: '#8B6B4A', letterSpacing: '0.3em', textTransform: 'uppercase', margin: '8px 0 0 0' }}>open issues</p>
+            </div>
           </div>
 
           <div style={{ padding: '26px 0', textAlign: 'center' }}>

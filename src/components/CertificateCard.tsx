@@ -581,7 +581,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
               alignItems: 'center',
               justifyContent: 'space-between',
               gap: '10px',
-              border: '2px solid #d8cfc4',
+              border: '2px solid #0a0a0a',
               background: '#FAF6EF',
               padding: '10px 14px',
             }}>
