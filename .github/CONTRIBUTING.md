@@ -42,7 +42,7 @@ npm run build
 1. Fork repo
 2. Create feature branch (`feat/...`, `fix/...`, `docs/...`, `chore/...`)
 3. Commit with clear message
-4. Open PR to `master`
+4. Open PR to `main`
 
 ## Issue hygiene
 
