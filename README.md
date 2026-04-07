@@ -1,4 +1,4 @@
-[![dapple — Certificate of Death](https://commitmentissues.dev/api/certificate-image/parthrevanwar/dapple)](https://commitmentissues.dev/?repo=parthrevanwar%2Fdapple)
+
 
 # Commitment Issues
 
