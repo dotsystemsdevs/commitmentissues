@@ -92,7 +92,6 @@ export default function CertificateCard({ cert, onReset }: Props) {
   const [exportError, setExportError] = useState<string | null>(null)
   const [showInlineShare, setShowInlineShare] = useState(false)
   const [copied, setCopied] = useState(false)
-  const [badgeCopied, setBadgeCopied] = useState(false)
 
   function getPixelRatio(highQuality = false): number {
     if (typeof navigator === 'undefined') return 2
@@ -575,66 +574,6 @@ export default function CertificateCard({ cert, onReset }: Props) {
             {exportError}
           </p>
         )}
-
-        {/* README embed */}
-        {(() => {
-          const fullName = cert.repoData.fullName
-          const repoUrl = `https://commitmentissues.dev/?repo=${encodeURIComponent(fullName)}`
-          const shieldsUrl = `https://img.shields.io/badge/%F0%9F%AA%A6%20declared%20dead-view%20certificate-555?style=for-the-badge&labelColor=cc0000`
-          const badgeMd = `[![commitmentissues](${shieldsUrl})](${repoUrl})`
-          const shieldsPreviewUrl = `https://img.shields.io/badge/%F0%9F%AA%A6%20declared%20dead-view%20certificate-555?style=for-the-badge&labelColor=cc0000`
-
-          const CopyIcon = ({ done }: { done: boolean }) => done
-            ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            : <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="1"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-
-          const copyBtn = (copied: boolean, onCopy: () => void) => (
-            <button
-              type="button"
-              onClick={onCopy}
-              title="Copy markdown"
-              style={{
-                flexShrink: 0,
-                width: '40px',
-                height: '40px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                background: copied ? '#2a5a2a' : '#0a0a0a',
-                color: '#fff',
-                border: 'none',
-                cursor: 'pointer',
-                transition: 'background 0.15s',
-              }}
-            >
-              <CopyIcon done={copied} />
-            </button>
-          )
-
-          return (
-            <div style={{ display: 'flex', flexDirection: 'column', marginTop: '4px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '8px' }}>
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="#8a8a8a" aria-hidden>
-                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/>
-                </svg>
-                <span style={{ fontFamily: UI, fontSize: '11px', fontWeight: 600, color: '#8a8a8a', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-                  Add to README
-                </span>
-              </div>
-              <div style={{ border: '2px solid #1a1a1a', background: '#FAF6EF', overflow: 'hidden' }}>
-                {/* Badge row — preview + copy icon */}
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 12px 12px 14px', gap: '12px' }}>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', minWidth: 0 }}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={shieldsPreviewUrl} alt="commitmentissues badge" style={{ height: '22px', display: 'block' }} />
-                    <span style={{ fontFamily: UI, fontSize: '11px', color: '#8a8a8a' }}>links to certificate on commitmentissues.dev</span>
-                  </div>
-                  {copyBtn(badgeCopied, async () => { try { await navigator.clipboard.writeText(badgeMd); setBadgeCopied(true); setTimeout(() => setBadgeCopied(false), 2000) } catch { /* ignore */ } })}
-                </div>
-              </div>
-            </div>
-          )
-        })()}
 
         {/* Bury another — text link */}
         <div style={{ textAlign: 'center', marginTop: '6px', marginBottom: '8px' }}>

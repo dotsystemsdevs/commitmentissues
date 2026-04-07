@@ -58,7 +58,7 @@ export default function Leaderboard({ onSelect }: Props) {
           minHeight: '184px',
           flexShrink: 0,
           padding: '20px',
-          background: '#f2f2f2',
+          background: '#EDE8E1',
           border: '2px solid #1a1a1a',
           borderRadius: '0px',
           cursor: 'pointer',
