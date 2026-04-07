@@ -118,7 +118,7 @@ export default function Page() {
       )}
 
       {loading && <LoadingState />}
-      {error && !loading && <ErrorDisplay error={error} onRetry={() => analyze(url)} />}
+      {error && !loading && <ErrorDisplay error={error} onRetry={reset} />}
 
       <SiteFooter compact={idle} />
       </div>

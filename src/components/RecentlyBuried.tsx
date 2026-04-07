@@ -12,15 +12,25 @@ interface Props {
 
 export default function RecentlyBuried({ onSelect }: Props) {
   const [entries, setEntries] = useState<LeaderboardEntry[]>([])
+  const [failed, setFailed] = useState(false)
 
   useEffect(() => {
     fetch('/api/recent')
-      .then(r => r.json())
+      .then(r => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`)
+        return r.json()
+      })
       .then((data: LeaderboardEntry[]) => {
         if (Array.isArray(data) && data.length > 0) setEntries(data.slice(0, 10))
       })
-      .catch(() => {})
+      .catch(() => setFailed(true))
   }, [])
+
+  if (failed) return (
+    <p style={{ fontFamily: FONT, fontSize: '13px', color: '#aaa', textAlign: 'center', margin: '8px 0' }}>
+      The recently buried feed is resting. Try again later.
+    </p>
+  )
 
   if (entries.length === 0) return null
 
@@ -57,7 +67,7 @@ export default function RecentlyBuried({ onSelect }: Props) {
           minHeight: '184px',
           flexShrink: 0,
           padding: '20px',
-          background: '#f2f2f2',
+          background: '#EDE8E1',
           border: '2px solid #1a1a1a',
           borderRadius: '0px',
           cursor: 'pointer',

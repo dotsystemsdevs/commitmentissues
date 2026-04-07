@@ -93,7 +93,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
         overflow: 'hidden',
         boxShadow: 'none',
         transition: 'border-color 0.15s',
-        background: '#fff',
+        background: '#FAF6EF',
       }}>
         {/* Input */}
         <div style={{ flex: 1, display: 'flex', alignItems: 'center', minWidth: 0 }}>
@@ -149,7 +149,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
             WebkitTapHighlightColor: 'transparent',
             touchAction: 'manipulation',
           }}
-          onMouseEnter={e => { e.currentTarget.style.background = '#0a0a0a' }}
+          onMouseEnter={e => { e.currentTarget.style.background = '#222222' }}
           onMouseLeave={e => { e.currentTarget.style.background = '#0a0a0a' }}
           onMouseDown={e => { e.currentTarget.style.opacity = '0.9' }}
           onMouseUp={e => { e.currentTarget.style.opacity = '1' }}
@@ -196,7 +196,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
         >
           {randomLoading
             ? 'finding a corpse...'
-            : 'or dig up a repo dead for 1+ year →'
+            : 'or dig up a corpse →'
           }
         </button>
       </div>

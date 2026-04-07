@@ -7,6 +7,23 @@ import { DeathCertificate } from '@/lib/types'
 const MONO = `var(--font-courier), "Courier New", monospace`
 const UI = `var(--font-dm), -apple-system, sans-serif`
 
+// Inline SVG noise filter — rendered by the browser before html-to-image captures it,
+// so it exports correctly without any external file dependency.
+const PAPER_TEXTURE_SVG = (
+  <svg
+    aria-hidden
+    style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <filter id="ci-paper-noise" x="0%" y="0%" width="100%" height="100%" colorInterpolationFilters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="4" stitchTiles="stitch" result="noise" />
+      <feColorMatrix type="saturate" values="0" in="noise" result="grey" />
+      <feBlend in="SourceGraphic" in2="grey" mode="multiply" />
+    </filter>
+    <rect width="100%" height="100%" filter="url(#ci-paper-noise)" opacity="0.07" fill="#a07850" />
+  </svg>
+)
+
 interface Props {
   cert: DeathCertificate
   visible?: boolean
@@ -65,12 +82,18 @@ const CertificateFixed = forwardRef<HTMLDivElement, Props>(
           transition: 'opacity 0.4s ease, transform 0.4s ease',
           WebkitFontSmoothing: 'antialiased',
           textRendering: 'optimizeLegibility',
+          overflow: 'hidden',
         }}
       >
+        {PAPER_TEXTURE_SVG}
+
+
         <div
           style={{
             flex: 1,
             border: '2px solid #1A0F06',
+            position: 'relative',
+            zIndex: 1,
             display: 'flex',
             flexDirection: 'column',
             padding: '44px 56px',
@@ -115,22 +138,11 @@ const CertificateFixed = forwardRef<HTMLDivElement, Props>(
             )}
           </div>
 
-          <div style={{ flex: 1, position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '34px 0', borderBottom: '2px solid #C4A882' }}>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '34px 0', borderBottom: '2px solid #C4A882' }}>
             <p style={{ ...labelStyle, margin: '0 0 14px 0', fontSize: '16px' }}>CAUSE OF DEATH</p>
             <p style={{ fontFamily: UI, fontStyle: 'italic', fontWeight: 600, fontSize: '36px', color: '#8B0000', lineHeight: 1.35, maxWidth: '560px', margin: '20px 0' }}>
               {cert.causeOfDeath}
             </p>
-            {showStamp && (
-              <div ref={stampRef} style={{ position: 'absolute', bottom: '20px', right: '20px', transform: 'rotate(-7deg)', pointerEvents: 'none', userSelect: 'none' }}>
-                <div className="stamp-animate" style={{ border: '5px solid rgba(139,26,26,0.68)', borderRadius: '4px', padding: '10px 22px', background: 'rgba(139,26,26,0.03)' }}>
-                  <span style={{ fontFamily: MONO, fontSize: '18px', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(139,26,26,0.72)', display: 'block', textAlign: 'center', lineHeight: 1.25 }}>
-                    REST IN
-                    <br />
-                    PRODUCTION
-                  </span>
-                </div>
-              </div>
-            )}
           </div>
 
           <div style={{ padding: '28px 0', borderBottom: '2px solid #C4A882' }}>
@@ -162,16 +174,32 @@ const CertificateFixed = forwardRef<HTMLDivElement, Props>(
 
           <div style={{ padding: '26px 0', textAlign: 'center' }}>
             <p style={{ ...labelStyle, margin: '0 0 14px 0' }}>Last words</p>
-            <p style={{ fontFamily: UI, fontStyle: 'italic', fontSize: '24px', color: '#1A0F06', lineHeight: 1.55, margin: 0 }}>
+            <p style={{ fontFamily: UI, fontStyle: 'italic', fontWeight: 600, fontSize: '34px', color: '#8B0000', lineHeight: 1.35, margin: '20px 0 0 0', maxWidth: '560px', marginLeft: 'auto', marginRight: 'auto' }}>
               &ldquo;{cert.lastWords}&rdquo;
             </p>
           </div>
 
-          <div style={{ marginTop: 'auto', textAlign: 'center', paddingTop: '14px' }}>
-            <p style={{ fontFamily: MONO, fontSize: '11px', color: '#C4A882', margin: 0, letterSpacing: '0.18em', textTransform: 'uppercase' }}>
-              Issued by commitmentissues.dev
-            </p>
-          </div>
+          {showStamp && (
+            <div
+              ref={stampRef}
+              className="stamp-animate"
+              style={{
+                marginTop: 'auto',
+                display: 'flex',
+                justifyContent: 'center',
+                paddingBottom: '8px',
+                pointerEvents: 'none',
+                userSelect: 'none',
+              }}
+            >
+              <div style={{ border: '5px solid rgba(139,26,26,0.72)', borderRadius: '4px', padding: '10px 28px', background: 'rgba(139,26,26,0.04)' }}>
+                <span style={{ fontFamily: MONO, fontSize: '13px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(139,26,26,0.75)', display: 'block', textAlign: 'center', whiteSpace: 'nowrap' }}>
+                  Issued by commitmentissues.dev
+                </span>
+              </div>
+            </div>
+          )}
+
         </div>
       </div>
     )

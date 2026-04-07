@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { DeathCertificate } from '@/lib/types'
 
 export interface AnalysisError {
@@ -13,15 +13,22 @@ export function useRepoAnalysis() {
   const [certificate, setCertificate] = useState<DeathCertificate | null>(null)
   const [error, setError] = useState<AnalysisError | null>(null)
   const [loading, setLoading] = useState(false)
+  const abortRef = useRef<AbortController | null>(null)
 
   async function analyze(inputUrl: string) {
     if (!inputUrl.trim()) return
+
+    // Cancel any in-flight request
+    abortRef.current?.abort()
+    const controller = new AbortController()
+    abortRef.current = controller
+
     setLoading(true)
     setError(null)
     setCertificate(null)
 
     try {
-      const res = await fetch(`/api/repo?url=${encodeURIComponent(inputUrl.trim())}`)
+      const res = await fetch(`/api/repo?url=${encodeURIComponent(inputUrl.trim())}`, { signal: controller.signal })
       const data = await res.json()
       if (!res.ok) {
         setError({ message: data.error, retryAfter: data.retryAfter })
@@ -49,10 +56,11 @@ export function useRepoAnalysis() {
           localStorage.setItem('ci_recent', JSON.stringify(filtered.slice(0, 20)))
         } catch { /* localStorage unavailable */ }
       }
-    } catch {
+    } catch (err) {
+      if (err instanceof DOMException && err.name === 'AbortError') return
       setError({ message: 'Network error. Check your connection.' })
     } finally {
-      setLoading(false)
+      if (!controller.signal.aborted) setLoading(false)
     }
   }
 

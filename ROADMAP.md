@@ -43,6 +43,9 @@ Living document. Completed work at the top, upcoming at the bottom. Add new entr
 - OG image aligned with live hero (light theme, correct fonts)
 - Custom roast line for commitmentissues repo itself
 
+### Bug fixes
+- Fixed "bury something else →" on error screen — was retrying same broken URL instead of resetting to the form
+
 ### Data integrity
 - Audited all 28 Famous Casualties graveyard entries against live GitHub API
 - Fixed `angularjs/angular.js` → `angular/angular.js` (org transferred, old path 404)
