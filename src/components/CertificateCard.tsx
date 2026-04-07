@@ -93,7 +93,6 @@ export default function CertificateCard({ cert, onReset }: Props) {
   const [showInlineShare, setShowInlineShare] = useState(false)
   const [copied, setCopied] = useState(false)
   const [badgeCopied, setBadgeCopied] = useState(false)
-  const [embedCopied, setEmbedCopied] = useState(false)
 
   function getPixelRatio(highQuality = false): number {
     if (typeof navigator === 'undefined') return 2
@@ -581,12 +580,9 @@ export default function CertificateCard({ cert, onReset }: Props) {
         {(() => {
           const fullName = cert.repoData.fullName
           const repoUrl = `https://commitmentissues.dev/?repo=${encodeURIComponent(fullName)}`
-          const shieldsUrl = `https://img.shields.io/badge/%F0%9F%AA%A6%20declared%20dead-commitmentissues.dev-cc0000?style=flat-square`
+          const shieldsUrl = `https://img.shields.io/badge/%F0%9F%AA%A6%20declared%20dead-view%20certificate-1a0f06?style=for-the-badge&labelColor=cc0000`
           const badgeMd = `[![commitmentissues](${shieldsUrl})](${repoUrl})`
-          const certImageUrl = `https://commitmentissues.dev/api/certificate-image/${fullName}`
-          const certMd = `[![${cert.repoData.name} — Certificate of Death](${certImageUrl})](${repoUrl})`
-
-          const shieldsPreviewUrl = `https://img.shields.io/badge/%F0%9F%AA%A6%20declared%20dead-commitmentissues.dev-cc0000?style=flat-square`
+          const shieldsPreviewUrl = `https://img.shields.io/badge/%F0%9F%AA%A6%20declared%20dead-view%20certificate-1a0f06?style=for-the-badge&labelColor=cc0000`
 
           const CopyIcon = ({ done }: { done: boolean }) => done
             ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -627,21 +623,13 @@ export default function CertificateCard({ cert, onReset }: Props) {
               </div>
               <div style={{ border: '2px solid #1a1a1a', background: '#FAF6EF', overflow: 'hidden' }}>
                 {/* Badge row — preview + copy icon */}
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 12px 12px 14px', borderBottom: '1px solid #d8cfc4', gap: '12px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 12px 12px 14px', gap: '12px' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', minWidth: 0 }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={shieldsPreviewUrl} alt="commitmentissues badge" style={{ height: '22px', display: 'block' }} />
                     <span style={{ fontFamily: UI, fontSize: '11px', color: '#8a8a8a' }}>links to certificate on commitmentissues.dev</span>
                   </div>
                   {copyBtn(badgeCopied, async () => { try { await navigator.clipboard.writeText(badgeMd); setBadgeCopied(true); setTimeout(() => setBadgeCopied(false), 2000) } catch { /* ignore */ } })}
-                </div>
-                {/* Full certificate row */}
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 12px 12px 14px', gap: '12px' }}>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', minWidth: 0 }}>
-                    <span style={{ fontFamily: UI, fontSize: '13px', fontWeight: 600, color: '#1a1a1a' }}>Full certificate</span>
-                    <span style={{ fontFamily: UI, fontSize: '11px', color: '#8a8a8a' }}>embeds certificate image in README</span>
-                  </div>
-                  {copyBtn(embedCopied, async () => { try { await navigator.clipboard.writeText(certMd); setEmbedCopied(true); setTimeout(() => setEmbedCopied(false), 2000) } catch { /* ignore */ } })}
                 </div>
               </div>
             </div>
