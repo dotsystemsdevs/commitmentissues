@@ -87,27 +87,6 @@ const CertificateFixed = forwardRef<HTMLDivElement, Props>(
       >
         {PAPER_TEXTURE_SVG}
 
-        {showStamp && (
-          <div
-            ref={stampRef}
-            className="stamp-animate"
-            style={{
-              position: 'absolute',
-              bottom: '28px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              pointerEvents: 'none',
-              userSelect: 'none',
-              zIndex: 10,
-            }}
-          >
-            <div style={{ border: '5px solid rgba(139,26,26,0.72)', borderRadius: '4px', padding: '10px 28px', background: 'rgba(139,26,26,0.04)' }}>
-              <span style={{ fontFamily: MONO, fontSize: '13px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(139,26,26,0.75)', display: 'block', textAlign: 'center', whiteSpace: 'nowrap' }}>
-                Issued by commitmentissues.dev
-              </span>
-            </div>
-          </div>
-        )}
 
         <div
           style={{
@@ -161,17 +140,22 @@ const CertificateFixed = forwardRef<HTMLDivElement, Props>(
 
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '34px 0', borderBottom: '2px solid #C4A882' }}>
             <p style={{ ...labelStyle, margin: '0 0 14px 0', fontSize: '16px' }}>CAUSE OF DEATH</p>
-            <p style={{ fontFamily: UI, fontStyle: 'italic', fontWeight: 600, fontSize: '36px', color: '#8B0000', lineHeight: 1.35, maxWidth: '560px', margin: '20px 0' }}>
+            <div style={{ border: '3px solid rgba(139,26,26,0.65)', padding: '5px 18px', marginBottom: '18px', background: 'rgba(139,26,26,0.04)' }}>
+              <span style={{ fontFamily: MONO, fontSize: '12px', fontWeight: 700, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(139,26,26,0.80)' }}>
+                {cert.deathLabel}
+              </span>
+            </div>
+            <p style={{ fontFamily: UI, fontStyle: 'italic', fontWeight: 600, fontSize: '36px', color: '#8B0000', lineHeight: 1.35, maxWidth: '560px', margin: '0' }}>
               {cert.causeOfDeath}
             </p>
           </div>
 
-          <div style={{ padding: '28px 0', borderBottom: '2px solid #C4A882' }}>
+          <div style={{ padding: '18px 0', borderBottom: '2px solid #C4A882' }}>
             {[
               { label: 'Date of death', value: cert.deathDate },
               { label: 'Age at death', value: cert.age },
             ].map(({ label, value }, i) => (
-              <div key={label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', padding: '12px 0', borderBottom: i === 0 ? '1px solid #EDE5D8' : 'none' }}>
+              <div key={label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', padding: '10px 0', borderBottom: i === 0 ? '1px solid #EDE5D8' : 'none' }}>
                 <span style={{ fontFamily: MONO, fontSize: '15px', color: '#8B6B4A', letterSpacing: '0.06em' }}>{label}</span>
                 <span style={{ fontFamily: MONO, fontSize: '17px', color: '#1A0F06', fontWeight: 600 }}>{value}</span>
               </div>
@@ -200,6 +184,25 @@ const CertificateFixed = forwardRef<HTMLDivElement, Props>(
             </p>
           </div>
 
+          {showStamp && (
+            <div
+              ref={stampRef}
+              className="stamp-animate"
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                paddingTop: '20px',
+                pointerEvents: 'none',
+                userSelect: 'none',
+              }}
+            >
+              <div style={{ border: '5px solid rgba(139,26,26,0.72)', borderRadius: '4px', padding: '10px 28px', background: 'rgba(139,26,26,0.04)' }}>
+                <span style={{ fontFamily: MONO, fontSize: '13px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(139,26,26,0.75)', display: 'block', textAlign: 'center', whiteSpace: 'nowrap' }}>
+                  Issued by commitmentissues.dev
+                </span>
+              </div>
+            </div>
+          )}
 
         </div>
       </div>
