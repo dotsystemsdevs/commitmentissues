@@ -590,7 +590,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
                   Add to README
                 </span>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={shieldsUrl} alt="commitmentissues badge" style={{ height: '20px', display: 'block' }} />
+                <img src={shieldsUrl} alt="commitmentissues badge" style={{ height: '28px', display: 'block' }} />
               </div>
               <button
                 type="button"
