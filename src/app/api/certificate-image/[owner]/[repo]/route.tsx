@@ -23,11 +23,11 @@ async function loadFont(family: string, weight: number): Promise<ArrayBuffer | n
   try {
     const css = await fetch(
       `https://fonts.googleapis.com/css2?family=${family.replace(/\s+/g, '+')}:wght@${weight}&display=swap`,
-      { headers: { 'User-Agent': 'Mozilla/5.0 Chrome/120' } }
+      { headers: { 'User-Agent': 'Mozilla/5.0 Chrome/120' }, signal: AbortSignal.timeout(3000) }
     ).then(r => r.text())
     const m = css.match(/url\((https:\/\/fonts\.gstatic\.com[^)]+)\)\s+format\(['"]woff2['"]\)/)
     if (!m) return null
-    return fetch(m[1]).then(r => r.arrayBuffer())
+    return fetch(m[1], { signal: AbortSignal.timeout(3000) }).then(r => r.arrayBuffer())
   } catch {
     return null
   }

@@ -87,6 +87,27 @@ const CertificateFixed = forwardRef<HTMLDivElement, Props>(
       >
         {PAPER_TEXTURE_SVG}
 
+        {showStamp && (
+          <div
+            ref={stampRef}
+            className="stamp-animate"
+            style={{
+              position: 'absolute',
+              bottom: '28px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              pointerEvents: 'none',
+              userSelect: 'none',
+              zIndex: 10,
+            }}
+          >
+            <div style={{ border: '5px solid rgba(139,26,26,0.72)', borderRadius: '4px', padding: '10px 28px', background: 'rgba(139,26,26,0.04)' }}>
+              <span style={{ fontFamily: MONO, fontSize: '13px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(139,26,26,0.75)', display: 'block', textAlign: 'center', whiteSpace: 'nowrap' }}>
+                Issued by commitmentissues.dev
+              </span>
+            </div>
+          </div>
+        )}
 
         <div
           style={{
@@ -179,26 +200,6 @@ const CertificateFixed = forwardRef<HTMLDivElement, Props>(
             </p>
           </div>
 
-          {showStamp && (
-            <div
-              ref={stampRef}
-              className="stamp-animate"
-              style={{
-                marginTop: 'auto',
-                display: 'flex',
-                justifyContent: 'center',
-                paddingBottom: '8px',
-                pointerEvents: 'none',
-                userSelect: 'none',
-              }}
-            >
-              <div style={{ border: '5px solid rgba(139,26,26,0.72)', borderRadius: '4px', padding: '10px 28px', background: 'rgba(139,26,26,0.04)' }}>
-                <span style={{ fontFamily: MONO, fontSize: '13px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(139,26,26,0.75)', display: 'block', textAlign: 'center', whiteSpace: 'nowrap' }}>
-                  Issued by commitmentissues.dev
-                </span>
-              </div>
-            </div>
-          )}
 
         </div>
       </div>

@@ -581,12 +581,12 @@ export default function CertificateCard({ cert, onReset }: Props) {
         {(() => {
           const fullName = cert.repoData.fullName
           const repoUrl = `https://commitmentissues.dev/?repo=${encodeURIComponent(fullName)}`
-          const shieldsUrl = `https://img.shields.io/badge/${encodeURIComponent('⚰ commitmentissues')}-${encodeURIComponent('declared dead')}-cc0000?style=for-the-badge&labelColor=1a0f06`
+          const shieldsUrl = `https://img.shields.io/badge/%F0%9F%AA%A6%20declared%20dead-commitmentissues.dev-cc0000?style=flat-square`
           const badgeMd = `[![commitmentissues](${shieldsUrl})](${repoUrl})`
           const certImageUrl = `https://commitmentissues.dev/api/certificate-image/${fullName}`
           const certMd = `[![${cert.repoData.name} — Certificate of Death](${certImageUrl})](${repoUrl})`
 
-          const shieldsPreviewUrl = `https://img.shields.io/badge/${encodeURIComponent('⚰ commitmentissues')}-${encodeURIComponent('declared dead')}-cc0000?style=for-the-badge&labelColor=1a0f06`
+          const shieldsPreviewUrl = `https://img.shields.io/badge/%F0%9F%AA%A6%20declared%20dead-commitmentissues.dev-cc0000?style=flat-square`
 
           const CopyIcon = ({ done }: { done: boolean }) => done
             ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
