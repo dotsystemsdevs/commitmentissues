@@ -1,3 +1,5 @@
+[![Dead](https://commitmentissues.dev/api/badge/blueminder/flycast-netplay-savestates)](https://commitmentissues.dev/?repo=blueminder%2Fflycast-netplay-savestates)
+
 # Commitment Issues
 
 Your abandoned repos deserve a proper funeral.
@@ -144,5 +146,3 @@ If the API is rate-limited or unavailable, the badge falls back to `Reaper busy`
 MIT — see repository license file.
 
 Built by [Dot Systems](https://github.com/dotsystemsdevs).
-
-[![Dead](https://commitmentissues.dev/api/badge/blueminder/flycast-netplay-savestates)](https://commitmentissues.dev/?repo=blueminder%2Fflycast-netplay-savestates)
