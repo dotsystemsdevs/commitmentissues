@@ -576,17 +576,30 @@ export default function CertificateCard({ cert, onReset }: Props) {
           const shieldsUrl = `https://img.shields.io/badge/%F0%9F%AA%A6%20declared%20dead-view%20certificate-555?style=for-the-badge&labelColor=cc0000`
           const badgeMd = `[![commitmentissues](${shieldsUrl})](${repoUrl})`
           return (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={shieldsUrl} alt="commitmentissues badge" style={{ height: '20px', display: 'block', flexShrink: 0 }} />
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: '10px',
+              border: '2px solid #d8cfc4',
+              background: '#FAF6EF',
+              padding: '10px 14px',
+            }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                <span style={{ fontFamily: UI, fontSize: '10px', fontWeight: 600, color: '#9a8a7a', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+                  Add to README
+                </span>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={shieldsUrl} alt="commitmentissues badge" style={{ height: '20px', display: 'block' }} />
+              </div>
               <button
                 type="button"
                 onClick={async () => { try { await navigator.clipboard.writeText(badgeMd); setBadgeCopied(true); setTimeout(() => setBadgeCopied(false), 2000) } catch { /* ignore */ } }}
                 style={{
                   fontFamily: UI, fontSize: '11px', fontWeight: 700,
                   flexShrink: 0,
-                  height: '28px',
-                  padding: '0 10px',
+                  height: '32px',
+                  padding: '0 12px',
                   background: badgeCopied ? '#2a5a2a' : '#0a0a0a',
                   color: '#fff',
                   border: 'none',
@@ -595,7 +608,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
                   transition: 'background 0.15s',
                 }}
               >
-                {badgeCopied ? '✓ Copied' : 'Copy badge'}
+                {badgeCopied ? '✓ Copied' : 'Copy'}
               </button>
             </div>
           )
