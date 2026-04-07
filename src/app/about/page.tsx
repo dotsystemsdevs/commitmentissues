@@ -2,12 +2,12 @@ import type { Metadata } from 'next'
 import SubpageShell from '@/components/SubpageShell'
 
 export const metadata: Metadata = {
-  title: 'About — commitmentissues',
-  description: 'How commitmentissues works: real GitHub data, a death score algorithm, and a healthy dose of dark humor for your abandoned repos.',
+  title: 'About — Commitment Issues | How It Works',
+  description: 'How Commitment Issues works: we analyze your GitHub repo\'s commit history, activity decay, and open issues to assign a cause of death and generate a printable death certificate.',
   alternates: { canonical: 'https://commitmentissues.dev/about' },
   openGraph: {
-    title: 'About — commitmentissues',
-    description: 'How commitmentissues works: real GitHub data, a death score algorithm, and a healthy dose of dark humor for your abandoned repos.',
+    title: 'About — Commitment Issues | How It Works',
+    description: 'How Commitment Issues works: we analyze your GitHub repo\'s commit history, activity decay, and open issues to assign a cause of death and generate a printable death certificate.',
     url: 'https://commitmentissues.dev/about',
   },
 }
@@ -62,7 +62,7 @@ export default function AboutPage() {
               padding: '20px 18px',
               border: '2px solid #1a1a1a',
               borderRadius: '0',
-              background: '#f2f2f2',
+              background: '#EDE8E1',
             }}
           >
             <p style={{ fontFamily: UI, fontSize: 'clamp(16px, 4.2vw, 17px)', fontWeight: 700, color: '#160A06', margin: '0 0 10px 0' }}>

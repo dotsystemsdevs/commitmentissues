@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
   const ip =
     request.headers.get('x-forwarded-for')?.split(',')[0].trim() ?? '127.0.0.1'
 
-  const { allowed, retryAfter } = checkRateLimit(ip)
+  const { allowed, retryAfter } = await checkRateLimit(ip)
   if (!allowed) {
     return NextResponse.json(
       { error: `Slow down. Try again in ${retryAfter}s.`, retryAfter },
@@ -78,16 +78,18 @@ export async function GET(request: NextRequest) {
     ;[repoRes, commitsRes] = await Promise.all([
       fetch(`https://api.github.com/repos/${owner}/${cleanRepo}`, {
         headers,
+        signal: AbortSignal.timeout(8000),
         next: { revalidate: 86400 },
       }),
       fetch(
         `https://api.github.com/repos/${owner}/${cleanRepo}/commits?per_page=1`,
-        { headers, next: { revalidate: 86400 } }
+        { headers, signal: AbortSignal.timeout(8000), next: { revalidate: 86400 } }
       ),
     ])
-  } catch {
+  } catch (err) {
+    const isTimeout = err instanceof DOMException && err.name === 'TimeoutError'
     return NextResponse.json(
-      { error: 'The reaper is busy. Try again in a moment.' },
+      { error: isTimeout ? 'GitHub took too long to respond. Try again.' : 'The reaper is busy. Try again in a moment.' },
       { status: 502 }
     )
   }
@@ -173,7 +175,9 @@ export async function GET(request: NextRequest) {
     cause: causeOfDeath,
     score: deathIndex,
     analyzedAt: new Date().toISOString(),
-  }).catch(() => {})
+  }).catch((err) => {
+    console.error('[addRecent] Redis write failed:', err)
+  })
 
   return NextResponse.json(certificate)
 }

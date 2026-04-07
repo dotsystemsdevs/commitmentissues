@@ -20,7 +20,7 @@
 .page-shell-main {
   min-height: 100vh;
   min-height: 100dvh;
-  background: #e8e8e8;
+  background: #FAF6EF;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -115,7 +115,7 @@
 
 .page-shell-rule {
   height: 1px;
-  background: #bfbfbf;
+  background: #d8cfc4;
   width: 100%;
 }
 
@@ -296,10 +296,10 @@ button {
 
 /* ── Stamp: rubber-stamp impact animation ── */
 @keyframes stamp-in {
-  0%   { transform: rotate(-12deg) scale(3);    opacity: 0; }
-  60%  { transform: rotate(-12deg) scale(0.95); opacity: 1; }
-  80%  { transform: rotate(-12deg) scale(1.05); opacity: 1; }
-  100% { transform: rotate(-12deg) scale(1);    opacity: 1; }
+  0%   { transform: scale(3);    opacity: 0; }
+  60%  { transform: scale(0.95); opacity: 1; }
+  80%  { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1);    opacity: 1; }
 }
 
 .stamp-animate {
@@ -403,7 +403,7 @@ button {
 }
 @media (hover: hover) and (pointer: fine) {
   .cert-btn-secondary:hover {
-    background: #f0f0f0 !important;
+    background: #EDE8E1 !important;
   }
 }
 .cert-btn-secondary:active {
@@ -455,7 +455,7 @@ a.subpage-inline-mail {
   gap: 6px;
   width: 100%;
   position: relative;
-  background: #e8e8e8;
+  background: #FAF6EF;
 }
 
 .site-footer--compact {
@@ -653,7 +653,7 @@ a.subpage-inline-mail {
     font-family: var(--font-dm), -apple-system, sans-serif;
     font-size: 14px;
     color: #160A06;
-    background-color: #e8e8e8;
+    background-color: #FAF6EF;
   }
   html,
   body,
@@ -665,7 +665,7 @@ a.subpage-inline-mail {
   input:-webkit-autofill,
   input:-webkit-autofill:focus {
     -webkit-text-fill-color: #160A06;
-    -webkit-box-shadow: 0 0 0 1000px #f5f5f5 inset;
+    -webkit-box-shadow: 0 0 0 1000px #FAF6EF inset;
     transition: background-color 5000s ease-in-out 0s;
   }
 }
