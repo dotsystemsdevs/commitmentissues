@@ -16,10 +16,10 @@ Paste a public GitHub URL. Get a shareable **Certificate of Death** — algorith
 
 Got a dead repo? Add the badge to your README:
 
-[![🪦 declared dead](https://img.shields.io/badge/%F0%9F%AA%A6%20declared%20dead-commitmentissues.dev-cc0000?style=flat-square)](https://commitmentissues.dev)
+[![🪦 declared dead](https://img.shields.io/badge/%F0%9F%AA%A6%20declared%20dead-view%20certificate-C4A882?style=for-the-badge&labelColor=cc0000)](https://commitmentissues.dev)
 
 ```markdown
-[![🪦 declared dead](https://img.shields.io/badge/%F0%9F%AA%A6%20declared%20dead-commitmentissues.dev-cc0000?style=flat-square)](https://commitmentissues.dev/?repo=YOUR_OWNER/YOUR_REPO)
+[![🪦 declared dead](https://img.shields.io/badge/%F0%9F%AA%A6%20declared%20dead-view%20certificate-C4A882?style=for-the-badge&labelColor=cc0000)](https://commitmentissues.dev/?repo=YOUR_OWNER/YOUR_REPO)
 ```
 
 The badge and full certificate embed markdown are generated automatically on the certificate page — just hit **Copy** after analyzing your repo.
@@ -38,7 +38,7 @@ The badge and full certificate embed markdown are generated automatically on the
 - **Algorithmic scoring** — `src/lib/scoring.ts` computes a death index from commit activity, archive status, issue count, and time since last push
 - **Export** — PNG downloads in multiple aspect ratios: A4, Instagram (4:5 and 1:1), X/Twitter (16:9), Facebook feed, and Stories (9:16)
 - **Mobile share** — Native share sheet on iOS/Android with a story-formatted image
-- **README badge** — Embed a `⚰ DECLARED DEAD` shields.io badge linking back to the certificate
+- **README badge** — Embed a `🪦 DECLARED DEAD | VIEW CERTIFICATE` shields.io badge linking back to the certificate
 - **Certificate embed** — Full certificate image via `/api/certificate-image/[owner]/[repo]` for GitHub READMEs
 - **Recently Buried** — Live scrolling feed of the latest public burials
 - **Famous Casualties** — Curated graveyard of famously abandoned repos
