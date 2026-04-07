@@ -586,11 +586,11 @@ export default function CertificateCard({ cert, onReset }: Props) {
               padding: '10px 14px',
             }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={shieldsUrl} alt="commitmentissues badge" style={{ height: '28px', display: 'block' }} />
                 <span style={{ fontFamily: UI, fontSize: '10px', fontWeight: 600, color: '#9a8a7a', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
                   Add to README
                 </span>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={shieldsUrl} alt="commitmentissues badge" style={{ height: '28px', display: 'block' }} />
               </div>
               <button
                 type="button"
