@@ -1,4 +1,4 @@
-[![Dead](https://commitmentissues.dev/api/badge/blueminder/flycast-netplay-savestates)](https://commitmentissues.dev/?repo=blueminder%2Fflycast-netplay-savestates)
+[![commitmentissues](https://commitmentissues.dev/api/badge/blueminder/flycast-netplay-savestates)](https://commitmentissues.dev/?repo=blueminder%2Fflycast-netplay-savestates)
 
 # Commitment Issues
 
