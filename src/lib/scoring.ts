@@ -93,6 +93,38 @@ export function determineCauseOfDeath(repo: RepoData): string {
       cause: 'Lost in dependency hell',
     },
     {
+      score: repo.language?.toLowerCase() === 'php' && daysSince > 365 ? 5 : 0,
+      cause: 'Died of PHP fatigue',
+    },
+    {
+      score: repo.language?.toLowerCase() === 'ruby' && daysSince > 365 ? 5 : 0,
+      cause: 'Gemfile.lock never unlocked',
+    },
+    {
+      score: repo.language?.toLowerCase() === 'python' && daysSince > 365 ? 5 : 0,
+      cause: 'Pip froze, then everything else did',
+    },
+    {
+      score: repo.language?.toLowerCase() === 'perl' && daysSince > 365 ? 5 : 0,
+      cause: 'Nobody could read it, including the author',
+    },
+    {
+      score: repo.language?.toLowerCase() === 'java' && daysSince > 365 ? 5 : 0,
+      cause: 'OutOfMemoryError: human patience exceeded',
+    },
+    {
+      score: repo.language?.toLowerCase() === 'go' && daysSince > 365 ? 5 : 0,
+      cause: 'if err != nil { give up }',
+    },
+    {
+      score: repo.language?.toLowerCase() === 'rust' && daysSince > 365 ? 5 : 0,
+      cause: 'The borrow checker won',
+    },
+    {
+      score: repo.language?.toLowerCase() === 'c++' && daysSince > 365 ? 5 : 0,
+      cause: 'Segfaulted into the void',
+    },
+    {
       score: descLower.includes('microservice') || descLower.includes('enterprise') ? 5 : 0,
       cause: 'Killed by overengineering',
     },
