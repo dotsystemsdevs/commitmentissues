@@ -278,6 +278,7 @@ test('Ruby repo idle >365 days → Gemfile quip', () => {
     isFork: false,
     openIssuesCount: 2,
     stargazersCount: 5,
+    forksCount: 0,
     description: 'a gem that time forgot',
   })
   const cause = determineCauseOfDeath(repo)
@@ -292,6 +293,7 @@ test('Perl repo returns Perl-specific cause', () => {
     isFork: false,
     openIssuesCount: 2,
     stargazersCount: 5,
+    forksCount: 0,
     description: 'a Perl tool',
   })
   const cause = determineCauseOfDeath(repo)
@@ -306,6 +308,7 @@ test('Objective-C repo idle >365 days returns Swift quip', () => {
     isFork: false,
     openIssuesCount: 2,
     stargazersCount: 5,
+    forksCount: 0,
     description: 'an old iOS lib',
   })
   const cause = determineCauseOfDeath(repo)
