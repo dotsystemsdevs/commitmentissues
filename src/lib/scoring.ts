@@ -93,6 +93,30 @@ export function determineCauseOfDeath(repo: RepoData): string {
       cause: 'Lost in dependency hell',
     },
     {
+      score: repo.language?.toLowerCase() === 'ruby' && daysSince > 365 ? 4 : 0,
+      cause: 'Gemfile.lock never unlocked',
+    },
+    {
+      score: repo.language?.toLowerCase() === 'python' && daysSince > 365 ? 4 : 0,
+      cause: 'Pip froze, then everything else did',
+    },
+    {
+      score: repo.language?.toLowerCase() === 'php' && daysSince > 365 ? 4 : 0,
+      cause: 'Died of PHP fatigue',
+    },
+    {
+      score: repo.language?.toLowerCase() === 'perl' ? 5 : 0,
+      cause: 'Nobody could read it, including the author',
+    },
+    {
+      score: repo.language?.toLowerCase() === 'coffeescript' ? 5 : 0,
+      cause: 'Outlived by the thing it inspired',
+    },
+    {
+      score: repo.language?.toLowerCase() === 'objective-c' && daysSince > 365 ? 5 : 0,
+      cause: 'Swift happened',
+    },
+    {
       score: descLower.includes('microservice') || descLower.includes('enterprise') ? 5 : 0,
       cause: 'Killed by overengineering',
     },

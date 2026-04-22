@@ -267,3 +267,50 @@ test('"dependencies" returns dependency hell', () => {
   const repo = buildRepo({ lastCommitMessage: 'update dependencies', lastCommitDate: new Date().toISOString() })
   assert.equal(generateLastWords(repo), 'trapped in dependency hell')
 })
+
+// ── language-specific causes ───────────────────────────────────────
+
+test('Ruby repo idle >365 days → Gemfile quip', () => {
+  const repo = buildRepo({
+    language: 'Ruby',
+    lastCommitDate: '2023-01-01T00:00:00.000Z',
+    isArchived: false,
+    isFork: false,
+    openIssuesCount: 2,
+    stargazersCount: 5,
+    forksCount: 0,
+    description: 'a gem that time forgot',
+  })
+  const cause = determineCauseOfDeath(repo)
+  assert.equal(cause, 'Gemfile.lock never unlocked')
+})
+
+test('Perl repo returns Perl-specific cause', () => {
+  const repo = buildRepo({
+    language: 'Perl',
+    lastCommitDate: '2024-01-01T00:00:00.000Z',
+    isArchived: false,
+    isFork: false,
+    openIssuesCount: 2,
+    stargazersCount: 5,
+    forksCount: 0,
+    description: 'a Perl tool',
+  })
+  const cause = determineCauseOfDeath(repo)
+  assert.equal(cause, 'Nobody could read it, including the author')
+})
+
+test('Objective-C repo idle >365 days returns Swift quip', () => {
+  const repo = buildRepo({
+    language: 'Objective-C',
+    lastCommitDate: '2022-01-01T00:00:00.000Z',
+    isArchived: false,
+    isFork: false,
+    openIssuesCount: 2,
+    stargazersCount: 5,
+    forksCount: 0,
+    description: 'an old iOS lib',
+  })
+  const cause = determineCauseOfDeath(repo)
+  assert.equal(cause, 'Swift happened')
+})
