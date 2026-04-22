@@ -16,11 +16,10 @@ function classify(repo: UserRepoSummary): Category {
 }
 
 interface Props {
-  username: string
   repos: UserRepoSummary[]
 }
 
-export default function UserDashboard({ username, repos }: Props) {
+export default function UserDashboard({ repos }: Props) {
   const dead       = repos.filter(r => classify(r) === 'dead dead')
   const struggling = repos.filter(r => classify(r) === 'struggling')
   const alive      = repos.filter(r => classify(r) === 'alive')

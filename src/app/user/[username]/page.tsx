@@ -117,7 +117,7 @@ export default function UserPage() {
             >
               ← back
             </button>
-            <UserDashboard username={scannedUsername || username} repos={repos} />
+            <UserDashboard repos={repos} />
           </div>
         )}
 
