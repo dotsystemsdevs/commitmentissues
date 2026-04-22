@@ -11,6 +11,11 @@ const KNOWN_REPO_CAUSES: Record<string, string> = {
   'angular/angular.js': 'AngularJS hit official end-of-life when modern Angular replaced it',
   'request/request': 'The maintainers deprecated it as native fetch and modern clients took over',
   'ariya/phantomjs': 'Chrome went headless and erased the reason this existed',
+  'facebook/draft-js': 'Meta shipped Lexical and forgot which editor anyone was using',
+  'lighttable/lighttable': 'The IDE of the future stayed in the future permanently',
+  'keystonejs/keystone-classic': 'Keystone 6 shipped and nobody looked back at the old one',
+  'facebookarchive/stetho': 'Chrome DevTools got native Android debugging and stopped caring',
+  'facebookarchive/react-native-fbsdk': 'Replaced by a package with -next in the name',
 }
 
 export function computeDeathIndex(repo: RepoData): number {

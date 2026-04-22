@@ -33,6 +33,12 @@ const HALL_OF_SHAME: LeaderboardEntry[] = [
   { fullName: 'marionettejs/backbone.marionette', cause: 'Backbone died. So did everything built on Backbone.', score: 8, deathDate: 'Mar 2020', lastWords: 'I was Backbone but organized. Backbone wasn\'t organized. Or alive.' },
   { fullName: 'request/request',        cause: 'fetch() shipped natively and deprecated an entire generation', score: 9, deathDate: 'Feb 2020', lastWords: 'I was downloaded 30 million times a week. Then fetch happened.' },
   { fullName: 'nicolo-ribaudo/jest-light-runner', cause: 'Vitest arrived and made everyone feel bad about Jest', score: 6, deathDate: 'Jan 2023', lastWords: 'I was faster Jest. Vitest was even faster. Also had a UI.' },
+
+  { fullName: 'facebook/draft-js',            cause: 'Meta shipped Lexical and forgot which editor anyone was using', score: 9, deathDate: 'Feb 2023', lastWords: 'I was the React rich-text answer. React found a different answer.' },
+  { fullName: 'LightTable/LightTable',        cause: 'The IDE of the future stayed in the future permanently',        score: 8, deathDate: 'Jun 2022', lastWords: 'Kickstarted $316k. Shipped an alpha. Never shipped a 1.0.' },
+  { fullName: 'keystonejs/keystone-classic',   cause: 'Keystone 6 shipped and nobody looked back at the old one',      score: 7, deathDate: 'Dec 2023', lastWords: 'The rewrite kept the name. I kept the issues tab.' },
+  { fullName: 'facebookarchive/stetho',        cause: 'Chrome DevTools got native Android debugging and stopped caring', score: 7, deathDate: 'Oct 2024', lastWords: 'I bridged Chrome DevTools to Android. Chrome stopped wanting a bridge.' },
+  { fullName: 'facebookarchive/react-native-fbsdk', cause: 'Replaced by a package with -next in the name',             score: 7, deathDate: 'Mar 2021', lastWords: 'The successor is react-native-fbsdk-next. There is no going forward from here.' },
 ]
 
 const FONT = `var(--font-dm), -apple-system, sans-serif`
