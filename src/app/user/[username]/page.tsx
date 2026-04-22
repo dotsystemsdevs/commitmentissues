@@ -17,7 +17,6 @@ export default function UserPage() {
   const username = typeof params.username === 'string' ? params.username : ''
 
   const [repos, setRepos] = useState<UserRepoSummary[] | null>(null)
-  const [scannedUsername, setScannedUsername] = useState('')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -45,10 +44,7 @@ export default function UserPage() {
         if (!data || typeof data !== 'object') throw new Error('Something went wrong. Try again.')
         if ('error' in data) throw new Error(data.error)
 
-        const nextUsername = data.username || username
-        const nextRepos = data.repos
-        setScannedUsername(nextUsername || username)
-        setRepos(nextRepos)
+        setRepos(data.repos)
       })
       .catch(err => {
         if (err?.name === 'AbortError') return
