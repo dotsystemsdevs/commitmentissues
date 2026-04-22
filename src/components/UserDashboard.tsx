@@ -29,15 +29,8 @@ export default function UserDashboard({ username, repos }: Props) {
   return (
     <div style={{ width: '100%', fontFamily: FONT }}>
 
-      {/* ── Header ── */}
+      {/* ── Stat row ── */}
       <div style={{ marginBottom: '28px' }}>
-        <p style={{ fontFamily: MONO, fontSize: '11px', color: '#8a8a8a', letterSpacing: '0.14em', textTransform: 'uppercase', margin: '0 0 6px 0' }}>
-          graveyard scan
-        </p>
-        <h2 style={{ fontFamily: FONT, fontSize: '28px', fontWeight: 700, color: '#160A06', margin: '0 0 14px', letterSpacing: '-0.03em' }}>
-          @{username}
-        </h2>
-
         {/* Stat row */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '4px' }}>
           {[
