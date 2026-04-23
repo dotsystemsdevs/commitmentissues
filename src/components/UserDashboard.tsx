@@ -1,10 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, type CSSProperties } from 'react'
 import type { UserRepoSummary } from '@/lib/types'
+import ReadmeBadge from '@/components/ReadmeBadge'
 
 const MONO = `var(--font-courier), system-ui, sans-serif`
-const SERIF = `var(--font-dm), Georgia, serif`
 
 type Tab = 'dead' | 'struggling' | 'alive'
 
@@ -60,56 +60,43 @@ export default function UserDashboard({ repos, username }: Props) {
   return (
     <div style={{ width: '100%', paddingBottom: '40px' }}>
 
-      {/* Tab bar — horizontally scrollable on small screens */}
-      <div className="user-dash-tabs" style={{ display: 'flex', gap: '0', marginBottom: '20px', borderBottom: '2px solid var(--c-border)' }}>
-        {SECTIONS.map(({ key, label, color }) => {
+      <ReadmeBadge username={username} />
+
+      {/* Tab bar — minimal text tabs with colored accent underline */}
+      <div className="user-dash-tabs" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '6px', marginBottom: '18px' }}>
+        {SECTIONS.flatMap(({ key, label, color }, i) => {
           const isActive = tab === key
           const disabled = counts[key] === 0
-          return (
+          const items = []
+          if (i > 0) {
+            items.push(<span key={`sep-${key}`} aria-hidden style={{ color: '#cec6bb', fontSize: '10px', userSelect: 'none' }}>✦</span>)
+          }
+          items.push(
             <button
               key={key}
-              className="user-dash-tab-btn"
+              className="user-dash-tab-btn mode-tab"
               onClick={() => { if (!disabled) setTab(key) }}
               disabled={disabled}
               style={{
-                fontFamily: MONO,
-                fontSize: '11px',
-                letterSpacing: '0.08em',
-                textTransform: 'uppercase',
-                padding: '10px 18px 12px',
-                background: isActive ? color : 'transparent',
-                border: 'none',
-                borderBottom: isActive ? `2px solid ${color}` : '2px solid transparent',
-                marginBottom: '-2px',
-                color: isActive ? '#fff' : disabled ? 'var(--c-faint)' : 'var(--c-muted)',
+                color: isActive ? color : disabled ? 'var(--c-faint)' : 'var(--c-muted)',
+                fontWeight: isActive ? 700 : 500,
+                position: 'relative',
                 cursor: disabled ? 'default' : 'pointer',
-                fontWeight: isActive ? 700 : 400,
-                transition: 'background 0.12s, color 0.12s',
-                whiteSpace: 'nowrap',
-                flexShrink: 0,
+                opacity: disabled ? 0.5 : 1,
               }}
             >
               {counts[key]} {label}
+              {isActive && (
+                <span aria-hidden style={{ position: 'absolute', left: 14, right: 14, bottom: 2, height: 2, background: color }} />
+              )}
             </button>
           )
+          return items
         })}
       </div>
 
-      {/* Section intro */}
-      <p style={{
-        fontFamily: MONO,
-        fontSize: '10px',
-        letterSpacing: '0.1em',
-        textTransform: 'uppercase',
-        color: activeSection.color,
-        marginBottom: '16px',
-      }}>
-        {activeSection.intro}
-      </p>
-
       <CardGrid
         repos={currentRepos}
-        showCertLink={tab === 'dead' || tab === 'struggling'}
         accentColor={activeSection.color}
       />
 
@@ -120,7 +107,7 @@ export default function UserDashboard({ repos, username }: Props) {
   )
 }
 
-function CardGrid({ repos, showCertLink, accentColor }: { repos: UserRepoSummary[]; showCertLink: boolean; accentColor: string }) {
+function CardGrid({ repos, accentColor }: { repos: UserRepoSummary[]; accentColor: string }) {
   if (repos.length === 0) {
     return (
       <p style={{ fontFamily: MONO, fontSize: '11px', color: 'var(--c-muted)', letterSpacing: '0.06em', padding: '24px 0' }}>
@@ -132,17 +119,17 @@ function CardGrid({ repos, showCertLink, accentColor }: { repos: UserRepoSummary
   return (
     <div style={{
       display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))',
-      gap: '10px',
+      gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
+      gap: '12px',
     }}>
       {repos.map(r => (
-        <RepoCard key={r.fullName} repo={r} showCertLink={showCertLink} accentColor={accentColor} />
+        <RepoCard key={r.fullName} repo={r} accentColor={accentColor} />
       ))}
     </div>
   )
 }
 
-function RepoCard({ repo, showCertLink, accentColor }: { repo: UserRepoSummary; showCertLink?: boolean; accentColor: string }) {
+function RepoCard({ repo, accentColor }: { repo: UserRepoSummary; accentColor: string }) {
   const name = repo.fullName.split('/')[1] ?? repo.fullName
 
   function formatDate(iso: string | null | undefined) {
@@ -150,63 +137,98 @@ function RepoCard({ repo, showCertLink, accentColor }: { repo: UserRepoSummary; 
     return new Date(iso).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
   }
 
-  return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '5px',
-        padding: '14px 16px 14px 14px',
-        background: 'var(--c-surface)',
-        border: '1px solid var(--c-border-light)',
-        borderLeft: `4px solid ${accentColor}`,
-        minHeight: '140px',
-        transition: 'background 0.12s',
-      }}
-      onMouseEnter={e => { e.currentTarget.style.background = 'var(--c-surface-raised)' }}
-      onMouseLeave={e => { e.currentTarget.style.background = 'var(--c-surface)' }}
-    >
-      {/* Repo name */}
-      <span style={{ fontFamily: MONO, fontSize: '13px', fontWeight: 700, color: 'var(--c-ink)', lineHeight: 1.3, wordBreak: 'break-word' }}>
-        {name}
-      </span>
+  const canCertify = repo.isDead || repo.isStruggling
+  const cardStyle: CSSProperties = {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '6px',
+    padding: '16px 18px',
+    background: '#EDE8E1',
+    border: '2px solid #1a1a1a',
+    borderRadius: '0px',
+    minHeight: '170px',
+    boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
+    textDecoration: 'none',
+    color: 'inherit',
+    cursor: canCertify ? 'pointer' : 'default',
+  }
 
-      {/* Cause */}
-      {repo.cause && (
-        <span style={{ fontFamily: SERIF, fontSize: '12px', fontStyle: 'italic', color: 'var(--c-ink-2)', lineHeight: 1.55, flex: 1 }}>
-          {repo.cause}
+  const inner = (
+    <>
+      {/* Top row: status icon + name */}
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', width: '100%' }}>
+        <span aria-hidden style={{
+          fontSize: '18px', lineHeight: 1, flexShrink: 0, marginTop: '-1px',
+          display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+          width: '28px', height: '28px',
+          background: `radial-gradient(ellipse at 50% 85%, ${accentColor}33 0%, ${accentColor}18 45%, transparent 70%)`,
+          borderRadius: '4px',
+        }}>
+          {repo.isDead ? '🪦' : repo.isStruggling ? '⚠' : '🌱'}
+        </span>
+        <span style={{ fontFamily: MONO, fontSize: '13px', fontWeight: 700, color: '#0a0a0a', lineHeight: 1.3, wordBreak: 'break-word', flex: 1, alignSelf: 'center' }}>
+          {name}
+        </span>
+      </div>
+
+      {/* Description */}
+      {repo.description && (
+        <span style={{ fontFamily: MONO, fontSize: '12px', color: '#3d3832', lineHeight: 1.5, fontWeight: 500, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+          {repo.description}
         </span>
       )}
 
-      {/* Last activity */}
-      <span style={{ fontFamily: MONO, fontSize: '10px', color: 'var(--c-muted)', letterSpacing: '0.06em', marginTop: 'auto' }}>
-        Last activity: {formatDate(repo.pushedAt)}
-      </span>
+      {/* Cause (for dead/struggling) */}
+      {repo.cause && (
+        <span style={{ fontFamily: MONO, fontSize: '11px', fontStyle: 'italic', color: '#7a7268', lineHeight: 1.5, fontWeight: 400, flex: 1 }}>
+          {repo.cause}
+        </span>
+      )}
+      {!repo.cause && <span style={{ flex: 1 }} />}
 
-      {/* Certify link */}
-      {showCertLink && (
-        <>
-          <div style={{ width: '100%', height: '1px', background: 'var(--c-border-light)', marginTop: '6px' }} />
-          <a
-            href={`/?repo=${repo.fullName}`}
+      {/* Footer */}
+      <div style={{ width: '100%', marginTop: 'auto', borderTop: '1px solid rgba(0,0,0,0.08)', paddingTop: '8px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+        <span style={{ fontFamily: MONO, fontSize: '9px', color: '#878078', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+          last activity · <span style={{ color: '#4d4d4d', fontWeight: 600 }}>{formatDate(repo.pushedAt)}</span>
+        </span>
+        {canCertify && (
+          <span
             style={{
               fontFamily: MONO,
-              fontSize: '10px',
-              fontWeight: 400,
-              letterSpacing: '0.06em',
-              color: 'var(--c-muted)',
-              textDecoration: 'none',
-              padding: '6px 0 0',
-              display: 'block',
-              transition: 'color 0.12s',
+              fontSize: '11px',
+              fontWeight: 700,
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+              color: '#fff',
+              background: accentColor,
+              padding: '8px 12px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              alignSelf: 'stretch',
+              marginTop: '6px',
+              border: `2px solid ${accentColor}`,
+              transition: 'background 0.15s, border-color 0.15s',
             }}
-            onMouseEnter={e => { e.currentTarget.style.color = 'var(--c-ink)' }}
-            onMouseLeave={e => { e.currentTarget.style.color = 'var(--c-muted)' }}
           >
-            certify →
-          </a>
-        </>
-      )}
+            issue certificate →
+          </span>
+        )}
+      </div>
+    </>
+  )
+
+  if (canCertify) {
+    return (
+      <a href={`/?repo=${repo.fullName}`} className="alive-card" style={cardStyle}>
+        {inner}
+      </a>
+    )
+  }
+
+  return (
+    <div className="alive-card" style={cardStyle}>
+      {inner}
     </div>
   )
 }

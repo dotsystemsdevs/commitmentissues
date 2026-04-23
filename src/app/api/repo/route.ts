@@ -175,6 +175,8 @@ export async function GET(request: NextRequest) {
     cause: causeOfDeath,
     score: deathIndex,
     analyzedAt: new Date().toISOString(),
+    deathDate: formatDate(repoData.pushedAt),
+    lastWords,
   }).catch((err) => {
     console.error('[addRecent] Redis write failed:', err)
   })

@@ -10,19 +10,23 @@ Your abandoned repos deserve a proper funeral.
 
 ---
 
-Paste a public GitHub URL. Get a shareable **Certificate of Death** — algorithmic cause of death, last commit as last words, repo age, and exportable graphics. No signup. No account. Completely free.
+Paste a public GitHub URL **or** a GitHub username. Get a shareable **Certificate of Death** — algorithmic cause of death, last commit as last words, repo age, and exportable graphics. Or run an autopsy across an entire user's public repos and get a Graveyard Report. No signup. No account. Completely free.
 
-## Embed your dead repo
+## Two ways to autopsy
 
-Got a dead repo? Add the badge to your README:
+- **Certify a Repo** — paste a GitHub URL, get a certificate of death for that single repo
+- **Examine a Profile** — paste a username, get a graveyard report card with every dead, struggling, and alive repo, plus a README badge you can embed
 
-[![🪦 declared dead](https://img.shields.io/badge/%F0%9F%AA%A6%20declared%20dead-view%20certificate-555?style=for-the-badge&labelColor=cc0000)](https://commitmentissues.dev)
+## Embed your graveyard
 
-```markdown
-[![🪦 declared dead](https://img.shields.io/badge/%F0%9F%AA%A6%20declared%20dead-view%20certificate-555?style=for-the-badge&labelColor=cc0000)](https://commitmentissues.dev/?repo=YOUR_OWNER/YOUR_REPO)
+Paste the generated `![commitmentissues](...)` markdown in your README and you'll get a live-updating badge:
+
+```
+🪦 GITHUB REPO GRAVEYARD
+94 DEAD · 35 STRUGGLING · 14 ALIVE
 ```
 
-The badge and full certificate embed markdown are generated automatically on the certificate page — just hit **Copy** after analyzing your repo.
+The badge and full certificate embed markdown are generated automatically on the certificate/profile page — just hit **Copy**.
 
 ## Screenshots
 
@@ -35,13 +39,13 @@ The badge and full certificate embed markdown are generated automatically on the
 ## Features
 
 - **Certificate of Death** — A4 layout with cause of death, last words, repo age, stars, forks, and language
+- **Profile Graveyard Report** — scan any user's public repos, grouped by Dead / Struggling / Alive, with per-repo descriptions and certificates
+- **Field Record badge** — dynamic SVG for READMEs showing live dead/struggling/alive counts for a user
 - **Algorithmic scoring** — `src/lib/scoring.ts` computes a death index from commit activity, archive status, issue count, and time since last push
 - **Export** — PNG downloads in multiple aspect ratios: A4, Instagram (4:5 and 1:1), X/Twitter (16:9), Facebook feed, and Stories (9:16)
 - **Mobile share** — Native share sheet on iOS/Android with a story-formatted image
-- **README badge** — Embed a `🪦 DECLARED DEAD | VIEW CERTIFICATE` shields.io badge linking back to the certificate
 - **Certificate embed** — Full certificate image via `/api/certificate-image/[owner]/[repo]` for GitHub READMEs
-- **Recently Buried** — Live scrolling feed of the latest public burials
-- **Famous Casualties** — Curated graveyard of famously abandoned repos
+- **Recently Buried** — Live scrolling feed of the latest burials, interleaved with a curated Hall of Shame
 - **Rate limiting** — Redis-backed per-IP limiting with graceful fallback
 - **Timeout + race condition handling** — AbortController on every GitHub API call
 
@@ -106,32 +110,40 @@ The scoring algorithm weighs: time since last commit, archive status, open issue
 ```
 src/
 ├── app/
-│   ├── page.tsx                    ← homepage
+│   ├── page.tsx                    ← homepage (repo + profile scan)
 │   ├── about/page.tsx              ← /about
+│   ├── legal/page.tsx              ← /legal
+│   ├── user/[username]/page.tsx    ← permalink to a profile graveyard
 │   ├── layout.tsx                  ← root layout, fonts, analytics, JSON-LD
 │   └── api/
-│       ├── repo/route.ts           ← main analysis endpoint
+│       ├── repo/route.ts           ← single-repo analysis
+│       ├── user/route.ts           ← user profile scan
 │       ├── recent/route.ts         ← recently buried feed
+│       ├── recent-profiles/        ← top-ticker profile feed
 │       ├── random/route.ts         ← random dead repo picker
-│       ├── stats/route.ts          ← buried counter
-│       ├── badge/[owner]/[repo]/   ← shields.io-compatible badge SVG
+│       ├── stats/route.ts          ← buried + profiles counter
+│       ├── badge/route.ts          ← dynamic graveyard SVG (for READMEs)
+│       ├── badge/[owner]/[repo]/   ← single-repo shields.io badge
 │       └── certificate-image/[owner]/[repo]/  ← OG image for README embeds
 ├── components/
-│   ├── CertificateCard.tsx         ← certificate view + all export/share logic
-│   ├── CertificateFixed.tsx        ← the actual certificate layout (A4)
-│   ├── SearchForm.tsx              ← URL input + random button
+│   ├── CertificateCard.tsx         ← certificate view + export/share logic
+│   ├── CertificateFixed.tsx        ← certificate layout (A4)
+│   ├── SearchForm.tsx              ← URL input + rotating placeholder
+│   ├── UserDashboard.tsx           ← profile graveyard (Dead/Struggling/Alive)
+│   ├── ReadmeBadge.tsx             ← README badge preview + copy
 │   ├── RecentlyBuried.tsx          ← scrolling marquee feed
-│   ├── Leaderboard.tsx             ← Famous Casualties graveyard
-│   ├── LoadingState.tsx            ← loading skeleton
+│   ├── ScannerBanner.tsx           ← top-bar profile ticker
+│   ├── LoadingState.tsx            ← unified loading indicator
 │   ├── ErrorDisplay.tsx            ← error + retry UI
 │   ├── PageHero.tsx                ← shared hero (emoji, title, subtitle)
-│   ├── SubpageShell.tsx            ← shell for /about and future subpages
-│   └── SiteFooter.tsx              ← footer
+│   ├── SubpageShell.tsx            ← shell for /about, /legal, /user
+│   └── SiteFooter.tsx              ← fixed bottom footer
 └── lib/
     ├── scoring.ts                  ← death index + cause of death logic
     ├── scoring.test.ts             ← scoring unit tests
     ├── rateLimit.ts                ← Redis-backed rate limiting
     ├── recentStore.ts              ← recently buried Redis store
+    ├── hallOfShame.ts              ← curated famous dead repos
     └── types.ts                    ← shared TypeScript types
 ```
 

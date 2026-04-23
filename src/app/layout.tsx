@@ -1,19 +1,22 @@
 import type { Metadata, Viewport } from 'next'
-import { Courier_Prime, UnifrakturMaguntia, Inter } from 'next/font/google'
+import { Space_Grotesk, UnifrakturMaguntia, Lora } from 'next/font/google'
 import Script from 'next/script'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import ScannerBanner from '@/components/ScannerBanner'
 import './globals.css'
 
-const courierPrime = Courier_Prime({
+const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
-  weight: ['400', '700'],
+  weight: ['400', '500', '700'],
   variable: '--font-courier',
   display: 'swap',
 })
 
-const inter = Inter({
+const lora = Lora({
   subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  style: ['normal', 'italic'],
   variable: '--font-dm',
   display: 'swap',
 })
@@ -33,8 +36,8 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://commitmentissues.dev'),
-  title: 'Commitment Issues — Official Death Certificates for Dead GitHub Repos',
-  description: 'Paste any public GitHub repo and get an official death certificate. See the cause of death, last commit as "last words," and repo stats. Free tool for developers with too many abandoned side projects.',
+  title: 'Commitment Issues — Death Certificates for Dead GitHub Repos',
+  description: 'Paste any public GitHub repo and get an official death certificate — cause of death, last commit as last words, and repo stats. Free for developers.',
   keywords: [
     'abandoned github repo', 'dead github project', 'github repo death certificate',
     'unmaintained open source', 'stale repository checker', 'github graveyard',
@@ -45,7 +48,7 @@ export const metadata: Metadata = {
   authors: [{ name: 'Dot Systems', url: 'https://github.com/dotsystemsdevs' }],
   alternates: { canonical: 'https://commitmentissues.dev' },
   openGraph: {
-    title: 'Commitment Issues — Official Death Certificates for Dead GitHub Repos',
+    title: 'Commitment Issues — Death Certificates for Dead GitHub Repos',
     description: 'Paste any public GitHub repo and get an official death certificate. Cause of death, last words, repo stats. Free for developers.',
     url: 'https://commitmentissues.dev',
     siteName: 'Commitment Issues',
@@ -54,7 +57,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Commitment Issues — Official Death Certificates for Dead GitHub Repos',
+    title: 'Commitment Issues — Death Certificates for Dead GitHub Repos',
     description: 'Paste any public GitHub repo and get an official death certificate. Cause of death, last words, repo stats.',
     images: ['/opengraph-image'],
   },
@@ -95,32 +98,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
-      <body className={`${courierPrime.variable} ${unifraktur.variable} ${inter.variable} antialiased`}>
-        <a
-          href="https://buymeacoffee.com/commitmentissues"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Buy me a coffee"
-          className="coffee-btn-fixed"
-          style={{
-            position: 'fixed',
-            top: '12px',
-            right: '14px',
-            zIndex: 999,
-            fontFamily: `var(--font-dm), -apple-system, sans-serif`,
-            fontSize: '12px',
-            fontWeight: 600,
-            letterSpacing: '0.01em',
-            color: '#1a1a1a',
-            textDecoration: 'none',
-            padding: '7px 12px',
-            border: '1.5px solid #1a1a1a',
-            background: '#f6f6f6',
-            whiteSpace: 'nowrap',
-          }}
-        >
-          ☕ Don&apos;t let us die too
-        </a>
+      <body className={`${spaceGrotesk.variable} ${unifraktur.variable} ${lora.variable} antialiased`}>
+        <ScannerBanner />
         {children}
         <Analytics />
         <SpeedInsights />

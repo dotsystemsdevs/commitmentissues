@@ -48,9 +48,9 @@ function Row({ label, value, border }: { label: string; value: string; border?: 
 
 export async function GET(
   _request: NextRequest,
-  { params }: { params: { owner: string; repo: string } }
+  { params }: { params: Promise<{ owner: string; repo: string }> }
 ) {
-  const { owner, repo } = params
+  const { owner, repo } = await params
 
   if (!VALID_SEGMENT.test(owner) || !VALID_SEGMENT.test(repo)) {
     return new Response('Invalid repo', { status: 400 })

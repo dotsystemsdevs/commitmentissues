@@ -25,26 +25,15 @@ export default function ReadmeBadge({ username }: Props) {
 
   return (
     <div style={{ marginBottom: '40px' }}>
-      {/* Section header */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '16px' }}>
-        <div style={{ flex: 1, height: '1px', background: '#cec6bb' }} />
-        <p style={{
-          fontFamily: MONO, fontSize: '10px', fontWeight: 700,
-          color: '#8a8278', margin: 0, letterSpacing: '0.16em',
-          textTransform: 'uppercase', flexShrink: 0,
-        }}>
-          Field Record
-        </p>
-        <div style={{ flex: 1, height: '1px', background: '#cec6bb' }} />
+      {/* Badge preview — aspect-ratio wrapper prevents layout shift while loading */}
+      <div style={{ width: '100%', aspectRatio: '440 / 128', marginBottom: '10px' }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={`/api/badge?username=${username}&v=18`}
+          alt={altText}
+          style={{ width: '100%', height: '100%', display: 'block' }}
+        />
       </div>
-
-      {/* Badge preview */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={`/api/badge?username=${username}&v=11`}
-        alt={altText}
-        style={{ width: '100%', display: 'block', marginBottom: '10px' }}
-      />
 
       {/* Copy row */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', marginTop: '10px' }}>

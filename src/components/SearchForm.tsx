@@ -1,11 +1,21 @@
 'use client'
 
-import { FormEvent, useState, useCallback } from 'react'
+import { FormEvent, useState, useCallback, useEffect } from 'react'
 import { track } from '@vercel/analytics'
 import ClickSpark from '@/components/ClickSpark'
 
 const FONT = `var(--font-courier), system-ui, sans-serif`
 const MONO = `var(--font-courier), system-ui, sans-serif`
+
+const PLACEHOLDERS = [
+  'facebook/create-react-app',
+  'vercel/turbo',
+  'angular/angular.js',
+  'gulpjs/gulp',
+  'meteor/meteor',
+  'bower/bower',
+  'your/abandoned-project',
+]
 
 interface Props {
   url: string
@@ -18,6 +28,13 @@ interface Props {
 export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }: Props) {
   const [invalid, setInvalid] = useState(false)
   const [randomLoading, setRandomLoading] = useState(false)
+  const [placeholderIdx, setPlaceholderIdx] = useState(0)
+
+  useEffect(() => {
+    if (url) return
+    const id = setInterval(() => setPlaceholderIdx(i => (i + 1) % PLACEHOLDERS.length), 5000)
+    return () => clearInterval(id)
+  }, [url])
 
   const handleRandom = useCallback(async () => {
     setRandomLoading(true)
@@ -89,8 +106,9 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
         border: '2px solid #1a1a1a',
         overflow: 'hidden',
         background: '#FAF6EF',
+        boxShadow: '0 4px 14px rgba(0,0,0,0.06)',
       }}>
-        <span style={{ fontFamily: MONO, fontSize: '14px', fontWeight: 700, color: '#666', padding: '0 0 0 14px', display: 'flex', alignItems: 'center', flexShrink: 0, userSelect: 'none' }}>
+        <span style={{ fontFamily: MONO, fontSize: '15px', fontWeight: 700, color: '#666', padding: '0 2px 0 16px', display: 'flex', alignItems: 'center', flexShrink: 0, userSelect: 'none' }}>
           github.com/
         </span>
         <input
@@ -99,13 +117,14 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
           inputMode="url"
           value={url.replace(/^(?:https?:\/\/)?(?:www\.)?github\.com\//i, '')}
           onChange={e => { if (invalid) setInvalid(false); handleChange(e.target.value) }}
-          placeholder="owner/repo"
+          placeholder={PLACEHOLDERS[placeholderIdx]}
           style={{
             fontFamily: MONO,
-            fontSize: '14px',
+            fontSize: '16px',
+            fontWeight: 600,
             flex: 1,
-            height: '52px',
-            padding: '0 8px',
+            height: '60px',
+            padding: '0 10px 0 2px',
             background: 'transparent',
             border: 'none',
             outline: 'none',
@@ -116,19 +135,18 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
 
         <ClickSpark color="#2b2b2b">
         <button
-          className="input-submit-button alive-interactive"
+          className="input-submit-button input-submit-button--dark alive-interactive"
           type="submit"
           disabled={loading}
           style={{
             fontFamily: FONT,
-            fontSize: '13px',
+            fontSize: '14px',
             fontWeight: 700,
-            letterSpacing: '0.05em',
+            letterSpacing: '0.06em',
             flexShrink: 0,
-            padding: '0 20px',
-            height: '52px',
-            background: '#1a1a1a',
-            color: '#fff',
+            padding: '0 24px',
+            minWidth: '160px',
+            height: '60px',
             border: 'none',
             cursor: loading ? 'wait' : 'pointer',
             display: 'flex',
@@ -140,8 +158,6 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
             WebkitTapHighlightColor: 'transparent',
             touchAction: 'manipulation',
           }}
-          onMouseEnter={e => { e.currentTarget.style.background = '#2a2a2a' }}
-          onMouseLeave={e => { e.currentTarget.style.background = '#1a1a1a' }}
         >
           {loading ? <span className="btn-spinner" /> : 'Declare Dead →'}
         </button>
@@ -154,25 +170,25 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
         </p>
       )}
 
-      <div className="chips-section" style={{ marginTop: '14px', display: 'flex', justifyContent: 'center' }}>
+      <div className="chips-section" style={{ marginTop: '2px', display: 'flex', justifyContent: 'center' }}>
         <button
-          className="alive-interactive"
           type="button"
           onClick={handleRandom}
           disabled={randomLoading || loading}
+          aria-label="Dig up a random corpse"
           style={{
-            fontFamily: MONO, fontSize: '11px', fontWeight: 400,
-            padding: '6px 12px',
-            background: 'transparent', border: '2px solid #cec6bb',
+            fontFamily: MONO, fontSize: '12px', letterSpacing: '0.04em',
+            background: 'none', border: 'none', padding: '4px 2px',
             cursor: randomLoading || loading ? 'wait' : 'pointer',
-            color: randomLoading || loading ? '#bbb' : '#9a9288',
-            transition: 'border-color 0.15s, color 0.15s',
-            letterSpacing: '0.04em',
+            color: '#9a9288',
+            textDecoration: 'underline', textUnderlineOffset: '3px', textDecorationColor: 'rgba(154,146,136,0.4)',
+            transition: 'color 0.15s, text-decoration-color 0.15s',
+            opacity: randomLoading || loading ? 0.5 : 1,
           }}
-          onMouseEnter={e => { if (!randomLoading && !loading) { e.currentTarget.style.borderColor = '#1a1a1a'; e.currentTarget.style.color = '#1a1a1a' } }}
-          onMouseLeave={e => { e.currentTarget.style.borderColor = '#cec6bb'; e.currentTarget.style.color = '#9a9288' }}
+          onMouseEnter={e => { if (!randomLoading && !loading) { e.currentTarget.style.color = '#1a1a1a'; e.currentTarget.style.textDecorationColor = '#1a1a1a' } }}
+          onMouseLeave={e => { e.currentTarget.style.color = '#9a9288'; e.currentTarget.style.textDecorationColor = 'rgba(154,146,136,0.4)' }}
         >
-          {randomLoading ? 'exhuming...' : '↯ exhume at random'}
+          {randomLoading ? 'exhuming…' : 'or dig up a corpse →'}
         </button>
       </div>
 

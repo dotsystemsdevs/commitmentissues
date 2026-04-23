@@ -415,7 +415,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
               fontFamily: UI,
               fontSize: '14px',
               fontWeight: 700,
-              letterSpacing: '0.04em',
+              letterSpacing: '0.06em',
               width: '100%',
               height: '52px',
               background: '#0a0a0a',
@@ -440,7 +440,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
               onClick={handleShareToX}
               className="cert-btn-primary"
               style={{
-                fontFamily: UI, fontSize: '14px', fontWeight: 700, letterSpacing: '0.04em',
+                fontFamily: UI, fontSize: '14px', fontWeight: 700, letterSpacing: '0.06em',
                 width: '100%', height: '52px', background: '#0a0a0a', color: '#fff',
                 border: '2px solid #0a0a0a', cursor: 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -453,7 +453,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
               onClick={handleCopyLink}
               className="cert-btn-secondary"
               style={{
-                fontFamily: UI, fontSize: '14px', fontWeight: 600,
+                fontFamily: UI, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em',
                 width: '100%', height: '52px', background: '#FAF6EF', color: '#0a0a0a',
                 border: '2px solid #0a0a0a', cursor: 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -467,7 +467,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
               disabled={isDownloading}
               className="cert-btn-secondary"
               style={{
-                fontFamily: UI, fontSize: '14px', fontWeight: 600,
+                fontFamily: UI, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em',
                 width: '100%', height: '52px', background: '#FAF6EF', color: '#0a0a0a',
                 border: '2px solid #0a0a0a', cursor: isDownloading ? 'wait' : 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -481,7 +481,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
               disabled={isDownloading}
               className="cert-btn-secondary"
               style={{
-                fontFamily: UI, fontSize: '14px', fontWeight: 600,
+                fontFamily: UI, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em',
                 width: '100%', height: '52px', background: '#FAF6EF', color: '#0a0a0a',
                 border: '2px solid #0a0a0a', cursor: isDownloading ? 'wait' : 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -495,7 +495,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
               disabled={isDownloading}
               className="cert-btn-secondary"
               style={{
-                fontFamily: UI, fontSize: '14px', fontWeight: 600,
+                fontFamily: UI, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em',
                 width: '100%', height: '52px', background: '#FAF6EF', color: '#0a0a0a',
                 border: '2px solid #0a0a0a', cursor: isDownloading ? 'wait' : 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -509,7 +509,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
               disabled={isDownloading}
               className="cert-btn-secondary"
               style={{
-                fontFamily: UI, fontSize: '14px', fontWeight: 600,
+                fontFamily: UI, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em',
                 width: '100%', height: '52px', background: '#FAF6EF', color: '#0a0a0a',
                 border: '2px solid #0a0a0a', cursor: isDownloading ? 'wait' : 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -523,7 +523,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
               disabled={isDownloading}
               className="cert-btn-secondary"
               style={{
-                fontFamily: UI, fontSize: '14px', fontWeight: 600,
+                fontFamily: UI, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em',
                 width: '100%', height: '52px', background: '#FAF6EF', color: '#0a0a0a',
                 border: '2px solid #0a0a0a', cursor: isDownloading ? 'wait' : 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -560,11 +560,11 @@ export default function CertificateCard({ cert, onReset }: Props) {
             disabled={isDownloading || isGeneratingShare}
             className="cert-btn-secondary"
             style={{
-              fontFamily: UI, fontSize: '13px', fontWeight: 600,
-              width: '100%', height: '44px', background: '#FAF6EF', color: '#0a0a0a',
+              fontFamily: UI, fontSize: '13px', fontWeight: 700,
+              width: '100%', height: '48px', background: '#FAF6EF', color: '#0a0a0a',
               border: '2px solid #0a0a0a', cursor: isDownloading ? 'wait' : 'pointer',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              gap: '6px', letterSpacing: '0.02em',
+              gap: '6px', letterSpacing: '0.06em',
             }}
           >
             {isDownloading ? <span className="btn-spinner" style={{ borderColor: '#0a0a0a', borderTopColor: 'transparent' }} /> : 'Download A4'}
@@ -597,13 +597,13 @@ export default function CertificateCard({ cert, onReset }: Props) {
                 style={{
                   fontFamily: UI, fontSize: '11px', fontWeight: 700,
                   flexShrink: 0,
-                  height: '32px',
-                  padding: '0 12px',
+                  height: '34px',
+                  padding: '0 14px',
                   background: badgeCopied ? '#2a5a2a' : '#0a0a0a',
                   color: '#fff',
                   border: 'none',
                   cursor: 'pointer',
-                  letterSpacing: '0.04em',
+                  letterSpacing: '0.06em',
                   transition: 'background 0.15s',
                 }}
               >

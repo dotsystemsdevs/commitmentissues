@@ -21,16 +21,18 @@ async function getRedis() {
 export async function GET() {
   try {
     const redis = await getRedis()
-    if (!redis) return NextResponse.json({ buried: BURIED_HISTORICAL_BASELINE, shared: 0, downloaded: 0 })
-    const [buried, shared, downloaded] = await Promise.all([
+    if (!redis) return NextResponse.json({ buried: BURIED_HISTORICAL_BASELINE, shared: 0, downloaded: 0, profiles: 0 })
+    const [buried, shared, downloaded, profiles] = await Promise.all([
       redis.get<number>('stats:buried'),
       redis.get<number>('stats:shared'),
       redis.get<number>('stats:downloaded'),
+      redis.get<number>('stats:profiles'),
     ])
     return NextResponse.json({
       buried:     normalizeBuriedCount(buried),
       shared:     shared     ?? 0,
       downloaded: downloaded ?? 0,
+      profiles:   profiles   ?? 0,
     })
   } catch {
     return NextResponse.json({ buried: BURIED_HISTORICAL_BASELINE, shared: 0, downloaded: 0 })

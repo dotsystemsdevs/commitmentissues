@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useRepoAnalysis } from '@/hooks/useRepoAnalysis'
 import SearchForm from '@/components/SearchForm'
 import LoadingState from '@/components/LoadingState'
@@ -13,8 +13,8 @@ import ClickSpark from '@/components/ClickSpark'
 import UserDashboard from '@/components/UserDashboard'
 import type { UserRepoSummary } from '@/lib/types'
 
-const FONT = `var(--font-courier), system-ui, sans-serif`
 const MONO = `var(--font-courier), system-ui, sans-serif`
+const UI = `var(--font-dm), system-ui, sans-serif`
 
 export default function Page() {
   const { url, setUrl, certificate, error, loading, analyze, reset } = useRepoAnalysis()
@@ -27,11 +27,38 @@ export default function Page() {
   const [username, setUsername] = useState('')
   const [userInputError, setUserInputError] = useState<string | null>(null)
   const [inputMode, setInputMode] = useState<'user' | 'repo'>('repo')
+  const userInputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    if (inputMode === 'user') {
+      userInputRef.current?.focus()
+    } else {
+      document.querySelector<HTMLInputElement>('input[inputmode="url"]')?.focus()
+    }
+  }, [inputMode])
 
   const [userRepos, setUserRepos] = useState<UserRepoSummary[] | null>(null)
   const [userLoading, setUserLoading] = useState(false)
   const [userFetchError, setUserFetchError] = useState<string | null>(null)
   const [scannedUsername, setScannedUsername] = useState('')
+
+  const fetchUser = useCallback((name: string) => {
+    setScannedUsername(name)
+    setUserLoading(true)
+    setUserFetchError(null)
+    setUserRepos(null)
+    fetch(`/api/user?username=${encodeURIComponent(name)}`)
+      .then(r => r.json())
+      .then((d: { repos?: UserRepoSummary[]; error?: string }) => {
+        if (d?.error) {
+          setUserFetchError(d.error)
+          return
+        }
+        setUserRepos(d?.repos ?? [])
+      })
+      .catch(() => setUserFetchError('Something went wrong. Try again.'))
+      .finally(() => setUserLoading(false))
+  }, [])
 
   function handleUserSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -39,17 +66,7 @@ export default function Page() {
     if (!name) return
     if (!/^[a-zA-Z0-9_.-]+$/.test(name)) { setUserInputError('Invalid username.'); return }
     setUserInputError(null)
-    setScannedUsername(name)
-    setUserLoading(true)
-    setUserFetchError(null)
-    fetch(`/api/user?username=${encodeURIComponent(name)}`)
-      .then(r => r.json())
-      .then((d: { repos?: UserRepoSummary[]; error?: string }) => {
-        if (d.error) { setUserFetchError(d.error); setUserLoading(false); return }
-        setUserRepos(d.repos ?? [])
-        setUserLoading(false)
-      })
-      .catch(() => { setUserFetchError('Something went wrong. Try again.'); setUserLoading(false) })
+    fetchUser(name)
   }
 
   function resetUser() {
@@ -72,15 +89,15 @@ export default function Page() {
 
   useEffect(() => {
     if (buried === null) return
-    const start = Math.max(0, buried - 20)
+    const start = Math.max(0, buried - 40)
     setDisplayedBuried(start)
     let current = start
     const tick = () => {
       current += 1
       setDisplayedBuried(current)
-      if (current < buried) setTimeout(tick, 55)
+      if (current < buried) setTimeout(tick, 80)
     }
-    if (start < buried) setTimeout(tick, 120)
+    if (start < buried) setTimeout(tick, 150)
     else setDisplayedBuried(buried)
   }, [buried])
 
@@ -103,135 +120,145 @@ export default function Page() {
   const idle = !loading && !certificate && !error && !userLoading && !userRepos && !userFetchError
 
   return (
-    <main className="page-shell-main" style={idle ? { height: '100dvh', overflow: 'hidden' } : undefined}>
-      <div className="page-shell-inner" style={idle ? { height: '100%' } : undefined}>
+    <main className="page-shell-main">
+      <div className="page-shell-inner page-shell-inner--home">
 
-      {/* Hero — always visible unless certificate is showing */}
-      {!certificate && (
+      {/* Hero — only on the clean landing (hidden for certificate or user results) */}
+      {!certificate && !userRepos && (
         <div style={{ marginTop: '0px' }}>
           <PageHero
             subtitle={
-              statsLoading ? null : (
-                <span style={{ fontFamily: MONO, fontSize: '12px', letterSpacing: '0.06em', color: '#7a7268' }}>
-                  {inputMode === 'user'
-                    ? (profiles && profiles > 0 ? `🔍 ${profiles.toLocaleString()} profiles scanned` : `🔍 scan a graveyard`)
-                    : `⚰️ ${(displayedBuried ?? 0).toLocaleString()} repos buried`
-                  }
-                </span>
-              )
+              <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minHeight: '24px', fontFamily: MONO, fontSize: 'clamp(14px, 2.6vw, 17px)', letterSpacing: '0.12em', textTransform: 'uppercase', color: '#8b0000', fontWeight: 700 }}>
+                {statsLoading ? '' : (
+                  inputMode === 'user'
+                    ? (profiles && profiles > 0 ? `☠ ${profiles.toLocaleString()} profiles examined` : '☠ scan a graveyard')
+                    : `☠ ${(displayedBuried ?? 0).toLocaleString()} repos buried`
+                )}
+              </span>
             }
             microcopy={null}
           />
         </div>
       )}
 
-      {/* Search — only when idle */}
-      {!certificate && !loading && !error && (
+      {/* Loading state in search area to avoid layout shift */}
+      {!certificate && loading && (
+        <div style={{ width: '100%', marginTop: '6px' }}>
+          <LoadingState />
+        </div>
+      )}
+
+      {/* Search — only when idle (hidden for user results) */}
+      {!certificate && !loading && !error && !userRepos && !userLoading && !userFetchError && (
         <>
           <div className="ux-live-section" style={{ width: '100%', marginTop: '6px' }}>
 
             {/* Mode tabs */}
-            <div className="mode-tab-group" style={{ display: 'flex', justifyContent: 'center', marginBottom: '10px' }}>
-              {(['user', 'repo'] as const).map((mode, i) => (
-                <button
-                  key={mode}
-                  type="button"
-                  onClick={() => setInputMode(mode)}
-                  className={`mode-tab${inputMode === mode ? ' mode-tab--active' : ''}`}
-                  style={{
-                    borderLeft: i === 1 ? 'none' : undefined,
-                  }}
-                >
-                  {mode === 'user' ? 'Examine a Subject' : 'Certify a Repo'}
-                </button>
-              ))}
+            <div className="mode-tab-group" role="tablist" aria-label="Choose scan type" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '6px', marginBottom: '12px' }}>
+              <button
+                key="user"
+                type="button"
+                onClick={() => setInputMode('user')}
+                className={`mode-tab${inputMode === 'user' ? ' mode-tab--active' : ''}`}
+                role="tab"
+                aria-selected={inputMode === 'user'}
+                aria-controls="panel-user"
+              >
+                Examine a Profile
+              </button>
+              <span aria-hidden style={{ color: '#cec6bb', fontSize: '10px', userSelect: 'none' }}>✦</span>
+              <button
+                key="repo"
+                type="button"
+                onClick={() => setInputMode('repo')}
+                className={`mode-tab${inputMode === 'repo' ? ' mode-tab--active' : ''}`}
+                role="tab"
+                aria-selected={inputMode === 'repo'}
+                aria-controls="panel-repo"
+              >
+                Certify a Repo
+              </button>
             </div>
 
             {/* User scan */}
             {inputMode === 'user' && (
-              <form onSubmit={handleUserSubmit} style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <form id="panel-user" role="tabpanel" aria-label="Profile scan" onSubmit={handleUserSubmit} style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 <div className="input-button-wrapper input-block" style={{
                   display: 'flex', border: '2px solid #1a1a1a', overflow: 'hidden', background: '#FAF6EF',
+                  boxShadow: '0 4px 14px rgba(0,0,0,0.06)',
                 }}>
-                  <span style={{ fontFamily: MONO, fontSize: '14px', fontWeight: 700, color: '#666', padding: '0 0 0 14px', display: 'flex', alignItems: 'center', flexShrink: 0, userSelect: 'none' }}>
+                  <span style={{ fontFamily: MONO, fontSize: '15px', fontWeight: 700, color: '#666', padding: '0 2px 0 16px', display: 'flex', alignItems: 'center', flexShrink: 0, userSelect: 'none' }}>
                     github.com/
                   </span>
                   <input
+                    ref={userInputRef}
                     autoFocus
                     type="text"
                     value={username}
                     onChange={e => { setUsername(e.target.value); setUserInputError(null) }}
                     placeholder="your-username"
-                    style={{ fontFamily: MONO, fontSize: '14px', flex: 1, height: '52px', padding: '0 8px', background: 'transparent', border: 'none', outline: 'none', color: '#160A06', minWidth: 0 }}
+                    aria-invalid={Boolean(userInputError)}
+                    style={{ fontFamily: MONO, fontSize: '16px', fontWeight: 600, flex: 1, height: '60px', padding: '0 10px 0 2px', background: 'transparent', border: 'none', outline: 'none', color: '#160A06', minWidth: 0 }}
                   />
                   <ClickSpark color="#2b2b2b">
                     <button
-                      className="input-submit-button alive-interactive"
+                      className="input-submit-button input-submit-button--dark alive-interactive"
                       type="submit"
+                      disabled={userLoading}
                       style={{
-                        fontFamily: FONT, fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em',
-                        flexShrink: 0, padding: '0 20px', height: '52px',
-                        background: '#1a1a1a',
-                        color: '#fff',
+                        fontFamily: MONO, fontSize: '14px', fontWeight: 700, letterSpacing: '0.06em',
+                        flexShrink: 0, padding: '0 24px', minWidth: '160px', height: '60px',
                         border: 'none',
                         cursor: loading ? 'wait' : 'pointer',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                         whiteSpace: 'nowrap', transition: 'background 0.15s, opacity 0.12s',
                         userSelect: 'none', WebkitTapHighlightColor: 'transparent', touchAction: 'manipulation',
                       }}
-                      onMouseEnter={e => { e.currentTarget.style.background = '#2a2a2a' }}
-                      onMouseLeave={e => { e.currentTarget.style.background = '#1a1a1a' }}
                     >
                       Open Case File →
                     </button>
                   </ClickSpark>
                 </div>
                 {userInputError && (
-                  <p style={{ margin: '-4px 2px 0', fontFamily: FONT, fontSize: '12px', color: '#8B0000' }}>{userInputError}</p>
+                  <p aria-live="polite" style={{ margin: '-4px 2px 0', fontFamily: MONO, fontSize: '12px', color: '#8B0000' }}>{userInputError}</p>
                 )}
               </form>
             )}
             {inputMode === 'user' && (
-              <div className="chips-section" style={{ marginTop: '14px' }}>
-                <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                  <button
-                    className="alive-interactive"
-                    type="button"
-                    onClick={() => {
-                      const pool = ['addyosmani', 'paulirish', 'kentcdodds', 'wesbos', 'tj', 'mxstbr', 'nicolo', 'sindresorhus', 'gaearon', 'torvalds']
-                      const pick = pool[Math.floor(Math.random() * pool.length)]
-                      setUsername(pick)
-                      setUserInputError(null)
-                      setScannedUsername(pick)
-                      setUserLoading(true)
-                      setUserFetchError(null)
-                      fetch(`/api/user?username=${encodeURIComponent(pick)}`)
-                        .then(r => r.json())
-                        .then((d: { repos?: UserRepoSummary[]; error?: string }) => {
-                          if (d.error) { setUserFetchError(d.error); setUserLoading(false); return }
-                          setUserRepos(d.repos ?? [])
-                          setUserLoading(false)
-                        })
-                        .catch(() => { setUserFetchError('Something went wrong. Try again.'); setUserLoading(false) })
-                    }}
-                    style={{
-                      fontFamily: MONO, fontSize: '11px', fontWeight: 400,
-                      padding: '6px 12px', background: 'transparent',
-                      border: '2px solid #cec6bb', cursor: 'pointer', color: '#9a9288',
-                      letterSpacing: '0.04em', transition: 'border-color 0.15s, color 0.15s',
-                    }}
-                    onMouseEnter={e => { e.currentTarget.style.borderColor = '#1a1a1a'; e.currentTarget.style.color = '#1a1a1a' }}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor = '#cec6bb'; e.currentTarget.style.color = '#9a9288' }}
-                  >
-                    ↯ exhume at random
-                  </button>
-                </div>
+              <div className="chips-section" style={{ marginTop: '12px', display: 'flex', justifyContent: 'center' }}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const pool = ['addyosmani', 'paulirish', 'kentcdodds', 'wesbos', 'tj', 'mxstbr', 'nicolo', 'sindresorhus', 'gaearon', 'torvalds']
+                    const pick = pool[Math.floor(Math.random() * pool.length)]
+                    setUsername(pick)
+                    setUserInputError(null)
+                    fetchUser(pick)
+                  }}
+                  disabled={userLoading}
+                  aria-label="Dig up a random profile"
+                  style={{
+                    fontFamily: MONO, fontSize: '12px', letterSpacing: '0.04em',
+                    background: 'none', border: 'none', padding: '4px 2px',
+                    cursor: userLoading ? 'wait' : 'pointer',
+                    color: '#9a9288',
+                    textDecoration: 'underline', textUnderlineOffset: '3px', textDecorationColor: 'rgba(154,146,136,0.4)',
+                    transition: 'color 0.15s, text-decoration-color 0.15s',
+                    opacity: userLoading ? 0.5 : 1,
+                  }}
+                  onMouseEnter={e => { if (!userLoading) { e.currentTarget.style.color = '#1a1a1a'; e.currentTarget.style.textDecorationColor = '#1a1a1a' } }}
+                  onMouseLeave={e => { e.currentTarget.style.color = '#9a9288'; e.currentTarget.style.textDecorationColor = 'rgba(154,146,136,0.4)' }}
+                >
+                  {userLoading ? 'exhuming…' : 'or dig up a corpse →'}
+                </button>
               </div>
             )}
 
             {/* Repo scan */}
             {inputMode === 'repo' && (
-              <SearchForm url={url} setUrl={setUrl} onSubmit={analyze} onSelect={handleSelect} loading={loading} />
+              <div id="panel-repo" role="tabpanel" aria-label="Repository scan">
+                <SearchForm url={url} setUrl={setUrl} onSubmit={analyze} onSelect={handleSelect} loading={loading} />
+              </div>
             )}
 
           </div>
@@ -246,28 +273,20 @@ export default function Page() {
       )}
 
       {idle && (
-        <div style={{ flex: 1, minHeight: 0, overflow: 'hidden', width: '100%', marginTop: '10px', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ width: '100%', marginTop: '56px' }}>
           <RecentlyBuried onSelect={handleSelect} />
         </div>
       )}
-
-      {loading && <LoadingState />}
       {error && !loading && <ErrorDisplay error={error} onRetry={reset} />}
 
       {/* User scan loading */}
-      {userLoading && (
-        <div style={{ textAlign: 'center', padding: '48px 0', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
-          <div style={{ fontSize: '48px', lineHeight: 1, animation: 'hero-float 1.8s ease-in-out infinite' }}>🪦</div>
-          <p style={{ fontFamily: MONO, fontSize: '11px', color: '#8a8a8a', letterSpacing: '0.1em', margin: 0 }}>reviewing case files...</p>
-          <style>{`@keyframes hero-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }`}</style>
-        </div>
-      )}
+      {userLoading && <LoadingState />}
 
       {/* User scan error */}
       {userFetchError && !userLoading && (
         <div style={{ textAlign: 'center', padding: '40px 0' }}>
           <p style={{ fontFamily: MONO, fontSize: '13px', color: '#8B0000', marginBottom: '20px' }}>{userFetchError}</p>
-          <button onClick={resetUser} style={{ fontFamily: MONO, fontSize: '13px', fontWeight: 600, background: 'none', border: 'none', textDecoration: 'underline', color: '#160A06', cursor: 'pointer' }}>
+          <button className="alive-interactive" onClick={resetUser} style={{ fontFamily: MONO, fontSize: '13px', fontWeight: 700, background: 'none', border: 'none', textDecoration: 'underline', textUnderlineOffset: '3px', color: '#160A06', cursor: 'pointer' }}>
             ← examine another subject
           </button>
         </div>

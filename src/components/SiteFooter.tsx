@@ -1,7 +1,6 @@
 'use client'
 
-import { useState } from 'react'
-import InfoSheet from '@/components/InfoSheet'
+import Link from 'next/link'
 
 const FONT = `var(--font-courier), system-ui, sans-serif`
 
@@ -15,48 +14,58 @@ interface SiteFooterProps {
   compact?: boolean
 }
 
-export default function SiteFooter({ compact = false }: SiteFooterProps) {
-  const [sheetOpen, setSheetOpen] = useState(false)
+const linkStyle = {
+  fontFamily: FONT, fontSize: '13px', color: '#8a8a8a',
+  textDecoration: 'none', display: 'inline-flex', alignItems: 'center',
+  gap: '4px', transition: 'color 0.15s',
+  WebkitTapHighlightColor: 'transparent',
+} as const
 
+export default function SiteFooter({ compact = false }: SiteFooterProps) {
   return (
-    <>
-      <footer className={`site-footer${compact ? ' site-footer--compact' : ''}`}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px' }}>
-          <button
-            onClick={() => setSheetOpen(true)}
-            style={{
-              fontFamily: FONT, fontSize: '13px', color: '#8a8a8a',
-              background: 'none', border: 'none', cursor: 'pointer',
-              padding: '4px 0', transition: 'color 0.15s',
-              WebkitTapHighlightColor: 'transparent',
-            }}
-            onMouseEnter={e => (e.currentTarget.style.color = '#1f1f1f')}
-            onMouseLeave={e => (e.currentTarget.style.color = '#8a8a8a')}
-          >
-            About · Legal
-          </button>
-          <span style={{ color: '#d0c8be', fontSize: '12px' }}>·</span>
-          <a
-            href="https://github.com/dotsystemsdevs/commitmentissues"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              fontFamily: FONT, fontSize: '13px', color: '#8a8a8a',
-              textDecoration: 'none', display: 'inline-flex', alignItems: 'center',
-              gap: '4px', transition: 'color 0.15s',
-            }}
-            onMouseEnter={e => (e.currentTarget.style.color = '#1f1f1f')}
-            onMouseLeave={e => (e.currentTarget.style.color = '#8a8a8a')}
-          >
-            <GitHubIcon />
-            GitHub
-          </a>
-        </div>
-        <p style={{ fontFamily: FONT, fontSize: '11px', color: '#b0aca8', letterSpacing: '0.04em', margin: 0 }}>
-          official records of abandonment
-        </p>
-      </footer>
-      <InfoSheet open={sheetOpen} onClose={() => setSheetOpen(false)} />
-    </>
+    <footer className={`site-footer${compact ? ' site-footer--compact' : ''}`}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '14px', flexWrap: 'wrap' }}>
+        <Link
+          href="/about"
+          style={linkStyle}
+          onMouseEnter={e => (e.currentTarget.style.color = '#1f1f1f')}
+          onMouseLeave={e => (e.currentTarget.style.color = '#8a8a8a')}
+        >
+          About
+        </Link>
+        <span style={{ color: '#d0c8be', fontSize: '12px' }}>·</span>
+        <Link
+          href="/legal"
+          style={linkStyle}
+          onMouseEnter={e => (e.currentTarget.style.color = '#1f1f1f')}
+          onMouseLeave={e => (e.currentTarget.style.color = '#8a8a8a')}
+        >
+          Legal
+        </Link>
+        <span style={{ color: '#d0c8be', fontSize: '12px' }}>·</span>
+        <a
+          href="https://github.com/dotsystemsdevs/commitmentissues"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={linkStyle}
+          onMouseEnter={e => (e.currentTarget.style.color = '#1f1f1f')}
+          onMouseLeave={e => (e.currentTarget.style.color = '#8a8a8a')}
+        >
+          <GitHubIcon />
+          GitHub
+        </a>
+        <span style={{ color: '#d0c8be', fontSize: '12px' }}>·</span>
+        <a
+          href="https://buymeacoffee.com/commitmentissues"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={linkStyle}
+          onMouseEnter={e => (e.currentTarget.style.color = '#1f1f1f')}
+          onMouseLeave={e => (e.currentTarget.style.color = '#8a8a8a')}
+        >
+          ☕ DON&apos;T LET US DIE
+        </a>
+      </div>
+    </footer>
   )
 }

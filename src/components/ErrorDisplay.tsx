@@ -2,7 +2,7 @@
 
 import { AnalysisError } from '@/hooks/useRepoAnalysis'
 
-const FONT = `var(--font-dm), -apple-system, sans-serif`
+const FONT = `var(--font-courier), system-ui, sans-serif`
 
 interface Props {
   error: AnalysisError
@@ -12,8 +12,8 @@ interface Props {
 export default function ErrorDisplay({ error, onRetry }: Props) {
   return (
     <div style={{ width: '100%', marginTop: '24px', fontFamily: FONT }}>
-      <div style={{ borderLeft: '3px solid #8B1A1A', paddingLeft: '16px' }}>
-        <p style={{ fontSize: '14px', fontWeight: 600, color: '#8B1A1A', margin: '0 0 4px 0' }}>
+      <div style={{ borderLeft: '2px solid #8B0000', paddingLeft: '16px' }}>
+        <p style={{ fontSize: '14px', fontWeight: 600, color: '#8B0000', margin: '0 0 4px 0' }}>
           {error.message}
         </p>
         {error.retryAfter ? (

@@ -4,8 +4,8 @@ import { forwardRef } from 'react'
 import type React from 'react'
 import { DeathCertificate } from '@/lib/types'
 
-const MONO = `var(--font-courier), "Courier New", monospace`
-const UI = `var(--font-dm), -apple-system, sans-serif`
+const MONO = `var(--font-courier), system-ui, sans-serif`
+const UI = `var(--font-dm), Georgia, serif`
 
 // Inline SVG noise filter — rendered by the browser before html-to-image captures it,
 // so it exports correctly without any external file dependency.
@@ -184,9 +184,13 @@ const CertificateFixed = forwardRef<HTMLDivElement, Props>(
             </div>
           </div>
 
-          <div style={{ padding: '26px 0', textAlign: 'center' }}>
-            <p style={{ ...labelStyle, margin: '0 0 14px 0' }}>Last words</p>
-            <p style={{ fontFamily: UI, fontStyle: 'italic', fontWeight: 600, fontSize: '34px', color: '#8B0000', lineHeight: 1.35, margin: '20px 0 0 0', maxWidth: '560px', marginLeft: 'auto', marginRight: 'auto' }}>
+          <div style={{ flex: 1, padding: '20px 0', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <p style={{ ...labelStyle, margin: '0 0 12px 0' }}>Last words</p>
+            <p style={{
+              fontFamily: UI, fontStyle: 'italic', fontWeight: 600, fontSize: '30px', color: '#8B0000',
+              lineHeight: 1.3, margin: '0 auto', maxWidth: '540px',
+              display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 4, overflow: 'hidden',
+            }}>
               &ldquo;{cert.lastWords}&rdquo;
             </p>
           </div>
@@ -198,14 +202,22 @@ const CertificateFixed = forwardRef<HTMLDivElement, Props>(
               style={{
                 display: 'flex',
                 justifyContent: 'center',
-                paddingTop: '20px',
+                paddingBottom: '8px',
+                paddingLeft: '16px',
+                paddingRight: '16px',
                 pointerEvents: 'none',
                 userSelect: 'none',
               }}
             >
-              <div style={{ border: '5px solid rgba(139,26,26,0.72)', borderRadius: '4px', padding: '10px 28px', background: 'rgba(139,26,26,0.04)' }}>
-                <span style={{ fontFamily: MONO, fontSize: '13px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(139,26,26,0.75)', display: 'block', textAlign: 'center', whiteSpace: 'nowrap' }}>
-                  Issued by commitmentissues.dev
+              <div style={{
+                border: '3px solid rgba(139,26,26,0.65)',
+                padding: '6px 18px',
+                transform: 'rotate(-1.5deg)',
+                background: 'rgba(139,26,26,0.03)',
+                maxWidth: '100%',
+              }}>
+                <span style={{ fontFamily: MONO, fontSize: '10px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(139,26,26,0.7)', display: 'block', textAlign: 'center', whiteSpace: 'nowrap' }}>
+                  Issued · commitmentissues.dev
                 </span>
               </div>
             </div>

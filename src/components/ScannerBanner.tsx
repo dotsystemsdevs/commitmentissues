@@ -75,7 +75,7 @@ export default function ScannerBanner() {
                 <span style={{ color: '#aaa' }}>@</span>
                 <span style={{ color: '#e8e2d9', textDecoration: 'underline', textUnderlineOffset: '2px', textDecorationColor: 'rgba(232,226,217,0.3)' }}>{name}</span>
               </a>
-              <span style={{ color: '#888' }}>&nbsp;— case filed</span>
+              <span style={{ color: '#888' }}>&nbsp;— diagnosed</span>
             </span>
           ))}
         </div>

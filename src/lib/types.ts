@@ -44,6 +44,7 @@ export interface UserRepoSummary {
   isDead: boolean
   isStruggling: boolean
   cause: string
+  description: string | null
 }
 
 export interface LeaderboardEntry {
