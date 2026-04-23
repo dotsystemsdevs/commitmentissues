@@ -22,15 +22,6 @@ export async function addRecent(entry: LeaderboardEntry): Promise<void> {
   await redis.set(KV_KEY, filtered.slice(0, MAX_RECENT))
 }
 
-export async function addRecentBatch(entries: LeaderboardEntry[]): Promise<void> {
-  const redis = await getRedis()
-  if (!redis) return
-  const current = await redis.get<LeaderboardEntry[]>(KV_KEY) ?? []
-  const names = new Set(entries.map(e => e.fullName))
-  const existing = current.filter(e => !names.has(e.fullName))
-  await redis.set(KV_KEY, [...entries, ...existing].slice(0, MAX_RECENT))
-}
-
 export async function getRecent(): Promise<LeaderboardEntry[]> {
   const redis = await getRedis()
   if (!redis) return []

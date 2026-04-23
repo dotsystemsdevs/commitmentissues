@@ -56,7 +56,6 @@ export function determineCauseOfDeath(repo: RepoData): string {
   const daysSince = (now.getTime() - lastCommit.getTime()) / (1000 * 60 * 60 * 24)
   const msgLower = repo.lastCommitMessage.toLowerCase()
   const descLower = (repo.description ?? '').toLowerCase()
-  const nameLower = repo.name.toLowerCase()
   const isJS =
     repo.topics.some(t => t.toLowerCase() === 'node') ||
     repo.language?.toLowerCase() === 'javascript'
@@ -73,26 +72,6 @@ export function determineCauseOfDeath(repo: RepoData): string {
     {
       score: repo.isFork ? 7 : 0,
       cause: 'Forked but never understood',
-    },
-    {
-      score: daysSince > 1825 && repo.stargazersCount === 0 ? 7 : 0,
-      cause: 'Five years of silence and counting',
-    },
-    {
-      score: (nameLower.includes('boilerplate') || nameLower.includes('template') || nameLower.includes('starter')) && daysSince > 365 ? 7 : 0,
-      cause: 'Built to be reused. Never was.',
-    },
-    {
-      score: (nameLower.includes('tuto') || nameLower.includes('tutorial') || nameLower.includes('cours') || descLower.includes('tuto')) && daysSince > 365 ? 7 : 0,
-      cause: 'Victim of tutorial fatigue',
-    },
-    {
-      score: (nameLower.includes('test') || nameLower.includes('demo') || nameLower.includes('example') || nameLower.includes('sample')) && daysSince > 365 ? 7 : 0,
-      cause: 'Never made it past proof of concept',
-    },
-    {
-      score: daysSince > 730 && repo.stargazersCount === 0 && !repo.description ? 7 : 0,
-      cause: 'No description. No stars. No mercy.',
     },
     {
       score: daysSince > 730 && repo.stargazersCount === 0 ? 7 : 0,
@@ -183,7 +162,6 @@ export function generateLastWords(repo: RepoData): string {
   const lastCommit = new Date(repo.lastCommitDate)
   const daysSince = (now.getTime() - lastCommit.getTime()) / (1000 * 60 * 60 * 24)
   const msgLower = repo.lastCommitMessage.toLowerCase()
-  const nameLower = repo.name.toLowerCase()
 
   if (msgLower.includes('fix typo')) return 'pls work now'
   if (msgLower.includes('update readme')) return 'at least the docs are good'
@@ -198,22 +176,8 @@ export function generateLastWords(repo: RepoData): string {
   if (msgLower.includes('refactor')) return 'i swear this time the architecture is right'
   if (msgLower.includes('todo') || msgLower.includes('fixme')) return 'someone else will handle it'
   if (msgLower.includes('dependency') || msgLower.includes('dependencies')) return 'trapped in dependency hell'
+  if (daysSince > 730 && repo.stargazersCount === 0) return "i'll finish this later"
   if (repo.stargazersCount > 200 && daysSince > 365) return 'i thought people liked me'
-
-  // Fallbacks when no commit message is available
-  if (!repo.lastCommitMessage) {
-    if (repo.isFork) return 'i just wanted to understand how it worked'
-    if (nameLower.includes('boilerplate') || nameLower.includes('template') || nameLower.includes('starter')) return 'the next project was supposed to use me'
-    if (nameLower.includes('tuto') || nameLower.includes('tutorial') || nameLower.includes('cours')) return 'i watched the whole video. never finished the code.'
-    if (nameLower.includes('test') || nameLower.includes('demo') || nameLower.includes('example')) return 'it worked on my machine'
-    if (nameLower.includes('api')) return 'zero consumers. zero regrets.'
-    if (nameLower.includes('app')) return 'there was going to be a launch tweet'
-    if (daysSince > 2920) return "i've been waiting eight years. nobody came."
-    if (daysSince > 1825) return 'five years. not a pull request. not even a star.'
-    if (daysSince > 1095) return "i'll finish it when things calm down"
-    if (daysSince > 730) return "the readme said 'coming soon'. that was two years ago."
-    return "it made sense at the time"
-  }
 
   const msg = repo.lastCommitMessage.split('\n')[0]
   return msg.length > 80 ? msg.slice(0, 77) + '...' : msg
