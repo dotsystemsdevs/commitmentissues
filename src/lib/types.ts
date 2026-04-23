@@ -35,6 +35,17 @@ export interface ApiErrorResponse {
 
 export type ApiResponse = DeathCertificate | ApiErrorResponse
 
+export interface UserRepoSummary {
+  fullName: string
+  pushedAt: string | null
+  isArchived: boolean
+  language: string | null
+  daysSinceLastPush: number | null
+  isDead: boolean
+  isStruggling: boolean
+  cause: string
+}
+
 export interface LeaderboardEntry {
   fullName: string
   cause: string
