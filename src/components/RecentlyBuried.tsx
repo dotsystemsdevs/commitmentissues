@@ -4,7 +4,17 @@ import { useEffect, useState } from 'react'
 import { track } from '@vercel/analytics'
 import type { LeaderboardEntry } from '@/lib/types'
 
-const FONT = `var(--font-dm), -apple-system, sans-serif`
+const MONO = `var(--font-courier), system-ui, sans-serif`
+
+function SectionHeader({ label }: { label: string }) {
+  return (
+    <div style={{ marginBottom: '14px', textAlign: 'center' }}>
+      <p className="record-label" style={{ margin: 0, textAlign: 'center', letterSpacing: '0.16em' }}>
+        {label}
+      </p>
+    </div>
+  )
+}
 
 interface Props {
   onSelect: (url: string) => void
@@ -26,13 +36,7 @@ export default function RecentlyBuried({ onSelect }: Props) {
       .catch(() => setFailed(true))
   }, [])
 
-  if (failed) return (
-    <p style={{ fontFamily: FONT, fontSize: '13px', color: '#aaa', textAlign: 'center', margin: '8px 0' }}>
-      The recently buried feed is resting. Try again later.
-    </p>
-  )
-
-  if (entries.length === 0) return null
+  if (failed || entries.length === 0) return null
 
   function timeAgo(iso: string): string {
     const seconds = Math.floor((Date.now() - new Date(iso).getTime()) / 1000)
@@ -51,49 +55,39 @@ export default function RecentlyBuried({ onSelect }: Props) {
   function Card({ entry }: { entry: typeof entries[number] }) {
     return (
       <button
-        className="alive-card"
         type="button"
         onClick={() => {
           track('recent_clicked', { repo: entry.fullName })
           onSelect(`https://github.com/${entry.fullName}`)
         }}
         style={{
-          fontFamily: FONT,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'flex-start',
-          gap: '6px',
-          width: '296px',
-          minHeight: '184px',
+          gap: '4px',
+          width: 'clamp(220px, 70vw, 280px)',
+          height: 'clamp(110px, 18vh, 150px)',
           flexShrink: 0,
-          padding: '20px',
-          background: '#EDE8E1',
-          border: '2px solid #1a1a1a',
-          borderRadius: '0px',
+          padding: '12px 14px',
+          background: 'var(--c-surface)',
+          border: '1px solid var(--c-border-light)',
+          borderLeft: '3px solid var(--c-border)',
           cursor: 'pointer',
           textAlign: 'left',
-          transition: 'border-color 0.15s, box-shadow 0.15s, opacity 0.12s',
-          boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
+          transition: 'background 0.12s',
         }}
-        onMouseEnter={e => {
-          e.currentTarget.style.borderColor = '#0a0a0a'
-          e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.10)'
-        }}
-        onMouseLeave={e => {
-          e.currentTarget.style.borderColor = '#1a1a1a'
-          e.currentTarget.style.boxShadow = '0 1px 4px rgba(0,0,0,0.05)'
-        }}
+        onMouseEnter={e => { e.currentTarget.style.background = 'var(--c-surface-raised)' }}
+        onMouseLeave={e => { e.currentTarget.style.background = 'var(--c-surface)' }}
         onMouseDown={e => { e.currentTarget.style.opacity = '0.9' }}
         onMouseUp={e => { e.currentTarget.style.opacity = '1' }}
       >
-        <span style={{ fontSize: '20px', lineHeight: 1 }}>🪦</span>
-        <span style={{ fontSize: '15px', fontWeight: 700, color: '#0a0a0a', lineHeight: 1.3, wordBreak: 'break-word' }}>
+        <span style={{ fontFamily: MONO, fontSize: '12px', fontWeight: 700, color: 'var(--c-ink)', lineHeight: 1.3, wordBreak: 'break-word' }}>
           {entry.fullName}
         </span>
-        <span style={{ fontSize: '14px', fontStyle: 'italic', color: '#4d4d4d', lineHeight: 1.6, fontWeight: 500, marginTop: '2px' }}>
+        <span style={{ fontFamily: `var(--font-dm), Georgia, serif`, fontSize: '12px', fontStyle: 'italic', color: 'var(--c-ink-2)', lineHeight: 1.55, marginTop: '2px', flex: 1 }}>
           {entry.cause}
         </span>
-        <span style={{ fontSize: '12px', color: '#787878', marginTop: '4px' }}>
+        <span style={{ fontFamily: MONO, fontSize: '10px', color: 'var(--c-muted)', letterSpacing: '0.04em' }}>
           {entry.analyzedAt ? timeAgo(entry.analyzedAt) : ''}
         </span>
       </button>
@@ -101,9 +95,15 @@ export default function RecentlyBuried({ onSelect }: Props) {
   }
 
   return (
-    <div style={{ width: '100%' }}>
+    <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <SectionHeader label="Recently Buried" />
       <div
-        style={{ width: '100vw', marginLeft: 'calc(50% - 50vw)', overflow: 'hidden', padding: '4px 20px 8px' }}
+        style={{
+            flex: 1, minHeight: 0,
+            width: '100vw', marginLeft: 'calc(50% - 50vw)', overflow: 'hidden', padding: '4px 0 8px',
+            WebkitMaskImage: 'linear-gradient(to right, transparent, black 40px, black calc(100% - 40px), transparent)',
+            maskImage: 'linear-gradient(to right, transparent, black 40px, black calc(100% - 40px), transparent)',
+          }}
         onMouseEnter={e => { (e.currentTarget.querySelector('.recent-track') as HTMLElement).style.animationPlayState = 'paused' }}
         onMouseLeave={e => { (e.currentTarget.querySelector('.recent-track') as HTMLElement).style.animationPlayState = 'running' }}
       >

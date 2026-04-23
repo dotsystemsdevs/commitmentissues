@@ -5,14 +5,16 @@ import { useState, useEffect } from 'react'
 const MESSAGES = [
   'Checking for a pulse...',
   'None found. Proceeding.',
-  'Consulting the reaper...',
-  'Filling out the paperwork...',
+  'Reviewing commit history...',
+  'Assessing cause of abandonment...',
+  'Preparing the record...',
+  'Filing the paperwork...',
   'Cause of death: confirmed.',
   'Stamping the certificate...',
 ]
 
-const FONT = `var(--font-dm), -apple-system, sans-serif`
-const MONO = `var(--font-courier), 'Courier New', monospace`
+const FONT = `var(--font-courier), system-ui, sans-serif`
+const MONO = `var(--font-courier), system-ui, sans-serif`
 
 export default function LoadingState() {
   const [index, setIndex] = useState(0)
@@ -54,7 +56,7 @@ export default function LoadingState() {
         textTransform: 'uppercase',
         margin: 0,
       }}>
-        writing the obituary
+        preparing the record
       </p>
       <style>{`
         @keyframes loading-float {

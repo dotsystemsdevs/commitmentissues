@@ -4,6 +4,108 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Design tokens ────────────────────────────────────────────────── */
+:root {
+  /* Backgrounds */
+  --c-bg:       #FAF6EF;   /* page background */
+  --c-surface:  #EDE8E1;   /* cards */
+
+  /* Text */
+  --c-ink:      #160A06;   /* primary text */
+  --c-ink-2:    #4a4440;   /* body text on cards */
+  --c-muted:    #9a9288;   /* metadata, labels */
+  --c-faint:    #b0aca8;   /* very quiet text */
+
+  /* Borders */
+  --c-border:   #1a1a1a;   /* all solid borders — cards, inputs, buttons */
+  --c-border-light: #cec6bb; /* dividers, ghost buttons */
+
+  /* Accent */
+  --c-red:      #8B0000;   /* dead / error */
+  --c-green:    #2d7a3c;   /* alive */
+  --c-amber:    #b45309;   /* struggling */
+
+  /* Extended */
+  --c-surface-raised: #F5F0E8; /* cards lifted above surface */
+  --c-stamp-red: #8B0000;      /* semantic alias for certificate stamp */
+}
+
+/* ── Unified record / institutional card system ───────────────────── */
+
+/* Base card — flat, institutional, no radius */
+.record-card {
+  border: 1px solid var(--c-border-light);
+  background: var(--c-surface);
+  padding: 16px 18px;
+  transition: background 0.12s;
+}
+
+.record-card:hover {
+  background: var(--c-surface-raised);
+}
+
+/* Label — all-caps metadata, monospace, muted */
+.record-label {
+  font-family: var(--font-courier), system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+  margin: 0 0 6px 0;
+  display: block;
+}
+
+/* Value — serif body text */
+.record-value {
+  font-family: var(--font-dm), Georgia, serif;
+  font-size: 14px;
+  color: var(--c-ink-2);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* Case section header — status tabs in user dashboard */
+.case-header {
+  font-family: var(--font-courier), system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Mode tab — flat institutional toggle, no pill shape */
+.mode-tab {
+  font-family: var(--font-courier), system-ui, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 20px;
+  border: 2px solid var(--c-border);
+  cursor: pointer;
+  font-weight: 400;
+  transition: background 0.12s, color 0.12s;
+  background: transparent;
+  color: var(--c-muted);
+  /* Universal 44px minimum tap target */
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mode-tab--active {
+  background: var(--c-border);
+  color: var(--c-bg);
+  font-weight: 700;
+}
+
+.mode-tab:not(.mode-tab--active):hover {
+  color: var(--c-ink);
+}
+
+/* ── end record system ─────────────────────────────────────────────── */
+
 /* Product title — Unifraktur Maguntia ONLY for "Certificate of Death" */
 .certificate-of-death-title {
   font-family: var(--font-gothic), serif;
@@ -11,7 +113,7 @@
 
 /* Subpage titles — modern sans-serif */
 .page-hero-title--sans {
-  font-family: var(--font-dm), -apple-system, sans-serif;
+  font-family: var(--font-courier), system-ui, sans-serif;
   font-weight: 700;
   letter-spacing: -0.02em;
 }
@@ -24,7 +126,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: calc(env(safe-area-inset-top) + 34px) 24px 0;
+  padding: calc(env(safe-area-inset-top) + 34px + 32px) 24px 0;
   padding-left: max(16px, env(safe-area-inset-left));
   padding-right: max(16px, env(safe-area-inset-right));
   padding-bottom: env(safe-area-inset-bottom, 0);
@@ -33,7 +135,6 @@
 .page-shell-inner {
   width: 100%;
   max-width: 680px;
-  flex: 1;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -43,8 +144,8 @@
 .page-hero {
   width: 100%;
   text-align: center;
-  padding-top: 8px;
-  padding-bottom: 20px;
+  padding-top: 4px;
+  padding-bottom: 10px;
 }
 
 
@@ -72,22 +173,27 @@
   50% { transform: translateY(-7px); }
 }
 
+@keyframes coffee-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
 .page-hero-emoji {
-  font-size: clamp(52px, 12vw, 72px);
+  font-size: clamp(44px, 9vw, 58px);
   line-height: 1;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   animation: hero-float 3.2s ease-in-out infinite;
 }
 
 .page-hero-title {
-  font-size: clamp(3rem, 10vw, 5rem);
+  font-size: clamp(2.6rem, 8vw, 4rem);
   line-height: 0.95;
-  margin: 12px 0 16px 0;
+  margin: 6px 0 10px 0;
   color: #160a06;
 }
 
 .page-hero-sub {
-  font-family: var(--font-dm), system-ui, sans-serif;
+  font-family: var(--font-courier), system-ui, sans-serif;
   font-size: clamp(14px, 3.5vw, 16px);
   font-weight: 400;
   color: #5f5f5f;
@@ -97,7 +203,7 @@
 }
 
 .page-hero-micro {
-  font-family: var(--font-dm), system-ui, sans-serif;
+  font-family: var(--font-courier), system-ui, sans-serif;
   font-size: 11px;
   color: #8a8a8a;
   line-height: 1.5;
@@ -154,7 +260,7 @@
 .subpage-details summary {
   cursor: pointer;
   list-style: none;
-  font-family: var(--font-dm), system-ui, sans-serif;
+  font-family: var(--font-courier), system-ui, sans-serif;
   font-size: clamp(15px, 4vw, 16px);
   font-weight: 700;
   color: #160a06;
@@ -202,7 +308,7 @@
 }
 
 .subpage-details-answer {
-  font-family: var(--font-dm), system-ui, sans-serif;
+  font-family: var(--font-courier), system-ui, sans-serif;
   font-size: clamp(14px, 3.8vw, 15px);
   color: #555;
   line-height: 1.7;
@@ -211,19 +317,21 @@
 
 /* Subpage ← back link */
 .subpage-back-link {
-  font-family: var(--font-dm), -apple-system, sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  color: #0a0a0a;
+  font-family: var(--font-courier), system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--c-muted);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 0;
+  padding: 10px 0;
+  min-height: 44px;
   background: none;
   border: none;
   -webkit-tap-highlight-color: transparent;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.06em;
+  transition: color 0.15s;
 }
 
 /* ── Base interaction defaults ── */
@@ -317,7 +425,7 @@ button {
 }
 
 .subpage-bottom-links a {
-  font-family: var(--font-dm), system-ui, sans-serif;
+  font-family: var(--font-courier), system-ui, sans-serif;
   font-size: 15px;
   min-height: 48px;
   display: inline-flex;
@@ -331,7 +439,7 @@ button {
 
 .subpage-bottom-links a.subpage-bottom-primary {
   font-weight: 700;
-  color: #0a0a0a;
+  color: var(--c-ink);
   letter-spacing: 0.03em;
 }
 
@@ -339,7 +447,7 @@ button {
   font-size: 14px;
   font-style: italic;
   font-weight: 500;
-  color: #938882;
+  color: var(--c-muted);
 }
 
 @media (min-width: 480px) {
@@ -376,8 +484,8 @@ button {
   transition: background 0.15s, color 0.15s, box-shadow 0.15s, transform 0.12s;
 }
 .coffee-btn-fixed:hover {
-  background: #1a1a1a !important;
-  color: #f6f6f6 !important;
+  background: var(--c-border) !important;
+  color: var(--c-bg) !important;
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 .coffee-btn-fixed:active {
@@ -415,15 +523,15 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-dm), system-ui, sans-serif;
+  font-family: var(--font-courier), system-ui, sans-serif;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.04em;
-  background: #2b2b2b;
-  color: #f5f5f5 !important;
+  background: var(--c-border);
+  color: var(--c-bg) !important;
   text-decoration: none;
   padding: 15px 24px;
-  border-radius: 8px;
+  border-radius: 0;
   min-height: 52px;
   min-width: min(100%, 280px);
   -webkit-tap-highlight-color: transparent;
@@ -446,7 +554,7 @@ a.subpage-inline-mail {
 }
 
 .site-footer {
-  margin-top: auto;
+  margin-top: 0;
   padding-top: 26px;
   padding-bottom: max(34px, env(safe-area-inset-bottom));
   text-align: center;
@@ -460,7 +568,41 @@ a.subpage-inline-mail {
 
 .site-footer--compact {
   margin-top: 36px;
-  padding-top: 26px;
+  padding-top: 20px;
+}
+
+@keyframes coffee-nudge {
+  0%, 85%, 100% { transform: translateY(0) rotate(0deg); }
+  88%  { transform: translateY(-4px) rotate(-4deg); }
+  92%  { transform: translateY(-6px) rotate(3deg); }
+  96%  { transform: translateY(-3px) rotate(-2deg); }
+}
+
+.coffee-corner {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  font-family: var(--font-courier), system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--c-ink);
+  background: var(--c-surface);
+  border: 2px solid var(--c-border);
+  text-decoration: none;
+  padding: 10px 16px;
+  white-space: nowrap;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+  animation: coffee-nudge 5s ease-in-out infinite;
+}
+
+.coffee-corner:hover {
+  animation: none;
+  transform: translateY(-3px);
+  border-color: var(--c-ink);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
 
 .homepage-cert-preview {
@@ -542,6 +684,14 @@ a.subpage-inline-mail {
   0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(10,10,10,0.24); }
   65% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(10,10,10,0); }
   100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(10,10,10,0); }
+}
+
+.input-button-wrapper {
+  transition: box-shadow 0.15s;
+}
+
+.input-button-wrapper:focus-within {
+  box-shadow: 0 0 0 3px rgba(26,26,26,0.12);
 }
 
 .input-submit-button:hover {
@@ -650,7 +800,7 @@ a.subpage-inline-mail {
   html { scroll-behavior: smooth; }
   body {
     @apply antialiased;
-    font-family: var(--font-dm), -apple-system, sans-serif;
+    font-family: var(--font-courier), system-ui, sans-serif;
     font-size: 14px;
     color: #160A06;
     background-color: #FAF6EF;
@@ -696,18 +846,18 @@ a.subpage-inline-mail {
     display: block;
     margin: 0 0 14px;
     text-align: center;
-    font-family: var(--font-dm), -apple-system, sans-serif;
+    font-family: var(--font-courier), system-ui, sans-serif;
     font-size: 11px;
     color: #7a7a7a;
     letter-spacing: 0.02em;
   }
 
   /* Hero: keep CTA above the fold on small screens */
-  .page-hero { padding-bottom: 10px; }
-  .page-hero-emoji { margin-bottom: 8px; }
-  .page-hero-title { font-size: clamp(2.2rem, 12vw, 2.8rem); margin-bottom: 10px; }
-  .page-hero-sub { font-size: 15px; }
-  .page-shell-main { min-height: 100svh; }
+  .page-hero { padding-top: 6px; padding-bottom: 8px; }
+  .page-hero-emoji { font-size: clamp(40px, 11vw, 52px); margin-bottom: 6px; }
+  .page-hero-title { font-size: clamp(2.2rem, 11vw, 2.8rem); margin: 4px 0 8px; }
+  .page-hero-sub { font-size: 13px; }
+  .page-shell-main { min-height: 100svh; padding-top: calc(env(safe-area-inset-top) + 20px) !important; }
 
   .input-button-wrapper {
     flex-direction: column;
@@ -716,11 +866,13 @@ a.subpage-inline-mail {
   .input-submit-button {
     width: 100%;
     border-left: none !important;
-    border-top: none !important;
-    margin-top: -1px !important;
-    justify-content: flex-start !important;
-    text-align: left !important;
+    border-top: 2px solid #1a1a1a !important;
+    margin-top: 0 !important;
+    justify-content: center !important;
+    text-align: center !important;
     padding-left: 14px !important;
+    height: 48px !important;
+    font-size: 13px !important;
   }
 
   .alive-interactive:active,
@@ -758,10 +910,51 @@ a.subpage-inline-mail {
   }
 
   /* Footer: keep links low-noise but tappable */
-  footer a { font-size: 13px !important; padding: 4px 0; }
-  .site-footer-nav a { font-size: 13px !important; padding: 6px 8px !important; min-height: 36px !important; }
+  footer a { font-size: 13px !important; padding: 8px 0 !important; min-height: 44px !important; }
+  .site-footer-nav a { font-size: 13px !important; padding: 8px 10px !important; min-height: 44px !important; display: inline-flex !important; align-items: center !important; }
   .site-footer-source-link { font-size: 12px !important; }
 
+  /* Footer bottom padding: clear the fixed coffee-corner button */
+  .site-footer {
+    padding-bottom: max(80px, calc(env(safe-area-inset-bottom) + 72px)) !important;
+  }
+
+  /* Mode tabs: full-width segmented control on mobile */
+  .mode-tab-group {
+    width: 100%;
+    justify-content: stretch !important;
+  }
+  .mode-tab {
+    flex: 1;
+    text-align: center;
+    padding: 10px 12px;
+  }
+
+  /* User dashboard tab bar: horizontal scroll on small screens */
+  .user-dash-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .user-dash-tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .user-dash-tab-btn {
+    flex-shrink: 0;
+    min-height: 44px;
+  }
+
+  /* Certificate back button */
+  .cert-back-btn {
+    min-height: 44px;
+    padding: 12px 0 !important;
+  }
+
+  /* ReadmeBadge copy button */
+  .readme-copy-btn {
+    min-height: 44px;
+    padding: 10px 16px !important;
+  }
 
 }
 

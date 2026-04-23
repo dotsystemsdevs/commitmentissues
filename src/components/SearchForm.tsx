@@ -4,8 +4,8 @@ import { FormEvent, useState, useCallback } from 'react'
 import { track } from '@vercel/analytics'
 import ClickSpark from '@/components/ClickSpark'
 
-const FONT = `var(--font-dm), -apple-system, sans-serif`
-
+const FONT = `var(--font-courier), system-ui, sans-serif`
+const MONO = `var(--font-courier), system-ui, sans-serif`
 
 interface Props {
   url: string
@@ -16,7 +16,6 @@ interface Props {
 }
 
 export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }: Props) {
-  const [focused, setFocused] = useState(false)
   const [invalid, setInvalid] = useState(false)
   const [randomLoading, setRandomLoading] = useState(false)
 
@@ -85,49 +84,41 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
   return (
     <form onSubmit={handleSubmit} style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '10px' }}>
 
-      {/* Input + button — single row */}
       <div className="input-button-wrapper input-block" style={{
         display: 'flex',
-        border: `2px solid ${focused ? '#0a0a0a' : '#0a0a0a'}`,
-        borderRadius: '0px',
+        border: '2px solid #1a1a1a',
         overflow: 'hidden',
-        boxShadow: 'none',
-        transition: 'border-color 0.15s',
         background: '#FAF6EF',
       }}>
-        {/* Input */}
-        <div style={{ flex: 1, display: 'flex', alignItems: 'center', minWidth: 0 }}>
-          <input
-            autoFocus
-            type="url"
-            inputMode="url"
-            value={url}
-            onChange={e => { if (invalid) setInvalid(false); handleChange(e.target.value) }}
-            placeholder="paste-your-repo-url-here"
-            onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
-            style={{
-              fontFamily: FONT,
-              fontSize: '14px',
-              flex: 1,
-              height: '52px',
-              padding: '0 12px 0 14px',
-              background: 'transparent',
-              border: 'none',
-              outline: 'none',
-              color: '#160A06',
-              minWidth: 0,
-            }}
-          />
-        </div>
+        <span style={{ fontFamily: MONO, fontSize: '14px', fontWeight: 700, color: '#666', padding: '0 0 0 14px', display: 'flex', alignItems: 'center', flexShrink: 0, userSelect: 'none' }}>
+          github.com/
+        </span>
+        <input
+          autoFocus
+          type="text"
+          inputMode="url"
+          value={url.replace(/^(?:https?:\/\/)?(?:www\.)?github\.com\//i, '')}
+          onChange={e => { if (invalid) setInvalid(false); handleChange(e.target.value) }}
+          placeholder="owner/repo"
+          style={{
+            fontFamily: MONO,
+            fontSize: '14px',
+            flex: 1,
+            height: '52px',
+            padding: '0 8px',
+            background: 'transparent',
+            border: 'none',
+            outline: 'none',
+            color: '#160A06',
+            minWidth: 0,
+          }}
+        />
 
-        {/* Button */}
         <ClickSpark color="#2b2b2b">
         <button
           className="input-submit-button alive-interactive"
           type="submit"
           disabled={loading}
-          aria-label="Issue death certificate"
           style={{
             fontFamily: FONT,
             fontSize: '13px',
@@ -136,7 +127,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
             flexShrink: 0,
             padding: '0 20px',
             height: '52px',
-            background: '#0a0a0a',
+            background: '#1a1a1a',
             color: '#fff',
             border: 'none',
             cursor: loading ? 'wait' : 'pointer',
@@ -144,60 +135,44 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
             alignItems: 'center',
             justifyContent: 'center',
             whiteSpace: 'nowrap',
-              transition: 'background 0.15s, opacity 0.12s',
+            transition: 'background 0.15s, opacity 0.12s',
             userSelect: 'none',
             WebkitTapHighlightColor: 'transparent',
             touchAction: 'manipulation',
           }}
-          onMouseEnter={e => { e.currentTarget.style.background = '#222222' }}
-          onMouseLeave={e => { e.currentTarget.style.background = '#0a0a0a' }}
-          onMouseDown={e => { e.currentTarget.style.opacity = '0.9' }}
-          onMouseUp={e => { e.currentTarget.style.opacity = '1' }}
+          onMouseEnter={e => { e.currentTarget.style.background = '#2a2a2a' }}
+          onMouseLeave={e => { e.currentTarget.style.background = '#1a1a1a' }}
         >
-          {loading ? <span className="btn-spinner" /> : 'Issue Death Certificate →'}
+          {loading ? <span className="btn-spinner" /> : 'Declare Dead →'}
         </button>
         </ClickSpark>
       </div>
 
       {invalid && (
         <p style={{ margin: '-2px 2px 0', fontFamily: FONT, fontSize: '12px', color: '#8B0000' }}>
-          Paste a valid GitHub URL or user/repo.
+          Invalid URL. Expected github.com/owner/repo.
         </p>
       )}
 
-      {/* Random dead repo */}
-      <div className="chips-section" style={{ display: 'flex', justifyContent: 'center', marginTop: '6px', marginBottom: '8px' }}>
+      <div className="chips-section" style={{ marginTop: '14px', display: 'flex', justifyContent: 'center' }}>
         <button
           className="alive-interactive"
           type="button"
           onClick={handleRandom}
           disabled={randomLoading || loading}
           style={{
-            fontFamily: FONT,
-            fontSize: '13px',
-            fontWeight: 500,
-            color: randomLoading || loading ? '#aaa' : '#5f5f5f',
-            background: 'transparent',
-            border: 'none',
-            padding: '6px 4px',
+            fontFamily: MONO, fontSize: '11px', fontWeight: 400,
+            padding: '6px 12px',
+            background: 'transparent', border: '2px solid #cec6bb',
             cursor: randomLoading || loading ? 'wait' : 'pointer',
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '6px',
-            textDecoration: 'underline',
-            textUnderlineOffset: '3px',
-            textDecorationColor: 'rgba(0,0,0,0.2)',
-            transition: 'color 0.15s',
-            WebkitTapHighlightColor: 'transparent',
-            touchAction: 'manipulation',
+            color: randomLoading || loading ? '#bbb' : '#9a9288',
+            transition: 'border-color 0.15s, color 0.15s',
+            letterSpacing: '0.04em',
           }}
-          onMouseEnter={e => { e.currentTarget.style.color = '#1f1f1f' }}
-          onMouseLeave={e => { e.currentTarget.style.color = '#5f5f5f' }}
+          onMouseEnter={e => { if (!randomLoading && !loading) { e.currentTarget.style.borderColor = '#1a1a1a'; e.currentTarget.style.color = '#1a1a1a' } }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = '#cec6bb'; e.currentTarget.style.color = '#9a9288' }}
         >
-          {randomLoading
-            ? 'finding a corpse...'
-            : 'or dig up a corpse →'
-          }
+          {randomLoading ? 'exhuming...' : '↯ exhume at random'}
         </button>
       </div>
 

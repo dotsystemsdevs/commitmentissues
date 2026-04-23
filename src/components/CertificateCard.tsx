@@ -23,8 +23,8 @@ function clamp(value: number, min: number, max: number) {
 function getCertificateUiScale(viewportWidth: number) {
   if (viewportWidth > 900) return DESKTOP_CERT_UI_SCALE
   if (viewportWidth <= 640) {
-    // Mobile: keep certificate intentionally smaller but still comfortably readable.
-    return clamp((viewportWidth * 0.76) / CERT_RENDER_WIDTH, 0.30, 0.40)
+    // Mobile: scale to fit the viewport width with comfortable margins.
+    return clamp((viewportWidth * 0.82) / CERT_RENDER_WIDTH, 0.34, 0.46)
   }
   // Tablet / small desktop: gradual ramp to desktop size.
   return clamp((viewportWidth * 0.72) / CERT_RENDER_WIDTH, 0.42, DESKTOP_CERT_UI_SCALE)
@@ -320,17 +320,18 @@ export default function CertificateCard({ cert, onReset }: Props) {
     }
   }
 
-  const UI = `var(--font-dm), -apple-system, sans-serif`
+  const UI = `var(--font-courier), system-ui, sans-serif`
 
   return (
     <div className="certificate-card-shell" style={{ width: '100%', maxWidth: '480px', margin: '0 auto' }}>
 
       {/* ── Top: back arrow only ── */}
-      <div style={{ paddingBottom: '12px', marginBottom: '14px' }}>
+      <div style={{ paddingBottom: '8px', marginBottom: '10px' }}>
         <button
           type="button"
           onClick={() => { track('issue_another_clicked'); onReset() }}
           aria-label="Back"
+          className="cert-back-btn"
           style={{
             fontFamily: UI,
             display: 'inline-flex',
@@ -338,12 +339,13 @@ export default function CertificateCard({ cert, onReset }: Props) {
             gap: '6px',
             background: 'none',
             border: 'none',
-            padding: '4px 0',
+            padding: '10px 0',
             cursor: 'pointer',
             color: '#0a0a0a',
             fontSize: '13px',
             fontWeight: 600,
             letterSpacing: '0.02em',
+            minHeight: '44px',
           }}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -618,7 +620,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
           </p>
         )}
 
-        {/* Bury another — text link */}
+        {/* Certify another — text link */}
         <div style={{ textAlign: 'center', marginTop: '6px', marginBottom: '8px' }}>
           <button
             type="button"
@@ -631,7 +633,8 @@ export default function CertificateCard({ cert, onReset }: Props) {
               background: 'none',
               border: 'none',
               cursor: 'pointer',
-              padding: '6px 4px',
+              padding: '12px 8px',
+              minHeight: '44px',
               textDecoration: 'underline',
               textUnderlineOffset: '3px',
               textDecorationColor: 'rgba(0,0,0,0.2)',
@@ -640,7 +643,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
             onMouseEnter={e => { e.currentTarget.style.color = '#1f1f1f' }}
             onMouseLeave={e => { e.currentTarget.style.color = '#5f5f5f' }}
           >
-            or bury another repo →
+            certify another repo →
           </button>
         </div>
 

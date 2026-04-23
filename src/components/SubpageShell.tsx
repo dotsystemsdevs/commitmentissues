@@ -1,9 +1,11 @@
+'use client'
+
 import type { ReactNode } from 'react'
 import Link from 'next/link'
 import SiteFooter from '@/components/SiteFooter'
 import PageHero from '@/components/PageHero'
 
-const UI = `var(--font-dm), -apple-system, sans-serif`
+const MONO = `var(--font-courier), system-ui, sans-serif`
 
 type Props = {
   subtitle: ReactNode
@@ -23,23 +25,22 @@ export default function SubpageShell({ subtitle, title, microcopy, headerExtra, 
             aria-label="Back to home"
             className="subpage-back-link alive-interactive"
             style={{
-              fontFamily: UI,
+              fontFamily: MONO,
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '6px',
-              color: '#0a0a0a',
+              gap: '5px',
+              color: '#9a9288',
               textDecoration: 'none',
-              fontSize: '13px',
-              fontWeight: 600,
-              letterSpacing: '0.02em',
-              padding: '4px 0',
+              fontSize: '11px',
+              fontWeight: 400,
+              letterSpacing: '0.06em',
               WebkitTapHighlightColor: 'transparent',
+              transition: 'color 0.15s',
             }}
+            onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#1a1a1a' }}
+            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#9a9288' }}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-              <path d="M15 18l-6-6 6-6"></path>
-            </svg>
-            back
+            ← home
           </Link>
         </div>
 
