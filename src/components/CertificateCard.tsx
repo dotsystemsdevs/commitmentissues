@@ -632,26 +632,23 @@ export default function CertificateCard({ cert, onReset }: Props) {
           const shieldsUrl = `https://img.shields.io/badge/%F0%9F%AA%A6%20declared%20dead-view%20certificate-555?style=for-the-badge&labelColor=cc0000`
           const badgeMd = `[![commitmentissues](${shieldsUrl})](${repoUrl})`
           return (
-            <div style={{ marginTop: '6px' }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={shieldsUrl}
-                alt="README badge preview"
-                loading="lazy"
-                decoding="async"
-                style={{ height: '28px', width: 'auto', display: 'block', marginBottom: '10px' }}
-              />
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
-                <p style={{ fontFamily: MONO, fontSize: '10px', color: '#b0a89e', margin: 0, letterSpacing: '0.04em' }}>
-                  ↻ paste once — updates automatically
-                </p>
+            <div className="readme-badge-block">
+              <div className="readme-badge-row">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={shieldsUrl}
+                  alt="README badge preview"
+                  loading="lazy"
+                  decoding="async"
+                  style={{ height: '28px', width: 'auto', display: 'block', flexShrink: 0 }}
+                />
                 <button
                   type="button"
                   onClick={async () => { try { await navigator.clipboard.writeText(badgeMd); setBadgeCopied(true); setTimeout(() => setBadgeCopied(false), 2000) } catch { /* ignore */ } }}
                   className="readme-copy-btn"
                   style={{
                     fontFamily: MONO, fontSize: '10px', fontWeight: 700, letterSpacing: '0.06em',
-                    padding: '8px 14px', minHeight: '44px',
+                    padding: '8px 14px', minHeight: '36px',
                     background: badgeCopied ? '#2d7a3c' : 'transparent',
                     color: badgeCopied ? '#fff' : '#4a4440',
                     border: `2px solid ${badgeCopied ? '#2d7a3c' : '#cec6bb'}`,
@@ -666,6 +663,9 @@ export default function CertificateCard({ cert, onReset }: Props) {
                   {badgeCopied ? '✓ copied!' : '⎘ copy to readme'}
                 </button>
               </div>
+              <p className="readme-badge-caption" style={{ fontFamily: MONO }}>
+                ↻ paste once — updates automatically
+              </p>
             </div>
           )
         })()}

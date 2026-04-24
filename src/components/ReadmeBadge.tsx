@@ -40,8 +40,8 @@ export default function ReadmeBadge({ username }: Props) {
       </div>
 
       {/* Copy row */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', marginTop: '10px' }}>
-        <p style={{ fontFamily: MONO, fontSize: '10px', color: '#b0a89e', margin: 0, letterSpacing: '0.04em' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', marginTop: '4px' }}>
+        <p className="readme-badge-caption" style={{ fontFamily: MONO, margin: 0, textAlign: 'left' }}>
           ↻ paste once — updates automatically
         </p>
         <button
@@ -53,7 +53,7 @@ export default function ReadmeBadge({ username }: Props) {
             fontWeight: 700,
             letterSpacing: '0.06em',
             padding: '8px 14px',
-            minHeight: '44px',
+            minHeight: '36px',
             background: copied ? '#2d7a3c' : 'transparent',
             color: copied ? '#fff' : '#4a4440',
             border: `2px solid ${copied ? '#2d7a3c' : '#cec6bb'}`,
