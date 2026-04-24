@@ -345,12 +345,13 @@ button {
 /* README badge preview block — shields badge + copy button grouped */
 .readme-badge-block {
   margin-top: 10px;
-  background: var(--c-surface);
+  width: 100%;
+  background: transparent;
 }
 .readme-badge-row {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
 }
@@ -359,6 +360,11 @@ button {
   color: #b0a89e;
   letter-spacing: 0.04em;
   margin: 10px 0 0;
+}
+
+.readme-badge-preview {
+  width: 100%;
+  max-width: 100%;
 }
 
 .subpage-faq-cta {
