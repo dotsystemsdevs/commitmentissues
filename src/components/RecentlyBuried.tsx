@@ -144,9 +144,13 @@ export default function RecentlyBuried({ onSelect }: Props) {
       <div
         className="recent-marquee"
         style={{
-          width: '100vw', marginLeft: 'calc(50% - 50vw)', overflow: 'hidden', height: '300px', padding: '14px 0 16px',
-          WebkitMaskImage: 'linear-gradient(to right, transparent, black 40px, black calc(100% - 40px), transparent)',
-          maskImage: 'linear-gradient(to right, transparent, black 40px, black calc(100% - 40px), transparent)',
+          width: '100vw',
+          marginLeft: 'calc(50% - 50vw)',
+          overflow: 'hidden',
+          height: '300px',
+          padding: '14px 24px 16px',
+          WebkitMaskImage: 'linear-gradient(to right, transparent, black 24px, black calc(100% - 24px), transparent)',
+          maskImage: 'linear-gradient(to right, transparent, black 24px, black calc(100% - 24px), transparent)',
         }}
       >
         <div
