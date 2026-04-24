@@ -545,7 +545,7 @@ a.subpage-inline-mail {
   main { padding-left: 16px !important; padding-right: 16px !important; }
   .page-shell-main {
     min-height: 100svh;
-    padding-top: calc(env(safe-area-inset-top) + 30px) !important;
+    padding-top: calc(env(safe-area-inset-top) + 40px) !important;
   }
 
   /* Certificate wrapper spacing only; scale is handled in CertificateCard.tsx */
@@ -592,6 +592,12 @@ a.subpage-inline-mail {
 
   .homepage-recent-wrap {
     margin-top: 14px !important;
+  }
+
+  /* Hall of Fame cards: keep them punchy on mobile */
+  .recent-card-cause,
+  .recent-card-lastwords {
+    display: none !important;
   }
 
   .input-button-wrapper {

@@ -105,11 +105,11 @@ const Card = memo(function Card({ entry, count, placed, onSelect, onToggle }: Ca
       <span style={{ fontFamily: MONO, fontSize: '14px', fontWeight: 700, color: '#1a1a1a', lineHeight: 1.3, wordBreak: 'break-word', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%', paddingRight: '56px' }}>
         {entry.fullName}
       </span>
-      <span style={{ fontFamily: MONO, fontSize: '12px', color: '#3d3832', lineHeight: 1.55, fontWeight: 500, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+      <span className="recent-card-cause" style={{ fontFamily: MONO, fontSize: '12px', color: '#3d3832', lineHeight: 1.55, fontWeight: 500, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
         {entry.cause}
       </span>
       {entry.lastWords && (
-        <span style={{ fontFamily: MONO, fontSize: '11px', fontStyle: 'italic', color: '#7a7268', lineHeight: 1.5, fontWeight: 400, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+        <span className="recent-card-lastwords" style={{ fontFamily: MONO, fontSize: '11px', fontStyle: 'italic', color: '#7a7268', lineHeight: 1.5, fontWeight: 400, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
           &ldquo;{entry.lastWords}&rdquo;
         </span>
       )}
