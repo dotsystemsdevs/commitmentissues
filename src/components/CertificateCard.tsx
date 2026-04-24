@@ -7,6 +7,7 @@ import { track } from '@vercel/analytics'
 import { DeathCertificate } from '@/lib/types'
 import CertificateFixed from '@/components/CertificateFixed'
 import GitHubIcon from '@/components/GitHubIcon'
+import { copyText, promptCopy } from '@/lib/clipboard'
 
 // Lazy-load html-to-image (~40KB) on first share/download interaction so it
 // stays out of the critical bundle.
@@ -648,13 +649,10 @@ export default function CertificateCard({ cert, onReset }: Props) {
                   <button
                     type="button"
                     onClick={async () => {
-                      try {
-                        await navigator.clipboard.writeText(badgeMd)
-                        setBadgeCopied(true)
-                        setTimeout(() => setBadgeCopied(false), 2000)
-                      } catch {
-                        // ignore
-                      }
+                      const ok = await copyText(badgeMd)
+                      if (!ok) promptCopy(badgeMd, 'Copy this README badge markdown')
+                      setBadgeCopied(true)
+                      setTimeout(() => setBadgeCopied(false), 2000)
                     }}
                     className="readme-copy-btn cert-readme-copy-btn"
                   >

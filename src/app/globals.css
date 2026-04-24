@@ -425,7 +425,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 1 1 240px;
+  flex: 0 0 auto;
 }
 
 .cert-readme-copy-btn {
@@ -763,6 +763,7 @@ a.subpage-inline-mail {
   }
   .cert-readme-badge-preview {
     justify-content: flex-start;
+    flex: 0 0 auto;
   }
 
 }
