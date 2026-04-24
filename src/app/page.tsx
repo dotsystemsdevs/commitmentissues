@@ -126,7 +126,7 @@ function HomePage() {
       <div className="page-shell-inner page-shell-inner--home">
 
       {/* Hero — landing: stats counter; user result: show @username */}
-      {!certificate && !userRepos && (
+      {!certificate && !userRepos && !loading && !userLoading && (
         <div style={{ marginTop: '0px' }}>
           <PageHero
             subtitle={
@@ -137,7 +137,7 @@ function HomePage() {
         </div>
       )}
 
-      {!certificate && userRepos && scannedUsername && (
+      {!certificate && userRepos && scannedUsername && !loading && !userLoading && (
         <div style={{ marginTop: '0px' }}>
           <PageHero
             subtitle={
