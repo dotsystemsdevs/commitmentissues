@@ -193,6 +193,32 @@
   max-width: 520px;
 }
 
+.user-result-header {
+  width: 100%;
+  text-align: center;
+  padding-top: 8px;
+  padding-bottom: 14px;
+}
+
+.user-result-kicker {
+  font-family: var(--font-courier), system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+  margin: 0 0 6px 0;
+}
+
+.user-result-handle {
+  font-family: var(--font-dm), system-ui, sans-serif;
+  font-size: clamp(22px, 7vw, 34px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--c-ink);
+  margin: 0;
+}
+
 .page-hero-micro {
   font-family: var(--font-courier), system-ui, sans-serif;
   font-size: 11px;

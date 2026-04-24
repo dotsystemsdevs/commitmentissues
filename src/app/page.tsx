@@ -138,24 +138,10 @@ function HomePage() {
       )}
 
       {!certificate && userRepos && scannedUsername && !loading && !userLoading && (
-        <div style={{ marginTop: '0px' }}>
-          <PageHero
-            subtitle={
-              <span style={{
-                display: 'block',
-                fontFamily: MONO,
-                fontSize: 'clamp(15px, 4vw, 19px)',
-                fontWeight: 700,
-                color: '#2a2218',
-                letterSpacing: '0.02em',
-                marginTop: '2px',
-              }}>
-                @{scannedUsername}
-              </span>
-            }
-            microcopy={null}
-          />
-        </div>
+        <header className="user-result-header">
+          <p className="user-result-kicker">graveyard scan</p>
+          <h1 className="user-result-handle">@{scannedUsername}</h1>
+        </header>
       )}
 
       {/* Loading state in search area to avoid layout shift */}
