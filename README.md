@@ -47,9 +47,9 @@ The badge is rendered live, refreshes through GitHub's image proxy within minute
 
 ## Screenshots
 
-| Profile graveyard | Certificate | About page |
-| --- | --- | --- |
-| ![Homepage](docs/screenshots/homepage.png) | ![Certificate of Death](docs/screenshots/certificate.png) | ![About page](docs/screenshots/about.png) |
+| Certificate of Death | About page |
+| --- | --- |
+| ![Certificate of Death](docs/screenshots/certificate.png) | ![About page](docs/screenshots/about.png) |
 
 ## Tech stack
 
