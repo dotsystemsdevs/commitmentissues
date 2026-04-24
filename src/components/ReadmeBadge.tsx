@@ -27,47 +27,58 @@ export default function ReadmeBadge({ username }: Props) {
   }
 
   return (
-    <div style={{ marginBottom: '40px' }}>
-      {/* Badge preview — aspect-ratio wrapper prevents layout shift while loading */}
-      <div style={{ width: '100%', aspectRatio: '440 / 96', marginBottom: '10px' }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={`/api/badge?username=${username}&v=${BADGE_VERSION}`}
-          alt={altText}
-          loading="lazy"
-          decoding="async"
-          style={{ width: '100%', height: '100%', display: 'block' }}
-        />
-      </div>
+    <div style={{ width: '100%', marginBottom: '22px', display: 'flex', justifyContent: 'center' }}>
+      <div
+        className="record-card"
+        style={{
+          width: 'min(520px, 100%)',
+          border: '2px solid #1a1a1a',
+          borderRadius: '0px',
+          boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
+          padding: '14px 16px',
+        }}
+      >
+        {/* Badge preview — aspect-ratio wrapper prevents layout shift while loading */}
+        <div style={{ width: '100%', aspectRatio: '440 / 96' }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={`/api/badge?username=${username}&v=${BADGE_VERSION}`}
+            alt={altText}
+            loading="lazy"
+            decoding="async"
+            style={{ width: '100%', height: '100%', display: 'block' }}
+          />
+        </div>
 
-      {/* Copy row */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', marginTop: '4px' }}>
-        <p className="readme-badge-caption" style={{ fontFamily: MONO, margin: 0, textAlign: 'left' }}>
-          ↻ paste once — updates automatically
-        </p>
-        <button
-          onClick={handleCopy}
-          className="readme-copy-btn"
-          style={{
-            fontFamily: MONO,
-            fontSize: '10px',
-            fontWeight: 700,
-            letterSpacing: '0.06em',
-            padding: '8px 14px',
-            minHeight: '36px',
-            background: copied ? '#2d7a3c' : 'transparent',
-            color: copied ? '#fff' : '#4a4440',
-            border: `2px solid ${copied ? '#2d7a3c' : '#cec6bb'}`,
-            cursor: 'pointer',
-            transition: 'all 0.15s',
-            whiteSpace: 'nowrap',
-            flexShrink: 0,
-          }}
-          onMouseEnter={e => { if (!copied) { e.currentTarget.style.borderColor = '#1a1a1a'; e.currentTarget.style.color = '#1a1a1a' } }}
-          onMouseLeave={e => { if (!copied) { e.currentTarget.style.borderColor = '#cec6bb'; e.currentTarget.style.color = '#4a4440' } }}
-        >
-          {copied ? '✓ copied!' : '⎘ copy to readme'}
-        </button>
+        {/* Copy row */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', marginTop: '10px' }}>
+          <p className="readme-badge-caption" style={{ fontFamily: MONO, margin: 0, textAlign: 'left' }}>
+            ↻ paste once — updates automatically
+          </p>
+          <button
+            onClick={handleCopy}
+            className="readme-copy-btn"
+            style={{
+              fontFamily: MONO,
+              fontSize: '10px',
+              fontWeight: 700,
+              letterSpacing: '0.06em',
+              padding: '8px 14px',
+              minHeight: '36px',
+              background: copied ? '#2d7a3c' : 'transparent',
+              color: copied ? '#fff' : '#4a4440',
+              border: `2px solid ${copied ? '#2d7a3c' : '#cec6bb'}`,
+              cursor: 'pointer',
+              transition: 'all 0.15s',
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
+            }}
+            onMouseEnter={e => { if (!copied) { e.currentTarget.style.borderColor = '#1a1a1a'; e.currentTarget.style.color = '#1a1a1a' } }}
+            onMouseLeave={e => { if (!copied) { e.currentTarget.style.borderColor = '#cec6bb'; e.currentTarget.style.color = '#4a4440' } }}
+          >
+            {copied ? '✓ copied!' : '⎘ copy to readme'}
+          </button>
+        </div>
       </div>
     </div>
   )

@@ -34,13 +34,10 @@ export default function UserPage() {
 
   return (
     <SubpageShell
-      title={`@${username}`}
-      subtitle={
-        <span style={{ fontFamily: MONO, fontSize: '12px', color: 'var(--c-muted)', letterSpacing: '0.04em' }}>
-          dev graveyard
-        </span>
-      }
+      title={undefined}
+      subtitle={null}
       microcopy={null}
+      hideHero
     >
       {loading && <LoadingState />}
 

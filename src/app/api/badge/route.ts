@@ -48,7 +48,7 @@ function buildSvg(username: string, dead: number, struggling: number, alive: num
   <rect width="440" height="96" fill="#FAF6EF"/>
   <rect x="1" y="1" width="438" height="94" fill="none" stroke="#1a1a1a" stroke-width="2"/>
 
-  <text x="16" y="28" font-family=${JSON.stringify(MONO)} font-size="9" font-weight="700" fill="#9a9288" letter-spacing="2.2">🪦  GITHUB REPO GRAVEYARD</text>
+  <text x="16" y="28" font-family=${JSON.stringify(MONO)} font-size="9" font-weight="700" fill="#9a9288" letter-spacing="2.2">GITHUB REPO GRAVEYARD</text>
 
   <text x="16" y="58" font-family=${JSON.stringify(MONO)} font-size="15" font-weight="700" letter-spacing="0.8">
     <tspan fill="#8B0000">${dead} DEAD</tspan><tspan fill="#cec6bb" font-weight="400">  ·  </tspan><tspan fill="${struggling > 0 ? '#b45309' : '#cec6bb'}" font-weight="${struggling > 0 ? '700' : '400'}">${struggling} STRUGGLING</tspan><tspan fill="#cec6bb" font-weight="400">  ·  </tspan><tspan fill="${alive > 0 ? '#2d7a3c' : '#cec6bb'}" font-weight="${alive > 0 ? '700' : '400'}">${alive} ALIVE</tspan>

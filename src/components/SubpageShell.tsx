@@ -12,10 +12,11 @@ type Props = {
   title?: string
   microcopy?: ReactNode | null
   headerExtra?: ReactNode
+  hideHero?: boolean
   children: ReactNode
 }
 
-export default function SubpageShell({ subtitle, title, microcopy, headerExtra, children }: Props) {
+export default function SubpageShell({ subtitle, title, microcopy, headerExtra, hideHero = false, children }: Props) {
   return (
     <main className="page-shell-main">
       <div className="page-shell-inner">
@@ -44,8 +45,12 @@ export default function SubpageShell({ subtitle, title, microcopy, headerExtra, 
           </Link>
         </div>
 
-        <PageHero subtitle={subtitle} title={title} microcopy={microcopy} brandHref="/" hideEmoji />
-        {headerExtra ? <div className="page-hero-extra">{headerExtra}</div> : null}
+        {!hideHero ? (
+          <>
+            <PageHero subtitle={subtitle} title={title} microcopy={microcopy} brandHref="/" hideEmoji />
+            {headerExtra ? <div className="page-hero-extra">{headerExtra}</div> : null}
+          </>
+        ) : null}
 
         <div className="page-shell-body page-shell-body--subpage">{children}</div>
 
