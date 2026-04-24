@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { copyText, promptCopy } from '@/lib/clipboard'
 
 const MONO = `var(--font-courier), system-ui, sans-serif`
@@ -11,6 +11,8 @@ interface Props {
 
 export default function ReadmeBadge({ username }: Props) {
   const [copied, setCopied] = useState(false)
+  const [svg, setSvg] = useState<string | null>(null)
+  const [svgError, setSvgError] = useState(false)
 
   // Version param forces GitHub's camo proxy to refetch when we redesign the badge.
   const BADGE_VERSION = '3'
@@ -18,6 +20,24 @@ export default function ReadmeBadge({ username }: Props) {
   const profileUrl = `https://commitmentissues.dev/user/${username}`
   const altText    = `Commitment Issues — @${username}'s graveyard`
   const markdown   = `[![${altText}](${badgeUrl})](${profileUrl})`
+
+  useEffect(() => {
+    let cancelled = false
+    setSvg(null)
+    setSvgError(false)
+    fetch(`/api/badge?username=${encodeURIComponent(username)}&v=${BADGE_VERSION}`)
+      .then(r => {
+        if (!r.ok) throw new Error('badge fetch failed')
+        return r.text()
+      })
+      .then(text => {
+        if (!cancelled) setSvg(text)
+      })
+      .catch(() => {
+        if (!cancelled) setSvgError(true)
+      })
+    return () => { cancelled = true }
+  }, [username, BADGE_VERSION])
 
   async function handleCopy() {
     const ok = await copyText(markdown)
