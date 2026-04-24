@@ -121,30 +121,32 @@ export default function SearchForm({ url, setUrl, onSubmit, onUserSubmit, onSele
         background: '#FAF6EF',
         boxShadow: '0 4px 14px rgba(0,0,0,0.06)',
       }}>
-        <span style={{ fontFamily: MONO, fontSize: '14px', fontWeight: 700, color: '#666', padding: '0 2px 0 16px', display: 'flex', alignItems: 'center', flexShrink: 0, userSelect: 'none' }}>
-          github.com/
-        </span>
-        <input
-          autoFocus
-          type="text"
-          inputMode="url"
-          value={url.replace(/^(?:https?:\/\/)?(?:www\.)?github\.com\//i, '')}
-          onChange={e => { if (invalid) setInvalid(false); handleChange(e.target.value) }}
-          placeholder={PLACEHOLDER}
-          style={{
-            fontFamily: MONO,
-            fontSize: '16px',
-            fontWeight: 600,
-            flex: 1,
-            height: '60px',
-            padding: '0 10px 0 2px',
-            background: 'transparent',
-            border: 'none',
-            outline: 'none',
-            color: '#160A06',
-            minWidth: 0,
-          }}
-        />
+        <div className="input-field-row" style={{ display: 'flex', alignItems: 'center', flex: 1, minWidth: 0 }}>
+          <span style={{ fontFamily: MONO, fontSize: '14px', fontWeight: 700, color: '#666', padding: '0 2px 0 16px', display: 'flex', alignItems: 'center', flexShrink: 0, userSelect: 'none' }}>
+            github.com/
+          </span>
+          <input
+            autoFocus
+            type="text"
+            inputMode="url"
+            value={url.replace(/^(?:https?:\/\/)?(?:www\.)?github\.com\//i, '')}
+            onChange={e => { if (invalid) setInvalid(false); handleChange(e.target.value) }}
+            placeholder={PLACEHOLDER}
+            style={{
+              fontFamily: MONO,
+              fontSize: '16px',
+              fontWeight: 600,
+              flex: 1,
+              height: '60px',
+              padding: '0 10px 0 2px',
+              background: 'transparent',
+              border: 'none',
+              outline: 'none',
+              color: '#160A06',
+              minWidth: 0,
+            }}
+          />
+        </div>
 
         <ClickSpark color="#2b2b2b">
         <button
