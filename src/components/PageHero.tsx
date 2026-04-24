@@ -9,8 +9,6 @@ type Props = {
   microcopy?: ReactNode | null
   /** Wrap 🪦 + title in `<a href="/">` */
   brandHref?: string
-  /** Wrap 🪦 + title in `<button>` (e.g. certificate reset) */
-  onBrandClick?: () => void
   /** Hide the tombstone emoji (subpages) */
   hideEmoji?: boolean
 }
@@ -20,10 +18,8 @@ export default function PageHero({
   title = 'Certificate of Death',
   microcopy,
   brandHref,
-  onBrandClick,
   hideEmoji = false,
 }: Props) {
-  // Gothic font only for the product title "Certificate of Death"
   const isGothic = title === 'Certificate of Death'
 
   const titleBlock = (
@@ -39,22 +35,13 @@ export default function PageHero({
     </>
   )
 
-  let brand: ReactNode
-  if (brandHref) {
-    brand = (
-      <Link href={brandHref} className="page-hero-brand">
-        {titleBlock}
-      </Link>
-    )
-  } else if (onBrandClick) {
-    brand = (
-      <button type="button" onClick={onBrandClick} className="page-hero-brand page-hero-brand--btn">
-        {titleBlock}
-      </button>
-    )
-  } else {
-    brand = <div className="page-hero-brand">{titleBlock}</div>
-  }
+  const brand = brandHref ? (
+    <Link href={brandHref} className="page-hero-brand">
+      {titleBlock}
+    </Link>
+  ) : (
+    <div className="page-hero-brand">{titleBlock}</div>
+  )
 
   return (
     <header className="page-hero">

@@ -1,30 +1,42 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import type { LeaderboardEntry } from '@/lib/types'
+import { HALL_OF_SHAME } from '@/lib/hallOfShame'
 
 const MONO = `var(--font-courier), system-ui, sans-serif`
 
-const FALLBACK = [
-  'torvalds', 'gaearon', 'sindresorhus', 'nicolo', 'tj',
-  'mxstbr', 'addyosmani', 'paulirish', 'kentcdodds', 'wesbos',
-]
-
 export default function ScannerBanner() {
-  const [profiles, setProfiles] = useState<string[]>([])
+  const [recent, setRecent] = useState<LeaderboardEntry[]>([])
 
   useEffect(() => {
-    fetch('/api/recent-profiles')
-      .then(r => r.json())
-      .then((data: unknown) => {
-        if (Array.isArray(data) && data.length >= 4) setProfiles(data as string[])
+    fetch('/api/recent')
+      .then(r => r.ok ? r.json() : [])
+      .then((data: LeaderboardEntry[]) => {
+        if (Array.isArray(data)) setRecent(data.slice(0, 10))
       })
       .catch(() => {})
   }, [])
 
-  const names = profiles.length >= 4 ? profiles : FALLBACK
-  const items = [...names, ...names, ...names]
+  // Top ticker = latest burials. If empty (cold start), fall back to Hall of Shame.
+  const merged = recent.length >= 4 ? recent : HALL_OF_SHAME.slice(0, 12)
 
-  const duration = names.length * 18
+  if (merged.length === 0) return null
+
+  function timeAgo(iso: string): string {
+    const seconds = Math.floor((Date.now() - new Date(iso).getTime()) / 1000)
+    if (seconds < 60) return 'just now'
+    const minutes = Math.floor(seconds / 60)
+    if (minutes < 60) return `${minutes}m ago`
+    const hours = Math.floor(minutes / 60)
+    if (hours < 24) return `${hours}h ago`
+    const days = Math.floor(hours / 24)
+    return `${days}d ago`
+  }
+
+  const items = [...merged, ...merged, ...merged]
+  const duration = merged.length * 12
 
   return (
     <div style={{
@@ -33,12 +45,11 @@ export default function ScannerBanner() {
       left: 0,
       right: 0,
       zIndex: 1001,
-      background: '#0a0a0a',
+      background: '#1a1a1a',
       height: '32px',
       display: 'flex',
       alignItems: 'center',
     }}>
-      {/* scrolling marquee — fills remaining width */}
       <div
         style={{ flex: 1, overflow: 'hidden', height: '100%', display: 'flex', alignItems: 'center' }}
         onMouseEnter={e => { const t = e.currentTarget.querySelector<HTMLElement>('[data-marquee]'); if (t) t.style.animationPlayState = 'paused' }}
@@ -47,40 +58,45 @@ export default function ScannerBanner() {
         <div
           data-marquee
           style={{
-          display: 'flex',
-          animation: `marquee-reverse ${duration}s linear infinite`,
-          width: 'max-content',
-          alignItems: 'center',
-        }}>
-          {items.map((name, i) => (
-            <span key={i} style={{
-              fontFamily: MONO,
-              fontSize: '11px',
-              letterSpacing: '0.08em',
-              whiteSpace: 'nowrap',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0',
-            }}>
-              <span style={{ color: '#555', padding: '0 20px' }}>✦</span>
-              <a
-                href={`/user/${name}`}
-                style={{
-                  color: 'inherit',
-                  textDecoration: 'none',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                }}
-              >
-                <span style={{ color: '#aaa' }}>@</span>
-                <span style={{ color: '#e8e2d9', textDecoration: 'underline', textUnderlineOffset: '2px', textDecorationColor: 'rgba(232,226,217,0.3)' }}>{name}</span>
-              </a>
-              <span style={{ color: '#888' }}>&nbsp;— diagnosed</span>
-            </span>
-          ))}
+            display: 'flex',
+            animation: `marquee-reverse ${duration}s linear infinite`,
+            width: 'max-content',
+            alignItems: 'center',
+          }}
+        >
+          {items.map((entry, i) => {
+            const label = entry.analyzedAt
+              ? `buried ${timeAgo(entry.analyzedAt)}`
+              : entry.deathDate
+                ? `RIP ${entry.deathDate}`
+                : 'RIP'
+            return (
+              <span key={`${entry.fullName}-${i}`} style={{
+                fontFamily: MONO,
+                fontSize: '11px',
+                letterSpacing: '0.08em',
+                whiteSpace: 'nowrap',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0',
+              }}>
+                <span style={{ color: '#555', padding: '0 20px' }}>✦</span>
+                <Link
+                  href={`/?repo=${entry.fullName}`}
+                  prefetch={false}
+                  style={{ color: 'inherit', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                >
+                  <span aria-hidden style={{ color: '#e8e2d9' }}>🪦</span>
+                  <span style={{ color: '#e8e2d9', textDecoration: 'underline', textUnderlineOffset: '2px', textDecorationColor: 'rgba(232,226,217,0.3)' }}>
+                    {entry.fullName}
+                  </span>
+                </Link>
+                <span style={{ color: '#888' }}>&nbsp;— {label}</span>
+              </span>
+            )
+          })}
         </div>
       </div>
-
     </div>
   )
 }

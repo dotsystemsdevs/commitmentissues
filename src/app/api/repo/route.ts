@@ -177,9 +177,7 @@ export async function GET(request: NextRequest) {
     analyzedAt: new Date().toISOString(),
     deathDate: formatDate(repoData.pushedAt),
     lastWords,
-  }).catch((err) => {
-    console.error('[addRecent] Redis write failed:', err)
-  })
+  }).catch(() => { /* non-critical: Redis write failures shouldn't fail the request */ })
 
   return NextResponse.json(certificate)
 }

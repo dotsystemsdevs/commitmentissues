@@ -1,8 +1,10 @@
 'use client'
 
 import { useState, type CSSProperties } from 'react'
+import Link from 'next/link'
 import type { UserRepoSummary } from '@/lib/types'
 import ReadmeBadge from '@/components/ReadmeBadge'
+import GitHubIcon from '@/components/GitHubIcon'
 
 const MONO = `var(--font-courier), system-ui, sans-serif`
 
@@ -98,16 +100,17 @@ export default function UserDashboard({ repos, username }: Props) {
       <CardGrid
         repos={currentRepos}
         accentColor={activeSection.color}
+        username={username}
       />
 
-      <p style={{ fontFamily: MONO, fontSize: '9px', color: 'var(--c-faint)', letterSpacing: '0.1em', textAlign: 'center', marginTop: '28px' }}>
+      <p style={{ fontFamily: MONO, fontSize: '10px', color: 'var(--c-faint)', letterSpacing: '0.1em', textAlign: 'center', marginTop: '28px' }}>
         {repos.length} public repos · forks excluded
       </p>
     </div>
   )
 }
 
-function CardGrid({ repos, accentColor }: { repos: UserRepoSummary[]; accentColor: string }) {
+function CardGrid({ repos, accentColor, username }: { repos: UserRepoSummary[]; accentColor: string; username: string }) {
   if (repos.length === 0) {
     return (
       <p style={{ fontFamily: MONO, fontSize: '11px', color: 'var(--c-muted)', letterSpacing: '0.06em', padding: '24px 0' }}>
@@ -123,13 +126,13 @@ function CardGrid({ repos, accentColor }: { repos: UserRepoSummary[]; accentColo
       gap: '12px',
     }}>
       {repos.map(r => (
-        <RepoCard key={r.fullName} repo={r} accentColor={accentColor} />
+        <RepoCard key={r.fullName} repo={r} accentColor={accentColor} username={username} />
       ))}
     </div>
   )
 }
 
-function RepoCard({ repo, accentColor }: { repo: UserRepoSummary; accentColor: string }) {
+function RepoCard({ repo, accentColor, username }: { repo: UserRepoSummary; accentColor: string; username: string }) {
   const name = repo.fullName.split('/')[1] ?? repo.fullName
 
   function formatDate(iso: string | null | undefined) {
@@ -139,6 +142,7 @@ function RepoCard({ repo, accentColor }: { repo: UserRepoSummary; accentColor: s
 
   const canCertify = repo.isDead || repo.isStruggling
   const cardStyle: CSSProperties = {
+    position: 'relative',
     display: 'flex',
     flexDirection: 'column',
     gap: '6px',
@@ -155,8 +159,41 @@ function RepoCard({ repo, accentColor }: { repo: UserRepoSummary; accentColor: s
 
   const inner = (
     <>
+      {/* GitHub link — button to avoid nesting <a> inside <a> */}
+      <button
+        type="button"
+        aria-label={`View ${repo.fullName} on GitHub`}
+        title="View on GitHub"
+        onClick={e => {
+          e.stopPropagation()
+          e.preventDefault()
+          window.open(`https://github.com/${repo.fullName}`, '_blank', 'noopener,noreferrer')
+        }}
+        style={{
+          position: 'absolute',
+          top: '12px',
+          right: '12px',
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '24px',
+          height: '24px',
+          background: 'transparent',
+          border: 'none',
+          padding: 0,
+          color: '#8a8278',
+          cursor: 'pointer',
+          transition: 'color 0.15s, transform 0.15s',
+          zIndex: 2,
+        }}
+        onMouseEnter={e => { e.currentTarget.style.color = '#1a1a1a'; e.currentTarget.style.transform = 'scale(1.12)' }}
+        onMouseLeave={e => { e.currentTarget.style.color = '#8a8278'; e.currentTarget.style.transform = 'scale(1)' }}
+      >
+        <GitHubIcon size={16} />
+      </button>
+
       {/* Top row: status icon + name */}
-      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', width: '100%' }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', width: '100%', paddingRight: '32px' }}>
         <span aria-hidden style={{
           fontSize: '18px', lineHeight: 1, flexShrink: 0, marginTop: '-1px',
           display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
@@ -166,7 +203,7 @@ function RepoCard({ repo, accentColor }: { repo: UserRepoSummary; accentColor: s
         }}>
           {repo.isDead ? '🪦' : repo.isStruggling ? '⚠' : '🌱'}
         </span>
-        <span style={{ fontFamily: MONO, fontSize: '13px', fontWeight: 700, color: '#0a0a0a', lineHeight: 1.3, wordBreak: 'break-word', flex: 1, alignSelf: 'center' }}>
+        <span style={{ fontFamily: MONO, fontSize: '13px', fontWeight: 700, color: '#1a1a1a', lineHeight: 1.3, wordBreak: 'break-word', flex: 1, alignSelf: 'center' }}>
           {name}
         </span>
       </div>
@@ -188,7 +225,7 @@ function RepoCard({ repo, accentColor }: { repo: UserRepoSummary; accentColor: s
 
       {/* Footer */}
       <div style={{ width: '100%', marginTop: 'auto', borderTop: '1px solid rgba(0,0,0,0.08)', paddingTop: '8px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-        <span style={{ fontFamily: MONO, fontSize: '9px', color: '#878078', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+        <span style={{ fontFamily: MONO, fontSize: '10px', color: '#878078', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
           last activity · <span style={{ color: '#4d4d4d', fontWeight: 600 }}>{formatDate(repo.pushedAt)}</span>
         </span>
         {canCertify && (
@@ -220,9 +257,14 @@ function RepoCard({ repo, accentColor }: { repo: UserRepoSummary; accentColor: s
 
   if (canCertify) {
     return (
-      <a href={`/?repo=${repo.fullName}`} className="alive-card" style={cardStyle}>
+      <Link
+        href={`/?repo=${repo.fullName}&from=${encodeURIComponent(username)}`}
+        prefetch={false}
+        className="alive-card"
+        style={cardStyle}
+      >
         {inner}
-      </a>
+      </Link>
     )
   }
 

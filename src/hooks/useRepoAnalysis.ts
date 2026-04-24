@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { DeathCertificate } from '@/lib/types'
 
 export interface AnalysisError {
@@ -15,7 +15,7 @@ export function useRepoAnalysis() {
   const [loading, setLoading] = useState(false)
   const abortRef = useRef<AbortController | null>(null)
 
-  async function analyze(inputUrl: string) {
+  const analyze = useCallback(async (inputUrl: string) => {
     if (!inputUrl.trim()) return
 
     // Cancel any in-flight request
@@ -42,7 +42,6 @@ export function useRepoAnalysis() {
           window.history.replaceState(null, '', next)
         }
         fetch('/api/stats', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ counter: 'buried' }) }).catch(() => {})
-        // Save to localStorage for "Recently Buried"
         try {
           const entry = {
             fullName: data.repoData.fullName,
@@ -62,9 +61,9 @@ export function useRepoAnalysis() {
     } finally {
       if (!controller.signal.aborted) setLoading(false)
     }
-  }
+  }, [])
 
-  function reset() {
+  const reset = useCallback(() => {
     setCertificate(null)
     setError(null)
     setUrl('')
@@ -74,7 +73,7 @@ export function useRepoAnalysis() {
       const next = params.toString() ? `${window.location.pathname}?${params.toString()}` : window.location.pathname
       window.history.replaceState(null, '', next)
     }
-  }
+  }, [])
 
   return { url, setUrl, certificate, error, loading, analyze, reset }
 }

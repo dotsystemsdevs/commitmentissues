@@ -2,17 +2,27 @@
 
 import { useRef, useState, useEffect } from 'react'
 import type React from 'react'
+import { useRouter } from 'next/navigation'
 import { track } from '@vercel/analytics'
-import { toBlob } from 'html-to-image'
 import { DeathCertificate } from '@/lib/types'
 import CertificateFixed from '@/components/CertificateFixed'
+import GitHubIcon from '@/components/GitHubIcon'
+
+// Lazy-load html-to-image (~40KB) on first share/download interaction so it
+// stays out of the critical bundle.
+type ToBlobFn = typeof import('html-to-image').toBlob
+let toBlobPromise: Promise<ToBlobFn> | null = null
+function loadToBlob(): Promise<ToBlobFn> {
+  if (!toBlobPromise) toBlobPromise = import('html-to-image').then(m => m.toBlob)
+  return toBlobPromise
+}
 
 interface Props {
   cert: DeathCertificate
   onReset: () => void
 }
 
-const DESKTOP_CERT_UI_SCALE = 0.604
+const DESKTOP_CERT_UI_SCALE = 0.5
 const CERT_RENDER_WIDTH = 794
 const CERT_RENDER_HEIGHT = 1123
 
@@ -79,11 +89,43 @@ async function loadImageForCanvas(blob: Blob): Promise<ImageBitmap | HTMLImageEl
 }
 
 export default function CertificateCard({ cert, onReset }: Props) {
+  const router = useRouter()
   const visibleCardRef = useRef<HTMLDivElement>(null)
   const exportCardRef = useRef<HTMLDivElement>(null)
   const wrapperRef = useRef<HTMLDivElement>(null)
   const visibleStampRef = useRef<HTMLDivElement>(null)
   const exportStampRef = useRef<HTMLDivElement>(null)
+  const [referrerUser, setReferrerUser] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    // Prefer explicit ?from=username param (when clicking from UserDashboard inline)
+    const fromParam = new URLSearchParams(window.location.search).get('from')
+    if (fromParam && /^[a-zA-Z0-9_.-]+$/.test(fromParam)) {
+      setReferrerUser(fromParam)
+      return
+    }
+
+    // Fallback: /user/[name] referrer (direct nav from the permalink page)
+    const ref = document.referrer
+    if (!ref) return
+    try {
+      const url = new URL(ref)
+      if (url.origin !== window.location.origin) return
+      const match = url.pathname.match(/^\/user\/([a-zA-Z0-9_.-]+)\/?$/)
+      if (match) setReferrerUser(match[1])
+    } catch { /* ignore */ }
+  }, [])
+
+  function handleBack() {
+    track('issue_another_clicked')
+    if (referrerUser) {
+      router.push(`/user/${referrerUser}`)
+    } else {
+      onReset()
+    }
+  }
   const [visible, setVisible] = useState(false)
   const [uiScale, setUiScale] = useState(DESKTOP_CERT_UI_SCALE)
   const [isMobileViewport, setIsMobileViewport] = useState(false)
@@ -104,8 +146,10 @@ export default function CertificateCard({ cert, onReset }: Props) {
   }
 
   useEffect(() => {
-    const t = setTimeout(() => setVisible(true), 50)
-    return () => clearTimeout(t)
+    // Flip visibility on the next frame so the CSS transition has a
+    // stable "from" state; avoids an arbitrary setTimeout delay.
+    const id = requestAnimationFrame(() => setVisible(true))
+    return () => cancelAnimationFrame(id)
   }, [])
 
   useEffect(() => {
@@ -121,6 +165,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
 
   async function exportBlob(pixelRatio: number, watermark = false): Promise<Blob | null> {
     if (!exportCardRef.current) return null
+    const toBlob = await loadToBlob()
     const wrapper = wrapperRef.current
     if (wrapper) wrapper.style.zoom = '1'
     if (!watermark && exportStampRef.current) exportStampRef.current.style.visibility = 'hidden'
@@ -320,43 +365,62 @@ export default function CertificateCard({ cert, onReset }: Props) {
     }
   }
 
-  const UI = `var(--font-courier), system-ui, sans-serif`
+  const MONO = `var(--font-courier), system-ui, sans-serif`
 
   return (
     <div className="certificate-card-shell" style={{ width: '100%', maxWidth: '480px', margin: '0 auto' }}>
 
-      {/* ── Top: back arrow only ── */}
-      <div style={{ paddingBottom: '8px', marginBottom: '10px' }}>
+      {/* ── Top: back arrow + GitHub link ── */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '2px', marginBottom: '2px' }}>
         <button
           type="button"
-          onClick={() => { track('issue_another_clicked'); onReset() }}
+          onClick={handleBack}
           aria-label="Back"
-          className="cert-back-btn"
+          className="subpage-back-link alive-interactive"
           style={{
-            fontFamily: UI,
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            WebkitTapHighlightColor: 'transparent',
+            letterSpacing: '0.06em',
+            transition: 'color 0.15s',
+          }}
+          onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = '#1a1a1a' }}
+          onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = '#9a9288' }}
+        >
+          ← {referrerUser ? `back to @${referrerUser}` : 'back'}
+        </button>
+
+        <a
+          href={`https://github.com/${cert.repoData.fullName}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`View ${cert.repoData.fullName} on GitHub`}
+          title="View on GitHub"
+          style={{
+            fontFamily: MONO,
             display: 'inline-flex',
             alignItems: 'center',
             gap: '6px',
-            background: 'none',
-            border: 'none',
             padding: '10px 0',
-            cursor: 'pointer',
-            color: '#0a0a0a',
-            fontSize: '13px',
+            color: '#5f5f5f',
+            fontSize: '12px',
             fontWeight: 600,
-            letterSpacing: '0.02em',
+            letterSpacing: '0.04em',
+            textDecoration: 'none',
             minHeight: '44px',
+            transition: 'color 0.15s',
           }}
+          onMouseEnter={e => (e.currentTarget.style.color = '#1a1a1a')}
+          onMouseLeave={e => (e.currentTarget.style.color = '#5f5f5f')}
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-            <path d="M15 18l-6-6 6-6"></path>
-          </svg>
-          back
-        </button>
+          <GitHubIcon size={14} />
+          view on github
+        </a>
       </div>
 
       {/* ── Certificate ── */}
-      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'flex-start', marginBottom: '20px' }}>
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'flex-start', marginBottom: '8px', overflow: 'hidden' }}>
         <div
           ref={wrapperRef}
           style={{
@@ -402,34 +466,44 @@ export default function CertificateCard({ cert, onReset }: Props) {
       </div>
 
       {/* ── Actions below certificate ── */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '100%' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '100%' }}>
 
-        {/* Share button — primary */}
+        {/* Share + Download — side by side */}
         {!showInlineShare && (
-          <button
-            type="button"
-            onClick={handleShare}
-            disabled={isGeneratingShare}
-            className="cert-btn-primary"
-            style={{
-              fontFamily: UI,
-              fontSize: '14px',
-              fontWeight: 700,
-              letterSpacing: '0.06em',
-              width: '100%',
-              height: '52px',
-              background: '#0a0a0a',
-              color: '#fff',
-              border: '2px solid #0a0a0a',
-              cursor: isGeneratingShare ? 'wait' : 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '8px',
-            }}
-          >
-            {isGeneratingShare || isDownloading ? <span className="btn-spinner" /> : (isMobileViewport ? 'Share Story (9:16) →' : 'Share →')}
-          </button>
+          <div style={{ display: 'flex', gap: '8px', width: '100%' }}>
+            <button
+              type="button"
+              onClick={handleShare}
+              disabled={isGeneratingShare}
+              className="cert-btn-primary"
+              style={{
+                fontFamily: MONO, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em',
+                flex: 1, height: '44px',
+                background: '#1a1a1a', color: '#fff',
+                border: '2px solid #1a1a1a',
+                cursor: isGeneratingShare ? 'wait' : 'pointer',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+              }}
+            >
+              {isGeneratingShare || isDownloading ? <span className="btn-spinner" /> : (isMobileViewport ? 'Share as Story' : 'Share certificate')}
+            </button>
+            <button
+              type="button"
+              onClick={handleDownloadA4}
+              disabled={isDownloading || isGeneratingShare}
+              className="cert-btn-secondary"
+              style={{
+                fontFamily: MONO, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em',
+                flex: 1, height: '44px',
+                background: '#FAF6EF', color: '#1a1a1a',
+                border: '2px solid #1a1a1a',
+                cursor: isDownloading ? 'wait' : 'pointer',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
+              }}
+            >
+              {isDownloading ? <span className="btn-spinner" style={{ borderColor: '#1a1a1a', borderTopColor: 'transparent' }} /> : 'Download A4'}
+            </button>
+          </div>
         )}
 
         {/* Inline share options (desktop) */}
@@ -440,9 +514,9 @@ export default function CertificateCard({ cert, onReset }: Props) {
               onClick={handleShareToX}
               className="cert-btn-primary"
               style={{
-                fontFamily: UI, fontSize: '14px', fontWeight: 700, letterSpacing: '0.06em',
-                width: '100%', height: '52px', background: '#0a0a0a', color: '#fff',
-                border: '2px solid #0a0a0a', cursor: 'pointer',
+                fontFamily: MONO, fontSize: '14px', fontWeight: 700, letterSpacing: '0.06em',
+                width: '100%', height: '44px', background: '#1a1a1a', color: '#fff',
+                border: '2px solid #1a1a1a', cursor: 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
             >
@@ -453,9 +527,9 @@ export default function CertificateCard({ cert, onReset }: Props) {
               onClick={handleCopyLink}
               className="cert-btn-secondary"
               style={{
-                fontFamily: UI, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em',
-                width: '100%', height: '52px', background: '#FAF6EF', color: '#0a0a0a',
-                border: '2px solid #0a0a0a', cursor: 'pointer',
+                fontFamily: MONO, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em',
+                width: '100%', height: '44px', background: '#FAF6EF', color: '#1a1a1a',
+                border: '2px solid #1a1a1a', cursor: 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
             >
@@ -467,13 +541,13 @@ export default function CertificateCard({ cert, onReset }: Props) {
               disabled={isDownloading}
               className="cert-btn-secondary"
               style={{
-                fontFamily: UI, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em',
-                width: '100%', height: '52px', background: '#FAF6EF', color: '#0a0a0a',
-                border: '2px solid #0a0a0a', cursor: isDownloading ? 'wait' : 'pointer',
+                fontFamily: MONO, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em',
+                width: '100%', height: '44px', background: '#FAF6EF', color: '#1a1a1a',
+                border: '2px solid #1a1a1a', cursor: isDownloading ? 'wait' : 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
             >
-              {isDownloading ? <span className="btn-spinner" style={{ borderColor: '#0a0a0a', borderTopColor: 'transparent' }} /> : 'Download Instagram (4:5)'}
+              {isDownloading ? <span className="btn-spinner" style={{ borderColor: '#1a1a1a', borderTopColor: 'transparent' }} /> : 'Download Instagram (4:5)'}
             </button>
             <button
               type="button"
@@ -481,13 +555,13 @@ export default function CertificateCard({ cert, onReset }: Props) {
               disabled={isDownloading}
               className="cert-btn-secondary"
               style={{
-                fontFamily: UI, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em',
-                width: '100%', height: '52px', background: '#FAF6EF', color: '#0a0a0a',
-                border: '2px solid #0a0a0a', cursor: isDownloading ? 'wait' : 'pointer',
+                fontFamily: MONO, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em',
+                width: '100%', height: '44px', background: '#FAF6EF', color: '#1a1a1a',
+                border: '2px solid #1a1a1a', cursor: isDownloading ? 'wait' : 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
             >
-              {isDownloading ? <span className="btn-spinner" style={{ borderColor: '#0a0a0a', borderTopColor: 'transparent' }} /> : 'Download Square (1:1)'}
+              {isDownloading ? <span className="btn-spinner" style={{ borderColor: '#1a1a1a', borderTopColor: 'transparent' }} /> : 'Download Square (1:1)'}
             </button>
             <button
               type="button"
@@ -495,13 +569,13 @@ export default function CertificateCard({ cert, onReset }: Props) {
               disabled={isDownloading}
               className="cert-btn-secondary"
               style={{
-                fontFamily: UI, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em',
-                width: '100%', height: '52px', background: '#FAF6EF', color: '#0a0a0a',
-                border: '2px solid #0a0a0a', cursor: isDownloading ? 'wait' : 'pointer',
+                fontFamily: MONO, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em',
+                width: '100%', height: '44px', background: '#FAF6EF', color: '#1a1a1a',
+                border: '2px solid #1a1a1a', cursor: isDownloading ? 'wait' : 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
             >
-              {isDownloading ? <span className="btn-spinner" style={{ borderColor: '#0a0a0a', borderTopColor: 'transparent' }} /> : 'Download X (16:9)'}
+              {isDownloading ? <span className="btn-spinner" style={{ borderColor: '#1a1a1a', borderTopColor: 'transparent' }} /> : 'Download X (16:9)'}
             </button>
             <button
               type="button"
@@ -509,13 +583,13 @@ export default function CertificateCard({ cert, onReset }: Props) {
               disabled={isDownloading}
               className="cert-btn-secondary"
               style={{
-                fontFamily: UI, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em',
-                width: '100%', height: '52px', background: '#FAF6EF', color: '#0a0a0a',
-                border: '2px solid #0a0a0a', cursor: isDownloading ? 'wait' : 'pointer',
+                fontFamily: MONO, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em',
+                width: '100%', height: '44px', background: '#FAF6EF', color: '#1a1a1a',
+                border: '2px solid #1a1a1a', cursor: isDownloading ? 'wait' : 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
             >
-              {isDownloading ? <span className="btn-spinner" style={{ borderColor: '#0a0a0a', borderTopColor: 'transparent' }} /> : 'Download Facebook (1.91:1)'}
+              {isDownloading ? <span className="btn-spinner" style={{ borderColor: '#1a1a1a', borderTopColor: 'transparent' }} /> : 'Download Facebook (1.91:1)'}
             </button>
             <button
               type="button"
@@ -523,19 +597,19 @@ export default function CertificateCard({ cert, onReset }: Props) {
               disabled={isDownloading}
               className="cert-btn-secondary"
               style={{
-                fontFamily: UI, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em',
-                width: '100%', height: '52px', background: '#FAF6EF', color: '#0a0a0a',
-                border: '2px solid #0a0a0a', cursor: isDownloading ? 'wait' : 'pointer',
+                fontFamily: MONO, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em',
+                width: '100%', height: '44px', background: '#FAF6EF', color: '#1a1a1a',
+                border: '2px solid #1a1a1a', cursor: isDownloading ? 'wait' : 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
             >
-              {isDownloading ? <span className="btn-spinner" style={{ borderColor: '#0a0a0a', borderTopColor: 'transparent' }} /> : 'Download Story (9:16)'}
+              {isDownloading ? <span className="btn-spinner" style={{ borderColor: '#1a1a1a', borderTopColor: 'transparent' }} /> : 'Download Story (9:16)'}
             </button>
             <button
               type="button"
               onClick={() => setShowInlineShare(false)}
               style={{
-                fontFamily: UI,
+                fontFamily: MONO,
                 fontSize: '12px',
                 fontWeight: 500,
                 color: '#787878',
@@ -552,70 +626,53 @@ export default function CertificateCard({ cert, onReset }: Props) {
           </div>
         )}
 
-        {/* Download A4 — secondary */}
-        {!showInlineShare && (
-          <button
-            type="button"
-            onClick={handleDownloadA4}
-            disabled={isDownloading || isGeneratingShare}
-            className="cert-btn-secondary"
-            style={{
-              fontFamily: UI, fontSize: '13px', fontWeight: 700,
-              width: '100%', height: '48px', background: '#FAF6EF', color: '#0a0a0a',
-              border: '2px solid #0a0a0a', cursor: isDownloading ? 'wait' : 'pointer',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              gap: '6px', letterSpacing: '0.06em',
-            }}
-          >
-            {isDownloading ? <span className="btn-spinner" style={{ borderColor: '#0a0a0a', borderTopColor: 'transparent' }} /> : 'Download A4'}
-          </button>
-        )}
-
-
-        {/* Badge copy */}
+        {/* Badge copy with preview — matches ReadmeBadge on /user */}
         {!showInlineShare && (() => {
           const repoUrl = `https://commitmentissues.dev/?repo=${encodeURIComponent(cert.repoData.fullName)}`
           const shieldsUrl = `https://img.shields.io/badge/%F0%9F%AA%A6%20declared%20dead-view%20certificate-555?style=for-the-badge&labelColor=cc0000`
           const badgeMd = `[![commitmentissues](${shieldsUrl})](${repoUrl})`
           return (
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: '10px',
-              border: '2px solid #0a0a0a',
-              background: '#FAF6EF',
-              padding: '10px 14px',
-            }}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={shieldsUrl} alt="commitmentissues badge" style={{ height: '28px', display: 'block' }} />
+            <div style={{ marginTop: '6px' }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={shieldsUrl}
+                alt="README badge preview"
+                loading="lazy"
+                decoding="async"
+                style={{ height: '28px', width: 'auto', display: 'block', marginBottom: '10px' }}
+              />
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
+                <p style={{ fontFamily: MONO, fontSize: '10px', color: '#b0a89e', margin: 0, letterSpacing: '0.04em' }}>
+                  ↻ paste once — updates automatically
+                </p>
+                <button
+                  type="button"
+                  onClick={async () => { try { await navigator.clipboard.writeText(badgeMd); setBadgeCopied(true); setTimeout(() => setBadgeCopied(false), 2000) } catch { /* ignore */ } }}
+                  className="readme-copy-btn"
+                  style={{
+                    fontFamily: MONO, fontSize: '10px', fontWeight: 700, letterSpacing: '0.06em',
+                    padding: '8px 14px', minHeight: '44px',
+                    background: badgeCopied ? '#2d7a3c' : 'transparent',
+                    color: badgeCopied ? '#fff' : '#4a4440',
+                    border: `2px solid ${badgeCopied ? '#2d7a3c' : '#cec6bb'}`,
+                    cursor: 'pointer',
+                    transition: 'all 0.15s',
+                    whiteSpace: 'nowrap',
+                    flexShrink: 0,
+                  }}
+                  onMouseEnter={e => { if (!badgeCopied) { e.currentTarget.style.borderColor = '#1a1a1a'; e.currentTarget.style.color = '#1a1a1a' } }}
+                  onMouseLeave={e => { if (!badgeCopied) { e.currentTarget.style.borderColor = '#cec6bb'; e.currentTarget.style.color = '#4a4440' } }}
+                >
+                  {badgeCopied ? '✓ copied!' : '⎘ copy to readme'}
+                </button>
               </div>
-              <button
-                type="button"
-                onClick={async () => { try { await navigator.clipboard.writeText(badgeMd); setBadgeCopied(true); setTimeout(() => setBadgeCopied(false), 2000) } catch { /* ignore */ } }}
-                style={{
-                  fontFamily: UI, fontSize: '11px', fontWeight: 700,
-                  flexShrink: 0,
-                  height: '34px',
-                  padding: '0 14px',
-                  background: badgeCopied ? '#2a5a2a' : '#0a0a0a',
-                  color: '#fff',
-                  border: 'none',
-                  cursor: 'pointer',
-                  letterSpacing: '0.06em',
-                  transition: 'background 0.15s',
-                }}
-              >
-                {badgeCopied ? '✓ Copied' : 'Copy'}
-              </button>
             </div>
           )
         })()}
 
         {/* Export error */}
         {exportError && (
-          <p style={{ fontFamily: UI, fontSize: '12px', color: '#8B1A1A', textAlign: 'center', margin: '0' }}>
+          <p style={{ fontFamily: MONO, fontSize: '12px', color: '#8B1A1A', textAlign: 'center', margin: '0' }}>
             {exportError}
           </p>
         )}
@@ -624,9 +681,9 @@ export default function CertificateCard({ cert, onReset }: Props) {
         <div style={{ textAlign: 'center', marginTop: '6px', marginBottom: '8px' }}>
           <button
             type="button"
-            onClick={() => { track('issue_another_clicked'); onReset() }}
+            onClick={handleBack}
             style={{
-              fontFamily: UI,
+              fontFamily: MONO,
               fontSize: '13px',
               fontWeight: 500,
               color: '#5f5f5f',
@@ -643,7 +700,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
             onMouseEnter={e => { e.currentTarget.style.color = '#1f1f1f' }}
             onMouseLeave={e => { e.currentTarget.style.color = '#5f5f5f' }}
           >
-            certify another repo →
+            {referrerUser ? `back to @${referrerUser}'s graveyard →` : 'certify another repo →'}
           </button>
         </div>
 

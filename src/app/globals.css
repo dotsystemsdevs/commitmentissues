@@ -65,16 +65,7 @@
   margin: 0;
 }
 
-/* Case section header — status tabs in user dashboard */
-.case-header {
-  font-family: var(--font-courier), system-ui, sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-/* Mode tab — subtle plain text toggle */
+/* Mode tab — subtle plain text toggle (UserDashboard drives active state inline) */
 .mode-tab {
   font-family: var(--font-courier), system-ui, sans-serif;
   font-size: 12px;
@@ -93,22 +84,7 @@
   position: relative;
 }
 
-.mode-tab--active {
-  color: var(--c-ink);
-  font-weight: 700;
-}
-
-.mode-tab--active::after {
-  content: '';
-  position: absolute;
-  left: 14px;
-  right: 14px;
-  bottom: 2px;
-  height: 2px;
-  background: var(--c-red);
-}
-
-.mode-tab:not(.mode-tab--active):hover {
+.mode-tab:hover {
   color: var(--c-ink);
 }
 
@@ -174,12 +150,6 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.page-hero-brand--btn:focus-visible {
-  outline: 2px solid #0a0a0a;
-  outline-offset: 4px;
-  border-radius: 4px;
-}
-
 @keyframes hero-float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-7px); }
@@ -197,11 +167,6 @@
   background: #8b0000;
   border-radius: 50%;
   animation: loading-bounce 1s ease-in-out infinite;
-}
-
-@keyframes coffee-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
 }
 
 .page-hero-emoji {
@@ -245,12 +210,6 @@
   justify-content: center;
 }
 
-.page-shell-rule {
-  height: 1px;
-  background: #d8cfc4;
-  width: 100%;
-}
-
 .page-shell-body {
   padding-top: 16px;
   padding-bottom: 8px;
@@ -259,85 +218,6 @@
 /* Subpages don't need flex:1 — keep footer close to content */
 .page-shell-body--subpage {
   flex: 0 0 auto;
-}
-
-/* FAQ / Terms / Privacy numbered rows — hover highlight */
-.faq-row {
-  transition: background 0.12s;
-  border-radius: 6px;
-  margin: 0 -8px;
-  padding-left: 8px !important;
-  padding-right: 8px !important;
-}
-.faq-row:hover {
-  background: #faf7f3;
-}
-
-/* FAQ accordion */
-.subpage-details details {
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.subpage-details details:last-child {
-  border-bottom: none;
-}
-
-.subpage-details summary {
-  cursor: pointer;
-  list-style: none;
-  font-family: var(--font-courier), system-ui, sans-serif;
-  font-size: clamp(15px, 4vw, 16px);
-  font-weight: 700;
-  color: #160a06;
-  min-height: 52px;
-  padding: 14px 36px 14px 0;
-  position: relative;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.subpage-details summary::-webkit-details-marker {
-  display: none;
-}
-
-.subpage-details summary::after {
-  content: '+';
-  position: absolute;
-  right: 4px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #0a0a0a;
-  font-size: 22px;
-  font-weight: 400;
-  line-height: 1;
-  width: 32px;
-  text-align: center;
-}
-
-.subpage-details details[open] summary::after {
-  content: '−';
-}
-
-.subpage-details details[open] > .subpage-details-answer {
-  animation: subpage-fadein 0.18s ease;
-}
-
-@keyframes subpage-fadein {
-  from {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.subpage-details-answer {
-  font-family: var(--font-courier), system-ui, sans-serif;
-  font-size: clamp(14px, 3.8vw, 15px);
-  color: #555;
-  line-height: 1.7;
-  padding: 0 0 18px 0;
 }
 
 /* Subpage ← back link */
@@ -401,11 +281,6 @@ button {
 }
 
 /* ── Graveyard ── */
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-
 @keyframes marquee-reverse {
   from { transform: translateX(-50%); }
   to   { transform: translateX(0); }
@@ -439,83 +314,6 @@ button {
   animation: stamp-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.6s both;
 }
 
-
-/* Terms / Privacy / Pricing bottom link rows */
-.subpage-bottom-links {
-  margin-top: 36px;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 4px;
-}
-
-.subpage-bottom-links a {
-  font-family: var(--font-courier), system-ui, sans-serif;
-  font-size: 15px;
-  min-height: 48px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  border-radius: 8px;
-  padding: 10px 16px;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.subpage-bottom-links a.subpage-bottom-primary {
-  font-weight: 700;
-  color: var(--c-ink);
-  letter-spacing: 0.03em;
-}
-
-.subpage-bottom-links a.subpage-bottom-secondary {
-  font-size: 14px;
-  font-style: italic;
-  font-weight: 500;
-  color: var(--c-muted);
-}
-
-@media (min-width: 480px) {
-  .subpage-bottom-links {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 12px 28px;
-  }
-
-  .subpage-bottom-links a {
-    width: auto;
-    min-height: 44px;
-    padding: 8px 12px;
-  }
-}
-
-
-.coffee-btn {
-  transition: color 0.15s, background 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.12s;
-}
-.coffee-btn:hover {
-  color: #160A06 !important;
-  border-color: #888 !important;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.10);
-}
-.coffee-btn:active {
-  opacity: 0.9;
-}
-
-.coffee-btn-fixed {
-  cursor: pointer;
-  transition: background 0.15s, color 0.15s, box-shadow 0.15s, transform 0.12s;
-}
-.coffee-btn-fixed:hover {
-  background: var(--c-border) !important;
-  color: var(--c-bg) !important;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-}
-.coffee-btn-fixed:active {
-  transform: scale(0.97);
-}
 
 /* Certificate action buttons */
 .cert-btn-primary {
@@ -571,7 +369,7 @@ button {
 
 
 a.subpage-inline-mail {
-  color: #0a0a0a;
+  color: #1a1a1a;
   text-decoration: underline;
   text-underline-offset: 3px;
   word-break: break-all;
@@ -603,85 +401,9 @@ a.subpage-inline-mail {
   padding-top: 20px;
 }
 
-.homepage-cert-preview {
-  --hero-cert-scale: 0.62;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  height: calc(679px * var(--hero-cert-scale));
-  overflow: visible;
-  opacity: 0.92;
-  margin-top: 12px;
-  margin-bottom: 0;
-  pointer-events: none;
-}
-
-.homepage-cert-preview > * {
-  transform: scale(var(--hero-cert-scale));
-  transform-origin: top center;
-}
-
-.site-footer-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 14px;
-  justify-content: center;
-  align-items: center;
-}
-
-.site-footer-nav a {
-  font-size: 13px;
-  color: #5f5f5f;
-  text-decoration: none;
-  padding: 0;
-  min-height: 0;
-  display: inline;
-  border: 0;
-  background: transparent;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-}
-
-.site-footer-nav a {
-  position: relative;
-}
-.site-footer-nav a::after {
-  content: none;
-}
-.site-footer-nav a:hover::after {
-  transform: none;
-}
-.site-footer-nav a:hover {
-  color: #1f1f1f;
-  background: transparent;
-  text-decoration: underline;
-}
-
-.site-footer-nav a:active {
-  color: #0a0a0a;
-}
-
-.site-footer-copy {
-  font-size: 12px;
-  color: #7a7a7a;
-  letter-spacing: 0.04em;
-  margin: 0;
-}
-
 /* Certificate view actions */
 .certificate-card-shell {
   width: min(100%, 480px);
-}
-
-.site-footer-source-link {
-  opacity: 0.9;
-}
-
-@keyframes alive-pulse {
-  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(10,10,10,0.24); }
-  65% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(10,10,10,0); }
-  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(10,10,10,0); }
 }
 
 .input-button-wrapper {
@@ -711,69 +433,13 @@ a.subpage-inline-mail {
   }
 }
 
-.input-chip {
-  font-family: var(--font-courier), system-ui, sans-serif;
-  font-size: 11px;
-  font-weight: 400;
-  padding: 6px 12px;
-  background: transparent;
-  border: 2px solid #cec6bb;
-  cursor: pointer;
-  color: #9a9288;
-  letter-spacing: 0.04em;
-  transition: border-color 0.15s, color 0.15s, background 0.15s;
-}
-
-.input-chip:disabled {
-  cursor: wait;
-  opacity: 0.65;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .input-chip:hover:not(:disabled) {
-    border-color: #1a1a1a;
-    color: #1a1a1a;
-    background: #faf7f3;
-  }
-}
-
 .recent-marquee:hover .recent-track {
   animation-play-state: paused;
 }
 
 .recent-card:focus-visible {
-  outline: 2px solid #0a0a0a;
+  outline: 2px solid #1a1a1a;
   outline-offset: 4px;
-}
-
-.site-footer-nav a:active,
-.site-footer-source-link:active {
-  opacity: 0.82;
-}
-
-.site-footer-source-link:hover,
-.site-footer-nav a:hover,
-.site-footer-copy-btn:hover {
-  opacity: 0.9;
-}
-
-.site-footer-copy-btn {
-  border: 0;
-  background: transparent;
-  padding: 4px 10px;
-  margin: 0 auto;
-  cursor: pointer;
-  border-radius: 999px;
-}
-
-.site-footer-copy-btn:hover {
-  color: #1f1f1f;
-  background: transparent;
-  text-decoration: underline;
-}
-
-.site-footer-copy--alive {
-  animation: alive-pulse 0.85s ease-out;
 }
 
 @keyframes section-fade-up {
@@ -812,29 +478,13 @@ a.subpage-inline-mail {
   animation: section-fade-up 520ms ease-out both;
 }
 
-.about-cards > div,
-.faq-row {
-  animation: section-fade-up 300ms ease-out both;
-}
-
-.about-cards > div:nth-child(2),
-.faq-row:nth-child(2) { animation-delay: 40ms; }
-.about-cards > div:nth-child(3),
-.faq-row:nth-child(3) { animation-delay: 80ms; }
-.about-cards > div:nth-child(4),
-.faq-row:nth-child(4) { animation-delay: 120ms; }
-.about-cards > div:nth-child(5),
-.faq-row:nth-child(5) { animation-delay: 160ms; }
-
 @media (prefers-reduced-motion: reduce) {
   .page-hero,
   .input-block,
   .chips-section,
   .ux-live-section,
   .certificate-card-shell,
-  .site-footer,
-  .about-cards > div,
-  .faq-row {
+  .site-footer {
     animation: none !important;
   }
 }
@@ -936,36 +586,14 @@ a.subpage-inline-mail {
     font-size: 16px !important;
   }
 
-  .homepage-cert-preview {
-    --hero-cert-scale: 0.52;
-  }
-
   .page-shell-body--subpage {
     padding-left: 20px;
     padding-right: 20px;
   }
 
-  /* About cards: less cramped on phone */
-  .about-cards {
-    margin-left: -8px;
-    margin-right: -8px;
-  }
-
-  .about-cards > div {
-    padding: 20px 18px !important;
-  }
-
   /* Footer: keep links low-noise but tappable */
   footer a { font-size: 13px !important; padding: 8px 0 !important; min-height: 44px !important; }
-  .site-footer-nav a { font-size: 13px !important; padding: 8px 10px !important; min-height: 44px !important; display: inline-flex !important; align-items: center !important; }
-  .site-footer-source-link { font-size: 12px !important; }
 
-  /* Mode tabs: center-aligned with separator on mobile */
-  .mode-tab-group {
-    width: 100%;
-    justify-content: center !important;
-    gap: 4px !important;
-  }
   .mode-tab {
     text-align: center;
     padding: 10px 10px;
@@ -986,12 +614,6 @@ a.subpage-inline-mail {
     min-height: 44px;
   }
 
-  /* Certificate back button */
-  .cert-back-btn {
-    min-height: 44px;
-    padding: 12px 0 !important;
-  }
-
   /* ReadmeBadge copy button */
   .readme-copy-btn {
     min-height: 44px;
@@ -1006,10 +628,13 @@ a.subpage-inline-mail {
 
 @media print {
   @page { size: A4 portrait; margin: 12mm; }
-  body::before, body::after { display: none !important; }
   body { background: white !important; }
-  main > *:not(.certificate-wrapper) { display: none !important; }
-  .certificate-actions { display: none !important; }
-  .certificate-wrapper { display: block !important; width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important; position: static !important; }
-  .certificate-card { width: 100% !important; max-width: 100% !important; height: auto !important; aspect-ratio: 210 / 297 !important; box-shadow: none !important; opacity: 1 !important; transform: none !important; page-break-inside: avoid; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .site-footer, .input-button-wrapper, .cert-btn-primary, .cert-btn-secondary { display: none !important; }
+  .certificate-card {
+    width: 100% !important; max-width: 100% !important; height: auto !important;
+    aspect-ratio: 210 / 297 !important; box-shadow: none !important;
+    opacity: 1 !important; transform: none !important;
+    page-break-inside: avoid;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
 }

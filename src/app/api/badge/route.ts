@@ -41,12 +41,12 @@ function buildSvg(username: string, dead: number, struggling: number, alive: num
   const aliveW      = total === 0 ? BAR_W : BAR_W - deadW - strugglingW
   const MONO = "'Courier New','Courier',ui-monospace,monospace"
 
-  return `<svg width="440" height="128" viewBox="0 0 440 128" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Graveyard report for @${username}">
+  return `<svg width="440" height="96" viewBox="0 0 440 96" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Graveyard report for @${username}">
   <defs>
     <clipPath id="bar-clip"><rect x="${BAR_X}" y="${BAR_Y}" width="${BAR_W}" height="${BAR_H}"/></clipPath>
   </defs>
-  <rect width="440" height="128" fill="#FAF6EF"/>
-  <rect x="1.5" y="1.5" width="437" height="125" fill="none" stroke="#0a0a0a" stroke-width="3"/>
+  <rect width="440" height="96" fill="#FAF6EF"/>
+  <rect x="1" y="1" width="438" height="94" fill="none" stroke="#1a1a1a" stroke-width="2"/>
 
   <text x="16" y="28" font-family=${JSON.stringify(MONO)} font-size="9" font-weight="700" fill="#9a9288" letter-spacing="2.2">🪦  GITHUB REPO GRAVEYARD</text>
 
@@ -60,8 +60,6 @@ function buildSvg(username: string, dead: number, struggling: number, alive: num
     ${strugglingW > 0 ? `<rect x="${BAR_X + deadW}"               y="${BAR_Y}" width="${strugglingW}" height="${BAR_H}" fill="#b45309"/>` : ''}
     ${aliveW > 0      ? `<rect x="${BAR_X + deadW + strugglingW}" y="${BAR_Y}" width="${aliveW}"      height="${BAR_H}" fill="#2d7a3c"/>` : ''}
   </g>
-
-  <text x="16" y="104" font-family=${JSON.stringify(MONO)} font-size="10" font-weight="500" fill="#7a7268" letter-spacing="1.2">commitmentissues.dev</text>
 </svg>`
 }
 
@@ -79,7 +77,8 @@ export async function GET(req: NextRequest) {
   return new NextResponse(svg, {
     headers: {
       'Content-Type': 'image/svg+xml',
-      'Cache-Control': 'public, max-age=3600, s-maxage=3600',
+      // Short edge cache so camo/README updates pick up within minutes, not hours
+      'Cache-Control': 'public, max-age=300, s-maxage=300, stale-while-revalidate=900',
     },
   })
 }

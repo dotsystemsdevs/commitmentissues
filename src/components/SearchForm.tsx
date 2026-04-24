@@ -1,40 +1,32 @@
 'use client'
 
-import { FormEvent, useState, useCallback, useEffect } from 'react'
+import { FormEvent, useState, useCallback } from 'react'
 import { track } from '@vercel/analytics'
 import ClickSpark from '@/components/ClickSpark'
 
-const FONT = `var(--font-courier), system-ui, sans-serif`
 const MONO = `var(--font-courier), system-ui, sans-serif`
 
-const PLACEHOLDERS = [
-  'facebook/create-react-app',
-  'vercel/turbo',
-  'angular/angular.js',
-  'gulpjs/gulp',
-  'meteor/meteor',
-  'bower/bower',
-  'your/abandoned-project',
-]
+const PLACEHOLDER = 'username or owner/repo'
+
+const VALID_USERNAME = /^[a-zA-Z0-9_.-]+$/
+
+type ParsedInput =
+  | { kind: 'repo', url: string }
+  | { kind: 'user', username: string }
+  | null
 
 interface Props {
   url: string
   setUrl: (v: string) => void
   onSubmit: (normalizedUrl: string) => void
+  onUserSubmit: (username: string) => void
   onSelect: (url: string) => void
   loading: boolean
 }
 
-export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }: Props) {
+export default function SearchForm({ url, setUrl, onSubmit, onUserSubmit, onSelect, loading }: Props) {
   const [invalid, setInvalid] = useState(false)
   const [randomLoading, setRandomLoading] = useState(false)
-  const [placeholderIdx, setPlaceholderIdx] = useState(0)
-
-  useEffect(() => {
-    if (url) return
-    const id = setInterval(() => setPlaceholderIdx(i => (i + 1) % PLACEHOLDERS.length), 5000)
-    return () => clearInterval(id)
-  }, [url])
 
   const handleRandom = useCallback(async () => {
     setRandomLoading(true)
@@ -52,30 +44,43 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
     }
   }, [onSelect])
 
-  function normalizeGithubInput(value: string): string | null {
+  function parseInput(value: string): ParsedInput {
     const trimmed = value.trim()
     if (!trimmed) return null
 
-    const githubUrlMatch = trimmed.match(/(?:https?:\/\/)?(?:www\.)?github\.com\/([^/\s]+)\/([^/\s#?]+)(?:[/?#]|$)/i)
-    if (githubUrlMatch) {
-      const owner = githubUrlMatch[1]
-      const repo = githubUrlMatch[2].replace(/\.git$/i, '')
-      return `https://github.com/${owner}/${repo}`
+    // Full github URL with owner/repo
+    const githubRepoUrl = trimmed.match(/(?:https?:\/\/)?(?:www\.)?github\.com\/([^/\s]+)\/([^/\s#?]+)(?:[/?#]|$)/i)
+    if (githubRepoUrl) {
+      const owner = githubRepoUrl[1]
+      const repo = githubRepoUrl[2].replace(/\.git$/i, '')
+      return { kind: 'repo', url: `https://github.com/${owner}/${repo}` }
     }
 
+    // Github URL with just owner (profile)
+    const githubUserUrl = trimmed.match(/(?:https?:\/\/)?(?:www\.)?github\.com\/([^/\s?#]+)\/?$/i)
+    if (githubUserUrl && VALID_USERNAME.test(githubUserUrl[1])) {
+      return { kind: 'user', username: githubUserUrl[1] }
+    }
+
+    // owner/repo slug
     const slugMatch = trimmed.match(/^([^/\s]+)\/([^/\s]+)$/)
     if (slugMatch) {
       const owner = slugMatch[1]
       const repo = slugMatch[2].replace(/\.git$/i, '')
-      return `https://github.com/${owner}/${repo}`
+      return { kind: 'repo', url: `https://github.com/${owner}/${repo}` }
     }
 
-    // Also support loose pastes like "owner/repo/blob/main/..."
+    // Loose paste like "owner/repo/blob/main/..."
     const looseParts = trimmed.split('/').filter(Boolean)
     if (looseParts.length >= 2 && !trimmed.includes('github.com')) {
       const owner = looseParts[0]
       const repo = looseParts[1].replace(/\.git$/i, '')
-      if (owner && repo) return `https://github.com/${owner}/${repo}`
+      if (owner && repo) return { kind: 'repo', url: `https://github.com/${owner}/${repo}` }
+    }
+
+    // Just a username (no slashes)
+    if (VALID_USERNAME.test(trimmed)) {
+      return { kind: 'user', username: trimmed }
     }
 
     return null
@@ -85,17 +90,25 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
     setUrl(val)
   }
 
+  // Live-detect what the user is typing so the button can adapt
+  const detected = parseInput(url)
+
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
-    const normalizedUrl = normalizeGithubInput(url)
-    if (!normalizedUrl) {
+    const parsed = parseInput(url)
+    if (!parsed) {
       setInvalid(true)
       return
     }
     setInvalid(false)
-    setUrl(normalizedUrl)
-    track('repo_submitted')
-    onSubmit(normalizedUrl)
+    if (parsed.kind === 'repo') {
+      setUrl(parsed.url)
+      track('repo_submitted')
+      onSubmit(parsed.url)
+    } else {
+      track('user_submitted')
+      onUserSubmit(parsed.username)
+    }
   }
 
   return (
@@ -108,7 +121,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
         background: '#FAF6EF',
         boxShadow: '0 4px 14px rgba(0,0,0,0.06)',
       }}>
-        <span style={{ fontFamily: MONO, fontSize: '15px', fontWeight: 700, color: '#666', padding: '0 2px 0 16px', display: 'flex', alignItems: 'center', flexShrink: 0, userSelect: 'none' }}>
+        <span style={{ fontFamily: MONO, fontSize: '14px', fontWeight: 700, color: '#666', padding: '0 2px 0 16px', display: 'flex', alignItems: 'center', flexShrink: 0, userSelect: 'none' }}>
           github.com/
         </span>
         <input
@@ -117,7 +130,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
           inputMode="url"
           value={url.replace(/^(?:https?:\/\/)?(?:www\.)?github\.com\//i, '')}
           onChange={e => { if (invalid) setInvalid(false); handleChange(e.target.value) }}
-          placeholder={PLACEHOLDERS[placeholderIdx]}
+          placeholder={PLACEHOLDER}
           style={{
             fontFamily: MONO,
             fontSize: '16px',
@@ -139,7 +152,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
           type="submit"
           disabled={loading}
           style={{
-            fontFamily: FONT,
+            fontFamily: MONO,
             fontSize: '14px',
             fontWeight: 700,
             letterSpacing: '0.06em',
@@ -159,13 +172,20 @@ export default function SearchForm({ url, setUrl, onSubmit, onSelect, loading }:
             touchAction: 'manipulation',
           }}
         >
-          {loading ? <span className="btn-spinner" /> : 'Declare Dead →'}
+          {loading
+            ? <span className="btn-spinner" />
+            : detected?.kind === 'user'
+              ? 'Autopsy Profile →'
+              : detected?.kind === 'repo'
+                ? 'Declare Dead →'
+                : 'Run Autopsy →'
+          }
         </button>
         </ClickSpark>
       </div>
 
       {invalid && (
-        <p style={{ margin: '-2px 2px 0', fontFamily: FONT, fontSize: '12px', color: '#8B0000' }}>
+        <p style={{ margin: '-2px 2px 0', fontFamily: MONO, fontSize: '12px', color: '#8B0000' }}>
           Invalid URL. Expected github.com/owner/repo.
         </p>
       )}

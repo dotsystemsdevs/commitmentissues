@@ -7,7 +7,7 @@ interface Props {
   count?: number
 }
 
-export default function ClickSpark({ children, color = '#0a0a0a', count = 10 }: Props) {
+export default function ClickSpark({ children, color = '#1a1a1a', count = 10 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {

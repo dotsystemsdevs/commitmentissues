@@ -11,7 +11,9 @@ interface Props {
 export default function ReadmeBadge({ username }: Props) {
   const [copied, setCopied] = useState(false)
 
-  const badgeUrl   = `https://commitmentissues.dev/api/badge?username=${username}`
+  // Version param forces GitHub's camo proxy to refetch when we redesign the badge.
+  const BADGE_VERSION = '3'
+  const badgeUrl   = `https://commitmentissues.dev/api/badge?username=${username}&v=${BADGE_VERSION}`
   const profileUrl = `https://commitmentissues.dev/user/${username}`
   const altText    = `Commitment Issues — @${username}'s graveyard`
   const markdown   = `[![${altText}](${badgeUrl})](${profileUrl})`
@@ -26,11 +28,13 @@ export default function ReadmeBadge({ username }: Props) {
   return (
     <div style={{ marginBottom: '40px' }}>
       {/* Badge preview — aspect-ratio wrapper prevents layout shift while loading */}
-      <div style={{ width: '100%', aspectRatio: '440 / 128', marginBottom: '10px' }}>
+      <div style={{ width: '100%', aspectRatio: '440 / 96', marginBottom: '10px' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={`/api/badge?username=${username}&v=18`}
+          src={`/api/badge?username=${username}&v=${BADGE_VERSION}`}
           alt={altText}
+          loading="lazy"
+          decoding="async"
           style={{ width: '100%', height: '100%', display: 'block' }}
         />
       </div>
