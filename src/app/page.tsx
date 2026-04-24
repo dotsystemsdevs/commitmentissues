@@ -187,7 +187,7 @@ function HomePage() {
       )}
 
       {idle && (
-        <div style={{ width: '100%', marginTop: '56px' }}>
+        <div className="homepage-recent-wrap" style={{ width: '100%', marginTop: '28px' }}>
           <RecentlyBuried onSelect={handleSelect} />
         </div>
       )}
