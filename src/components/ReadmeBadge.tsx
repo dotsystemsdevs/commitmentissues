@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { copyText, promptCopy } from '@/lib/clipboard'
 
 const MONO = `var(--font-courier), system-ui, sans-serif`
 
@@ -18,11 +19,11 @@ export default function ReadmeBadge({ username }: Props) {
   const altText    = `Commitment Issues — @${username}'s graveyard`
   const markdown   = `[![${altText}](${badgeUrl})](${profileUrl})`
 
-  function handleCopy() {
-    navigator.clipboard.writeText(markdown).then(() => {
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    })
+  async function handleCopy() {
+    const ok = await copyText(markdown)
+    if (!ok) promptCopy(markdown, 'Copy this README badge markdown')
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
   }
 
   return (

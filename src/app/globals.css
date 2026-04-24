@@ -543,7 +543,10 @@ a.subpage-inline-mail {
 @media (max-width: 640px) {
   /* Page padding */
   main { padding-left: 16px !important; padding-right: 16px !important; }
-  .page-shell-main { padding-top: calc(env(safe-area-inset-top) + 28px); }
+  .page-shell-main {
+    min-height: 100svh;
+    padding-top: calc(env(safe-area-inset-top) + 36px) !important;
+  }
 
   /* Certificate wrapper spacing only; scale is handled in CertificateCard.tsx */
   .certificate-scroll-zone {
@@ -570,11 +573,22 @@ a.subpage-inline-mail {
   }
 
   /* Hero: keep CTA above the fold on small screens */
-  .page-hero { padding-top: 6px; padding-bottom: 8px; }
+  .page-hero { padding-top: 14px; padding-bottom: 10px; }
   .page-hero-emoji { font-size: clamp(48px, 13vw, 62px); margin-bottom: 6px; }
   .page-hero-title { font-size: clamp(2.4rem, 12vw, 3.2rem); margin: 4px 0 8px; }
   .page-hero-sub { font-size: 13px; }
-  .page-shell-main { min-height: 100svh; padding-top: calc(env(safe-area-inset-top) + 20px) !important; }
+
+  /* Hall of Fame marquee: less clipped on phones */
+  .recent-marquee {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    height: 284px !important;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 18px, black calc(100% - 18px), transparent) !important;
+    mask-image: linear-gradient(to right, transparent, black 18px, black calc(100% - 18px), transparent) !important;
+  }
+  .recent-card {
+    height: 230px !important;
+  }
 
   .input-button-wrapper {
     flex-direction: column;
@@ -613,7 +627,8 @@ a.subpage-inline-mail {
   }
 
   /* Footer: keep links low-noise but tappable */
-  footer a { font-size: 13px !important; padding: 8px 0 !important; min-height: 44px !important; }
+  .site-footer { padding-top: 10px; padding-bottom: max(10px, env(safe-area-inset-bottom)); gap: 2px; }
+  footer a { font-size: 12px !important; padding: 6px 0 !important; min-height: 36px !important; }
 
   .mode-tab {
     text-align: center;
