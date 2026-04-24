@@ -56,9 +56,9 @@
   display: block;
 }
 
-/* Value — serif body text */
+/* Value — mono body text (unified typography) */
 .record-value {
-  font-family: var(--font-dm), Georgia, serif;
+  font-family: var(--font-courier), system-ui, sans-serif;
   font-size: 14px;
   color: var(--c-ink-2);
   line-height: 1.65;

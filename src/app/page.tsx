@@ -14,7 +14,6 @@ import UserDashboard from '@/components/UserDashboard'
 import type { UserRepoSummary } from '@/lib/types'
 
 const MONO = `var(--font-courier), system-ui, sans-serif`
-const UI = `var(--font-dm), system-ui, sans-serif`
 
 export default function Page() {
   const { url, setUrl, certificate, error, loading, analyze, reset } = useRepoAnalysis()
