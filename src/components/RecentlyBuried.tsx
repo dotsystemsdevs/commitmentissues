@@ -52,7 +52,7 @@ const Card = memo(function Card({ entry, count, placed, onSelect, onToggle }: Ca
         alignItems: 'flex-start',
         gap: '8px',
         width: 'clamp(260px, 76vw, 320px)',
-        height: '200px',
+        height: '232px',
         flexShrink: 0,
         padding: '18px 20px',
         background: '#EDE8E1',
@@ -147,7 +147,7 @@ export default function RecentlyBuried({ onSelect }: Props) {
           width: '100vw',
           marginLeft: 'calc(50% - 50vw)',
           overflow: 'hidden',
-          height: '300px',
+          height: '332px',
           padding: '14px 24px 16px',
           boxSizing: 'border-box',
         }}
