@@ -149,8 +149,7 @@ export default function RecentlyBuried({ onSelect }: Props) {
           overflow: 'hidden',
           height: '300px',
           padding: '14px 24px 16px',
-          WebkitMaskImage: 'linear-gradient(to right, transparent, black 24px, black calc(100% - 24px), transparent)',
-          maskImage: 'linear-gradient(to right, transparent, black 24px, black calc(100% - 24px), transparent)',
+          boxSizing: 'border-box',
         }}
       >
         <div
