@@ -374,6 +374,12 @@ button {
   width: 100%;
   background: transparent;
 }
+
+.readme-badge-block--profile {
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
 .readme-badge-row {
   display: flex;
   align-items: center;
@@ -694,6 +700,21 @@ a.subpage-inline-mail {
   .readme-copy-btn {
     min-height: 44px;
     padding: 10px 16px !important;
+  }
+
+  /* ReadmeBadge on profile: stack caption + button, avoid awkward side placement */
+  .readme-badge-row {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+  .readme-badge-caption {
+    margin: 0 !important;
+    text-align: left;
+  }
+  .readme-copy-btn {
+    width: 100%;
   }
 
 }

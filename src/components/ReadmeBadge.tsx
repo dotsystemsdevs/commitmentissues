@@ -47,7 +47,7 @@ export default function ReadmeBadge({ username }: Props) {
   }
 
   return (
-    <div className="readme-badge-block record-card" style={{ width: '100%', marginBottom: '22px', border: '2px solid #1a1a1a' }}>
+    <div className="readme-badge-block readme-badge-block--profile record-card" style={{ width: '100%', marginBottom: '22px', border: '2px solid #1a1a1a' }}>
       {/* Badge preview — the SVG already has its own border; keep the wrapper borderless */}
       <div className="readme-badge-preview" style={{ width: '100%', aspectRatio: '440 / 96', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         {svg ? (
@@ -90,7 +90,7 @@ export default function ReadmeBadge({ username }: Props) {
       </div>
 
       {/* Copy row */}
-      <div className="readme-badge-row" style={{ marginTop: '10px', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+      <div className="readme-badge-row" style={{ marginTop: '10px' }}>
         <p className="readme-badge-caption" style={{ fontFamily: MONO, margin: 0, textAlign: 'left' }}>
           ↻ paste once — updates automatically
         </p>
