@@ -52,7 +52,7 @@ const Card = memo(function Card({ entry, count, placed, onSelect, onToggle }: Ca
         alignItems: 'flex-start',
         gap: '8px',
         width: 'clamp(260px, 76vw, 320px)',
-        height: '250px',
+        height: '200px',
         flexShrink: 0,
         padding: '18px 20px',
         background: '#EDE8E1',

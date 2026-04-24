@@ -545,7 +545,7 @@ a.subpage-inline-mail {
   main { padding-left: 16px !important; padding-right: 16px !important; }
   .page-shell-main {
     min-height: 100svh;
-    padding-top: calc(env(safe-area-inset-top) + 40px) !important;
+    padding-top: calc(env(safe-area-inset-top) + 64px) !important;
   }
 
   /* Certificate wrapper spacing only; scale is handled in CertificateCard.tsx */
@@ -582,12 +582,12 @@ a.subpage-inline-mail {
   .recent-marquee {
     padding-left: 16px !important;
     padding-right: 16px !important;
-    height: 268px !important;
+    height: 214px !important;
     -webkit-mask-image: linear-gradient(to right, transparent, black 18px, black calc(100% - 18px), transparent) !important;
     mask-image: linear-gradient(to right, transparent, black 18px, black calc(100% - 18px), transparent) !important;
   }
   .recent-card {
-    height: 214px !important;
+    height: 164px !important;
   }
 
   .homepage-recent-wrap {
