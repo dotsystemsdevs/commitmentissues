@@ -632,40 +632,44 @@ export default function CertificateCard({ cert, onReset }: Props) {
           const shieldsUrl = `https://img.shields.io/badge/%F0%9F%AA%A6%20declared%20dead-view%20certificate-555?style=for-the-badge&labelColor=cc0000`
           const badgeMd = `[![commitmentissues](${shieldsUrl})](${repoUrl})`
           return (
-            <div className="readme-badge-block">
-              <div className="readme-badge-row">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={shieldsUrl}
-                  alt="README badge preview"
-                  loading="lazy"
-                  decoding="async"
-                  style={{ height: '28px', width: 'auto', display: 'block', flexShrink: 0 }}
-                />
-                <button
-                  type="button"
-                  onClick={async () => { try { await navigator.clipboard.writeText(badgeMd); setBadgeCopied(true); setTimeout(() => setBadgeCopied(false), 2000) } catch { /* ignore */ } }}
-                  className="readme-copy-btn"
-                  style={{
-                    fontFamily: MONO, fontSize: '10px', fontWeight: 700, letterSpacing: '0.06em',
-                    padding: '8px 14px', minHeight: '36px',
-                    background: badgeCopied ? '#2d7a3c' : 'transparent',
-                    color: badgeCopied ? '#fff' : '#4a4440',
-                    border: `2px solid ${badgeCopied ? '#2d7a3c' : '#cec6bb'}`,
-                    cursor: 'pointer',
-                    transition: 'all 0.15s',
-                    whiteSpace: 'nowrap',
-                    flexShrink: 0,
-                  }}
-                  onMouseEnter={e => { if (!badgeCopied) { e.currentTarget.style.borderColor = '#1a1a1a'; e.currentTarget.style.color = '#1a1a1a' } }}
-                  onMouseLeave={e => { if (!badgeCopied) { e.currentTarget.style.borderColor = '#cec6bb'; e.currentTarget.style.color = '#4a4440' } }}
-                >
-                  {badgeCopied ? '✓ copied!' : '⎘ copy to readme'}
-                </button>
+            <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+              <div className="readme-badge-block record-card" style={{ border: '2px solid #1a1a1a', boxShadow: '0 1px 4px rgba(0,0,0,0.05)', padding: '14px 16px', width: '100%' }}>
+                <div className="readme-badge-row">
+                  <div style={{ display: 'flex', justifyContent: 'center', flex: '1 1 260px' }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={shieldsUrl}
+                      alt="README badge preview"
+                      loading="lazy"
+                      decoding="async"
+                      style={{ height: '28px', width: 'auto', display: 'block', flexShrink: 0 }}
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={async () => { try { await navigator.clipboard.writeText(badgeMd); setBadgeCopied(true); setTimeout(() => setBadgeCopied(false), 2000) } catch { /* ignore */ } }}
+                    className="readme-copy-btn"
+                    style={{
+                      fontFamily: MONO, fontSize: '10px', fontWeight: 700, letterSpacing: '0.06em',
+                      padding: '8px 14px', minHeight: '36px',
+                      background: badgeCopied ? '#2d7a3c' : 'transparent',
+                      color: badgeCopied ? '#fff' : '#4a4440',
+                      border: `2px solid ${badgeCopied ? '#2d7a3c' : '#cec6bb'}`,
+                      cursor: 'pointer',
+                      transition: 'all 0.15s',
+                      whiteSpace: 'nowrap',
+                      flexShrink: 0,
+                    }}
+                    onMouseEnter={e => { if (!badgeCopied) { e.currentTarget.style.borderColor = '#1a1a1a'; e.currentTarget.style.color = '#1a1a1a' } }}
+                    onMouseLeave={e => { if (!badgeCopied) { e.currentTarget.style.borderColor = '#cec6bb'; e.currentTarget.style.color = '#4a4440' } }}
+                  >
+                    {badgeCopied ? '✓ copied!' : '⎘ copy to readme'}
+                  </button>
+                </div>
+                <p className="readme-badge-caption" style={{ fontFamily: MONO, textAlign: 'left' }}>
+                  ↻ paste once — updates automatically
+                </p>
               </div>
-              <p className="readme-badge-caption" style={{ fontFamily: MONO }}>
-                ↻ paste once — updates automatically
-              </p>
             </div>
           )
         })()}
