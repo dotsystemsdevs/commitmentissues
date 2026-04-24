@@ -34,19 +34,31 @@ async function fetchStats(username: string) {
   return { dead, struggling, alive, total: dead + struggling + alive }
 }
 
-function buildSvg(username: string, dead: number, struggling: number, alive: number, total: number) {
+function buildSvg(
+  username: string,
+  dead: number,
+  struggling: number,
+  alive: number,
+  total: number,
+  framed: boolean
+) {
   const BAR_X = 16, BAR_W = 408, BAR_Y = 76, BAR_H = 6
   const deadW       = total === 0 ? 0 : Math.round((dead       / total) * BAR_W)
   const strugglingW = total === 0 ? 0 : Math.round((struggling / total) * BAR_W)
   const aliveW      = total === 0 ? BAR_W : BAR_W - deadW - strugglingW
   const MONO = "'Courier New','Courier',ui-monospace,monospace"
 
+  const outerBg = framed ? `<rect width="440" height="96" fill="#FAF6EF"/>` : ''
+  const outerStroke = framed
+    ? `<rect x="1" y="1" width="438" height="94" fill="none" stroke="#1a1a1a" stroke-width="2"/>`
+    : ''
+
   return `<svg width="440" height="96" viewBox="0 0 440 96" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Graveyard report for @${username}">
   <defs>
     <clipPath id="bar-clip"><rect x="${BAR_X}" y="${BAR_Y}" width="${BAR_W}" height="${BAR_H}"/></clipPath>
   </defs>
-  <rect width="440" height="96" fill="#FAF6EF"/>
-  <rect x="1" y="1" width="438" height="94" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+  ${outerBg}
+  ${outerStroke}
 
   <text x="16" y="28" font-family=${JSON.stringify(MONO)} font-size="9" font-weight="700" fill="#9a9288" letter-spacing="2.2">GITHUB REPO GRAVEYARD</text>
 
@@ -69,10 +81,13 @@ export async function GET(req: NextRequest) {
     return new NextResponse('invalid username', { status: 400 })
   }
 
+  const framedParam = req.nextUrl.searchParams.get('frame')
+  const framed = framedParam == null ? true : framedParam !== '0'
+
   const stats = await fetchStats(username)
   const { dead, struggling, alive, total } = stats ?? { dead: 0, struggling: 0, alive: 0, total: 0 }
 
-  const svg = buildSvg(username, dead, struggling, alive, total)
+  const svg = buildSvg(username, dead, struggling, alive, total, framed)
 
   return new NextResponse(svg, {
     headers: {

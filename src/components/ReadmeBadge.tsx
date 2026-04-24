@@ -16,7 +16,7 @@ export default function ReadmeBadge({ username }: Props) {
 
   // Version param forces GitHub's camo proxy to refetch when we redesign the badge.
   const BADGE_VERSION = '3'
-  const badgeUrl   = `https://commitmentissues.dev/api/badge?username=${username}&v=${BADGE_VERSION}`
+  const badgeUrl   = `https://commitmentissues.dev/api/badge?username=${username}&v=${BADGE_VERSION}&frame=1`
   const profileUrl = `https://commitmentissues.dev/user/${username}`
   const altText    = `Commitment Issues — @${username}'s graveyard`
   const markdown   = `[![${altText}](${badgeUrl})](${profileUrl})`
@@ -25,7 +25,7 @@ export default function ReadmeBadge({ username }: Props) {
     let cancelled = false
     setSvg(null)
     setSvgError(false)
-    fetch(`/api/badge?username=${encodeURIComponent(username)}&v=${BADGE_VERSION}`)
+    fetch(`/api/badge?username=${encodeURIComponent(username)}&v=${BADGE_VERSION}&frame=0`)
       .then(r => {
         if (!r.ok) throw new Error('badge fetch failed')
         return r.text()
@@ -47,7 +47,7 @@ export default function ReadmeBadge({ username }: Props) {
   }
 
   return (
-    <div className="readme-badge-block" style={{ width: '100%', marginBottom: '22px' }}>
+    <div className="readme-badge-block record-card" style={{ width: '100%', marginBottom: '22px', border: '2px solid #1a1a1a' }}>
       {/* Badge preview — the SVG already has its own border; keep the wrapper borderless */}
       <div className="readme-badge-preview" style={{ width: '100%', aspectRatio: '440 / 96', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         {svg ? (
@@ -65,8 +65,7 @@ export default function ReadmeBadge({ username }: Props) {
             style={{
               width: '100%',
               height: '100%',
-              border: '2px solid #1a1a1a',
-              background: 'var(--c-bg)',
+              background: 'transparent',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
