@@ -4,27 +4,34 @@ A free developer tool that generates official-looking death certificates for aba
 
 ## What it does
 
-- Paste any public GitHub repo URL to get a printable death certificate
-- Analyzes commit history, archive status, and activity decay to assign a cause of death
-- Shows last commit as "last words" and repo stats (stars, issues, language)
-- Generates shareable certificate images and embeddable README badges
-- User graveyard scanner: check any GitHub username to see all dead, struggling, and alive repos
+- Paste any public GitHub repo URL to get a printable death certificate.
+- Analyses commit history, archive status, and activity decay to assign a cause of death.
+- Shows the last commit as "last words" and surfaces repo stats (stars, issues, language).
+- Generates shareable certificate images and embeddable README badges.
+- Profile graveyard scanner: paste a GitHub username to see every dead, struggling, and alive repo.
 
-## Key pages
+## Pages
 
-- https://commitmentissues.dev — main tool, paste a repo URL to generate a certificate
-- https://commitmentissues.dev/about — how it works, privacy, terms
-- https://commitmentissues.dev/user/[username] — graveyard report for a GitHub user
+- https://commitmentissues.dev — main tool, paste a repo URL or username.
+- https://commitmentissues.dev/about — how it works, privacy, terms.
+- https://commitmentissues.dev/legal — terms of use and privacy policy.
+- https://commitmentissues.dev/user/[username] — graveyard report for a GitHub user.
 
-## API
+## Public API (no auth)
 
-- GET /api/repo?url={github_repo_url} — returns repo stats and generated cause of death
-- GET /api/user?username={github_username} — returns all repos for a user with dead/struggling/alive classification
-- GET /api/badge?username={github_username} — returns an SVG badge for GitHub READMEs
+- GET /api/repo?url={github_repo_url} — returns a full death certificate.
+- GET /api/user?username={github_username} — returns repos grouped by Dead / Struggling / Alive.
+- GET /api/badge?username={github_username} — SVG badge for GitHub READMEs.
+- GET /api/certificate-image/{owner}/{repo} — Satori-rendered certificate PNG for embeds.
+- GET /api/recent — the 10 most recent burials.
+- GET /api/random — a random dead-repo URL.
+- GET /api/stats — buried + profiles counters.
+- GET /api/candle — wreath totals per repo.
 
 ## Notes
 
-- Public repos only; no authentication required
-- Data sourced from GitHub's public API
-- Causes of death are algorithmic, not human-written
-- Free to use; no account required
+- Public repos only; no authentication required.
+- Data sourced from GitHub's public REST API.
+- Causes of death are algorithmic, not human-written.
+- Free to use; no account required.
+- Source: https://github.com/dotsystemsdevs/commitmentissues

@@ -1,19 +1,21 @@
 ## What changed
 
-- 
+<!-- One or two sentences. -->
 
 ## Why
 
-- 
+<!-- Link the issue, or explain the user-facing reason. -->
 
 ## Checklist
 
-- [ ] I tested my change locally (`npm run lint` and `npm test`)
-- [ ] I kept the scope focused and avoided unrelated refactors
-- [ ] I updated docs/screenshots if behavior or UI changed
-- [ ] I confirmed no secrets are added
+- [ ] `npm run lint` passes
+- [ ] `npm run typecheck` passes
+- [ ] `npm test` passes
+- [ ] Tested locally (`npm run dev`)
+- [ ] Scope is focused — no unrelated refactors bundled in
+- [ ] Docs / screenshots updated if behaviour or UI changed
+- [ ] No secrets, API keys, or `.env*.local` files added
 
-## Screenshots (if UI change)
+## Screenshots
 
-<!-- Add before/after images or a short clip -->
-
+<!-- Before / after, or short clip, if any UI moved. Delete the section if not applicable. -->

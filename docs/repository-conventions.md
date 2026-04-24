@@ -1,22 +1,32 @@
 # Repository conventions
 
-This project keeps file naming and layout simple on purpose.
+Lightweight conventions used across this repo. The goal is consistency, not ceremony.
 
 ## Naming
 
-- Use `kebab-case` for docs and config file names (`v1.0.0.md`, `repository-conventions.md`)
-- Use `lowercase` folder names (`docs`, `screenshots`, `releases`)
-- Keep React component files in `PascalCase` (`CertificateCard.tsx`)
-- Keep utility modules in `camelCase` (`recentStore.ts`, `rateLimit.ts`)
+| Kind | Convention | Example |
+| --- | --- | --- |
+| Docs and config files | `kebab-case` | `repository-conventions.md`, `next.config.mjs` |
+| Folders | lowercase | `docs/`, `screenshots/` |
+| React components | `PascalCase.tsx` | `CertificateCard.tsx` |
+| Hooks | `useCamelCase.ts` | `useRepoAnalysis.ts`, `useCandles.ts` |
+| Library / pure logic | `camelCase.ts` | `rateLimit.ts`, `recentStore.ts` |
 
-## Folders
+## Folder layout
 
-- `src/app`: routes and API handlers
-- `src/components`: UI components
-- `src/lib`: pure logic and shared utilities
-- `docs/screenshots`: README images and GIFs
-- `docs/releases`: release notes
+| Folder | Purpose |
+| --- | --- |
+| `src/app/` | Routes, API handlers, layouts, SEO files. App Router only. |
+| `src/components/` | UI components and feature-scoped hooks. |
+| `src/hooks/` | Cross-feature React hooks. |
+| `src/lib/` | Pure logic and shared utilities — no React imports. |
+| `docs/screenshots/` | README images. |
+| `.github/` | Templates, workflows, and contributor docs. |
 
 ## Scope rule
 
-Prefer small, focused changes over broad refactors.
+Prefer small, focused changes over broad refactors. If a change spans several concerns, open a tracking issue first.
+
+## Commit messages
+
+Conventional Commit prefixes (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `style:`, `test:`) are used in history but not enforced. Aim for a one-line summary that describes the user-facing change, not the file you touched.
