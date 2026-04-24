@@ -102,14 +102,14 @@ const Card = memo(function Card({ entry, count, placed, onSelect, onToggle }: Ca
         background: 'radial-gradient(ellipse at 50% 85%, rgba(45,122,60,0.22) 0%, rgba(45,122,60,0.10) 45%, transparent 70%)',
         borderRadius: '4px',
       }}>🪦</span>
-      <span style={{ fontFamily: MONO, fontSize: '14px', fontWeight: 700, color: '#1a1a1a', lineHeight: 1.3, wordBreak: 'break-word', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%', paddingRight: '56px' }}>
+      <span style={{ fontFamily: MONO, fontSize: '14px', fontWeight: 700, color: '#1a1a1a', lineHeight: 1.35, paddingBottom: '2px', wordBreak: 'break-word', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%', paddingRight: '56px' }}>
         {entry.fullName}
       </span>
-      <span className="recent-card-cause" style={{ fontFamily: MONO, fontSize: '12px', color: '#3d3832', lineHeight: 1.55, fontWeight: 500, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+      <span className="recent-card-cause" style={{ fontFamily: MONO, fontSize: '12px', color: '#3d3832', lineHeight: 1.6, paddingBottom: '2px', fontWeight: 500, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
         {entry.cause}
       </span>
       {entry.lastWords && (
-        <span className="recent-card-lastwords" style={{ fontFamily: MONO, fontSize: '11px', fontStyle: 'italic', color: '#7a7268', lineHeight: 1.5, fontWeight: 400, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+        <span className="recent-card-lastwords" style={{ fontFamily: MONO, fontSize: '11px', fontStyle: 'italic', color: '#7a7268', lineHeight: 1.6, paddingBottom: '2px', fontWeight: 400, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
           &ldquo;{entry.lastWords}&rdquo;
         </span>
       )}
