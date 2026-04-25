@@ -1,7 +1,5 @@
 [![commitmentissues](https://img.shields.io/badge/%E2%9A%B0%20commitmentissues-declared%20dead-cc0000?style=for-the-badge&labelColor=1a0f06)](https://commitmentissues.dev/?repo=atom%2Fatom)
 
-[![atom — Certificate of Death](https://commitmentissues.dev/api/certificate-image/atom/atom)](https://commitmentissues.dev/?repo=atom%2Fatom)
-
 # Commitment Issues
 
 Death certificates for abandoned GitHub repositories.
@@ -47,9 +45,9 @@ The badge is rendered live, refreshes through GitHub's image proxy within minute
 
 ## Screenshots
 
-| Certificate of Death | About page |
-| --- | --- |
-| ![Certificate of Death](docs/screenshots/certificate.png) | ![About page](docs/screenshots/about.png) |
+| Certificate of Death | Profile graveyard | Active profile |
+| --- | --- | --- |
+| ![Certificate of Death](docs/screenshots/certificate.png) | ![Profile graveyard](docs/screenshots/graveyard.png) | ![Active profile](docs/screenshots/scan.png) |
 
 ## Tech stack
 
