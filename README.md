@@ -174,6 +174,20 @@ src/
     └── types.ts                      ← shared TypeScript types
 ```
 
+## Browser extension
+
+A small Chrome extension lives in [`extension/`](extension/) that injects a 🪦 "Declared Dead — View Certificate" badge next to the title on any GitHub repo page where the API reports `deathIndex >= 6`.
+
+To load it unpacked:
+
+1. Open `chrome://extensions/`.
+2. Toggle **Developer mode** (top right).
+3. Click **Load unpacked**.
+4. Select the [`extension/`](extension/) directory.
+5. Visit any dead repo, e.g. `https://github.com/atom/atom` — the badge appears next to the repo name and links to its certificate at `commitmentissues.dev/?repo=atom/atom`.
+
+Manifest V3, content-script-only. Cleans up on GitHub's SPA navigation, fails silently when the API is unavailable, and never blocks page render (4-second `AbortSignal.timeout` on the fetch).
+
 ## Testing
 
 ```bash
