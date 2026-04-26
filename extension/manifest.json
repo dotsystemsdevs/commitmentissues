@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Commitment Issues Tombstone Badge",
+  "version": "0.1.0",
+  "description": "Shows a tombstone badge on GitHub repo pages when commitmentissues.dev has marked them dead.",
+  "icons": {
+    "32": "icon.png",
+    "128": "icon.png"
+  },
+  "permissions": [],
+  "host_permissions": [
+    "https://commitmentissues.dev/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://github.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
