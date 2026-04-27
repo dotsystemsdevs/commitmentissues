@@ -36,12 +36,12 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "15.3.9",
-    "postcss": "^8",
+    "postcss": "^8.5.10",
     "tailwindcss": "^3.4.1",
     "tsx": "^4.20.6",
     "typescript": "^5"
   },
   "overrides": {
-    "postcss": "^8.5.10"
+    "postcss": "$postcss"
   }
 }
