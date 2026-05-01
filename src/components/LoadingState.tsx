@@ -15,10 +15,10 @@ export default function LoadingState({ primary = 'reviewing case files...', seco
         <span className="loading-dot" style={{ animationDelay: '0.15s' }} />
         <span className="loading-dot" style={{ animationDelay: '0.3s' }} />
       </div>
-      <p style={{ fontFamily: MONO, fontSize: '14px', fontWeight: 600, color: '#160A06', margin: 0 }}>
+      <p style={{ fontFamily: MONO, fontSize: '14px', fontWeight: 600, color: 'var(--c-ink)', margin: 0 }}>
         {primary}
       </p>
-      <p style={{ fontFamily: MONO, fontSize: '10px', color: '#b0aca8', letterSpacing: '0.14em', textTransform: 'uppercase', margin: 0 }}>
+      <p style={{ fontFamily: MONO, fontSize: '10px', color: 'var(--c-faint)', letterSpacing: '0.14em', textTransform: 'uppercase', margin: 0 }}>
         {secondary}
       </p>
     </div>

@@ -116,13 +116,13 @@ export default function SearchForm({ url, setUrl, onSubmit, onUserSubmit, onSele
 
       <div className="input-button-wrapper input-block" style={{
         display: 'flex',
-        border: '2px solid #1a1a1a',
+        border: '2px solid var(--c-border)',
         overflow: 'hidden',
-        background: '#FAF6EF',
+        background: 'var(--c-bg)',
         boxShadow: '0 4px 14px rgba(0,0,0,0.06)',
       }}>
         <div className="input-field-row" style={{ display: 'flex', alignItems: 'center', flex: 1, minWidth: 0 }}>
-          <span style={{ fontFamily: MONO, fontSize: '14px', fontWeight: 700, color: '#666', padding: '0 2px 0 16px', display: 'flex', alignItems: 'center', flexShrink: 0, userSelect: 'none' }}>
+          <span style={{ fontFamily: MONO, fontSize: '14px', fontWeight: 700, color: 'var(--c-muted)', padding: '0 2px 0 16px', display: 'flex', alignItems: 'center', flexShrink: 0, userSelect: 'none' }}>
             github.com/
           </span>
           <input
@@ -142,13 +142,13 @@ export default function SearchForm({ url, setUrl, onSubmit, onUserSubmit, onSele
               background: 'transparent',
               border: 'none',
               outline: 'none',
-              color: '#160A06',
+              color: 'var(--c-ink)',
               minWidth: 0,
             }}
           />
         </div>
 
-        <ClickSpark color="#2b2b2b">
+        <ClickSpark>
         <button
           className="input-submit-button input-submit-button--dark alive-interactive"
           type="submit"
@@ -187,7 +187,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onUserSubmit, onSele
       </div>
 
       {invalid && (
-        <p style={{ margin: '-2px 2px 0', fontFamily: MONO, fontSize: '12px', color: '#8B0000' }}>
+        <p style={{ margin: '-2px 2px 0', fontFamily: MONO, fontSize: '12px', color: 'var(--c-red)' }}>
           Invalid URL. Expected github.com/owner/repo.
         </p>
       )}
@@ -202,13 +202,13 @@ export default function SearchForm({ url, setUrl, onSubmit, onUserSubmit, onSele
             fontFamily: MONO, fontSize: '12px', letterSpacing: '0.04em',
             background: 'none', border: 'none', padding: '4px 2px',
             cursor: randomLoading || loading ? 'wait' : 'pointer',
-            color: '#9a9288',
-            textDecoration: 'underline', textUnderlineOffset: '3px', textDecorationColor: 'rgba(154,146,136,0.4)',
+            color: 'var(--c-muted)',
+            textDecoration: 'underline', textUnderlineOffset: '3px', textDecorationColor: 'var(--c-border-light)',
             transition: 'color 0.15s, text-decoration-color 0.15s',
             opacity: randomLoading || loading ? 0.5 : 1,
           }}
-          onMouseEnter={e => { if (!randomLoading && !loading) { e.currentTarget.style.color = '#1a1a1a'; e.currentTarget.style.textDecorationColor = '#1a1a1a' } }}
-          onMouseLeave={e => { e.currentTarget.style.color = '#9a9288'; e.currentTarget.style.textDecorationColor = 'rgba(154,146,136,0.4)' }}
+          onMouseEnter={e => { if (!randomLoading && !loading) { e.currentTarget.style.color = 'var(--c-ink)'; e.currentTarget.style.textDecorationColor = 'var(--c-ink)' } }}
+          onMouseLeave={e => { e.currentTarget.style.color = 'var(--c-muted)'; e.currentTarget.style.textDecorationColor = 'var(--c-border-light)' }}
         >
           {randomLoading ? 'exhuming…' : 'or dig up a corpse →'}
         </button>
