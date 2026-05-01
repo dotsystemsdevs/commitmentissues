@@ -30,7 +30,7 @@ export default function SubpageShell({ subtitle, title, microcopy, headerExtra, 
               display: 'inline-flex',
               alignItems: 'center',
               gap: '5px',
-              color: '#9a9288',
+              color: 'var(--c-muted)',
               textDecoration: 'none',
               fontSize: '11px',
               fontWeight: 400,
@@ -38,8 +38,8 @@ export default function SubpageShell({ subtitle, title, microcopy, headerExtra, 
               WebkitTapHighlightColor: 'transparent',
               transition: 'color 0.15s',
             }}
-            onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#1a1a1a' }}
-            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#9a9288' }}
+            onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = 'var(--c-ink)' }}
+            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = 'var(--c-muted)' }}
           >
             ← home
           </Link>

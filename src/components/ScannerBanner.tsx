@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import type { LeaderboardEntry } from '@/lib/types'
 import { HALL_OF_SHAME } from '@/lib/hallOfShame'
+import ThemeToggle from '@/components/ThemeToggle'
 
 const MONO = `var(--font-courier), system-ui, sans-serif`
 
@@ -45,7 +46,7 @@ export default function ScannerBanner() {
       left: 0,
       right: 0,
       zIndex: 1001,
-      background: '#1a1a1a',
+      background: 'var(--c-border)',
       height: '32px',
       display: 'flex',
       alignItems: 'center',
@@ -79,23 +80,27 @@ export default function ScannerBanner() {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '0',
+                color: 'var(--c-bg)',
               }}>
-                <span style={{ color: '#555', padding: '0 20px' }}>✦</span>
+                <span style={{ color: 'var(--c-muted)', opacity: 0.6, padding: '0 20px' }}>✦</span>
                 <Link
                   href={`/?repo=${entry.fullName}`}
                   prefetch={false}
-                  style={{ color: 'inherit', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                  style={{ color: 'var(--c-bg)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
                 >
-                  <span aria-hidden style={{ color: '#e8e2d9' }}>🪦</span>
-                  <span style={{ color: '#e8e2d9', textDecoration: 'underline', textUnderlineOffset: '2px', textDecorationColor: 'rgba(232,226,217,0.3)' }}>
+                  <span aria-hidden style={{ opacity: 0.9 }}>🪦</span>
+                  <span style={{ textDecoration: 'underline', textUnderlineOffset: '2px', textDecorationColor: 'rgba(255,255,255,0.2)' }}>
                     {entry.fullName}
                   </span>
                 </Link>
-                <span style={{ color: '#888' }}>&nbsp;— {label}</span>
+                <span style={{ color: 'var(--c-muted)', opacity: 0.9 }}>&nbsp;— {label}</span>
               </span>
             )
           })}
         </div>
+      </div>
+      <div style={{ padding: '0 8px', display: 'flex', alignItems: 'center', borderLeft: '1px solid rgba(255,255,255,0.1)', height: '100%' }}>
+        <ThemeToggle />
       </div>
     </div>
   )

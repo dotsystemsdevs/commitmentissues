@@ -185,8 +185,8 @@ function HomePage() {
       {/* User scan error */}
       {userFetchError && !userLoading && (
         <div style={{ textAlign: 'center', padding: '40px 0' }}>
-          <p style={{ fontFamily: MONO, fontSize: '13px', color: '#8B0000', marginBottom: '20px' }}>{userFetchError}</p>
-          <button className="alive-interactive" onClick={resetUser} style={{ fontFamily: MONO, fontSize: '13px', fontWeight: 700, background: 'none', border: 'none', textDecoration: 'underline', textUnderlineOffset: '3px', color: '#160A06', cursor: 'pointer' }}>
+          <p style={{ fontFamily: MONO, fontSize: '13px', color: 'var(--c-red)', marginBottom: '20px' }}>{userFetchError}</p>
+          <button className="alive-interactive" onClick={resetUser} style={{ fontFamily: MONO, fontSize: '13px', fontWeight: 700, background: 'none', border: 'none', textDecoration: 'underline', textUnderlineOffset: '3px', color: 'var(--c-ink)', cursor: 'pointer' }}>
             ← examine another subject
           </button>
         </div>
@@ -206,8 +206,8 @@ function HomePage() {
                 letterSpacing: '0.06em',
                 transition: 'color 0.15s',
               }}
-              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = '#1a1a1a' }}
-              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = '#9a9288' }}
+              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = 'var(--c-ink)' }}
+              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = 'var(--c-muted)' }}
             >
               ← back
             </button>

@@ -9,11 +9,12 @@
   /* Backgrounds */
   --c-bg:       #FAF6EF;   /* page background */
   --c-surface:  #EDE8E1;   /* cards */
+  --c-surface-raised: #F5F0E8; /* cards lifted above surface */
 
   /* Text */
   --c-ink:      #160A06;   /* primary text */
   --c-ink-2:    #4a4440;   /* body text on cards */
-  --c-muted:    #9a9288;   /* metadata, labels */
+  --c-muted:    #8a8a8a;   /* metadata, labels */
   --c-faint:    #b0aca8;   /* very quiet text */
 
   /* Borders */
@@ -21,13 +22,33 @@
   --c-border-light: #cec6bb; /* dividers, ghost buttons */
 
   /* Accent */
-  --c-red:      #8B0000;   /* dead / error */
+  --c-red:      #8B1A1A;   /* dead / error */
   --c-green:    #2d7a3c;   /* alive */
   --c-amber:    #b45309;   /* struggling */
+  --c-stamp-red: #8B1A1A;  /* semantic alias for certificate stamp */
+}
 
-  /* Extended */
-  --c-surface-raised: #F5F0E8; /* cards lifted above surface */
-  --c-stamp-red: #8B0000;      /* semantic alias for certificate stamp */
+[data-theme="dark"] {
+  /* Backgrounds */
+  --c-bg:       #0F0C09;   /* page background */
+  --c-surface:  #1A1510;   /* cards */
+  --c-surface-raised: #241D16; /* cards lifted above surface */
+
+  /* Text */
+  --c-ink:      #EDE8E1;   /* primary text */
+  --c-ink-2:    #9a9288;   /* body text on cards */
+  --c-muted:    #6a6058;   /* metadata, labels */
+  --c-faint:    #4a4038;   /* very quiet text */
+
+  /* Borders */
+  --c-border:   #3a3028;   /* all solid borders — cards, inputs, buttons */
+  --c-border-light: #2a241e; /* dividers, ghost buttons */
+
+  /* Accent */
+  --c-red:      #C0392B;   /* dead / error */
+  --c-green:    #27ae60;   /* alive */
+  --c-amber:    #d35400;   /* struggling */
+  --c-stamp-red: #C0392B;
 }
 
 /* ── Unified record / institutional card system ───────────────────── */
@@ -106,7 +127,7 @@
 .page-shell-main {
   min-height: 100vh;
   min-height: 100dvh;
-  background: #FAF6EF;
+  background: var(--c-bg);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -164,7 +185,7 @@
   display: inline-block;
   width: 8px;
   height: 8px;
-  background: #8b0000;
+  background: var(--c-red);
   border-radius: 50%;
   animation: loading-bounce 1s ease-in-out infinite;
 }
@@ -180,14 +201,14 @@
   font-size: clamp(3.2rem, 9vw, 5rem);
   line-height: 0.95;
   margin: 6px 0 12px 0;
-  color: #160a06;
+  color: var(--c-ink);
 }
 
 .page-hero-sub {
   font-family: var(--font-courier), system-ui, sans-serif;
   font-size: clamp(13px, 3vw, 15px);
   font-weight: 400;
-  color: #5f5f5f;
+  color: var(--c-ink-2);
   line-height: 1.35;
   margin: 0 auto;
   max-width: 520px;
@@ -222,7 +243,7 @@
 .page-hero-micro {
   font-family: var(--font-courier), system-ui, sans-serif;
   font-size: 11px;
-  color: #8a8a8a;
+  color: var(--c-muted);
   line-height: 1.5;
   margin: 4px auto 0;
   letter-spacing: 0.03em;
@@ -347,7 +368,7 @@ button {
 }
 @media (hover: hover) and (pointer: fine) {
   .cert-btn-primary:hover {
-    background: #2a2a2a !important;
+    opacity: 0.9 !important;
   }
 }
 .cert-btn-primary:active {
@@ -360,7 +381,7 @@ button {
 }
 @media (hover: hover) and (pointer: fine) {
   .cert-btn-secondary:hover {
-    background: #EDE8E1 !important;
+    background: var(--c-surface-raised) !important;
   }
 }
 .cert-btn-secondary:active {
@@ -387,7 +408,7 @@ button {
 }
 .readme-badge-caption {
   font-size: 10px;
-  color: #b0a89e;
+  color: var(--c-muted);
   letter-spacing: 0.04em;
   margin: 10px 0 0;
 }
@@ -462,7 +483,7 @@ button {
 
 
 a.subpage-inline-mail {
-  color: #1a1a1a;
+  color: var(--c-ink);
   text-decoration: underline;
   text-underline-offset: 3px;
   word-break: break-all;
@@ -483,10 +504,11 @@ a.subpage-inline-mail {
   right: 0;
   bottom: 0;
   z-index: 40;
-  background: rgba(250, 246, 239, 0.92);
+  background: var(--c-bg);
+  opacity: 0.92;
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-  border-top: 1px solid #e2dcd1;
+  border-top: 1px solid var(--c-border-light);
 }
 
 .site-footer--compact {
@@ -504,11 +526,12 @@ a.subpage-inline-mail {
 }
 
 .input-button-wrapper:focus-within {
-  box-shadow: 0 0 0 3px rgba(26,26,26,0.12);
+  box-shadow: 0 0 0 3px var(--c-border-light);
+  opacity: 0.8;
 }
 
 .input-submit-button:hover {
-  box-shadow: 0 0 0 1px rgba(0,0,0,0.22);
+  opacity: 0.9;
 }
 
 .input-submit-button:active {
@@ -516,13 +539,13 @@ a.subpage-inline-mail {
 }
 
 .input-submit-button--dark {
-  background: #1a1a1a !important;
-  color: #fff !important;
+  background: var(--c-ink) !important;
+  color: var(--c-bg) !important;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .input-submit-button--dark:hover {
-    background: #2a2a2a !important;
+    opacity: 0.9 !important;
   }
 }
 
@@ -531,7 +554,7 @@ a.subpage-inline-mail {
 }
 
 .recent-card:focus-visible {
-  outline: 2px solid #1a1a1a;
+  outline: 2px solid var(--c-border);
   outline-offset: 4px;
 }
 
@@ -589,8 +612,8 @@ a.subpage-inline-mail {
     @apply antialiased;
     font-family: var(--font-courier), system-ui, sans-serif;
     font-size: 14px;
-    color: #160A06;
-    background-color: #FAF6EF;
+    color: var(--c-ink);
+    background-color: var(--c-bg);
     overflow-x: hidden;
   }
   html { overflow-x: hidden; }
@@ -600,11 +623,11 @@ a.subpage-inline-mail {
     cursor: default !important;
   }
   * { box-sizing: border-box; }
-  input::placeholder { color: #aaa; opacity: 1; }
+  input::placeholder { color: var(--c-faint); opacity: 0.7; }
   input:-webkit-autofill,
   input:-webkit-autofill:focus {
-    -webkit-text-fill-color: #160A06;
-    -webkit-box-shadow: 0 0 0 1000px #FAF6EF inset;
+    -webkit-text-fill-color: var(--c-ink);
+    -webkit-box-shadow: 0 0 0 1000px var(--c-bg) inset;
     transition: background-color 5000s ease-in-out 0s;
   }
 }
@@ -640,7 +663,7 @@ a.subpage-inline-mail {
     text-align: center;
     font-family: var(--font-courier), system-ui, sans-serif;
     font-size: 11px;
-    color: #7a7a7a;
+    color: var(--c-muted);
     letter-spacing: 0.02em;
   }
 
@@ -679,7 +702,7 @@ a.subpage-inline-mail {
   .input-submit-button {
     width: 100%;
     border-left: none !important;
-    border-top: 2px solid #1a1a1a !important;
+    border-top: 2px solid var(--c-border) !important;
     margin-top: 0 !important;
     justify-content: center !important;
     text-align: center !important;

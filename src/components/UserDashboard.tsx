@@ -14,22 +14,22 @@ const SECTIONS = [
   {
     key: 'dead' as Tab,
     label: 'Dead',
-    color: '#8B0000',
-    activeTextColor: '#fff',
+    color: 'var(--c-red)',
+    activeTextColor: 'var(--c-bg)',
     intro: 'Filed for permanent closure.',
   },
   {
     key: 'struggling' as Tab,
     label: 'Struggling',
-    color: '#b45309',
-    activeTextColor: '#fff',
+    color: 'var(--c-amber)',
+    activeTextColor: 'var(--c-bg)',
     intro: 'Active intervention recommended.',
   },
   {
     key: 'alive' as Tab,
     label: 'Alive',
-    color: '#2d7a3c',
-    activeTextColor: '#fff',
+    color: 'var(--c-green)',
+    activeTextColor: 'var(--c-bg)',
     intro: 'No action required.',
   },
 ]
@@ -71,7 +71,7 @@ export default function UserDashboard({ repos, username }: Props) {
           const disabled = counts[key] === 0
           const items = []
           if (i > 0) {
-            items.push(<span key={`sep-${key}`} aria-hidden style={{ color: '#cec6bb', fontSize: '10px', userSelect: 'none' }}>✦</span>)
+            items.push(<span key={`sep-${key}`} aria-hidden style={{ color: 'var(--c-border-light)', fontSize: '10px', userSelect: 'none' }}>✦</span>)
           }
           items.push(
             <button
@@ -147,8 +147,8 @@ function RepoCard({ repo, accentColor, username }: { repo: UserRepoSummary; acce
     flexDirection: 'column',
     gap: '6px',
     padding: '16px 18px',
-    background: '#EDE8E1',
-    border: '2px solid #1a1a1a',
+    background: 'var(--c-surface)',
+    border: '2px solid var(--c-border)',
     borderRadius: '0px',
     minHeight: '170px',
     boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
@@ -181,13 +181,13 @@ function RepoCard({ repo, accentColor, username }: { repo: UserRepoSummary; acce
           background: 'transparent',
           border: 'none',
           padding: 0,
-          color: '#8a8278',
+          color: 'var(--c-muted)',
           cursor: 'pointer',
           transition: 'color 0.15s, transform 0.15s',
           zIndex: 2,
         }}
-        onMouseEnter={e => { e.currentTarget.style.color = '#1a1a1a'; e.currentTarget.style.transform = 'scale(1.12)' }}
-        onMouseLeave={e => { e.currentTarget.style.color = '#8a8278'; e.currentTarget.style.transform = 'scale(1)' }}
+        onMouseEnter={e => { e.currentTarget.style.color = 'var(--c-ink)'; e.currentTarget.style.transform = 'scale(1.12)' }}
+        onMouseLeave={e => { e.currentTarget.style.color = 'var(--c-muted)'; e.currentTarget.style.transform = 'scale(1)' }}
       >
         <GitHubIcon size={16} />
       </button>
@@ -203,30 +203,30 @@ function RepoCard({ repo, accentColor, username }: { repo: UserRepoSummary; acce
         }}>
           {repo.isDead ? '🪦' : repo.isStruggling ? '⚠' : '🌱'}
         </span>
-        <span style={{ fontFamily: MONO, fontSize: '13px', fontWeight: 700, color: '#1a1a1a', lineHeight: 1.3, wordBreak: 'break-word', flex: 1, alignSelf: 'center' }}>
+        <span style={{ fontFamily: MONO, fontSize: '13px', fontWeight: 700, color: 'var(--c-ink)', lineHeight: 1.3, wordBreak: 'break-word', flex: 1, alignSelf: 'center' }}>
           {name}
         </span>
       </div>
 
       {/* Description */}
       {repo.description && (
-        <span style={{ fontFamily: MONO, fontSize: '12px', color: '#3d3832', lineHeight: 1.5, fontWeight: 500, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+        <span style={{ fontFamily: MONO, fontSize: '12px', color: 'var(--c-ink)', opacity: 0.8, lineHeight: 1.5, fontWeight: 500, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
           {repo.description}
         </span>
       )}
 
       {/* Cause (for dead/struggling) */}
       {repo.cause && (
-        <span style={{ fontFamily: MONO, fontSize: '11px', fontStyle: 'italic', color: '#7a7268', lineHeight: 1.5, fontWeight: 400, flex: 1 }}>
+        <span style={{ fontFamily: MONO, fontSize: '11px', fontStyle: 'italic', color: 'var(--c-muted)', lineHeight: 1.5, fontWeight: 400, flex: 1 }}>
           {repo.cause}
         </span>
       )}
       {!repo.cause && <span style={{ flex: 1 }} />}
 
       {/* Footer */}
-      <div style={{ width: '100%', marginTop: 'auto', borderTop: '1px solid rgba(0,0,0,0.08)', paddingTop: '8px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-        <span style={{ fontFamily: MONO, fontSize: '10px', color: '#878078', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-          last activity · <span style={{ color: '#4d4d4d', fontWeight: 600 }}>{formatDate(repo.pushedAt)}</span>
+      <div style={{ width: '100%', marginTop: 'auto', borderTop: '1px solid var(--c-border)', paddingTop: '8px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+        <span style={{ fontFamily: MONO, fontSize: '10px', color: 'var(--c-muted)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+          last activity · <span style={{ color: 'var(--c-ink)', fontWeight: 600 }}>{formatDate(repo.pushedAt)}</span>
         </span>
         {canCertify && (
           <span
@@ -236,7 +236,7 @@ function RepoCard({ repo, accentColor, username }: { repo: UserRepoSummary; acce
               fontWeight: 700,
               letterSpacing: '0.08em',
               textTransform: 'uppercase',
-              color: '#fff',
+              color: 'var(--c-bg)',
               background: accentColor,
               padding: '8px 12px',
               display: 'inline-flex',

@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import GitHubIcon from '@/components/GitHubIcon'
+import ThemeToggle from '@/components/ThemeToggle'
 
 const FONT = `var(--font-courier), system-ui, sans-serif`
 
@@ -10,7 +11,7 @@ interface SiteFooterProps {
 }
 
 const linkStyle = {
-  fontFamily: FONT, fontSize: '13px', color: '#8a8a8a',
+  fontFamily: FONT, fontSize: '13px', color: 'var(--c-muted)',
   textDecoration: 'none', display: 'inline-flex', alignItems: 'center',
   gap: '4px', transition: 'color 0.15s',
   WebkitTapHighlightColor: 'transparent',
@@ -23,43 +24,45 @@ export default function SiteFooter({ compact = false }: SiteFooterProps) {
         <Link
           href="/about"
           style={linkStyle}
-          onMouseEnter={e => (e.currentTarget.style.color = '#1f1f1f')}
-          onMouseLeave={e => (e.currentTarget.style.color = '#8a8a8a')}
+          onMouseEnter={e => (e.currentTarget.style.color = 'var(--c-ink)')}
+          onMouseLeave={e => (e.currentTarget.style.color = 'var(--c-muted)')}
         >
           About
         </Link>
-        <span style={{ color: '#d0c8be', fontSize: '12px' }}>·</span>
+        <span style={{ color: 'var(--c-border-light)', fontSize: '12px' }}>·</span>
         <Link
           href="/legal"
           style={linkStyle}
-          onMouseEnter={e => (e.currentTarget.style.color = '#1f1f1f')}
-          onMouseLeave={e => (e.currentTarget.style.color = '#8a8a8a')}
+          onMouseEnter={e => (e.currentTarget.style.color = 'var(--c-ink)')}
+          onMouseLeave={e => (e.currentTarget.style.color = 'var(--c-muted)')}
         >
           Legal
         </Link>
-        <span style={{ color: '#d0c8be', fontSize: '12px' }}>·</span>
+        <span style={{ color: 'var(--c-border-light)', fontSize: '12px' }}>·</span>
         <a
           href="https://github.com/dotsystemsdevs/commitmentissues"
           target="_blank"
           rel="noopener noreferrer"
           style={linkStyle}
-          onMouseEnter={e => (e.currentTarget.style.color = '#1f1f1f')}
-          onMouseLeave={e => (e.currentTarget.style.color = '#8a8a8a')}
+          onMouseEnter={e => (e.currentTarget.style.color = 'var(--c-ink)')}
+          onMouseLeave={e => (e.currentTarget.style.color = 'var(--c-muted)')}
         >
           <GitHubIcon size={13} />
           GitHub
         </a>
-        <span style={{ color: '#d0c8be', fontSize: '12px' }}>·</span>
+        <span style={{ color: 'var(--c-border-light)', fontSize: '12px' }}>·</span>
         <a
           href="https://buymeacoffee.com/commitmentissues"
           target="_blank"
           rel="noopener noreferrer"
           style={linkStyle}
-          onMouseEnter={e => (e.currentTarget.style.color = '#1f1f1f')}
-          onMouseLeave={e => (e.currentTarget.style.color = '#8a8a8a')}
+          onMouseEnter={e => (e.currentTarget.style.color = 'var(--c-ink)')}
+          onMouseLeave={e => (e.currentTarget.style.color = 'var(--c-muted)')}
         >
           ☕ Don&apos;t let us die
         </a>
+        <span style={{ color: 'var(--c-border-light)', fontSize: '12px' }}>·</span>
+        <ThemeToggle />
       </div>
     </footer>
   )
