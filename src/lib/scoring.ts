@@ -16,6 +16,10 @@ const KNOWN_REPO_CAUSES: Record<string, string> = {
   'keystonejs/keystone-classic': 'Keystone 6 shipped and nobody looked back at the old one',
   'facebookarchive/stetho': 'Chrome DevTools got native Android debugging and stopped caring',
   'facebookarchive/react-native-fbsdk': 'Replaced by a package with -next in the name',
+  'caolan/async': 'Native async/await made callback choreography look historical',
+  'petkaantonov/bluebird': 'Native Promises got fast and async/await got readable',
+  'expressjs/csurf': 'Express archived it and told CSRF to be your problem',
+  'tj/co': 'async/await shipped and generators lost the async job',
 }
 
 export function computeDeathIndex(repo: RepoData): number {
