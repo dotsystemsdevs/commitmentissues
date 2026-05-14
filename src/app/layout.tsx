@@ -69,6 +69,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <head>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        <script defer src="https://tracker-mauve-sigma.vercel.app/t.js" data-project="commitmentissues" />
       </head>
       <body className={`${courierPrime.variable} ${unifraktur.variable} ${inter.variable} antialiased`}>
         {children}
