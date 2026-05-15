@@ -16,11 +16,31 @@ import type { UserRepoSummary } from '@/lib/types'
 
 const MONO = `var(--font-courier), system-ui, sans-serif`
 
-export default function Page() {
-  // useSearchParams requires a Suspense boundary for static prerender
-  // in Next 15's App Router.
+// SSR fallback â€” ensures search engines see an h1 even when the dynamic page
+// is awaiting Suspense (useSearchParams forces a client boundary).
+function SuspenseFallback() {
   return (
-    <Suspense fallback={<main className="page-shell-main"><div className="page-shell-inner page-shell-inner--home" /></main>}>
+    <main className="page-shell-main">
+      <div className="page-shell-inner page-shell-inner--home">
+        <header className="page-hero">
+          <div className="page-hero-brand">
+            <div className="page-hero-emoji" aria-hidden>ðŸª¦</div>
+            <h1 className="page-hero-title certificate-of-death-title">
+              Certificate of Death
+            </h1>
+          </div>
+          <div className="page-hero-sub">
+            Official death certificates for abandoned GitHub repos.
+          </div>
+        </header>
+      </div>
+    </main>
+  )
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={<SuspenseFallback />}>
       <HomePage />
     </Suspense>
   )
