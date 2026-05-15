@@ -1,6 +1,3 @@
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
-
 export const dynamic = 'force-static';
 
 const content = `# Commitment Issues
