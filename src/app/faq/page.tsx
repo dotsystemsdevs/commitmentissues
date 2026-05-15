@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'FAQ — Commitment Issues',
@@ -86,7 +87,7 @@ export default function FAQPage() {
     <main className="page-shell-main">
       <FAQJsonLd />
       <div className="page-shell-inner">
-        <a href="/" style={{ display: 'inline-block', marginBottom: 24, color: 'var(--ink-fade)', fontSize: 14, textDecoration: 'none' }}>← Back to Commitment Issues</a>
+        <Link href="/" style={{ display: 'inline-block', marginBottom: 24, color: 'var(--ink-fade)', fontSize: 14, textDecoration: 'none' }}>← Back to Commitment Issues</Link>
         <h1 style={{ fontSize: 36, fontWeight: 800, letterSpacing: '-0.025em', margin: '0 0 8px' }}>
           Frequently Asked Questions
         </h1>
