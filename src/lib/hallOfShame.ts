@@ -32,4 +32,8 @@ export const HALL_OF_SHAME: LeaderboardEntry[] = [
   { fullName: 'keystonejs/keystone-classic',  cause: 'Keystone 6 shipped and nobody looked back at the old one',      score: 7, deathDate: 'Dec 2023', lastWords: 'The rewrite kept the name. I kept the issues tab.' },
   { fullName: 'facebookarchive/stetho',       cause: 'Chrome DevTools got native Android debugging and stopped caring', score: 7, deathDate: 'Oct 2024', lastWords: 'I bridged Chrome DevTools to Android. Chrome stopped wanting a bridge.' },
   { fullName: 'facebookarchive/react-native-fbsdk', cause: 'Replaced by a package with -next in the name',            score: 7, deathDate: 'Mar 2021', lastWords: 'The successor is react-native-fbsdk-next. There is no going forward from here.' },
+  { fullName: 'caolan/async',                 cause: 'Native async/await made callback choreography look historical', score: 7, deathDate: 'Jun 2017', lastWords: 'I organized callbacks. Then the language learned to wait.' },
+  { fullName: 'petkaantonov/bluebird',        cause: 'Native Promises got fast. async/await got readable.',          score: 8, deathDate: 'Nov 2019', lastWords: 'I was faster than native. Then native got faster.' },
+  { fullName: 'expressjs/csurf',              cause: 'Express archived it and told CSRF to be your problem',         score: 10, deathDate: 'May 2025', lastWords: 'I protected your forms. The framework filed the paperwork.' },
+  { fullName: 'tj/co',                        cause: 'async/await shipped and generators lost the async job',        score: 8, deathDate: 'Jun 2017', lastWords: 'I taught yield to wait. await took the credit.' },
 ]
