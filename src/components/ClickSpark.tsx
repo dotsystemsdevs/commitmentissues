@@ -7,7 +7,7 @@ interface Props {
   count?: number
 }
 
-export default function ClickSpark({ children, color = '#1a1a1a', count = 10 }: Props) {
+export default function ClickSpark({ children, color, count = 10 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
@@ -31,6 +31,10 @@ export default function ClickSpark({ children, color = '#1a1a1a', count = 10 }: 
 
     const x = e.clientX
     const y = e.clientY
+    
+    // Resolve color from CSS variable if not provided
+    const sparkColor = color || (typeof window !== 'undefined' ? getComputedStyle(document.documentElement).getPropertyValue('--c-ink').trim() : '#1a1a1a')
+
     const sparks = Array.from({ length: count }, (_, i) => ({
       angle: (i / count) * Math.PI * 2 + (Math.random() - 0.5) * 0.5,
       len: 14 + Math.random() * 14,
@@ -49,7 +53,7 @@ export default function ClickSpark({ children, color = '#1a1a1a', count = 10 }: 
         ctx!.beginPath()
         ctx!.moveTo(x + Math.cos(s.angle) * r0, y + Math.sin(s.angle) * r0)
         ctx!.lineTo(x + Math.cos(s.angle) * r1, y + Math.sin(s.angle) * r1)
-        ctx!.strokeStyle = color
+        ctx!.strokeStyle = sparkColor
         ctx!.globalAlpha = 1 - p
         ctx!.lineWidth = 1.5
         ctx!.stroke()

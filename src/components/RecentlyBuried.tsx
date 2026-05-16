@@ -55,8 +55,8 @@ const Card = memo(function Card({ entry, count, placed, onSelect, onToggle }: Ca
         height: '232px',
         flexShrink: 0,
         padding: '18px 20px',
-        background: '#EDE8E1',
-        border: '2px solid #1a1a1a',
+        background: 'var(--c-surface)',
+        border: '2px solid var(--c-border)',
         borderRadius: '0px',
         cursor: 'pointer',
         textAlign: 'left',
@@ -83,7 +83,7 @@ const Card = memo(function Card({ entry, count, placed, onSelect, onToggle }: Ca
           fontSize: '13px',
           fontWeight: 700,
           letterSpacing: '0.04em',
-          color: placed ? '#1a1a1a' : '#8a8278',
+          color: placed ? 'var(--c-ink)' : 'var(--c-muted)',
           cursor: 'pointer',
           transition: 'color 0.18s, transform 0.18s',
           zIndex: 2,
@@ -99,24 +99,24 @@ const Card = memo(function Card({ entry, count, placed, onSelect, onToggle }: Ca
         fontSize: '30px', lineHeight: 1, flexShrink: 0,
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
         width: '42px', height: '42px',
-        background: 'radial-gradient(ellipse at 50% 85%, rgba(45,122,60,0.22) 0%, rgba(45,122,60,0.10) 45%, transparent 70%)',
+        background: 'radial-gradient(ellipse at 50% 85%, rgba(139,26,26,0.1) 0%, rgba(139,26,26,0.05) 45%, transparent 70%)',
         borderRadius: '4px',
       }}>🪦</span>
-      <span style={{ fontFamily: MONO, fontSize: '14px', fontWeight: 700, color: '#1a1a1a', lineHeight: 1.35, paddingBottom: '2px', wordBreak: 'break-word', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%', paddingRight: '56px' }}>
+      <span style={{ fontFamily: MONO, fontSize: '14px', fontWeight: 700, color: 'var(--c-ink)', lineHeight: 1.35, paddingBottom: '2px', wordBreak: 'break-word', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%', paddingRight: '56px' }}>
         {entry.fullName}
       </span>
-      <span className="recent-card-cause" style={{ fontFamily: MONO, fontSize: '12px', color: '#3d3832', lineHeight: 1.6, paddingBottom: '2px', fontWeight: 500, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+      <span className="recent-card-cause" style={{ fontFamily: MONO, fontSize: '12px', color: 'var(--c-ink)', opacity: 0.8, lineHeight: 1.6, paddingBottom: '2px', fontWeight: 500, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
         {entry.cause}
       </span>
       {entry.lastWords && (
-        <span className="recent-card-lastwords" style={{ fontFamily: MONO, fontSize: '11px', fontStyle: 'italic', color: '#7a7268', lineHeight: 1.6, paddingBottom: '2px', fontWeight: 400, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+        <span className="recent-card-lastwords" style={{ fontFamily: MONO, fontSize: '11px', fontStyle: 'italic', color: 'var(--c-muted)', lineHeight: 1.6, paddingBottom: '2px', fontWeight: 400, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
           &ldquo;{entry.lastWords}&rdquo;
         </span>
       )}
-      <div style={{ width: '100%', marginTop: 'auto', borderTop: '1px solid rgba(0,0,0,0.08)', paddingTop: '10px' }}>
+      <div style={{ width: '100%', marginTop: 'auto', borderTop: '1px solid var(--c-border)', paddingTop: '10px' }}>
         {entry.commitLabel && (
-          <span style={{ fontFamily: MONO, fontSize: '10px', color: '#878078', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-            last commit · <span style={{ color: '#4d4d4d', fontWeight: 600 }}>{entry.commitLabel}</span>
+          <span style={{ fontFamily: MONO, fontSize: '10px', color: 'var(--c-muted)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+            last commit · <span style={{ color: 'var(--c-ink)', fontWeight: 600 }}>{entry.commitLabel}</span>
           </span>
         )}
       </div>

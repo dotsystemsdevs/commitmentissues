@@ -26,13 +26,13 @@ function Digit({ d }: { d: string }) {
       justifyContent: 'center',
       width: `${DIGIT_WIDTH}px`,
       height: `${DIGIT_HEIGHT}px`,
-      background: '#1a1a1a',
-      color: '#EDE8E1',
+      background: 'var(--c-ink)',
+      color: 'var(--c-bg)',
       fontFamily: MONO,
       fontSize: '14px',
       fontWeight: 700,
       lineHeight: 1,
-      borderRight: '1px solid rgba(255,255,255,0.12)',
+      borderRight: '1px solid var(--c-muted)',
     }}>
       {d}
     </span>
@@ -69,14 +69,14 @@ export default function StatsCounter({ buried, profiles }: Props) {
       fontFamily: MONO,
       minHeight: '24px',
     }}>
-      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: '#1a1a1a' }}>
+      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--c-ink)' }}>
         <RepoIcon />
         <Counter value={buried} />
       </span>
 
-      <span aria-hidden style={{ color: '#cec6bb', fontSize: '10px' }}>✦</span>
+      <span aria-hidden style={{ color: 'var(--c-muted)', fontSize: '10px' }}>✦</span>
 
-      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: '#1a1a1a' }}>
+      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--c-ink)' }}>
         <PersonIcon />
         <Counter value={profiles} />
       </span>

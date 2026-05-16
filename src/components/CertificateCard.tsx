@@ -386,8 +386,8 @@ export default function CertificateCard({ cert, onReset }: Props) {
             letterSpacing: '0.06em',
             transition: 'color 0.15s',
           }}
-          onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = '#1a1a1a' }}
-          onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = '#9a9288' }}
+          onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = 'var(--c-ink)' }}
+          onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = 'var(--c-muted)' }}
         >
           ← {referrerUser ? `back to @${referrerUser}` : 'back'}
         </button>
@@ -412,8 +412,8 @@ export default function CertificateCard({ cert, onReset }: Props) {
             minHeight: '44px',
             transition: 'color 0.15s',
           }}
-          onMouseEnter={e => (e.currentTarget.style.color = '#1a1a1a')}
-          onMouseLeave={e => (e.currentTarget.style.color = '#5f5f5f')}
+          onMouseEnter={e => (e.currentTarget.style.color = 'var(--c-ink)')}
+          onMouseLeave={e => (e.currentTarget.style.color = 'var(--c-muted)')}
         >
           <GitHubIcon size={14} />
           view on github
@@ -480,8 +480,8 @@ export default function CertificateCard({ cert, onReset }: Props) {
               style={{
                 fontFamily: MONO, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em',
                 flex: 1, height: '44px',
-                background: '#1a1a1a', color: '#fff',
-                border: '2px solid #1a1a1a',
+                background: 'var(--c-ink)', color: 'var(--c-bg)',
+                border: '2px solid var(--c-ink)',
                 cursor: isGeneratingShare ? 'wait' : 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
               }}
@@ -496,8 +496,8 @@ export default function CertificateCard({ cert, onReset }: Props) {
               style={{
                 fontFamily: MONO, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em',
                 flex: 1, height: '44px',
-                background: '#FAF6EF', color: '#1a1a1a',
-                border: '2px solid #1a1a1a',
+                background: 'var(--c-bg)', color: 'var(--c-ink)',
+                border: '2px solid var(--c-ink)',
                 cursor: isDownloading ? 'wait' : 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
               }}
@@ -516,8 +516,8 @@ export default function CertificateCard({ cert, onReset }: Props) {
               className="cert-btn-primary"
               style={{
                 fontFamily: MONO, fontSize: '14px', fontWeight: 700, letterSpacing: '0.06em',
-                width: '100%', height: '44px', background: '#1a1a1a', color: '#fff',
-                border: '2px solid #1a1a1a', cursor: 'pointer',
+                width: '100%', height: '44px', background: 'var(--c-ink)', color: 'var(--c-bg)',
+                border: '2px solid var(--c-ink)', cursor: 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
             >
@@ -529,8 +529,8 @@ export default function CertificateCard({ cert, onReset }: Props) {
               className="cert-btn-secondary"
               style={{
                 fontFamily: MONO, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em',
-                width: '100%', height: '44px', background: '#FAF6EF', color: '#1a1a1a',
-                border: '2px solid #1a1a1a', cursor: 'pointer',
+                width: '100%', height: '44px', background: 'var(--c-bg)', color: 'var(--c-ink)',
+                border: '2px solid var(--c-ink)', cursor: isDownloading ? 'wait' : 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
             >
@@ -669,7 +669,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
 
         {/* Export error */}
         {exportError && (
-          <p style={{ fontFamily: MONO, fontSize: '12px', color: '#8B1A1A', textAlign: 'center', margin: '0' }}>
+          <p style={{ fontFamily: MONO, fontSize: '12px', color: 'var(--c-red)', textAlign: 'center', margin: '0' }}>
             {exportError}
           </p>
         )}
@@ -694,8 +694,8 @@ export default function CertificateCard({ cert, onReset }: Props) {
               textDecorationColor: 'rgba(0,0,0,0.2)',
               transition: 'color 0.15s',
             }}
-            onMouseEnter={e => { e.currentTarget.style.color = '#1f1f1f' }}
-            onMouseLeave={e => { e.currentTarget.style.color = '#5f5f5f' }}
+            onMouseEnter={e => { e.currentTarget.style.color = 'var(--c-ink)' }}
+            onMouseLeave={e => { e.currentTarget.style.color = 'var(--c-muted)' }}
           >
             {referrerUser ? `back to @${referrerUser}'s graveyard →` : 'certify another repo →'}
           </button>
