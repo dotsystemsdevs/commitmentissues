@@ -24,10 +24,10 @@ const SECTIONS = [
     body: "Public repositories only. We do not access private code, credentials, or any data not already available through GitHub's public API.",
   },
   {
-    id: 'support-the-undertaker',
-    heading: 'Support the Undertaker',
-    body: "This service runs on a cheap server and a questionable amount of free time. If it made you laugh, a coffee keeps the lights on.",
-    coffee: true,
+    id: 'open-source',
+    heading: 'Open Source',
+    body: 'Commitment Issues is open source. The code is on GitHub. Fork it, star it, or open a PR with new famous casualties.',
+    github: true,
   },
   {
     id: 'contact',
@@ -54,7 +54,7 @@ export default function AboutContent() {
       microcopy={null}
     >
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        {SECTIONS.map(({ id, heading, body, email, coffee }) => (
+        {SECTIONS.map(({ id, heading, body, email, github }) => (
           <div
             key={id}
             className="record-card"
@@ -73,15 +73,15 @@ export default function AboutContent() {
                 </a>
               )}
             </p>
-            {coffee && (
+            {github && (
               <a
-                href="https://buymeacoffee.com/commitmentissues"
+                href="https://github.com/dotsystemsdevs/commitmentissues"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="subpage-faq-cta"
                 style={{ marginTop: '14px', display: 'inline-flex' }}
               >
-                ☕ don&apos;t let us die
+                ★ View on GitHub
               </a>
             )}
           </div>
