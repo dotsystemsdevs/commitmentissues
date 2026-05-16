@@ -47,18 +47,7 @@ export default function SiteFooter({ compact = false }: SiteFooterProps) {
           onMouseLeave={e => (e.currentTarget.style.color = '#8a8a8a')}
         >
           <GitHubIcon size={13} />
-          GitHub
-        </a>
-        <span style={{ color: '#d0c8be', fontSize: '12px' }}>·</span>
-        <a
-          href="https://buymeacoffee.com/commitmentissues"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={linkStyle}
-          onMouseEnter={e => (e.currentTarget.style.color = '#1f1f1f')}
-          onMouseLeave={e => (e.currentTarget.style.color = '#8a8a8a')}
-        >
-          ☕ Don&apos;t let us die
+          Open source
         </a>
       </div>
     </footer>
