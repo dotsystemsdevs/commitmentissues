@@ -214,4 +214,4 @@ MIT — see [`LICENSE`](LICENSE).
 
 ---
 
-Built by [Dot Systems](https://github.com/dotsystemsdevs). If it made you laugh, [keep us alive](https://buymeacoffee.com/commitmentissues).
+Built by [Dot Systems](https://github.com/dotsystemsdevs). Built indie, MIT-licensed, no monetization. Star or PR if you want to contribute.
