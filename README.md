@@ -14,6 +14,10 @@ Paste a public GitHub URL — or a username — and get a shareable certificate 
 
 ![Homepage](docs/screenshots/homepage.png)
 
+## Featured in
+
+- [pegaltier/awesome-utils-dev](https://github.com/pegaltier/awesome-utils-dev/blob/master/utils-coding/utils-git.md) (★293)
+
 ## Two ways in
 
 - **Certify a repo** — paste a GitHub URL, get a printable A4 certificate of death.
