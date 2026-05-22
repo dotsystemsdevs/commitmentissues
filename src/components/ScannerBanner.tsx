@@ -46,7 +46,7 @@ export default function ScannerBanner() {
       left: 0,
       right: 0,
       zIndex: 1001,
-      background: 'var(--c-border)',
+      background: 'var(--c-ink)',
       height: '32px',
       display: 'flex',
       alignItems: 'center',
@@ -89,7 +89,7 @@ export default function ScannerBanner() {
                   style={{ color: 'var(--c-bg)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
                 >
                   <span aria-hidden style={{ opacity: 0.9 }}>🪦</span>
-                  <span style={{ textDecoration: 'underline', textUnderlineOffset: '2px', textDecorationColor: 'rgba(255,255,255,0.2)' }}>
+                  <span style={{ textDecoration: 'underline', textUnderlineOffset: '2px', textDecorationColor: 'color-mix(in srgb, var(--c-bg) 30%, transparent)' }}>
                     {entry.fullName}
                   </span>
                 </Link>
@@ -99,7 +99,7 @@ export default function ScannerBanner() {
           })}
         </div>
       </div>
-      <div style={{ padding: '0 8px', display: 'flex', alignItems: 'center', borderLeft: '1px solid rgba(255,255,255,0.1)', height: '100%' }}>
+      <div style={{ padding: '0 8px', display: 'flex', alignItems: 'center', borderLeft: '1px solid color-mix(in srgb, var(--c-bg) 20%, transparent)', height: '100%' }}>
         <ThemeToggle />
       </div>
     </div>

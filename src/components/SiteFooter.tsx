@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import GitHubIcon from '@/components/GitHubIcon'
-import ThemeToggle from '@/components/ThemeToggle'
 
 const FONT = `var(--font-courier), system-ui, sans-serif`
 
@@ -50,8 +49,6 @@ export default function SiteFooter({ compact = false }: SiteFooterProps) {
           <GitHubIcon size={13} />
           Open source
         </a>
-        <span style={{ color: 'var(--c-border-light)', fontSize: '12px' }}>·</span>
-        <ThemeToggle />
       </div>
     </footer>
   )

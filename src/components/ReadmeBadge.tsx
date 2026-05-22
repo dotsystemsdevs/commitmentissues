@@ -27,7 +27,16 @@ export default function ReadmeBadge({ username }: Props) {
   }
 
   return (
-    <div className="readme-badge-block readme-badge-block--profile record-card" style={{ width: '100%', marginBottom: '22px', border: '2px solid #1a1a1a' }}>
+    <div
+      className="readme-badge-block readme-badge-block--profile record-card"
+      style={{
+        width: '100%',
+        marginBottom: '22px',
+        background: 'var(--c-surface)',
+        border: '2px solid var(--c-border)',
+        padding: '16px 18px',
+      }}
+    >
       {/* Badge preview — the SVG already has its own border; keep the wrapper borderless */}
       <div className="readme-badge-preview" style={{ width: '100%', aspectRatio: '440 / 96' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -55,9 +64,9 @@ export default function ReadmeBadge({ username }: Props) {
             letterSpacing: '0.06em',
             padding: '8px 14px',
             minHeight: '36px',
-            background: copied ? '#2d7a3c' : 'transparent',
-            color: copied ? '#fff' : '#4a4440',
-            border: `2px solid ${copied ? '#2d7a3c' : '#cec6bb'}`,
+            background: copied ? 'var(--c-green)' : 'transparent',
+            color: copied ? 'var(--c-bg)' : 'var(--c-ink-2)',
+            border: `2px solid ${copied ? 'var(--c-green)' : 'var(--c-border-light)'}`,
             cursor: 'pointer',
             transition: 'all 0.15s',
             whiteSpace: 'nowrap',
@@ -65,14 +74,14 @@ export default function ReadmeBadge({ username }: Props) {
           }}
           onMouseEnter={e => {
             if (!copied) {
-              e.currentTarget.style.borderColor = '#1a1a1a'
-              e.currentTarget.style.color = '#1a1a1a'
+              e.currentTarget.style.borderColor = 'var(--c-ink)'
+              e.currentTarget.style.color = 'var(--c-ink)'
             }
           }}
           onMouseLeave={e => {
             if (!copied) {
-              e.currentTarget.style.borderColor = '#cec6bb'
-              e.currentTarget.style.color = '#4a4440'
+              e.currentTarget.style.borderColor = 'var(--c-border-light)'
+              e.currentTarget.style.color = 'var(--c-ink-2)'
             }
           }}
         >
