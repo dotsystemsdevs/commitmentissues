@@ -68,7 +68,24 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
     {
+      '@type': 'WebSite',
+      '@id': 'https://commitmentissues.dev/#website',
+      url: 'https://commitmentissues.dev',
+      name: 'Commitment Issues',
+      description: 'Death certificate generator for abandoned GitHub repositories.',
+      publisher: { '@id': 'https://commitmentissues.dev/#org' },
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: 'https://commitmentissues.dev/?repo={search_term_string}',
+        },
+        'query-input': 'required name=search_term_string',
+      },
+    },
+    {
       '@type': 'WebApplication',
+      '@id': 'https://commitmentissues.dev/#app',
       name: 'Commitment Issues',
       alternateName: 'commitmentissues.dev',
       description: 'Free tool that generates official death certificates for abandoned GitHub repos. Paste any public repo URL to see the cause of death, last commit as last words, and full repo stats.',
@@ -83,12 +100,18 @@ const jsonLd = {
         'README badge embed',
       ],
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-      creator: { '@type': 'Organization', name: 'Dot Systems', url: 'https://github.com/dotsystemsdevs' },
+      creator: { '@id': 'https://commitmentissues.dev/#org' },
     },
     {
       '@type': 'Organization',
+      '@id': 'https://commitmentissues.dev/#org',
       name: 'Dot Systems',
       url: 'https://github.com/dotsystemsdevs',
+      sameAs: [
+        'https://github.com/dotsystemsdevs',
+        'https://x.com/Dotsystemsdevs',
+        'https://www.instagram.com/dotsystemsdevs/',
+      ],
     },
   ],
 }

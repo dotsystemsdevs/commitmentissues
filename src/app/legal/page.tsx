@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import LegalContent from './legalContent'
+import BreadcrumbJsonLd from '@/components/BreadcrumbJsonLd'
 
 export const metadata: Metadata = {
   title: 'Legal · Commitment Issues',
@@ -13,6 +14,11 @@ export const metadata: Metadata = {
 }
 
 export default function LegalPage() {
-  return <LegalContent />
+  return (
+    <>
+      <BreadcrumbJsonLd trail={[{ name: 'Legal', path: '/legal' }]} />
+      <LegalContent />
+    </>
+  )
 }
 

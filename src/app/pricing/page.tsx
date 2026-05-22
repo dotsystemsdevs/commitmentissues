@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import PricingContent from './PricingContent'
+import BreadcrumbJsonLd from '@/components/BreadcrumbJsonLd'
 
 export const metadata: Metadata = {
   title: 'Pricing · Commitment Issues · Death Is Free',
@@ -13,5 +14,10 @@ export const metadata: Metadata = {
 }
 
 export default function PricingPage() {
-  return <PricingContent />
+  return (
+    <>
+      <BreadcrumbJsonLd trail={[{ name: 'Pricing', path: '/pricing' }]} />
+      <PricingContent />
+    </>
+  )
 }

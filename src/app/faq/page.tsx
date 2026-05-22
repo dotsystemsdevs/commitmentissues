@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import FAQContent from './FAQContent'
+import BreadcrumbJsonLd from '@/components/BreadcrumbJsonLd'
 
 export const metadata: Metadata = {
   title: 'FAQ · Commitment Issues',
@@ -85,6 +86,7 @@ function FAQJsonLd() {
 export default function FAQPage() {
   return (
     <>
+      <BreadcrumbJsonLd trail={[{ name: 'FAQ', path: '/faq' }]} />
       <FAQJsonLd />
       <FAQContent items={FAQ} />
     </>

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import AboutContent from './AboutContent'
+import BreadcrumbJsonLd from '@/components/BreadcrumbJsonLd'
 
 export const metadata: Metadata = {
   title: 'About · Commitment Issues · How It Works',
@@ -13,5 +14,10 @@ export const metadata: Metadata = {
 }
 
 export default function AboutPage() {
-  return <AboutContent />
+  return (
+    <>
+      <BreadcrumbJsonLd trail={[{ name: 'About', path: '/about' }]} />
+      <AboutContent />
+    </>
+  )
 }
