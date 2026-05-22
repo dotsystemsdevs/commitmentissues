@@ -96,6 +96,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const visibleStampRef = useRef<HTMLDivElement>(null)
   const exportStampRef = useRef<HTMLDivElement>(null)
+  const actionsRef = useRef<HTMLDivElement>(null)
   const [referrerUser, setReferrerUser] = useState<string | null>(null)
 
   useEffect(() => {
@@ -152,6 +153,16 @@ export default function CertificateCard({ cert, onReset }: Props) {
     const id = requestAnimationFrame(() => setVisible(true))
     return () => cancelAnimationFrame(id)
   }, [])
+
+  useEffect(() => {
+    if (!visible || !isMobileViewport || !actionsRef.current) return
+    // After the certificate reveals, nudge the share/download row into view
+    // so the primary CTA is visible without manual scroll.
+    const id = window.setTimeout(() => {
+      actionsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }, 600)
+    return () => window.clearTimeout(id)
+  }, [visible, isMobileViewport])
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -467,7 +478,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
       </div>
 
       {/* ── Actions below certificate ── */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '100%' }}>
+      <div ref={actionsRef} style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '100%' }}>
 
         {/* Share + Download — side by side */}
         {!showInlineShare && (
@@ -486,7 +497,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
               }}
             >
-              {isGeneratingShare || isDownloading ? <span className="btn-spinner" /> : (isMobileViewport ? 'Share as Story' : 'Share certificate')}
+              {isGeneratingShare || isDownloading ? <span className="btn-spinner" /> : (isMobileViewport ? 'Post obituary' : 'Post on X / Instagram')}
             </button>
             <button
               type="button"
@@ -649,6 +660,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
                   <button
                     type="button"
                     onClick={async () => {
+                      track('readme_badge_copied')
                       const ok = await copyText(badgeMd)
                       if (!ok) promptCopy(badgeMd, 'Copy this README badge markdown')
                       setBadgeCopied(true)
@@ -660,7 +672,7 @@ export default function CertificateCard({ cert, onReset }: Props) {
                   </button>
                 </div>
                 <p className="readme-badge-caption cert-readme-caption" style={{ fontFamily: MONO }}>
-                  ↻ paste once — updates automatically
+                  ↻ paste once, updates automatically
                 </p>
               </div>
             </div>
