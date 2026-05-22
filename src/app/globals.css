@@ -8,8 +8,8 @@
 :root {
   /* Backgrounds */
   --c-bg:       #FAF6EF;   /* page background */
-  --c-surface:  #EDE8E1;   /* cards */
-  --c-surface-raised: #F5F0E8; /* cards lifted above surface */
+  --c-surface:  #FAF6EF;   /* cards (matches page for a unified cream canvas) */
+  --c-surface-raised: #F1ECE3; /* cards on hover: slight darken for state feedback */
 
   /* Text */
   --c-ink:      #160A06;   /* primary text */
@@ -31,8 +31,8 @@
 [data-theme="dark"] {
   /* Backgrounds */
   --c-bg:       #0F0C09;   /* page background */
-  --c-surface:  #1A1510;   /* cards */
-  --c-surface-raised: #241D16; /* cards lifted above surface */
+  --c-surface:  #0F0C09;   /* cards (matches page in dark mode too) */
+  --c-surface-raised: #1A1510; /* cards on hover: slight lift for state feedback */
 
   /* Text */
   --c-ink:      #EDE8E1;   /* primary text */
