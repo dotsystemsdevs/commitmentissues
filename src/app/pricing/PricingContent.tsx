@@ -1,7 +1,47 @@
 'use client'
 
-import Link from 'next/link'
+import { FormEvent, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { track } from '@vercel/analytics'
 import SubpageShell from '@/components/SubpageShell'
+
+const MONO = `var(--font-courier), system-ui, sans-serif`
+const VALID_USERNAME = /^[a-zA-Z0-9_.-]+$/
+
+type ParsedInput =
+  | { kind: 'repo'; slug: string }
+  | { kind: 'user'; username: string }
+  | null
+
+function parsePricingInput(value: string): ParsedInput {
+  const trimmed = value.trim()
+  if (!trimmed) return null
+
+  const githubRepoUrl = trimmed.match(/(?:https?:\/\/)?(?:www\.)?github\.com\/([^/\s]+)\/([^/\s#?]+)(?:[/?#]|$)/i)
+  if (githubRepoUrl) {
+    const owner = githubRepoUrl[1]
+    const repo = githubRepoUrl[2].replace(/\.git$/i, '')
+    return { kind: 'repo', slug: `${owner}/${repo}` }
+  }
+
+  const githubUserUrl = trimmed.match(/(?:https?:\/\/)?(?:www\.)?github\.com\/([^/\s?#]+)\/?$/i)
+  if (githubUserUrl && VALID_USERNAME.test(githubUserUrl[1])) {
+    return { kind: 'user', username: githubUserUrl[1] }
+  }
+
+  const slugMatch = trimmed.match(/^([^/\s]+)\/([^/\s]+)$/)
+  if (slugMatch) {
+    const owner = slugMatch[1]
+    const repo = slugMatch[2].replace(/\.git$/i, '')
+    return { kind: 'repo', slug: `${owner}/${repo}` }
+  }
+
+  if (VALID_USERNAME.test(trimmed)) {
+    return { kind: 'user', username: trimmed }
+  }
+
+  return null
+}
 
 const SECTIONS = [
   {
@@ -33,6 +73,25 @@ const SECTIONS = [
 ]
 
 export default function PricingContent() {
+  const router = useRouter()
+  const [value, setValue] = useState('')
+  const [invalid, setInvalid] = useState(false)
+
+  function handleSubmit(e: FormEvent) {
+    e.preventDefault()
+    const parsed = parsePricingInput(value)
+    if (!parsed) {
+      setInvalid(true)
+      return
+    }
+    track('pricing_repo_submitted', { kind: parsed.kind })
+    if (parsed.kind === 'repo') {
+      router.push(`/?repo=${encodeURIComponent(parsed.slug)}`)
+    } else {
+      router.push(`/user/${encodeURIComponent(parsed.username)}`)
+    }
+  }
+
   return (
     <SubpageShell
       title="Death Is Free."
@@ -78,19 +137,61 @@ export default function PricingContent() {
           style={{
             border: '2px solid var(--c-border)',
             background: 'var(--c-panel-2, transparent)',
-            textAlign: 'center',
             padding: '28px 20px',
             marginTop: '8px',
           }}
         >
-          <p className="record-label" style={{ marginBottom: '14px' }}>Begin the Examination</p>
-          <Link
-            href="/"
-            className="subpage-faq-cta"
-            style={{ display: 'inline-flex', justifyContent: 'center' }}
+          <p className="record-label" style={{ marginBottom: '14px', textAlign: 'center' }}>Begin the Examination</p>
+          <form
+            onSubmit={handleSubmit}
+            style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}
           >
-            ⚰  Bury a repo →
-          </Link>
+            <input
+              type="text"
+              value={value}
+              onChange={e => { setValue(e.target.value); if (invalid) setInvalid(false) }}
+              placeholder="username or owner/repo"
+              aria-label="GitHub username or repo"
+              autoComplete="off"
+              spellCheck={false}
+              style={{
+                fontFamily: MONO,
+                fontSize: '14px',
+                padding: '12px 14px',
+                background: 'var(--c-bg)',
+                color: 'var(--c-ink)',
+                border: `2px solid ${invalid ? 'var(--c-red, #8B0000)' : 'var(--c-ink)'}`,
+                outline: 'none',
+                width: '100%',
+                minHeight: '44px',
+              }}
+            />
+            <button
+              type="submit"
+              className="subpage-faq-cta"
+              style={{
+                fontFamily: MONO,
+                fontSize: '13px',
+                fontWeight: 700,
+                letterSpacing: '0.06em',
+                background: 'var(--c-ink)',
+                color: 'var(--c-bg)',
+                border: '2px solid var(--c-ink)',
+                cursor: 'pointer',
+                minHeight: '44px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              ⚰  Issue death certificate →
+            </button>
+            {invalid && (
+              <p style={{ fontFamily: MONO, fontSize: '12px', color: 'var(--c-red, #8B0000)', margin: 0, textAlign: 'center' }}>
+                Could not parse. Try a github URL or owner/repo.
+              </p>
+            )}
+          </form>
         </div>
       </div>
     </SubpageShell>
