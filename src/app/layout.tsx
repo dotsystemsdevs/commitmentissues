@@ -4,6 +4,7 @@ import Script from 'next/script'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import ScannerBanner from '@/components/ScannerBanner'
+import CoffinPill from '@/components/CoffinPill'
 import './globals.css'
 
 const spaceGrotesk = Space_Grotesk({
@@ -106,6 +107,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={`${spaceGrotesk.variable} ${unifraktur.variable} ${lora.variable} antialiased`}>
         <ScannerBanner />
+        <CoffinPill />
         {children}
         <Analytics />
         <SpeedInsights />

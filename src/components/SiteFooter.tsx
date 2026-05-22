@@ -4,18 +4,9 @@ import Link from 'next/link'
 import { track } from '@vercel/analytics'
 import GitHubIcon from '@/components/GitHubIcon'
 
-const FONT = `var(--font-courier), system-ui, sans-serif`
-
 interface SiteFooterProps {
   compact?: boolean
 }
-
-const linkStyle = {
-  fontFamily: FONT, fontSize: '13px', color: 'var(--c-muted)',
-  textDecoration: 'none', display: 'inline-flex', alignItems: 'center',
-  gap: '4px', transition: 'color 0.15s',
-  WebkitTapHighlightColor: 'transparent',
-} as const
 
 function XIcon({ size = 13 }: { size?: number }) {
   return (
@@ -38,77 +29,63 @@ function InstagramIcon({ size = 13 }: { size?: number }) {
 export default function SiteFooter({ compact = false }: SiteFooterProps) {
   return (
     <footer className={`site-footer${compact ? ' site-footer--compact' : ''}`}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '14px', flexWrap: 'wrap' }}>
-        <Link
-          href="/about"
-          style={linkStyle}
-          onMouseEnter={e => (e.currentTarget.style.color = 'var(--c-ink)')}
-          onMouseLeave={e => (e.currentTarget.style.color = 'var(--c-muted)')}
-        >
-          About
-        </Link>
-        <span style={{ color: 'var(--c-border-light)', fontSize: '12px' }}>·</span>
-        <Link
-          href="/legal"
-          style={linkStyle}
-          onMouseEnter={e => (e.currentTarget.style.color = 'var(--c-ink)')}
-          onMouseLeave={e => (e.currentTarget.style.color = 'var(--c-muted)')}
-        >
-          Legal
-        </Link>
-        <span style={{ color: 'var(--c-border-light)', fontSize: '12px' }}>·</span>
-        <a
-          href="https://github.com/dotsystemsdevs/commitmentissues"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={linkStyle}
-          onMouseEnter={e => (e.currentTarget.style.color = 'var(--c-ink)')}
-          onMouseLeave={e => (e.currentTarget.style.color = 'var(--c-muted)')}
-        >
-          <GitHubIcon size={13} />
-          Open source
-        </a>
-        <span style={{ color: 'var(--c-border-light)', fontSize: '12px' }}>·</span>
-        <a
-          href="https://x.com/Dotsystemsdevs"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Follow on X"
-          onClick={() => track('social_clicked', { platform: 'x', from: 'footer' })}
-          style={linkStyle}
-          onMouseEnter={e => (e.currentTarget.style.color = 'var(--c-ink)')}
-          onMouseLeave={e => (e.currentTarget.style.color = 'var(--c-muted)')}
-        >
-          <XIcon size={12} />
-          X
-        </a>
-        <span style={{ color: 'var(--c-border-light)', fontSize: '12px' }}>·</span>
-        <a
-          href="https://www.instagram.com/dotsystemsdevs/"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Follow on Instagram"
-          onClick={() => track('social_clicked', { platform: 'instagram', from: 'footer' })}
-          style={linkStyle}
-          onMouseEnter={e => (e.currentTarget.style.color = 'var(--c-ink)')}
-          onMouseLeave={e => (e.currentTarget.style.color = 'var(--c-muted)')}
-        >
-          <InstagramIcon size={13} />
-          Instagram
-        </a>
-        <span style={{ color: 'var(--c-border-light)', fontSize: '12px' }}>·</span>
+      <nav className="footer-row" aria-label="Site footer">
+        <div className="footer-group">
+          <Link href="/about" className="footer-link">About</Link>
+          <span className="footer-sep" aria-hidden>·</span>
+          <Link href="/legal" className="footer-link">Legal</Link>
+          <span className="footer-sep" aria-hidden>·</span>
+          <a
+            href="https://github.com/dotsystemsdevs/commitmentissues"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-link"
+          >
+            <GitHubIcon size={13} />
+            <span className="footer-link-text">Open source</span>
+          </a>
+        </div>
+
+        <span className="footer-divider" aria-hidden />
+
+        <div className="footer-group footer-group--socials">
+          <a
+            href="https://x.com/Dotsystemsdevs"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Follow on X"
+            onClick={() => track('social_clicked', { platform: 'x', from: 'footer' })}
+            className="footer-link footer-link--icon"
+          >
+            <XIcon size={12} />
+            <span className="footer-link-text">X</span>
+          </a>
+          <a
+            href="https://www.instagram.com/dotsystemsdevs/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Follow on Instagram"
+            onClick={() => track('social_clicked', { platform: 'instagram', from: 'footer' })}
+            className="footer-link footer-link--icon"
+          >
+            <InstagramIcon size={13} />
+            <span className="footer-link-text">Instagram</span>
+          </a>
+        </div>
+
+        <span className="footer-divider" aria-hidden />
+
         <a
           href="https://buymeacoffee.com/dotdevs"
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => track('buy_me_a_coffin_clicked', { from: 'footer' })}
-          style={linkStyle}
-          onMouseEnter={e => (e.currentTarget.style.color = 'var(--c-ink)')}
-          onMouseLeave={e => (e.currentTarget.style.color = 'var(--c-muted)')}
+          className="footer-coffin"
         >
-          ⚰  Buy me a coffin
+          <span aria-hidden>⚰</span>
+          <span>Buy me a coffin</span>
         </a>
-      </div>
+      </nav>
     </footer>
   )
 }
