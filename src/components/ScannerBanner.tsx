@@ -93,7 +93,7 @@ export default function ScannerBanner() {
                     {entry.fullName}
                   </span>
                 </Link>
-                <span style={{ color: 'var(--c-muted)', opacity: 0.9 }}>&nbsp;— {label}</span>
+                <span style={{ color: 'var(--c-muted)', opacity: 0.9 }}>&nbsp;· {label}</span>
               </span>
             )
           })}

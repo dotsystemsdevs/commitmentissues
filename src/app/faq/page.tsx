@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
+import FAQContent from './FAQContent'
 
 export const metadata: Metadata = {
   title: 'FAQ · Commitment Issues',
@@ -84,25 +84,9 @@ function FAQJsonLd() {
 
 export default function FAQPage() {
   return (
-    <main className="page-shell-main">
+    <>
       <FAQJsonLd />
-      <div className="page-shell-inner">
-        <Link href="/" style={{ display: 'inline-block', marginBottom: 24, color: 'var(--c-muted)', fontSize: 14, textDecoration: 'none' }}>← Back to Commitment Issues</Link>
-        <h1 style={{ fontSize: 36, fontWeight: 800, letterSpacing: '-0.025em', margin: '0 0 8px' }}>
-          Frequently Asked Questions
-        </h1>
-        <p style={{ color: 'var(--c-muted)', fontSize: 15, marginBottom: 40 }}>
-          Everything about the death certificate generator for dead GitHub repos.
-        </p>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-          {FAQ.map(({ q, a }, i) => (
-            <section key={i} style={{ borderTop: i === 0 ? 'none' : '1px solid rgba(0,0,0,0.08)', paddingTop: i === 0 ? 0 : 20 }}>
-              <h2 style={{ fontSize: 18, fontWeight: 700, marginBottom: 8, letterSpacing: '-0.01em' }}>{q}</h2>
-              <p style={{ fontSize: 15, margin: 0, lineHeight: 1.6 }}>{a}</p>
-            </section>
-          ))}
-        </div>
-      </div>
-    </main>
+      <FAQContent items={FAQ} />
+    </>
   )
 }

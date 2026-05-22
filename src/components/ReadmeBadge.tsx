@@ -16,7 +16,7 @@ export default function ReadmeBadge({ username }: Props) {
   const BADGE_VERSION = '3'
   const badgeUrl   = `https://commitmentissues.dev/api/badge?username=${username}&v=${BADGE_VERSION}&frame=1`
   const profileUrl = `https://commitmentissues.dev/user/${username}`
-  const altText    = `Commitment Issues — @${username}'s graveyard`
+  const altText    = `Commitment Issues: @${username}'s graveyard`
   const markdown   = `[![${altText}](${badgeUrl})](${profileUrl})`
 
   async function handleCopy() {

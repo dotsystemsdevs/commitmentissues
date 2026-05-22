@@ -50,7 +50,7 @@ export async function GET(request: NextRequest) {
   ])
 
   if (res1.status === 404) return NextResponse.json({ error: 'GitHub user not found.' }, { status: 404 })
-  if (res1.status === 403 || res1.status === 429) return NextResponse.json({ error: 'GitHub rate limit hit — try again in a minute.' }, { status: 429 })
+  if (res1.status === 403 || res1.status === 429) return NextResponse.json({ error: 'GitHub rate limit hit. Try again in a minute.' }, { status: 429 })
   if (!res1.ok) return NextResponse.json({ error: 'GitHub API error. Try again.' }, { status: 502 })
 
   const [page1, page2]: [GHRepo[], GHRepo[]] = await Promise.all([

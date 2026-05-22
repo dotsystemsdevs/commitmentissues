@@ -22,7 +22,7 @@ export default function CoffinPill() {
       href="https://buymeacoffee.com/dotdevs"
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Buy me a coffin — support the morgue"
+      aria-label="Buy me a coffin: support the morgue"
       aria-hidden={!visible}
       tabIndex={visible ? 0 : -1}
       onClick={() => track('buy_me_a_coffin_clicked', { from: 'top_right_pill' })}
