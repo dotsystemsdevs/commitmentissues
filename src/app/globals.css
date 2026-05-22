@@ -575,7 +575,8 @@ a.subpage-inline-mail {
 }
 
 /* Floating top-right "Buy me a coffin" button — sits just below the ScannerBanner.
-   Sharp corners to match the morgue/gothic theme (no rounded pill shapes). */
+   Sharp corners to match the morgue/gothic theme. Hidden until the user scrolls
+   past the hero, then fades in. */
 .coffin-pill {
   position: fixed;
   top: 44px;
@@ -595,9 +596,17 @@ a.subpage-inline-mail {
   border-radius: 0;
   text-decoration: none;
   box-shadow: 2px 2px 0 var(--c-ink);
-  transition: transform 0.1s, box-shadow 0.1s, background 0.15s, color 0.15s;
+  transition: opacity 220ms ease, transform 220ms ease, background 0.15s, color 0.15s, box-shadow 0.1s;
   -webkit-tap-highlight-color: transparent;
-  animation: section-fade-up 600ms ease-out both;
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+}
+
+.coffin-pill--visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .coffin-pill:hover {
