@@ -20,7 +20,7 @@ const SECTIONS: Section[] = [
   {
     id: 'data-sources',
     heading: 'Data Sources',
-    body: "The tool analyzes public data from GitHub's public API — repository metadata, commit activity, archive status, open issues. We do not access private code, credentials, or anything not already publicly available on GitHub.",
+    body: "The tool analyzes public data from GitHub's public API: repository metadata, commit activity, archive status, open issues. We do not access private code, credentials, or anything not already publicly available on GitHub.",
   },
   {
     id: 'privacy',
@@ -30,7 +30,7 @@ const SECTIONS: Section[] = [
   {
     id: 'analytics',
     heading: 'Analytics',
-    body: 'Privacy-friendly analytics only — aggregate counts, not personal profiles. You can avoid submitting private or sensitive URLs; this tool is intended for public GitHub data only.',
+    body: 'Privacy-friendly analytics only: aggregate counts, not personal profiles. You can avoid submitting private or sensitive URLs; this tool is intended for public GitHub data only.',
   },
   {
     id: 'contact',

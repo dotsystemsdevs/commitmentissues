@@ -2,11 +2,11 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'FAQ — Commitment Issues',
+  title: 'FAQ · Commitment Issues',
   description: 'Frequently asked questions about Commitment Issues, the death certificate generator for abandoned GitHub repositories. Free, no sign-up.',
   alternates: { canonical: 'https://commitmentissues.dev/faq' },
   openGraph: {
-    title: 'FAQ — Commitment Issues',
+    title: 'FAQ · Commitment Issues',
     description: 'Everything about the death certificate generator for dead GitHub repos.',
     url: 'https://commitmentissues.dev/faq',
     type: 'website',
@@ -32,7 +32,7 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: 'Is there a side project graveyard online?',
-    a: 'Yes — Commitment Issues has a Famous Casualties section listing well-known abandoned open-source projects. You can also paste any GitHub username to see that user\'s personal graveyard of unfinished projects.',
+    a: 'Yes. Commitment Issues has a Famous Casualties section listing well-known abandoned open-source projects. You can also paste any GitHub username to see that user\'s personal graveyard of unfinished projects.',
   },
   {
     q: 'How do I detect dependency rot in my project?',
@@ -40,7 +40,7 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: 'Is Commitment Issues free?',
-    a: 'Yes — completely free. No ads, no in-app purchases, no sign-up, no account required. Works in any browser. The Chrome extension is also free.',
+    a: 'Yes, completely free. No ads, no in-app purchases, no sign-up, no account required. Works in any browser. The Chrome extension is also free.',
   },
   {
     q: 'Does Commitment Issues use AI?',
@@ -56,7 +56,7 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: 'How does Commitment Issues compare to GitHub\'s built-in tools?',
-    a: 'GitHub shows raw activity data but does not synthesize abandonment. Commitment Issues takes those signals and renders an opinionated verdict — alive, life support, or deceased — with a comedic but accurate certificate.',
+    a: 'GitHub shows raw activity data but does not synthesize abandonment. Commitment Issues takes those signals and renders an opinionated verdict (alive, life support, or deceased) with a comedic but accurate certificate.',
   },
   {
     q: 'Who made Commitment Issues?',
@@ -87,11 +87,11 @@ export default function FAQPage() {
     <main className="page-shell-main">
       <FAQJsonLd />
       <div className="page-shell-inner">
-        <Link href="/" style={{ display: 'inline-block', marginBottom: 24, color: 'var(--ink-fade)', fontSize: 14, textDecoration: 'none' }}>← Back to Commitment Issues</Link>
+        <Link href="/" style={{ display: 'inline-block', marginBottom: 24, color: 'var(--c-muted)', fontSize: 14, textDecoration: 'none' }}>← Back to Commitment Issues</Link>
         <h1 style={{ fontSize: 36, fontWeight: 800, letterSpacing: '-0.025em', margin: '0 0 8px' }}>
           Frequently Asked Questions
         </h1>
-        <p style={{ color: 'var(--ink-fade)', fontSize: 15, marginBottom: 40 }}>
+        <p style={{ color: 'var(--c-muted)', fontSize: 15, marginBottom: 40 }}>
           Everything about the death certificate generator for dead GitHub repos.
         </p>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>

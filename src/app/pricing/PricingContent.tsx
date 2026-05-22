@@ -68,7 +68,7 @@ const SECTIONS = [
   {
     id: 'how-we-survive',
     heading: 'How We Stay Alive',
-    body: 'Commitment Issues is built and maintained by Dot Systems — an indie studio that funds this work from other projects. Fork it, share it, or open a pull request with new famous casualties. If you really want to chip in:',
+    body: 'Commitment Issues is built and maintained by Dot Systems, an indie studio that funds this work from other projects. Fork it, share it, or open a pull request with new famous casualties. If you really want to chip in:',
     coffin: true,
   },
 ]

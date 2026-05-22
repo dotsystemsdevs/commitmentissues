@@ -37,8 +37,8 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://commitmentissues.dev'),
-  title: 'Commitment Issues — Death Certificates for Dead GitHub Repos',
-  description: 'Paste any public GitHub repo and get an official death certificate — cause of death, last commit as last words, and repo stats. Free for developers.',
+  title: 'Commitment Issues: Death Certificates for Dead GitHub Repos',
+  description: 'Paste any public GitHub repo and get an official death certificate: cause of death, last commit as last words, and repo stats. Free for developers.',
   keywords: [
     'abandoned github repo', 'dead github project', 'github repo death certificate',
     'unmaintained open source', 'stale repository checker', 'github graveyard',
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
   authors: [{ name: 'Dot Systems', url: 'https://github.com/dotsystemsdevs' }],
   alternates: { canonical: 'https://commitmentissues.dev' },
   openGraph: {
-    title: 'Commitment Issues — Death Certificates for Dead GitHub Repos',
+    title: 'Commitment Issues: Death Certificates for Dead GitHub Repos',
     description: 'Paste any public GitHub repo and get an official death certificate. Cause of death, last words, repo stats. Free for developers.',
     url: 'https://commitmentissues.dev',
     siteName: 'Commitment Issues',
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Commitment Issues — Death Certificates for Dead GitHub Repos',
+    title: 'Commitment Issues: Death Certificates for Dead GitHub Repos',
     description: 'Paste any public GitHub repo and get an official death certificate. Cause of death, last words, repo stats.',
     images: ['/opengraph-image'],
   },

@@ -11,7 +11,7 @@ const SECTIONS = [
   {
     id: 'method-of-examination',
     heading: 'Method of Examination',
-    body: "We query the GitHub public API — commit history, star count, open issues, archive status — and run a severity assessment. The cause of death is algorithmic, not editorial. The results are accurate. The framing is not.",
+    body: "We query the GitHub public API for commit history, star count, open issues, and archive status, then run a severity assessment. The cause of death is algorithmic, not editorial. The results are accurate. The framing is not.",
   },
   {
     id: 'records-we-keep',
