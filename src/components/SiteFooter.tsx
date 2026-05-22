@@ -72,19 +72,6 @@ export default function SiteFooter({ compact = false }: SiteFooterProps) {
             <span className="footer-link-text">Instagram</span>
           </a>
         </div>
-
-        <span className="footer-divider" aria-hidden />
-
-        <a
-          href="https://buymeacoffee.com/dotdevs"
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => track('buy_me_a_coffin_clicked', { from: 'footer' })}
-          className="footer-coffin"
-        >
-          <span aria-hidden>⚰</span>
-          <span>Buy me a coffin</span>
-        </a>
       </nav>
     </footer>
   )

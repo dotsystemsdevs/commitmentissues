@@ -565,29 +565,6 @@ a.subpage-inline-mail {
   display: inline-block;
 }
 
-.footer-coffin {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 11px;
-  font-family: var(--font-courier), system-ui, sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: var(--c-ink);
-  background: transparent;
-  border: 1.5px solid var(--c-ink);
-  border-radius: 999px;
-  text-decoration: none;
-  transition: background 0.15s, color 0.15s;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.footer-coffin:hover {
-  background: var(--c-ink);
-  color: var(--c-bg);
-}
-
 /* Mobile: hide social link text, keep icons; drop dividers */
 @media (max-width: 640px) {
   .footer-row { gap: 8px; }
@@ -595,10 +572,10 @@ a.subpage-inline-mail {
   .footer-link { font-size: 12px; }
   .footer-group--socials .footer-link-text { display: none; }
   .footer-divider { display: none; }
-  .footer-coffin { padding: 5px 10px; font-size: 11.5px; }
 }
 
-/* Floating top-right "Buy me a coffin" pill — sits just below the ScannerBanner */
+/* Floating top-right "Buy me a coffin" button — sits just below the ScannerBanner.
+   Sharp corners to match the morgue/gothic theme (no rounded pill shapes). */
 .coffin-pill {
   position: fixed;
   top: 44px;
@@ -615,10 +592,10 @@ a.subpage-inline-mail {
   color: var(--c-ink);
   background: var(--c-bg);
   border: 1.5px solid var(--c-ink);
-  border-radius: 999px;
+  border-radius: 0;
   text-decoration: none;
-  box-shadow: 0 1px 0 var(--c-border-light), 0 4px 12px rgba(0,0,0,0.06);
-  transition: transform 0.15s, box-shadow 0.15s, background 0.15s, color 0.15s;
+  box-shadow: 2px 2px 0 var(--c-ink);
+  transition: transform 0.1s, box-shadow 0.1s, background 0.15s, color 0.15s;
   -webkit-tap-highlight-color: transparent;
   animation: section-fade-up 600ms ease-out both;
 }
@@ -626,20 +603,22 @@ a.subpage-inline-mail {
 .coffin-pill:hover {
   background: var(--c-ink);
   color: var(--c-bg);
-  transform: translateY(-1px);
-  box-shadow: 0 1px 0 var(--c-border-light), 0 6px 16px rgba(0,0,0,0.12);
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--c-ink);
 }
 
 .coffin-pill:active {
-  transform: translateY(0);
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 var(--c-ink);
 }
 
 @media (max-width: 640px) {
   .coffin-pill {
     top: 40px;
     right: 10px;
-    padding: 6px 10px;
+    padding: 6px 9px;
     font-size: 11px;
+    box-shadow: 1.5px 1.5px 0 var(--c-ink);
   }
   .coffin-pill-text {
     display: none;
