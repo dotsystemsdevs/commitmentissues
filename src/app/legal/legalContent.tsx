@@ -59,7 +59,6 @@ export default function LegalContent() {
               key={section.id}
               id={section.id}
               className="record-card"
-              style={{ border: '2px solid var(--c-border)' }}
             >
               <p className="record-label">{section.heading}</p>
               <p className="record-value" style={{ fontSize: 'clamp(14px, 3.8vw, 15px)', lineHeight: 1.75, color: 'var(--c-ink-2)' }}>

@@ -27,7 +27,6 @@ export default function FAQContent({ items }: { items: FAQItem[] }) {
           <section
             key={i}
             className="record-card"
-            style={{ border: '2px solid var(--c-border)' }}
           >
             <h2 className="record-label" style={{ fontSize: '11px', margin: '0 0 8px 0' }}>{q}</h2>
             <p className="record-value" style={{ fontSize: 'clamp(14px, 3.8vw, 15px)', lineHeight: 1.75, color: 'var(--c-ink-2)' }}>

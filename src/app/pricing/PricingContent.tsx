@@ -113,7 +113,6 @@ export default function PricingContent() {
           <div
             key={id}
             className="record-card"
-            style={{ border: '2px solid var(--c-border)' }}
           >
             <p className="record-label">{heading}</p>
             <p className="record-value" style={{ fontSize: 'clamp(14px, 3.8vw, 15px)', lineHeight: 1.75, color: 'var(--c-ink-2)' }}>
@@ -148,8 +147,6 @@ export default function PricingContent() {
         <div
           className="record-card"
           style={{
-            border: '2px solid var(--c-border)',
-            background: 'var(--c-panel-2, transparent)',
             padding: '28px 20px',
             marginTop: '8px',
           }}
