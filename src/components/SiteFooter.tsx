@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { track } from '@vercel/analytics'
 import GitHubIcon from '@/components/GitHubIcon'
 
 const FONT = `var(--font-courier), system-ui, sans-serif`
@@ -48,6 +49,18 @@ export default function SiteFooter({ compact = false }: SiteFooterProps) {
         >
           <GitHubIcon size={13} />
           Open source
+        </a>
+        <span style={{ color: 'var(--c-border-light)', fontSize: '12px' }}>·</span>
+        <a
+          href="https://buymeacoffee.com/dotdevs"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => track('buy_me_a_coffin_clicked', { from: 'footer' })}
+          style={linkStyle}
+          onMouseEnter={e => (e.currentTarget.style.color = 'var(--c-ink)')}
+          onMouseLeave={e => (e.currentTarget.style.color = 'var(--c-muted)')}
+        >
+          ⚰  Buy me a coffin
         </a>
       </div>
     </footer>
