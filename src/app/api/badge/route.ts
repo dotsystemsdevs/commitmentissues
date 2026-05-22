@@ -2,6 +2,32 @@ import { NextRequest, NextResponse } from 'next/server'
 
 const VALID_USERNAME = /^[a-zA-Z0-9_.-]+$/
 
+async function getRedis() {
+  if (!process.env.KV_REST_API_URL || !process.env.KV_REST_API_TOKEN) return null
+  try {
+    const { Redis } = await import('@upstash/redis')
+    return new Redis({ url: process.env.KV_REST_API_URL, token: process.env.KV_REST_API_TOKEN })
+  } catch {
+    return null
+  }
+}
+
+// Tracks badge usage without slowing the response: total renders go up
+// every request, and the username is added to a set so we can count unique
+// graveyards being tracked across the wild.
+async function trackBadgeRender(username: string) {
+  try {
+    const redis = await getRedis()
+    if (!redis) return
+    await Promise.all([
+      redis.incr('stats:badge_renders'),
+      redis.sadd('stats:badge_usernames', username.toLowerCase()),
+    ])
+  } catch {
+    // never block the SVG response on telemetry
+  }
+}
+
 interface GHRepo {
   pushed_at: string | null
   archived: boolean
@@ -63,12 +89,12 @@ function buildSvg(
   <text x="16" y="28" font-family=${JSON.stringify(MONO)} font-size="9" font-weight="700" fill="#9a9288" letter-spacing="2.2">GITHUB REPO GRAVEYARD</text>
 
   <text x="16" y="58" font-family=${JSON.stringify(MONO)} font-size="15" font-weight="700" letter-spacing="0.8">
-    <tspan fill="#8B0000">${dead} DEAD</tspan><tspan fill="#cec6bb" font-weight="400">  ·  </tspan><tspan fill="${struggling > 0 ? '#b45309' : '#cec6bb'}" font-weight="${struggling > 0 ? '700' : '400'}">${struggling} STRUGGLING</tspan><tspan fill="#cec6bb" font-weight="400">  ·  </tspan><tspan fill="${alive > 0 ? '#2d7a3c' : '#cec6bb'}" font-weight="${alive > 0 ? '700' : '400'}">${alive} ALIVE</tspan>
+    <tspan fill="#8B1A1A">${dead} DEAD</tspan><tspan fill="#cec6bb" font-weight="400">  ·  </tspan><tspan fill="${struggling > 0 ? '#b45309' : '#cec6bb'}" font-weight="${struggling > 0 ? '700' : '400'}">${struggling} STRUGGLING</tspan><tspan fill="#cec6bb" font-weight="400">  ·  </tspan><tspan fill="${alive > 0 ? '#2d7a3c' : '#cec6bb'}" font-weight="${alive > 0 ? '700' : '400'}">${alive} ALIVE</tspan>
   </text>
 
   <rect x="${BAR_X}" y="${BAR_Y}" width="${BAR_W}" height="${BAR_H}" fill="#e0d8ce"/>
   <g clip-path="url(#bar-clip)">
-    ${deadW > 0       ? `<rect x="${BAR_X}"                       y="${BAR_Y}" width="${deadW}"       height="${BAR_H}" fill="#8B0000"/>` : ''}
+    ${deadW > 0       ? `<rect x="${BAR_X}"                       y="${BAR_Y}" width="${deadW}"       height="${BAR_H}" fill="#8B1A1A"/>` : ''}
     ${strugglingW > 0 ? `<rect x="${BAR_X + deadW}"               y="${BAR_Y}" width="${strugglingW}" height="${BAR_H}" fill="#b45309"/>` : ''}
     ${aliveW > 0      ? `<rect x="${BAR_X + deadW + strugglingW}" y="${BAR_Y}" width="${aliveW}"      height="${BAR_H}" fill="#2d7a3c"/>` : ''}
   </g>
@@ -86,6 +112,10 @@ export async function GET(req: NextRequest) {
 
   const stats = await fetchStats(username)
   const { dead, struggling, alive, total } = stats ?? { dead: 0, struggling: 0, alive: 0, total: 0 }
+
+  // Fire-and-forget telemetry. Edge caching means we only see this on cache
+  // miss, so the count is a lower bound, not raw view count.
+  void trackBadgeRender(username)
 
   const svg = buildSvg(username, dead, struggling, alive, total, framed)
 

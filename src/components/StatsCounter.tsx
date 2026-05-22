@@ -14,6 +14,12 @@ const PersonIcon = () => (
   </svg>
 )
 
+const BadgeIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden>
+    <path d="M3.75 1a.75.75 0 0 0-.75.75v12.5c0 .414.336.75.75.75h8.5a.75.75 0 0 0 .75-.75V1.75a.75.75 0 0 0-.75-.75h-8.5ZM5 4h6v1.5H5V4Zm0 3h6v1.5H5V7Zm0 3h4v1.5H5V10Z"/>
+  </svg>
+)
+
 const DIGIT_WIDTH = 18
 const DIGIT_HEIGHT = 24
 const MIN_DIGITS = 4
@@ -56,9 +62,10 @@ function Counter({ value }: { value: number }) {
 interface Props {
   buried: number
   profiles: number
+  badgeUsers?: number
 }
 
-export default function StatsCounter({ buried, profiles }: Props) {
+export default function StatsCounter({ buried, profiles, badgeUsers }: Props) {
   return (
     <div style={{
       display: 'inline-flex',
@@ -69,17 +76,27 @@ export default function StatsCounter({ buried, profiles }: Props) {
       fontFamily: MONO,
       minHeight: '24px',
     }}>
-      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--c-ink)' }}>
+      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--c-ink)' }} title="Repos buried">
         <RepoIcon />
         <Counter value={buried} />
       </span>
 
       <span aria-hidden style={{ color: 'var(--c-muted)', fontSize: '10px' }}>✦</span>
 
-      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--c-ink)' }}>
+      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--c-ink)' }} title="Profiles examined">
         <PersonIcon />
         <Counter value={profiles} />
       </span>
+
+      {badgeUsers !== undefined && badgeUsers > 0 && (
+        <>
+          <span aria-hidden style={{ color: 'var(--c-muted)', fontSize: '10px' }}>✦</span>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--c-ink)' }} title="Graveyards embedded as README badges">
+            <BadgeIcon />
+            <Counter value={badgeUsers} />
+          </span>
+        </>
+      )}
     </div>
   )
 }

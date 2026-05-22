@@ -2,15 +2,37 @@ import { MetadataRoute } from 'next'
 
 const BASE_URL = 'https://commitmentissues.dev'
 
-// Sample user-graveyard URLs to expose the dynamic /user/[name] route shape
-// to crawlers. These pages have their own metadata (per-user title/description).
+// User-graveyard URLs to expose the dynamic /user/[name] route shape to
+// crawlers. These pages have their own metadata (per-user title/description).
+// Mix of (a) developers whose READMEs already embed our badge — Google
+// notices the cross-link — and (b) well-known orgs whose archive status
+// makes their graveyard page interesting on its own.
 const SAMPLE_USERS = [
+  // Our own org
   'dotsystemsdevs',
+  // Confirmed badge embedders (verified via gh code search 2026-05-22)
+  'JohanSanSebastian',
+  'adiz777',
+  'lord-vinayak',
+  'jaritrix02',
+  // Curated-list maintainers who already link to us
+  'pegaltier',
+  'YamilAyma',
+  'Diego2005z',
+  // Famous casualty orgs (from Hall of Shame)
   'atom',
   'angular',
   'apache',
   'facebookarchive',
   'YahooArchive',
+  'gulpjs',
+  'gruntjs',
+  'bower',
+  'mootools',
+  'knockout',
+  'jashkenas',
+  'ariya',
+  'meteor',
 ]
 
 export default function sitemap(): MetadataRoute.Sitemap {

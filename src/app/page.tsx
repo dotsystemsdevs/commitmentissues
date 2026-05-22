@@ -53,6 +53,7 @@ function HomePage() {
   const [displayedBuried, setDisplayedBuried] = useState<number | null>(null)
   const [profiles, setProfiles] = useState<number | null>(null)
   const [displayedProfiles, setDisplayedProfiles] = useState<number | null>(null)
+  const [badgeUsers, setBadgeUsers] = useState<number | null>(null)
   const [statsLoading, setStatsLoading] = useState(true)
   const lastHandledRepoRef = useRef<string | null>(null)
 
@@ -88,9 +89,10 @@ function HomePage() {
   useEffect(() => {
     fetch('/api/stats')
       .then(r => r.json())
-      .then((d: { buried: number; profiles: number }) => {
+      .then((d: { buried: number; profiles: number; badgeUsers?: number }) => {
         setBuried(d.buried ?? 0)
         setProfiles(d.profiles ?? 0)
+        setBadgeUsers(d.badgeUsers ?? 0)
       })
       .catch(() => {})
       .finally(() => setStatsLoading(false))
@@ -150,7 +152,7 @@ function HomePage() {
         <div style={{ marginTop: '0px' }}>
           <PageHero
             subtitle={
-              !statsLoading ? <StatsCounter buried={displayedBuried ?? 0} profiles={displayedProfiles ?? 0} /> : <span style={{ minHeight: '24px', display: 'block' }} />
+              !statsLoading ? <StatsCounter buried={displayedBuried ?? 0} profiles={displayedProfiles ?? 0} badgeUsers={badgeUsers ?? 0} /> : <span style={{ minHeight: '24px', display: 'block' }} />
             }
             microcopy={null}
           />
@@ -205,8 +207,8 @@ function HomePage() {
       {/* User scan error */}
       {userFetchError && !userLoading && (
         <div style={{ textAlign: 'center', padding: '40px 0' }}>
-          <p style={{ fontFamily: MONO, fontSize: '13px', color: '#8B0000', marginBottom: '20px' }}>{userFetchError}</p>
-          <button className="alive-interactive" onClick={resetUser} style={{ fontFamily: MONO, fontSize: '13px', fontWeight: 700, background: 'none', border: 'none', textDecoration: 'underline', textUnderlineOffset: '3px', color: '#160A06', cursor: 'pointer' }}>
+          <p style={{ fontFamily: MONO, fontSize: '13px', color: 'var(--c-red)', marginBottom: '20px' }}>{userFetchError}</p>
+          <button className="alive-interactive" onClick={resetUser} style={{ fontFamily: MONO, fontSize: '13px', fontWeight: 700, background: 'none', border: 'none', textDecoration: 'underline', textUnderlineOffset: '3px', color: 'var(--c-ink)', cursor: 'pointer' }}>
             ← examine another subject
           </button>
         </div>
@@ -226,8 +228,8 @@ function HomePage() {
                 letterSpacing: '0.06em',
                 transition: 'color 0.15s',
               }}
-              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = '#1a1a1a' }}
-              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = '#9a9288' }}
+              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.color = 'var(--c-ink)' }}
+              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.color = 'var(--c-muted)' }}
             >
               ← back
             </button>

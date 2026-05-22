@@ -21,21 +21,25 @@ async function getRedis() {
 export async function GET() {
   try {
     const redis = await getRedis()
-    if (!redis) return NextResponse.json({ buried: BURIED_HISTORICAL_BASELINE, shared: 0, downloaded: 0, profiles: 0 })
-    const [buried, shared, downloaded, profiles] = await Promise.all([
+    if (!redis) return NextResponse.json({ buried: BURIED_HISTORICAL_BASELINE, shared: 0, downloaded: 0, profiles: 0, badgeRenders: 0, badgeUsers: 0 })
+    const [buried, shared, downloaded, profiles, badgeRenders, badgeUsers] = await Promise.all([
       redis.get<number>('stats:buried'),
       redis.get<number>('stats:shared'),
       redis.get<number>('stats:downloaded'),
       redis.get<number>('stats:profiles'),
+      redis.get<number>('stats:badge_renders'),
+      redis.scard('stats:badge_usernames'),
     ])
     return NextResponse.json({
-      buried:     normalizeBuriedCount(buried),
-      shared:     shared     ?? 0,
-      downloaded: downloaded ?? 0,
-      profiles:   profiles   ?? 0,
+      buried:       normalizeBuriedCount(buried),
+      shared:       shared       ?? 0,
+      downloaded:   downloaded   ?? 0,
+      profiles:     profiles     ?? 0,
+      badgeRenders: badgeRenders ?? 0,
+      badgeUsers:   badgeUsers   ?? 0,
     })
   } catch {
-    return NextResponse.json({ buried: BURIED_HISTORICAL_BASELINE, shared: 0, downloaded: 0 })
+    return NextResponse.json({ buried: BURIED_HISTORICAL_BASELINE, shared: 0, downloaded: 0, badgeRenders: 0, badgeUsers: 0 })
   }
 }
 
