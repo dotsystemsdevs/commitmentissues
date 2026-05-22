@@ -52,7 +52,7 @@ export default function ReadmeBadge({ username }: Props) {
       {/* Copy row */}
       <div className="readme-badge-row" style={{ marginTop: '10px' }}>
         <p className="readme-badge-caption" style={{ fontFamily: MONO, margin: 0, textAlign: 'left' }}>
-          ↻ paste once — updates automatically
+          ↻ paste once, updates automatically
         </p>
         <button
           onClick={handleCopy}
