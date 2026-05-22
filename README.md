@@ -16,8 +16,16 @@ Paste a public GitHub URL — or a username — and get a shareable certificate 
 
 ## Featured in
 
-**Listed:**
+**Listed in curated collections:**
 - [pegaltier/awesome-utils-dev](https://github.com/pegaltier/awesome-utils-dev/blob/master/utils-coding/utils-git.md) (★293)
+- [YamilAyma/enlaces-para-desarrolladores](https://github.com/YamilAyma/enlaces-para-desarrolladores) — Spanish developer links collection
+- [Diego2005z/devlinks](https://github.com/Diego2005z/devlinks) — Spanish developer links
+
+**Badge used in the wild** (developers embedding our shields/SVG in their own READMEs):
+- [JohanSanSebastian](https://github.com/JohanSanSebastian/JohanSanSebastian) — profile graveyard badge
+- [adiz777/blue-tick](https://github.com/adiz777/blue-tick) — death certificate badge
+- [lord-vinayak/irrailways](https://github.com/lord-vinayak/irrailways) — death certificate badge
+- [jaritrix02/project](https://github.com/jaritrix02/project) — death certificate badge
 
 **Under review** (submissions awaiting maintainer review):
 - [mezod/awesome-indie](https://github.com/mezod/awesome-indie) (★11.4K)
