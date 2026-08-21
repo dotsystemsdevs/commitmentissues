@@ -22,6 +22,15 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the 
   `next/font/google` in the root layout.
 - `docs/screenshots/about.png` — not linked from any document.
 
+### Security
+
+- `npm audit` goes from 7 findings (6 high) to zero. Next.js 15.5.18 to 15.5.23 clears eight
+  advisories including SSRF in rewrites, cache confusion on request bodies, and the Image
+  Optimization SVG denial of service. `overrides` pull `sharp` to 0.35.x (libvips CVEs),
+  `postcss` to 8.5.26, `nanoid`, `js-yaml`, `brace-expansion` and `esbuild` to patched ranges.
+  Staying on Next 15 rather than 16, which `npm audit fix --force` wanted; the 16 upgrade is
+  still tracked under Planned.
+
 ### Fixed
 
 - Removed the stray `saas-commitmentissues` checkout that sat inside the working tree. It was an
