@@ -21,8 +21,10 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the 
 
 ### Fixed
 
-- `tsconfig.json` now excludes the local `saas-commitmentissues` spinoff, which failed type
-  checking and broke `next build`.
+- Removed the stray `saas-commitmentissues` checkout that sat inside the working tree. It was an
+  old clone of this same repository from before it was renamed, parked on the stale `master`
+  branch; its one unique commit is already in `main`. It failed type checking and broke
+  `next build`.
 
 ### Planned
 

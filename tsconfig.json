@@ -35,7 +35,6 @@
     ".next/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules",
-    "saas-commitmentissues"
+    "node_modules"
   ]
 }
