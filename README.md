@@ -27,25 +27,6 @@ Paste a public GitHub URL — or a username — and get a shareable certificate 
 - [lord-vinayak/irrailways](https://github.com/lord-vinayak/irrailways) — death certificate badge
 - [jaritrix02/project](https://github.com/jaritrix02/project) — death certificate badge
 
-**Under review** (submissions awaiting maintainer review):
-- [mezod/awesome-indie](https://github.com/mezod/awesome-indie) (★11.4K)
-- [Naereen/badges](https://github.com/Naereen/badges) (★4.6K)
-- [unicodeveloper/awesome-opensource-apps](https://github.com/unicodeveloper/awesome-opensource-apps) (★3.8K)
-- [dictcp/awesome-git](https://github.com/dictcp/awesome-git) (★2.9K)
-- [KrishMunot/awesome-startup](https://github.com/KrishMunot/awesome-startup) (★2.2K)
-- [AntBranch/awesome-github](https://github.com/AntBranch/awesome-github) (★2.2K)
-- [inttter/md-badges](https://github.com/inttter/md-badges) (★1.9K)
-- [josephzhang23/awesome-indie](https://github.com/josephzhang23/awesome-indie) (★1.5K)
-- [iAmCorey/awesome-indie-hacker-tools](https://github.com/iAmCorey/awesome-indie-hacker-tools) (★1.3K)
-- [YSGStudyHards/Awesome-Tools](https://github.com/YSGStudyHards/Awesome-Tools) (★1.1K)
-- [soGeneri/awesome-launch](https://github.com/soGeneri/awesome-launch) (★1K)
-- [phillipadsmith/awesome-github](https://github.com/phillipadsmith/awesome-github) (★957)
-- [Kikobeats/awesome-github](https://github.com/Kikobeats/awesome-github) (★685)
-- [terremoth/awesome-hilarious-repos](https://github.com/terremoth/awesome-hilarious-repos) (★508)
-- [maxprilutskiy/awesome-side-project](https://github.com/maxprilutskiy/awesome-side-project) (★351)
-- [cytopia/awesome-ci](https://github.com/cytopia/awesome-ci) (★338)
-- [DirectorySurf/awesome-launch-platforms](https://github.com/DirectorySurf/awesome-launch-platforms) (★221)
-
 ## Two ways in
 
 - **Certify a repo** — paste a GitHub URL, get a printable A4 certificate of death.

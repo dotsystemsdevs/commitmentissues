@@ -15,6 +15,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the 
 
 ### Removed
 
+- README "Under review" list. All 31 awesome-list forks were deleted, which closed the 23 open
+  submissions they were opened from. The section described pull requests that no longer exist.
+
 - `src/app/fonts/GeistVF.woff` and `GeistMonoVF.woff` — unreferenced; all fonts load via
   `next/font/google` in the root layout.
 - `docs/screenshots/about.png` — not linked from any document.
