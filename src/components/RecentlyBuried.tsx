@@ -99,7 +99,7 @@ const Card = memo(function Card({ entry, count, placed, onSelect, onToggle }: Ca
         fontSize: '30px', lineHeight: 1, flexShrink: 0,
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
         width: '42px', height: '42px',
-        background: 'radial-gradient(ellipse at 50% 85%, rgba(139,26,26,0.1) 0%, rgba(139,26,26,0.05) 45%, transparent 70%)',
+        background: 'radial-gradient(ellipse at 50% 85%, color-mix(in srgb, var(--c-red) 10%, transparent) 0%, color-mix(in srgb, var(--c-red) 5%, transparent) 45%, transparent 70%)',
         borderRadius: '4px',
       }}>🪦</span>
       <span style={{ fontFamily: MONO, fontSize: '14px', fontWeight: 700, color: 'var(--c-ink)', lineHeight: 1.35, paddingBottom: '2px', wordBreak: 'break-word', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', width: '100%', paddingRight: '56px' }}>

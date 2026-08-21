@@ -136,8 +136,8 @@ export async function GET(
               {causeOfDeath}
             </div>
             {/* Stamp — no transform, Satori doesn't support it */}
-            <div style={{ display: 'flex', marginTop: 24, border: `4px solid rgba(139,26,26,0.65)`, padding: '8px 20px' }}>
-              <div style={{ fontSize: 16, fontWeight: 700, letterSpacing: '0.16em', color: 'rgba(139,26,26,0.70)', fontFamily: mono }}>
+            <div style={{ display: 'flex', marginTop: 24, border: `4px solid rgba(139,0,0,0.65)`, padding: '8px 20px' }}>
+              <div style={{ fontSize: 16, fontWeight: 700, letterSpacing: '0.16em', color: 'rgba(139,0,0,0.70)', fontFamily: mono }}>
                 REST IN PRODUCTION
               </div>
             </div>

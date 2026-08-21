@@ -5,6 +5,25 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the 
 
 ## [Unreleased]
 
+### Added
+
+- `/print` — interest page for a framed physical certificate. No checkout, no email capture,
+  no charge; the page states this outright. Entry point is a link under the certificate actions.
+  Tracks `print_interest_clicked` and `print_demand_registered` so the idea can be killed or
+  built on real numbers rather than a hunch.
+- `.github/FUNDING.yml` — Sponsor button on the repo page (GitHub Sponsors + Buy Me a Coffee).
+
+### Removed
+
+- `src/app/fonts/GeistVF.woff` and `GeistMonoVF.woff` — unreferenced; all fonts load via
+  `next/font/google` in the root layout.
+- `docs/screenshots/about.png` — not linked from any document.
+
+### Fixed
+
+- `tsconfig.json` now excludes the local `saas-commitmentissues` spinoff, which failed type
+  checking and broke `next build`.
+
 ### Planned
 
 - Upgrade Next.js 15.x → 16.x (deferred CVEs).
@@ -17,7 +36,8 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the 
 
 - Private repo support — public data only.
 - Accounts / login — the funeral is anonymous.
-- Paywalls — coffee button stays, monetization doesn't.
+- Paywalls — every feature on the site stays free. Optional extras (donations, a physical
+  print you can buy) sit beside the product, never in front of it.
 
 ## [1.0.0] — 2026-04-24
 

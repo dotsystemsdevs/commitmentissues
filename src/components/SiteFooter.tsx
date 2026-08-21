@@ -54,22 +54,22 @@ export default function SiteFooter({ compact = false }: SiteFooterProps) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Follow on X"
+            title="Follow on X"
             onClick={() => track('social_clicked', { platform: 'x', from: 'footer' })}
             className="footer-link footer-link--icon"
           >
-            <XIcon size={12} />
-            <span className="footer-link-text">X</span>
+            <XIcon size={14} />
           </a>
           <a
             href="https://www.instagram.com/dotsystemsdevs/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Follow on Instagram"
+            title="Follow on Instagram"
             onClick={() => track('social_clicked', { platform: 'instagram', from: 'footer' })}
             className="footer-link footer-link--icon"
           >
-            <InstagramIcon size={13} />
-            <span className="footer-link-text">Instagram</span>
+            <InstagramIcon size={15} />
           </a>
         </div>
       </nav>

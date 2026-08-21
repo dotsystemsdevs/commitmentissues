@@ -96,7 +96,7 @@ const CertificateFixed = forwardRef<HTMLDivElement, Props>(
             zIndex: 1,
             display: 'flex',
             flexDirection: 'column',
-            padding: '44px 56px',
+            padding: '36px 56px 28px',
             overflow: 'hidden',
             boxSizing: 'border-box',
           }}
@@ -157,7 +157,7 @@ const CertificateFixed = forwardRef<HTMLDivElement, Props>(
             ))}
           </div>
 
-          <div style={{ display: 'flex', padding: '26px 0', borderBottom: '2px solid #C4A882' }}>
+          <div style={{ display: 'flex', padding: '22px 0', borderBottom: '2px solid #C4A882' }}>
             {stats.map(({ icon, value, label }, i, arr) => (
               <div key={label} style={{ flex: 1, display: 'flex', alignItems: 'stretch', minWidth: 0 }}>
                 <div style={{ flex: 1, textAlign: 'center', minWidth: 0, overflow: 'hidden' }}>
@@ -184,10 +184,10 @@ const CertificateFixed = forwardRef<HTMLDivElement, Props>(
             </div>
           </div>
 
-          <div style={{ flex: 1, padding: '20px 0', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <p style={{ ...labelStyle, margin: '0 0 12px 0' }}>Last words</p>
+          <div style={{ flex: 1, padding: '16px 0 8px', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <p style={{ ...labelStyle, margin: '0 0 10px 0' }}>Last words</p>
             <p style={{
-              fontFamily: UI, fontStyle: 'italic', fontWeight: 600, fontSize: '30px', color: '#8B0000',
+              fontFamily: UI, fontStyle: 'italic', fontWeight: 600, fontSize: '28px', color: '#8B0000',
               lineHeight: 1.3, margin: '0 auto', maxWidth: '540px',
               display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 4, overflow: 'hidden',
             }}>
@@ -202,7 +202,8 @@ const CertificateFixed = forwardRef<HTMLDivElement, Props>(
               style={{
                 display: 'flex',
                 justifyContent: 'center',
-                paddingBottom: '8px',
+                paddingTop: '6px',
+                paddingBottom: '4px',
                 paddingLeft: '16px',
                 paddingRight: '16px',
                 pointerEvents: 'none',
@@ -210,13 +211,13 @@ const CertificateFixed = forwardRef<HTMLDivElement, Props>(
               }}
             >
               <div style={{
-                border: '3px solid rgba(139,26,26,0.65)',
-                padding: '6px 18px',
+                border: '2px solid rgba(139,0,0,0.6)',
+                padding: '3px 12px',
                 transform: 'rotate(-1.5deg)',
-                background: 'rgba(139,26,26,0.03)',
+                background: 'rgba(139,0,0,0.03)',
                 maxWidth: '100%',
               }}>
-                <span style={{ fontFamily: MONO, fontSize: '10px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(139,26,26,0.7)', display: 'block', textAlign: 'center', whiteSpace: 'nowrap' }}>
+                <span style={{ fontFamily: MONO, fontSize: '8px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(139,0,0,0.7)', display: 'block', textAlign: 'center', whiteSpace: 'nowrap' }}>
                   Issued · commitmentissues.dev
                 </span>
               </div>
