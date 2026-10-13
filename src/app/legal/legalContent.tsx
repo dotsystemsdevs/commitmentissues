@@ -36,7 +36,7 @@ const SECTIONS: Section[] = [
     id: 'contact',
     heading: 'Contact',
     body: 'For questions or requests: ',
-    email: 'dot.systems@proton.me',
+    email: 'hello@commitmentissues.dev',
   } as Section & { email: string },
 ]
 

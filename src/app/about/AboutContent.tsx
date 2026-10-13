@@ -33,7 +33,7 @@ const SECTIONS = [
     id: 'contact',
     heading: 'Contact',
     body: 'For anything that could not wait: ',
-    email: 'dot.systems@proton.me',
+    email: 'hello@commitmentissues.dev',
   },
 ]
 
