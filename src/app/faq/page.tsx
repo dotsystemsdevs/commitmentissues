@@ -61,7 +61,7 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: 'Who made Commitment Issues?',
-    a: 'Commitment Issues is built by Dot Systems, an independent app studio. Source code is available at github.com/dotsystemsdevs/commitmentissues.',
+    a: 'Commitment Issues is built by Stackpine, an independent app studio. Source code is available at github.com/dotsystemsdevs/commitmentissues.',
   },
 ]
 

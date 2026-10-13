@@ -26,5 +26,5 @@ Repeated violations may result in a ban from participation.
 
 If you experience or observe unacceptable behavior, contact:
 
-`dot.systems@proton.me`
+`hello@stackpine.app`
 

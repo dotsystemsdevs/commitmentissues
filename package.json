@@ -12,7 +12,7 @@
     "url": "https://github.com/dotsystemsdevs/commitmentissues/issues"
   },
   "license": "MIT",
-  "author": "Dot Systems <dot.systems@proton.me> (https://github.com/dotsystemsdevs)",
+  "author": "Stackpine <hello@stackpine.app> (https://github.com/dotsystemsdevs)",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

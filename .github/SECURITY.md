@@ -7,7 +7,7 @@ If you find a security issue, please **do not open a public issue or PR**. Repor
 Use one of the following:
 
 - [GitHub security advisories](https://github.com/dotsystemsdevs/commitmentissues/security/advisories/new) — preferred.
-- Email: `dot.systems@proton.me`
+- Email: `hello@stackpine.app`
 
 Include:
 
