@@ -1,0 +1,95 @@
+/* The 2026 Haunted Hall: a yard of clickable gravestones. */
+.hh-yard {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 28px 18px;
+  padding: 12px 0 36px;
+  align-items: end;
+}
+
+.hh-stone {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  min-height: 210px;
+  padding: 26px 12px 18px;
+  border: 2px solid var(--c-border);
+  border-radius: 80px 80px 6px 6px;
+  background: linear-gradient(180deg, var(--c-surface-raised), var(--c-surface));
+  color: var(--c-ink);
+  text-decoration: none;
+  box-shadow: 0 10px 0 -4px rgba(0, 0, 0, 0.25);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  cursor: pointer;
+}
+.hh-stone::after {
+  /* the mound of earth the stone sits on */
+  content: '';
+  position: absolute;
+  left: -10px;
+  right: -10px;
+  bottom: -12px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--c-border-light);
+  z-index: -1;
+}
+.hh-stone:hover,
+.hh-stone:focus-visible {
+  transform: translateY(-4px) rotate(-1.5deg);
+  border-color: var(--c-red);
+  box-shadow: 0 14px 22px -8px rgba(0, 0, 0, 0.45);
+  outline: none;
+}
+
+.hh-rip {
+  font-family: var(--font-gothic), serif;
+  font-size: 20px;
+  letter-spacing: 0.06em;
+  color: var(--c-muted);
+}
+.hh-name {
+  font-family: var(--font-dm), serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.2;
+  word-break: break-word;
+  margin-top: 6px;
+}
+.hh-owner { font-family: var(--font-courier), system-ui, sans-serif; font-size: 11px; color: var(--c-muted); }
+.hh-date { font-family: var(--font-courier), system-ui, sans-serif; font-size: 12px; color: var(--c-red); margin-top: 8px; }
+.hh-stars { font-family: var(--font-courier), system-ui, sans-serif; font-size: 11px; color: var(--c-ink-2); }
+.hh-cta {
+  margin-top: auto;
+  font-family: var(--font-courier), system-ui, sans-serif;
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Halloween: moonlit stone and a pumpkin glow on hover. */
+html[data-halloween] .hh-stone {
+  background: linear-gradient(180deg, #3A2A52, #1D1230 70%);
+  border-color: #6B4D8F;
+}
+html[data-halloween] .hh-stone:hover,
+html[data-halloween] .hh-stone:focus-visible {
+  border-color: #FF7A1A;
+  box-shadow: 0 0 26px -4px rgba(255, 122, 26, 0.55);
+}
+html[data-halloween] .hh-stone::after { background: #07040C; }
+
+@media (max-width: 420px) {
+  .hh-yard { grid-template-columns: repeat(2, 1fr); gap: 24px 12px; }
+  .hh-stone { min-height: 190px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hh-stone { transition: none; }
+}

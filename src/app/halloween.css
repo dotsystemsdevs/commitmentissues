@@ -121,3 +121,6 @@ html[data-halloween] .record-card { background: rgba(18, 11, 28, 0.92); }
 }
 .hw-moon, .hw-ground { display: none; }
 .hw-bats { opacity: 0.6; }
+
+/* The page shell paints its own solid background; let the scene show through in Halloween mode. */
+html[data-halloween] .page-shell-main { background: transparent; }
