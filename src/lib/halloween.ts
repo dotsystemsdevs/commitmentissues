@@ -7,7 +7,7 @@
  */
 export function isHalloweenWindow(now: Date = new Date()): boolean {
   const iso = now.toISOString().slice(0, 10)
-  return iso >= '2026-10-20' && iso <= '2026-11-02'
+  return iso >= '2026-10-16' && iso <= '2026-11-02'
 }
 
 /**
