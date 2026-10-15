@@ -992,7 +992,6 @@ a.subpage-inline-mail {
   .page-hero { padding-top: 4px !important; padding-bottom: 4px !important; }
   .page-hero-emoji { font-size: 34px !important; margin-bottom: 2px !important; }
   .page-hero-title { font-size: clamp(2rem, 11vw, 2.6rem) !important; margin: 2px 0 6px !important; }
-  html[data-halloween] .hw-hero-banner { margin-bottom: 2px !important; padding: 3px 9px !important; font-size: 10px !important; }
   .homepage-recent-wrap { margin-top: 6px !important; }
   .recent-marquee { height: 160px !important; padding: 6px 16px !important; }
   .recent-card { height: 128px !important; padding: 10px 14px !important; gap: 4px !important; }
@@ -1003,7 +1002,6 @@ a.subpage-inline-mail {
 }
 
 @media (max-width: 640px) and (max-height: 620px) {
-  html[data-halloween] .hw-hero-banner { display: none !important; }
   .page-hero-emoji { display: none !important; }
 }
 

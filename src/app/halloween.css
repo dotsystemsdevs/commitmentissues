@@ -130,8 +130,31 @@ html[data-halloween] .page-shell-main { background: transparent; }
    in both modes; this just shrinks/hides the Halloween-only banner so it doesn't add back the
    height those rules just clawed back. */
 @media (min-width: 701px) and (max-height: 880px) {
-  html[data-halloween] .hw-hero-banner { margin-bottom: 4px !important; padding: 4px 12px !important; font-size: 11px !important; }
 }
 @media (min-width: 701px) and (max-height: 800px) {
-  html[data-halloween] .hw-hero-banner { display: none !important; }
+}
+
+/* Her call 16 Oct: the Halloween link sits top right, where the Stackpine pill used to be. */
+html[data-halloween] .hw-hero-banner {
+  position: fixed !important;
+  top: 46px;
+  right: 16px;
+  z-index: 50;
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+  margin: 0 !important;
+  padding: 8px 14px !important;
+  font-family: var(--font-courier), system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--c-red);
+  text-decoration: none;
+  background: rgba(18, 11, 28, 0.85);
+  border: 1.5px solid var(--c-red);
+}
+html[data-halloween] .hw-hero-banner:hover { background: var(--c-red); color: #120B1C; }
+@media (max-width: 640px) {
+  html[data-halloween] .hw-hero-banner { top: auto; bottom: 64px; right: 50%; transform: translateX(50%); font-size: 11px; padding: 6px 10px !important; white-space: nowrap; }
 }

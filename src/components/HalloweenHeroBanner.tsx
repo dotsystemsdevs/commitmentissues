@@ -22,12 +22,6 @@ export default function HalloweenHeroBanner(_: { onSelect?: (url: string) => voi
       href="/haunted-hall"
       onClick={() => track('haunted_hall_banner_clicked')}
       className="hw-hero-banner"
-      style={{
-        display: 'inline-flex', alignItems: 'center', gap: '8px',
-        fontFamily: MONO, fontSize: '12px', fontWeight: 700, letterSpacing: '0.08em',
-        color: 'var(--c-red)', textDecoration: 'none', margin: '0 auto 10px',
-        padding: '6px 14px', border: '1.5px solid var(--c-red)',
-      }}
     >
       🎃 Halloween edition · 🪦 visit the 2026 Haunted Hall →
     </Link>
