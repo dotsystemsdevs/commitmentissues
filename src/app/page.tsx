@@ -13,6 +13,8 @@ import RecentlyBuried from '@/components/RecentlyBuried'
 import StatsCounter from '@/components/StatsCounter'
 import UserDashboard from '@/components/UserDashboard'
 import type { UserRepoSummary } from '@/lib/types'
+import ResurrectLine from '@/components/ResurrectLine'
+import HalloweenHeroBanner from '@/components/HalloweenHeroBanner'
 
 const MONO = `var(--font-courier), system-ui, sans-serif`
 
@@ -150,6 +152,7 @@ function HomePage() {
       {/* Hero — landing: stats counter; user result: show @username */}
       {!certificate && !userRepos && !loading && !userLoading && (
         <div style={{ marginTop: '0px' }}>
+          <HalloweenHeroBanner onSelect={handleSelect} loading={loading || userLoading} />
           <PageHero
             subtitle={
               !statsLoading ? <StatsCounter buried={displayedBuried ?? 0} profiles={displayedProfiles ?? 0} badgeUsers={badgeUsers ?? 0} /> : <span style={{ minHeight: '24px', display: 'block' }} />
@@ -235,6 +238,7 @@ function HomePage() {
             </button>
           </div>
           <UserDashboard repos={userRepos} username={scannedUsername} />
+          <ResurrectLine username={scannedUsername} />
         </div>
       )}
 

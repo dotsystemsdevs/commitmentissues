@@ -1,6 +1,6 @@
 'use client'
 
-import { FormEvent, useState, useCallback } from 'react'
+import { FormEvent, useState, useCallback, useEffect } from 'react'
 import { track } from '@vercel/analytics'
 import ClickSpark from '@/components/ClickSpark'
 
@@ -27,6 +27,11 @@ interface Props {
 export default function SearchForm({ url, setUrl, onSubmit, onUserSubmit, onSelect, loading }: Props) {
   const [invalid, setInvalid] = useState(false)
   const [randomLoading, setRandomLoading] = useState(false)
+  const [halloween, setHalloween] = useState(false)
+
+  useEffect(() => {
+    setHalloween(document.documentElement.dataset.halloween === '1')
+  }, [])
 
   const handleRandom = useCallback(async () => {
     setRandomLoading(true)
@@ -35,6 +40,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onUserSubmit, onSele
       const data = await res.json() as { url?: string }
       if (data.url) {
         track('random_repo_clicked')
+        if (halloween) track('trick_or_treat_clicked')
         onSelect(data.url)
       }
     } catch {
@@ -42,7 +48,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onUserSubmit, onSele
     } finally {
       setRandomLoading(false)
     }
-  }, [onSelect])
+  }, [onSelect, halloween])
 
   function parseInput(value: string): ParsedInput {
     const trimmed = value.trim()
@@ -197,7 +203,7 @@ export default function SearchForm({ url, setUrl, onSubmit, onUserSubmit, onSele
           type="button"
           onClick={handleRandom}
           disabled={randomLoading || loading}
-          aria-label="Dig up a random corpse"
+          aria-label={halloween ? 'Trick or treat — dig up a random corpse' : 'Dig up a random corpse'}
           style={{
             fontFamily: MONO, fontSize: '12px', letterSpacing: '0.04em',
             background: 'none', border: 'none', padding: '4px 2px',
@@ -210,10 +216,34 @@ export default function SearchForm({ url, setUrl, onSubmit, onUserSubmit, onSele
           onMouseEnter={e => { if (!randomLoading && !loading) { e.currentTarget.style.color = 'var(--c-ink)'; e.currentTarget.style.textDecorationColor = 'var(--c-ink)' } }}
           onMouseLeave={e => { e.currentTarget.style.color = 'var(--c-muted)'; e.currentTarget.style.textDecorationColor = 'var(--c-border-light)' }}
         >
-          {randomLoading ? 'exhuming…' : 'or dig up a corpse →'}
+          {randomLoading
+            ? 'exhuming…'
+            : halloween
+              ? '🎃 trick or treat →'
+              : 'or dig up a corpse →'}
         </button>
+      </div>
+
+      <div className="famous-chips-row" role="list" aria-label="Try a famous repo">
+        {FAMOUS_CHIPS.map(slug => (
+          <button
+            key={slug}
+            type="button"
+            role="listitem"
+            className="famous-chip"
+            disabled={loading}
+            onClick={() => {
+              track('famous_chip_clicked', { repo: slug })
+              onSelect(`https://github.com/${slug}`)
+            }}
+          >
+            {slug}
+          </button>
+        ))}
       </div>
 
     </form>
   )
 }
+
+const FAMOUS_CHIPS = ['atom/atom', 'angular/angular.js', 'adobe/brackets', 'gulpjs/gulp']

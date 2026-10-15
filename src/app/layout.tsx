@@ -6,6 +6,8 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import ScannerBanner from '@/components/ScannerBanner'
 import CoffinPill from '@/components/CoffinPill'
 import './globals.css'
+import './halloween.css'
+import HalloweenLayer from '@/components/HalloweenLayer'
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -124,11 +126,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script defer src="https://tracker-mauve-sigma.vercel.app/t.js" data-project="commitmentissues" />
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme');if(!t&&window.matchMedia('(prefers-color-scheme:dark)').matches)t='dark';if(!t)t='light';document.documentElement.setAttribute('data-theme',t)}catch(e){}})();`,
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(!t&&window.matchMedia('(prefers-color-scheme:dark)').matches)t='dark';if(!t)t='light';document.documentElement.setAttribute('data-theme',t);var q=new URLSearchParams(location.search).get('halloween'),d=new Date().toISOString().slice(0,10),h=q==='1'||(q!=='0'&&d>='2026-10-20'&&d<='2026-11-02');if(h)document.documentElement.setAttribute('data-halloween','1')}catch(e){}})();`,
           }}
         />
       </head>
       <body className={`${spaceGrotesk.variable} ${unifraktur.variable} ${lora.variable} antialiased`}>
+        <HalloweenLayer />
         <ScannerBanner />
         <CoffinPill />
         {children}

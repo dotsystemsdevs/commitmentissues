@@ -7,6 +7,7 @@ import {
   formatDate,
 } from '@/lib/scoring'
 import { RepoData } from '@/lib/types'
+import { isHalloweenWindow, pickSpookyCause } from '@/lib/halloween'
 
 export const runtime = 'nodejs'
 
@@ -47,7 +48,7 @@ function Row({ label, value, border }: { label: string; value: string; border?: 
 }
 
 export async function GET(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ owner: string; repo: string }> }
 ) {
   const { owner, repo } = await params
@@ -55,6 +56,9 @@ export async function GET(
   if (!VALID_SEGMENT.test(owner) || !VALID_SEGMENT.test(repo)) {
     return new Response('Invalid repo', { status: 400 })
   }
+
+  const halloweenParam = request.nextUrl.searchParams.get('halloween')
+  const halloween = halloweenParam === '1' || (halloweenParam !== '0' && isHalloweenWindow())
 
   const ghHeaders: HeadersInit = {
     Accept: 'application/vnd.github.v3+json',
@@ -85,11 +89,16 @@ export async function GET(
     return new Response('Failed to fetch repo', { status: 502 })
   }
 
-  const causeOfDeath = determineCauseOfDeath(repoData)
+  const causeOfDeath = halloween ? pickSpookyCause(repoData.fullName) : determineCauseOfDeath(repoData)
   const lastWords = generateLastWords(repoData)
   const deathDate = formatDate(repoData.lastCommitDate)
   const age = computeAge(repoData.createdAt, repoData.lastCommitDate)
   const ownerName = repoData.fullName.split('/')[0]
+
+  const frameColor = halloween ? '#ff7a1a' : INK
+  const innerBorderColor = halloween ? '#7a3ca0' : INK
+  const causeColor = halloween ? '#ff7a1a' : RED
+  const bg = halloween ? '#f3e9f7' : BG
 
   const [gothicFont, monoFont] = await Promise.all([
     loadFont('Unifraktur Maguntia', 400),
@@ -104,8 +113,15 @@ export async function GET(
 
   return new ImageResponse(
     (
-      <div style={{ width: W, height: H, background: BG, border: `5px solid ${INK}`, display: 'flex', flexDirection: 'column', padding: 16 }}>
-        <div style={{ flex: 1, border: `2px solid ${INK}`, display: 'flex', flexDirection: 'column', padding: '44px 56px' }}>
+      <div style={{ width: W, height: H, background: bg, border: `5px solid ${frameColor}`, display: 'flex', flexDirection: 'column', padding: 16, position: 'relative' }}>
+        {halloween && (
+          <div style={{ position: 'absolute', top: 26, right: 26, display: 'flex', border: '2px solid #7a3ca0', padding: '4px 10px' }}>
+            <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', color: '#7a3ca0', fontFamily: mono }}>
+              HALLOWEEN EDITION
+            </div>
+          </div>
+        )}
+        <div style={{ flex: 1, border: `2px solid ${innerBorderColor}`, display: 'flex', flexDirection: 'column', padding: '44px 56px' }}>
 
           {/* Header */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingBottom: 28, borderBottom: `3px solid ${INK}` }}>
@@ -113,18 +129,18 @@ export async function GET(
               Certificate of Death
             </div>
             <div style={{ fontSize: 13, letterSpacing: '0.2em', color: WARM, fontStyle: 'italic', fontFamily: mono }}>
-              official record of abandonment
+              {halloween ? 'official record of abandonment · spooky edition' : 'official record of abandonment'}
             </div>
           </div>
 
           {/* Repo */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '34px 0', borderBottom: `2px solid ${LINE}` }}>
             <div style={{ fontSize: 13, letterSpacing: '0.3em', color: WARM, marginBottom: 14, fontFamily: mono }}>THIS IS TO CERTIFY THE DEATH OF</div>
-            <div style={{ fontSize: 15, color: WARM, marginBottom: 10, fontFamily: mono }}>{ownerName} /</div>
+            <div style={{ fontSize: 15, color: WARM, marginBottom: 10, fontFamily: mono }}>{`${ownerName} /`}</div>
             <div style={{ fontSize: 52, color: INK, lineHeight: 1.08, fontWeight: 700 }}>{repoData.name}</div>
             {repoData.description && (
               <div style={{ fontSize: 14, color: WARM, marginTop: 14, lineHeight: 1.5, textAlign: 'center', maxWidth: 560, fontFamily: mono }}>
-                {repoData.description.slice(0, 120)}{repoData.description.length > 120 ? '...' : ''}
+                {repoData.description.slice(0, 120) + (repoData.description.length > 120 ? '...' : '')}
               </div>
             )}
           </div>
@@ -132,7 +148,7 @@ export async function GET(
           {/* Cause */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '34px 0', borderBottom: `2px solid ${LINE}` }}>
             <div style={{ fontSize: 14, letterSpacing: '0.3em', color: WARM, fontFamily: mono }}>CAUSE OF DEATH</div>
-            <div style={{ fontSize: 34, color: RED, lineHeight: 1.35, maxWidth: 560, textAlign: 'center', marginTop: 20, fontStyle: 'italic', fontWeight: 600 }}>
+            <div style={{ fontSize: 34, color: causeColor, lineHeight: 1.35, maxWidth: 560, textAlign: 'center', marginTop: 20, fontStyle: 'italic', fontWeight: 600 }}>
               {causeOfDeath}
             </div>
             {/* Stamp — no transform, Satori doesn't support it */}
@@ -175,7 +191,7 @@ export async function GET(
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '26px 0' }}>
             <div style={{ fontSize: 13, letterSpacing: '0.3em', color: WARM, fontFamily: mono }}>LAST WORDS</div>
             <div style={{ fontSize: 22, color: INK, lineHeight: 1.55, marginTop: 14, fontStyle: 'italic', textAlign: 'center', maxWidth: 560 }}>
-              {'\u201C'}{lastWords}{'\u201D'}
+              {`\u201C${lastWords}\u201D`}
             </div>
           </div>
 

@@ -1,8 +1,9 @@
 'use client'
 
-import { forwardRef } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
 import type React from 'react'
 import { DeathCertificate } from '@/lib/types'
+import { pickSpookyCause } from '@/lib/halloween'
 
 const MONO = `var(--font-courier), system-ui, sans-serif`
 const UI = `var(--font-dm), Georgia, serif`
@@ -56,6 +57,18 @@ const CertificateFixed = forwardRef<HTMLDivElement, Props>(
     const { repoData: r } = cert
     const owner = r.fullName.split('/')[0]
 
+    const [halloween, setHalloween] = useState(false)
+    useEffect(() => {
+      setHalloween(document.documentElement.dataset.halloween === '1')
+    }, [])
+
+    const spookyCause = halloween ? pickSpookyCause(r.fullName) : null
+    const INK = halloween ? '#2a1033' : '#1A0F06'
+    const FRAME = halloween
+      ? '5px solid #ff7a1a'
+      : '5px solid #1A0F06'
+    const CAUSE_COLOR = halloween ? '#ff7a1a' : '#8B0000'
+
     const stats: { icon: React.ReactNode; value: string; label: string }[] = [
       { icon: <StarIcon />, value: r.stargazersCount.toLocaleString(), label: 'stars' },
       { icon: <ForkIcon />, value: r.forksCount.toLocaleString(), label: 'forks' },
@@ -70,9 +83,13 @@ const CertificateFixed = forwardRef<HTMLDivElement, Props>(
           position: 'relative',
           width: '794px',
           height: '1123px',
-          background: '#FAF6EF',
-          border: '5px solid #1A0F06',
-          boxShadow: '0 7px 52px rgba(42,26,14,0.15)',
+          background: halloween
+            ? 'linear-gradient(160deg, #FAF6EF 0%, #f3e9f7 100%)'
+            : '#FAF6EF',
+          border: FRAME,
+          boxShadow: halloween
+            ? '0 7px 52px rgba(120,40,160,0.22)'
+            : '0 7px 52px rgba(42,26,14,0.15)',
           boxSizing: 'border-box',
           padding: '16px',
           display: 'flex',
@@ -87,11 +104,25 @@ const CertificateFixed = forwardRef<HTMLDivElement, Props>(
       >
         {PAPER_TEXTURE_SVG}
 
+        {halloween && (
+          <div
+            aria-hidden
+            style={{
+              position: 'absolute', top: '26px', right: '26px', zIndex: 2,
+              border: '2px solid #7a3ca0', padding: '4px 10px',
+              transform: 'rotate(4deg)', background: 'rgba(122,60,160,0.07)',
+            }}
+          >
+            <span style={{ fontFamily: MONO, fontSize: '10px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#7a3ca0' }}>
+              🎃 Halloween edition
+            </span>
+          </div>
+        )}
 
         <div
           style={{
             flex: 1,
-            border: '2px solid #1A0F06',
+            border: halloween ? '2px solid #7a3ca0' : '2px solid #1A0F06',
             position: 'relative',
             zIndex: 1,
             display: 'flex',
@@ -101,12 +132,12 @@ const CertificateFixed = forwardRef<HTMLDivElement, Props>(
             boxSizing: 'border-box',
           }}
         >
-          <div style={{ textAlign: 'center', paddingBottom: '28px', borderBottom: '3px solid #1A0F06' }}>
-            <h2 className="certificate-of-death-title" style={{ fontSize: '58px', color: '#1A0F06', lineHeight: 1.06, margin: '0 0 16px 0', whiteSpace: 'nowrap' }}>
+          <div style={{ textAlign: 'center', paddingBottom: '28px', borderBottom: `3px solid ${INK}` }}>
+            <h2 className="certificate-of-death-title" style={{ fontSize: '58px', color: INK, lineHeight: 1.06, margin: '0 0 16px 0', whiteSpace: 'nowrap' }}>
               Certificate of Death
             </h2>
             <p style={{ fontFamily: MONO, fontSize: '13px', letterSpacing: '0.2em', color: '#8B6B4A', margin: 0, fontStyle: 'italic' }}>
-              official record of abandonment
+              {halloween ? 'official record of abandonment · spooky edition' : 'official record of abandonment'}
             </p>
           </div>
 
@@ -140,8 +171,8 @@ const CertificateFixed = forwardRef<HTMLDivElement, Props>(
 
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '34px 0', borderBottom: '2px solid #C4A882' }}>
             <p style={{ ...labelStyle, margin: '0 0 14px 0', fontSize: '16px' }}>CAUSE OF DEATH</p>
-            <p style={{ fontFamily: UI, fontStyle: 'italic', fontWeight: 600, fontSize: '36px', color: '#8B0000', lineHeight: 1.35, maxWidth: '560px', margin: '0' }}>
-              {cert.causeOfDeath}
+            <p style={{ fontFamily: UI, fontStyle: 'italic', fontWeight: 600, fontSize: '36px', color: CAUSE_COLOR, lineHeight: 1.35, maxWidth: '560px', margin: '0' }}>
+              {spookyCause ?? cert.causeOfDeath}
             </p>
           </div>
 

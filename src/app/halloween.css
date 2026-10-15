@@ -1,0 +1,123 @@
+/* Halloween edition, 20 Oct - 2 Nov. Everything here only applies under html[data-halloween]. */
+
+.hw-layer { display: none; }
+
+html[data-halloween] {
+  --c-bg:       #120B1C;
+  --c-surface:  #120B1C;
+  --c-surface-raised: #1D1230;
+  --c-ink:      #F3EADF;
+  --c-ink-2:    #C3B3D4;
+  --c-muted:    #8C7BA3;
+  --c-faint:    #5A4A70;
+  --c-border:   #6B4D8F;
+  --c-border-light: #2E2144;
+  --c-red:      #FF6A13;
+  --c-green:    #8CFF5A;
+  --c-amber:    #FFB347;
+  --c-stamp-red: #FF6A13;
+}
+
+html[data-halloween] .hw-layer {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hw-sky {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(120, 70, 170, 0.35), transparent 60%),
+    radial-gradient(900px 500px at 10% 110%, rgba(255, 106, 19, 0.10), transparent 60%),
+    #120B1C;
+}
+
+.hw-moon {
+  position: absolute;
+  top: 7vh;
+  right: 8vw;
+  width: clamp(90px, 14vw, 180px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 35%, #FFF6D6 0%, #F2E3A6 55%, #D9C27A 100%);
+  box-shadow: 0 0 60px 18px rgba(242, 227, 166, 0.25), 0 0 160px 60px rgba(160, 110, 220, 0.18);
+  opacity: 0.9;
+}
+
+.hw-bats {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 45vh;
+}
+.hw-bat { fill: #07040C; }
+.hw-bat path { transform-origin: 0 0; animation: hw-flap 0.9s ease-in-out infinite alternate; }
+.hw-bat-1 path { animation-duration: 0.7s; }
+.hw-bat-3 path { animation-duration: 1.1s; }
+.hw-bats { animation: hw-drift 14s ease-in-out infinite alternate; }
+
+.hw-ground {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: clamp(140px, 26vh, 260px);
+}
+.hw-hill-back { fill: #1A1029; }
+.hw-hill-front { fill: #07040C; }
+.hw-sil { color: #0B0713; fill: #0B0713; }
+.hw-pumpkin { fill: #FF7A1A; }
+.hw-stem { fill: #3B5A1E; }
+.hw-face { fill: #FFE08A; }
+.hw-flicker { animation: hw-flicker 2.6s ease-in-out infinite; }
+
+.hw-fog {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  bottom: 0;
+  height: 22vh;
+  background: linear-gradient(to top, rgba(180, 160, 210, 0.10), transparent);
+  filter: blur(8px);
+  animation: hw-fog 20s ease-in-out infinite alternate;
+}
+
+/* Readability: cards stay solid on top of the scene. */
+html[data-halloween] .record-card { background: rgba(18, 11, 28, 0.92); }
+
+@keyframes hw-flap { from { transform: scaleY(1); } to { transform: scaleY(0.55); } }
+@keyframes hw-drift { from { transform: translateX(-2%) translateY(0); } to { transform: translateX(2%) translateY(1.5%); } }
+@keyframes hw-flicker { 0%, 100% { opacity: 0.85; } 45% { opacity: 1; } 60% { opacity: 0.7; } }
+@keyframes hw-fog { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .hw-bats, .hw-bat path, .hw-flicker, .hw-fog { animation: none; }
+}
+
+@media print {
+  html[data-halloween] .hw-layer { display: none; }
+}
+
+/* The illustrated background (ChatGPT, 15 Oct): replaces the homemade moon, hill and pumpkins.
+   Our animated bats and the fog stay on top for a little movement. */
+.hw-sky {
+  background:
+    linear-gradient(to bottom, rgba(18, 11, 28, 0.25), rgba(18, 11, 28, 0) 40%),
+    url('/halloween/bg-desktop.webp') center bottom / cover no-repeat,
+    #120B1C;
+}
+@media (max-width: 700px), (orientation: portrait) {
+  .hw-sky {
+    background:
+      linear-gradient(to bottom, rgba(18, 11, 28, 0.25), rgba(18, 11, 28, 0) 40%),
+      url('/halloween/bg-mobile.webp') center bottom / cover no-repeat,
+      #120B1C;
+  }
+}
+.hw-moon, .hw-ground { display: none; }
+.hw-bats { opacity: 0.6; }

@@ -35,6 +35,8 @@ export default function SiteFooter({ compact = false }: SiteFooterProps) {
           <span className="footer-sep" aria-hidden>·</span>
           <Link href="/legal" className="footer-link">Legal</Link>
           <span className="footer-sep" aria-hidden>·</span>
+          <Link href="/haunted-hall" className="footer-link">Haunted Hall</Link>
+          <span className="footer-sep" aria-hidden>·</span>
           <a
             href="https://github.com/dotsystemsdevs/commitmentissues"
             target="_blank"
@@ -43,6 +45,16 @@ export default function SiteFooter({ compact = false }: SiteFooterProps) {
           >
             <GitHubIcon size={13} />
             <span className="footer-link-text">Open source</span>
+          </a>
+          <span className="footer-sep" aria-hidden>·</span>
+          <a
+            href="https://stackpine.app/?ref=commitmentissues"
+            target="_blank"
+            rel="noopener"
+            className="footer-link"
+            onClick={() => track('stackpine_clicked', { from: 'footer' })}
+          >
+            Made by Stackpine
           </a>
         </div>
 

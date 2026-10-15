@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { isHalloweenWindow } from '@/lib/halloween'
 
 const VALID_USERNAME = /^[a-zA-Z0-9_.-]+$/
 
@@ -66,7 +67,8 @@ function buildSvg(
   struggling: number,
   alive: number,
   total: number,
-  framed: boolean
+  framed: boolean,
+  halloween: boolean
 ) {
   const BAR_X = 16, BAR_W = 408, BAR_Y = 76, BAR_H = 6
   const deadW       = total === 0 ? 0 : Math.round((dead       / total) * BAR_W)
@@ -74,10 +76,20 @@ function buildSvg(
   const aliveW      = total === 0 ? BAR_W : BAR_W - deadW - strugglingW
   const MONO = "'Courier New','Courier',ui-monospace,monospace"
 
-  const outerBg = framed ? `<rect width="440" height="96" fill="#FAF6EF"/>` : ''
+  const bgFill = halloween ? '#2a1033' : '#FAF6EF'
+  const strokeColor = halloween ? '#ff7a1a' : '#1a1a1a'
+  const outerBg = framed ? `<rect width="440" height="96" fill="${bgFill}"/>` : ''
   const outerStroke = framed
-    ? `<rect x="1" y="1" width="438" height="94" fill="none" stroke="#1a1a1a" stroke-width="2"/>`
+    ? `<rect x="1" y="1" width="438" height="94" fill="none" stroke="${strokeColor}" stroke-width="2"/>`
     : ''
+
+  const kickerFill = halloween ? '#c9a3e0' : '#9a9288'
+  const kickerText = halloween ? '🎃 GITHUB REPO GRAVEYARD' : 'GITHUB REPO GRAVEYARD'
+  const mutedSep = halloween ? '#6b5280' : '#cec6bb'
+  const deadFill = halloween ? '#ff7a1a' : '#8B1A1A'
+  const strugglingFill = halloween ? '#c9a3e0' : '#b45309'
+  const aliveFill = halloween ? '#7a3ca0' : '#2d7a3c'
+  const barTrack = halloween ? '#4a2a5c' : '#e0d8ce'
 
   return `<svg width="440" height="96" viewBox="0 0 440 96" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Graveyard report for @${username}">
   <defs>
@@ -86,17 +98,17 @@ function buildSvg(
   ${outerBg}
   ${outerStroke}
 
-  <text x="16" y="28" font-family=${JSON.stringify(MONO)} font-size="9" font-weight="700" fill="#9a9288" letter-spacing="2.2">GITHUB REPO GRAVEYARD</text>
+  <text x="16" y="28" font-family=${JSON.stringify(MONO)} font-size="9" font-weight="700" fill="${kickerFill}" letter-spacing="2.2">${kickerText}</text>
 
   <text x="16" y="58" font-family=${JSON.stringify(MONO)} font-size="15" font-weight="700" letter-spacing="0.8">
-    <tspan fill="#8B1A1A">${dead} DEAD</tspan><tspan fill="#cec6bb" font-weight="400">  ·  </tspan><tspan fill="${struggling > 0 ? '#b45309' : '#cec6bb'}" font-weight="${struggling > 0 ? '700' : '400'}">${struggling} STRUGGLING</tspan><tspan fill="#cec6bb" font-weight="400">  ·  </tspan><tspan fill="${alive > 0 ? '#2d7a3c' : '#cec6bb'}" font-weight="${alive > 0 ? '700' : '400'}">${alive} ALIVE</tspan>
+    <tspan fill="${deadFill}">${dead} DEAD</tspan><tspan fill="${mutedSep}" font-weight="400">  ·  </tspan><tspan fill="${struggling > 0 ? strugglingFill : mutedSep}" font-weight="${struggling > 0 ? '700' : '400'}">${struggling} STRUGGLING</tspan><tspan fill="${mutedSep}" font-weight="400">  ·  </tspan><tspan fill="${alive > 0 ? aliveFill : mutedSep}" font-weight="${alive > 0 ? '700' : '400'}">${alive} ALIVE</tspan>
   </text>
 
-  <rect x="${BAR_X}" y="${BAR_Y}" width="${BAR_W}" height="${BAR_H}" fill="#e0d8ce"/>
+  <rect x="${BAR_X}" y="${BAR_Y}" width="${BAR_W}" height="${BAR_H}" fill="${barTrack}"/>
   <g clip-path="url(#bar-clip)">
-    ${deadW > 0       ? `<rect x="${BAR_X}"                       y="${BAR_Y}" width="${deadW}"       height="${BAR_H}" fill="#8B1A1A"/>` : ''}
-    ${strugglingW > 0 ? `<rect x="${BAR_X + deadW}"               y="${BAR_Y}" width="${strugglingW}" height="${BAR_H}" fill="#b45309"/>` : ''}
-    ${aliveW > 0      ? `<rect x="${BAR_X + deadW + strugglingW}" y="${BAR_Y}" width="${aliveW}"      height="${BAR_H}" fill="#2d7a3c"/>` : ''}
+    ${deadW > 0       ? `<rect x="${BAR_X}"                       y="${BAR_Y}" width="${deadW}"       height="${BAR_H}" fill="${deadFill}"/>` : ''}
+    ${strugglingW > 0 ? `<rect x="${BAR_X + deadW}"               y="${BAR_Y}" width="${strugglingW}" height="${BAR_H}" fill="${strugglingFill}"/>` : ''}
+    ${aliveW > 0      ? `<rect x="${BAR_X + deadW + strugglingW}" y="${BAR_Y}" width="${aliveW}"      height="${BAR_H}" fill="${aliveFill}"/>` : ''}
   </g>
 </svg>`
 }
@@ -110,6 +122,9 @@ export async function GET(req: NextRequest) {
   const framedParam = req.nextUrl.searchParams.get('frame')
   const framed = framedParam == null ? true : framedParam !== '0'
 
+  const halloweenParam = req.nextUrl.searchParams.get('halloween')
+  const halloween = halloweenParam === '1' || (halloweenParam !== '0' && isHalloweenWindow())
+
   const stats = await fetchStats(username)
   const { dead, struggling, alive, total } = stats ?? { dead: 0, struggling: 0, alive: 0, total: 0 }
 
@@ -117,12 +132,14 @@ export async function GET(req: NextRequest) {
   // miss, so the count is a lower bound, not raw view count.
   void trackBadgeRender(username)
 
-  const svg = buildSvg(username, dead, struggling, alive, total, framed)
+  const svg = buildSvg(username, dead, struggling, alive, total, framed, halloween)
 
   return new NextResponse(svg, {
     headers: {
       'Content-Type': 'image/svg+xml',
-      // Short edge cache so camo/README updates pick up within minutes, not hours
+      // Short edge cache (5 min) so counts stay fresh AND the pumpkin variant
+      // flips back to the tombstone within minutes of the Halloween window
+      // closing, rather than being stuck behind a long-lived cache entry.
       'Cache-Control': 'public, max-age=300, s-maxage=300, stale-while-revalidate=900',
     },
   })

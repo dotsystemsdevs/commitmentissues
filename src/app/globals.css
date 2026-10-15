@@ -640,6 +640,105 @@ a.subpage-inline-mail {
   }
 }
 
+/* "Raise it from the dead" prompt — Pineflow cross-sell on every certificate. */
+.resurrect-card {
+  width: 100%;
+  margin-top: 22px;
+  padding: 22px;
+  border: 1px solid var(--c-border-light);
+  background:
+    radial-gradient(circle at 100% 0, color-mix(in srgb, var(--c-green) 12%, transparent), transparent 42%),
+    var(--c-surface);
+  box-shadow: 3px 3px 0 var(--c-border-light);
+}
+
+.resurrect-card-kicker {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 13px;
+  font-family: var(--font-courier), system-ui, sans-serif;
+  color: var(--c-green);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.resurrect-card-title {
+  max-width: 390px;
+  margin: 0;
+  font-family: var(--font-courier), system-ui, sans-serif;
+  color: var(--c-ink);
+  font-size: clamp(19px, 5vw, 24px);
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+
+.resurrect-card-copy {
+  margin: 12px 0 0;
+  font-family: var(--font-courier), system-ui, sans-serif;
+  color: var(--c-ink-2);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.resurrect-card-button {
+  display: flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 18px;
+  padding: 0 15px;
+  border: 2px solid var(--c-ink);
+  background: var(--c-ink);
+  color: var(--c-bg);
+  font-family: var(--font-courier), system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+
+.resurrect-card-button:hover {
+  box-shadow: 3px 3px 0 var(--c-green);
+  transform: translate(-1px, -1px);
+}
+
+.resurrect-card-note {
+  margin: 10px 0 0;
+  font-family: var(--font-courier), system-ui, sans-serif;
+  color: var(--c-muted);
+  font-size: 10px;
+  line-height: 1.55;
+  text-align: center;
+}
+
+/* Quiet one-liner version, used on the profile graveyard report. */
+.resurrect-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  margin-top: 18px;
+  padding: 10px 0;
+  font-family: var(--font-courier), system-ui, sans-serif;
+  font-size: 12px;
+  color: var(--c-muted);
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+.resurrect-line a {
+  color: var(--c-ink);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 /* Certificate view actions */
 .certificate-card-shell {
   width: min(100%, 480px);
@@ -704,6 +803,40 @@ a.subpage-inline-mail {
 
 .chips-section {
   animation: section-fade-up 420ms ease-out both;
+}
+
+.famous-chips-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+  animation: section-fade-up 460ms ease-out both;
+}
+
+.famous-chip {
+  font-family: var(--font-courier), system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--c-ink-2);
+  background: var(--c-surface);
+  border: 1px solid var(--c-border-light);
+  padding: 7px 12px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, transform 0.12s;
+  min-height: 32px;
+}
+
+.famous-chip:hover {
+  border-color: var(--c-ink);
+  color: var(--c-ink);
+  transform: translateY(-1px);
+}
+
+.famous-chip:disabled {
+  cursor: wait;
+  opacity: 0.6;
 }
 
 .ux-live-section {

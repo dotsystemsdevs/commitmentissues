@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { track } from '@vercel/analytics'
 import { DeathCertificate } from '@/lib/types'
 import CertificateFixed from '@/components/CertificateFixed'
+import ResurrectCard from '@/components/ResurrectCard'
 import GitHubIcon from '@/components/GitHubIcon'
 import { copyText, promptCopy } from '@/lib/clipboard'
 
@@ -641,6 +642,8 @@ export default function CertificateCard({ cert, onReset }: Props) {
       </div>
 
       {/* ── Badge section — separated from action buttons ── */}
+      {!showInlineShare && <ResurrectCard repo={cert.repoData.fullName} />}
+
       {!showInlineShare && (() => {
         const repoUrl = `https://commitmentissues.dev/?repo=${encodeURIComponent(cert.repoData.fullName)}`
         const shieldsUrl = `https://img.shields.io/badge/%F0%9F%AA%A6%20declared%20dead-view%20certificate-555?style=for-the-badge&labelColor=cc0000`

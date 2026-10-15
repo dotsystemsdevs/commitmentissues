@@ -68,8 +68,7 @@ const SECTIONS = [
   {
     id: 'how-we-survive',
     heading: 'How We Stay Alive',
-    body: 'Commitment Issues is built and maintained by Dot Systems, an indie studio that funds this work from other projects. Fork it, share it, or open a pull request with new famous casualties. If you really want to chip in:',
-    coffin: true,
+    body: 'Commitment Issues is built and maintained by Dot Systems, an indie studio that funds this work from other projects. Fork it, share it, or open a pull request with new famous casualties.',
   },
 ]
 
@@ -109,7 +108,7 @@ export default function PricingContent() {
       microcopy={null}
     >
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        {SECTIONS.map(({ id, heading, body, github, coffin }) => (
+        {SECTIONS.map(({ id, heading, body, github }) => (
           <div
             key={id}
             className="record-card"
@@ -127,18 +126,6 @@ export default function PricingContent() {
                 style={{ marginTop: '14px', display: 'inline-flex' }}
               >
                 ★ View on GitHub
-              </a>
-            )}
-            {coffin && (
-              <a
-                href="https://buymeacoffee.com/dotdevs"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => track('buy_me_a_coffin_clicked', { from: 'pricing' })}
-                className="subpage-faq-cta"
-                style={{ marginTop: '14px', display: 'inline-flex' }}
-              >
-                ⚰  Buy me a coffin →
               </a>
             )}
           </div>
