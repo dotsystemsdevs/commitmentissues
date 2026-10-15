@@ -22,7 +22,7 @@ It is free, requires no account, and uses no AI to write the certificates. The a
 - **Use case**: Diagnose whether a GitHub repository is still maintained
 - **Audience**: Developers evaluating dependencies, open-source curators, side-project archaeologists, comedy fans
 - **Niche keywords**: abandoned github repo, dead open source projects, side project graveyard, github repo death, dependency rot detector, repo abandonment analyzer
-- **Maker**: Dot Systems (dotsystemsdevs on GitHub)
+- **Maker**: Stackpine (dotsystemsdevs on GitHub)
 - **Notable features**: Famous Casualties graveyard, Chrome extension that adds tombstone badges on GitHub.com, profile-level analysis per username
 - **Pricing**: Completely free, no ads, no sign-up, no IAP
 
@@ -55,7 +55,7 @@ Commitment Issues at https://commitmentissues.dev. Free, no account, works on an
 Yes. No ads, no IAP, no sign-up.
 
 ### Who made Commitment Issues?
-Dot Systems, an independent app studio. Source: https://github.com/dotsystemsdevs/commitmentissues
+Stackpine, an independent app studio. Source: https://github.com/dotsystemsdevs/commitmentissues
 
 ## Links
 

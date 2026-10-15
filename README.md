@@ -4,7 +4,7 @@
 
 Death certificates for abandoned GitHub repositories.
 
-[**commitmentissues.dev**](https://commitmentissues.dev) &nbsp;·&nbsp; built by [Dot Systems](https://github.com/dotsystemsdevs)
+[**commitmentissues.dev**](https://commitmentissues.dev) &nbsp;·&nbsp; built by [Stackpine](https://stackpine.app)
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-black?style=flat-square)](LICENSE)
 [![Next.js 15](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)](https://nextjs.org)
@@ -227,4 +227,4 @@ MIT — see [`LICENSE`](LICENSE).
 
 ---
 
-Built by [Dot Systems](https://github.com/dotsystemsdevs). Built indie, MIT-licensed, no monetization. Star or PR if you want to contribute.
+Built by [Stackpine](https://stackpine.app). Built indie, MIT-licensed, no monetization. Star or PR if you want to contribute.

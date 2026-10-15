@@ -62,7 +62,7 @@ export default function SiteFooter({ compact = false }: SiteFooterProps) {
 
         <div className="footer-group footer-group--socials">
           <a
-            href="https://x.com/Dotsystemsdevs"
+            href="https://x.com/stackpinehq"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Follow on X"
@@ -73,7 +73,7 @@ export default function SiteFooter({ compact = false }: SiteFooterProps) {
             <XIcon size={14} />
           </a>
           <a
-            href="https://www.instagram.com/dotsystemsdevs/"
+            href="https://www.instagram.com/stackpinehq/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Follow on Instagram"

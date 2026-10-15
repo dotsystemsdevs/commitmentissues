@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     'github repo stats', 'last commit checker', 'repo activity',
     'commitmentissues', 'developer humor', 'github tools',
   ],
-  authors: [{ name: 'Dot Systems', url: 'https://github.com/dotsystemsdevs' }],
+  authors: [{ name: 'Stackpine', url: 'https://stackpine.app' }],
   alternates: { canonical: 'https://commitmentissues.dev' },
   openGraph: {
     title: 'Commitment Issues: Death Certificates for Dead GitHub Repos',
@@ -106,12 +106,12 @@ const jsonLd = {
     {
       '@type': 'Organization',
       '@id': 'https://commitmentissues.dev/#org',
-      name: 'Dot Systems',
-      url: 'https://github.com/dotsystemsdevs',
+      name: 'Stackpine',
+      url: 'https://stackpine.app',
       sameAs: [
         'https://github.com/dotsystemsdevs',
-        'https://x.com/Dotsystemsdevs',
-        'https://www.instagram.com/dotsystemsdevs/',
+        'https://x.com/stackpinehq',
+        'https://www.instagram.com/stackpinehq/',
       ],
     },
   ],
