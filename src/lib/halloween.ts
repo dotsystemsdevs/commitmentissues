@@ -28,7 +28,7 @@ export const SPOOKY_CAUSES: string[] = [
   'raised, then re-buried by a failed migration',
 ]
 
-function hashString(input: string): number {
+export function hashString(input: string): number {
   let hash = 0
   for (let i = 0; i < input.length; i++) {
     hash = (hash * 31 + input.charCodeAt(i)) >>> 0

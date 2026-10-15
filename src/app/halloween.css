@@ -124,3 +124,14 @@ html[data-halloween] .record-card { background: rgba(18, 11, 28, 0.92); }
 
 /* The page shell paints its own solid background; let the scene show through in Halloween mode. */
 html[data-halloween] .page-shell-main { background: transparent; }
+
+/* Short laptop screens (her call 16 Oct: the homepage must never scroll). The bulk of the
+   tightening (shell padding, hero, Hall of Fame, footer) lives in globals.css since it applies
+   in both modes; this just shrinks/hides the Halloween-only banner so it doesn't add back the
+   height those rules just clawed back. */
+@media (min-width: 701px) and (max-height: 880px) {
+  html[data-halloween] .hw-hero-banner { margin-bottom: 4px !important; padding: 4px 12px !important; font-size: 11px !important; }
+}
+@media (min-width: 701px) and (max-height: 800px) {
+  html[data-halloween] .hw-hero-banner { display: none !important; }
+}

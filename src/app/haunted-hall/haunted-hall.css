@@ -1,71 +1,229 @@
-/* The 2026 Haunted Hall: a yard of clickable gravestones. */
+/* The 2026 Haunted Hall — a proper graveyard: weathered granite stones, carved lettering,
+   a few classic headstone shapes, moss, cracks, slight per-stone tilt, each one standing in
+   its own mound of earth and grass. Rows read top-to-bottom like plots in a cemetery. */
+
 .hh-yard {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 28px 18px;
-  padding: 12px 0 36px;
+  grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+  gap: 40px 20px;
+  padding: 20px 4px 44px;
   align-items: end;
 }
 
+/* Each plot is unclipped, so the mound below a gothic stone's clip-path never gets cropped. */
+.hh-plot {
+  position: relative;
+  isolation: isolate;
+}
+
+/* ── the stone itself ───────────────────────────────────────────────── */
 .hh-stone {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 4px;
-  min-height: 210px;
-  padding: 26px 12px 18px;
-  border: 2px solid var(--c-border);
-  border-radius: 80px 80px 6px 6px;
-  background: linear-gradient(180deg, var(--c-surface-raised), var(--c-surface));
+  gap: 3px;
+  min-height: 228px;
+  padding: 28px 14px 20px;
   color: var(--c-ink);
   text-decoration: none;
-  box-shadow: 0 10px 0 -4px rgba(0, 0, 0, 0.25);
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
   cursor: pointer;
+
+  /* weathered granite: faint marbling + a top-to-bottom wear gradient under the grain */
+  background:
+    radial-gradient(ellipse 70% 40% at 22% 18%, color-mix(in srgb, var(--c-ink) 7%, transparent), transparent 60%),
+    radial-gradient(ellipse 60% 35% at 78% 65%, color-mix(in srgb, var(--c-ink) 5%, transparent), transparent 55%),
+    radial-gradient(ellipse 50% 30% at 35% 85%, color-mix(in srgb, var(--c-ink) 6%, transparent), transparent 60%),
+    linear-gradient(170deg, var(--c-surface-raised) 0%, var(--c-surface) 55%, color-mix(in srgb, var(--c-surface) 85%, var(--c-ink)) 100%);
+  background-color: var(--c-surface);
+
+  border: 2px solid var(--c-border);
+  border-radius: 64px 64px 6px 6px;
+
+  /* carved-in border + a bit of top sheen / bottom shade, like real cut stone */
+  box-shadow:
+    inset 0 0 0 3px color-mix(in srgb, var(--c-border) 35%, transparent),
+    inset 0 2px 3px rgba(255, 255, 255, 0.18),
+    inset 0 -6px 10px rgba(0, 0, 0, 0.16),
+    0 10px 14px -10px rgba(0, 0, 0, 0.35);
+
+  transform: rotate(var(--hh-tilt, 0deg)) translateY(var(--hh-shift, 0px));
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
-.hh-stone::after {
-  /* the mound of earth the stone sits on */
+
+/* subtle stone grain, same texture on every stone, tiled small */
+.hh-stone::before {
   content: '';
   position: absolute;
-  left: -10px;
-  right: -10px;
-  bottom: -12px;
-  height: 14px;
-  border-radius: 50%;
-  background: var(--c-border-light);
-  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 120px 120px;
+  mix-blend-mode: overlay;
+  opacity: 0.1;
 }
+
 .hh-stone:hover,
 .hh-stone:focus-visible {
-  transform: translateY(-4px) rotate(-1.5deg);
+  transform: rotate(var(--hh-tilt, 0deg)) translateY(calc(var(--hh-shift, 0px) - 5px));
   border-color: var(--c-red);
-  box-shadow: 0 14px 22px -8px rgba(0, 0, 0, 0.45);
+  box-shadow:
+    inset 0 0 0 3px color-mix(in srgb, var(--c-border) 35%, transparent),
+    inset 0 2px 3px rgba(255, 255, 255, 0.18),
+    inset 0 -6px 10px rgba(0, 0, 0, 0.16),
+    0 16px 22px -10px rgba(0, 0, 0, 0.45);
   outline: none;
+}
+
+/* ── headstone shapes ───────────────────────────────────────────────── */
+.hh-stone--round    { border-radius: 64px 64px 6px 6px; }
+.hh-stone--classic  { border-radius: 10px 10px 4px 4px; }
+.hh-stone--cross     { border-radius: 46px 46px 6px 6px; }
+.hh-stone--gothic {
+  border-radius: 6px;
+  clip-path: polygon(0% 24%, 50% 0%, 100% 24%, 100% 100%, 0% 100%);
+  padding-top: 38px;
+}
+
+.hh-cross-top {
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 22px;
+  line-height: 1;
+  color: var(--c-ink);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25), 0 -1px 1px rgba(0, 0, 0, 0.4);
+  opacity: 0.85;
+}
+
+/* ── moss + cracks, a few per-stone variants so the yard isn't uniform ── */
+.hh-stone::after { content: none; }
+
+.hh-moss-0 .hh-engraved::before,
+.hh-moss-1 .hh-engraved::before,
+.hh-moss-2 .hh-engraved::before {
+  content: '';
+  position: absolute;
+  width: 34px;
+  height: 22px;
+  border-radius: 50% 40% 60% 30%;
+  background: radial-gradient(ellipse, color-mix(in srgb, var(--c-green) 35%, transparent), transparent 70%);
+  opacity: 0.45;
+  pointer-events: none;
+  z-index: 0;
+}
+.hh-moss-0 .hh-engraved::before { top: -22px; left: -28px; }
+.hh-moss-1 .hh-engraved::before { top: -10px; right: -30px; width: 26px; height: 18px; }
+.hh-moss-2 .hh-engraved::before { bottom: -6px; left: -24px; width: 22px; height: 16px; }
+.hh-moss-3 .hh-engraved::before { content: none; }
+
+.hh-crack-0::after,
+.hh-crack-1::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  background: linear-gradient(var(--hh-crack-angle, 12deg), transparent 48%, color-mix(in srgb, var(--c-border) 55%, transparent) 49%, transparent 51%);
+  opacity: 0.5;
+}
+.hh-crack-0::after { top: 14%; left: 20%; width: 46%; height: 34%; --hh-crack-angle: 18deg; }
+.hh-crack-1::after { top: 46%; right: 14%; width: 30%; height: 40%; --hh-crack-angle: -22deg; }
+.hh-crack-2::after { content: none; }
+
+/* ── the grave mound: dark earth + a ragged grass edge ─────────────── */
+.hh-grave-mound {
+  position: absolute;
+  left: -16px;
+  right: -16px;
+  bottom: -20px;
+  height: 30px;
+  z-index: -1;
+  background: linear-gradient(to bottom, #4f8a3a 0%, #3c6a2c 22%, #4a3420 24%, #2e2012 100%);
+  clip-path: polygon(
+    0% 60%, 6% 40%, 12% 58%, 18% 35%, 25% 55%, 32% 32%, 40% 54%,
+    48% 30%, 56% 52%, 64% 34%, 72% 56%, 80% 36%, 88% 54%, 94% 38%, 100% 58%,
+    100% 100%, 0% 100%
+  );
+  box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.45);
+}
+
+/* ── engraved text ──────────────────────────────────────────────────── */
+.hh-engraved {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
 }
 
 .hh-rip {
   font-family: var(--font-gothic), serif;
-  font-size: 20px;
+  font-size: 19px;
   letter-spacing: 0.06em;
-  color: var(--c-muted);
+  color: var(--c-ink);
+  opacity: 0.75;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3), 0 -1px 1px rgba(0, 0, 0, 0.45);
 }
 .hh-name {
   font-family: var(--font-dm), serif;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.2;
   word-break: break-word;
-  margin-top: 6px;
+  margin-top: 5px;
+  color: var(--c-ink);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3), 0 -1px 1px rgba(0, 0, 0, 0.45);
 }
-.hh-owner { font-family: var(--font-courier), system-ui, sans-serif; font-size: 11px; color: var(--c-muted); }
-.hh-date { font-family: var(--font-courier), system-ui, sans-serif; font-size: 12px; color: var(--c-red); margin-top: 8px; }
-.hh-stars { font-family: var(--font-courier), system-ui, sans-serif; font-size: 11px; color: var(--c-ink-2); }
-.hh-cta {
-  margin-top: auto;
+.hh-owner {
   font-family: var(--font-courier), system-ui, sans-serif;
   font-size: 10.5px;
+  color: var(--c-muted);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+.hh-date {
+  font-family: var(--font-courier), system-ui, sans-serif;
+  font-size: 11px;
+  color: var(--c-red);
+  margin-top: 6px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+.hh-cause-label {
+  margin-top: 8px;
+  font-family: var(--font-courier), system-ui, sans-serif;
+  font-size: 8.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+  opacity: 0.8;
+}
+.hh-cause {
+  font-family: var(--font-courier), system-ui, sans-serif;
+  font-style: italic;
+  font-size: 10.5px;
+  line-height: 1.35;
+  color: var(--c-ink-2);
+  max-width: 18ch;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.hh-stars {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-courier), system-ui, sans-serif;
+  font-size: 10.5px;
+  color: var(--c-ink-2);
+  margin-top: 6px;
+}
+.hh-cta {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  padding-top: 8px;
+  font-family: var(--font-courier), system-ui, sans-serif;
+  font-size: 10px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--c-muted);
@@ -73,23 +231,43 @@
   text-underline-offset: 3px;
 }
 
-/* Halloween: moonlit stone and a pumpkin glow on hover. */
+/* ── Halloween: moonlit stone, purple/orange glow on hover ──────────── */
 html[data-halloween] .hh-stone {
-  background: linear-gradient(180deg, #3A2A52, #1D1230 70%);
+  background:
+    radial-gradient(ellipse 70% 40% at 22% 18%, rgba(255, 255, 255, 0.05), transparent 60%),
+    radial-gradient(ellipse 60% 35% at 78% 65%, rgba(107, 77, 143, 0.35), transparent 55%),
+    linear-gradient(170deg, #3A2A52 0%, #241735 55%, #160D22 100%);
   border-color: #6B4D8F;
+}
+html[data-halloween] .hh-stone .hh-rip,
+html[data-halloween] .hh-stone .hh-name,
+html[data-halloween] .hh-stone .hh-cross-top {
+  text-shadow: 0 1px 0 rgba(195, 179, 212, 0.25), 0 -1px 2px rgba(0, 0, 0, 0.7), 0 0 14px rgba(140, 90, 200, 0.25);
 }
 html[data-halloween] .hh-stone:hover,
 html[data-halloween] .hh-stone:focus-visible {
   border-color: #FF7A1A;
-  box-shadow: 0 0 26px -4px rgba(255, 122, 26, 0.55);
+  box-shadow:
+    inset 0 0 0 3px rgba(107, 77, 143, 0.4),
+    inset 0 2px 3px rgba(255, 255, 255, 0.1),
+    0 0 16px 2px rgba(255, 122, 26, 0.45),
+    0 0 40px 6px rgba(140, 90, 200, 0.35);
 }
-html[data-halloween] .hh-stone::after { background: #07040C; }
+html[data-halloween] .hh-grave-mound {
+  background: linear-gradient(to bottom, #6fae4a 0%, #3f6a2c 22%, #241735 24%, #160D22 100%);
+  box-shadow: 0 0 16px -4px rgba(140, 90, 200, 0.4);
+}
 
-@media (max-width: 420px) {
-  .hh-yard { grid-template-columns: repeat(2, 1fr); gap: 24px 12px; }
-  .hh-stone { min-height: 190px; }
+@media (max-width: 640px) {
+  .hh-yard { grid-template-columns: repeat(2, 1fr); gap: 32px 14px; }
+  .hh-stone { min-height: 200px; padding: 24px 10px 16px; }
+  .hh-cause { max-width: 15ch; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .hh-stone { transition: none; }
+}
+
+@media print {
+  .hh-stone::before { display: none; }
 }
