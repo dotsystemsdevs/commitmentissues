@@ -1020,3 +1020,10 @@ a.subpage-inline-mail {
     -webkit-print-color-adjust: exact; print-color-adjust: exact;
   }
 }
+
+/* Footer on phones: whole links wrap as units, centered, no orphaned dots (16 Oct). */
+@media (max-width: 640px) {
+  .site-footer .footer-row, .site-footer .footer-group { flex-wrap: wrap; justify-content: center; row-gap: 6px; column-gap: 14px; }
+  .site-footer .footer-link, .site-footer .footer-link-text { white-space: nowrap; }
+  .site-footer .footer-sep { display: none; }
+}
