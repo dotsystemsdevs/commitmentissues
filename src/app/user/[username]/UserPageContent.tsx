@@ -39,6 +39,13 @@ export default function UserPageContent() {
       microcopy={null}
       hideHero
     >
+      {username && (
+        <header className="user-result-header">
+          <p className="user-result-kicker">graveyard scan</p>
+          <h1 className="user-result-handle">@{username}</h1>
+        </header>
+      )}
+
       {loading && <LoadingState />}
 
       {error && (

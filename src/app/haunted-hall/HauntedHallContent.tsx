@@ -74,6 +74,11 @@ export default function HauntedHallContent() {
           )
         })}
       </div>
+      <div style={{ textAlign: 'center', padding: '28px 0 8px' }}>
+        <Link href="/" className="subpage-faq-cta">
+          ⚰ Issue your own death certificate →
+        </Link>
+      </div>
     </SubpageShell>
   )
 }

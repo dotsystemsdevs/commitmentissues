@@ -158,10 +158,11 @@ export default function PricingContent() {
                 background: 'var(--c-bg)',
                 color: 'var(--c-ink)',
                 border: `2px solid ${invalid ? 'var(--c-red, #8B0000)' : 'var(--c-ink)'}`,
-                outline: 'none',
                 width: '100%',
                 minHeight: '44px',
               }}
+              onFocus={e => { e.currentTarget.style.boxShadow = '0 0 0 3px var(--c-border-light)' }}
+              onBlur={e => { e.currentTarget.style.boxShadow = 'none' }}
             />
             <button
               type="submit"

@@ -156,5 +156,7 @@ html[data-halloween] .hw-hero-banner {
 }
 html[data-halloween] .hw-hero-banner:hover { background: var(--c-red); color: #120B1C; }
 @media (max-width: 640px) {
-  html[data-halloween] .hw-hero-banner { top: auto; bottom: 64px; right: 50%; transform: translateX(50%); font-size: 11px; padding: 6px 10px !important; white-space: nowrap; }
+  /* Sits in the gap between the top ticker (32px) and the hero content (64px down) so it
+     never overlaps the fixed footer at the bottom (that overlap was the earlier bug here). */
+  html[data-halloween] .hw-hero-banner { top: 38px; bottom: auto; right: 10px; left: auto; transform: none; font-size: 10px; padding: 5px 9px !important; white-space: nowrap; }
 }

@@ -583,7 +583,6 @@ a.subpage-inline-mail {
   background:
     radial-gradient(circle at 100% 0, color-mix(in srgb, var(--c-green) 12%, transparent), transparent 42%),
     var(--c-surface);
-  box-shadow: 3px 3px 0 var(--c-border-light);
 }
 
 .resurrect-card-kicker {
@@ -637,8 +636,8 @@ a.subpage-inline-mail {
 }
 
 .resurrect-card-button:hover {
-  box-shadow: 3px 3px 0 var(--c-green);
-  transform: translate(-1px, -1px);
+  background: var(--c-green);
+  border-color: var(--c-green);
 }
 
 .resurrect-card-note {

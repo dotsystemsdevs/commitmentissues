@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import SubpageShell from '@/components/SubpageShell'
 
 const MONO = `var(--font-courier), system-ui, sans-serif`
@@ -34,6 +35,11 @@ export default function FAQContent({ items }: { items: FAQItem[] }) {
             </p>
           </section>
         ))}
+        <div style={{ textAlign: 'center', padding: '20px 0 8px' }}>
+          <Link href="/" className="subpage-faq-cta">
+            ⚰ Issue a death certificate →
+          </Link>
+        </div>
       </div>
     </SubpageShell>
   )

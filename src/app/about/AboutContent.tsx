@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import SubpageShell from '@/components/SubpageShell'
 
 const SECTIONS = [
@@ -85,6 +86,11 @@ export default function AboutContent() {
             )}
           </div>
         ))}
+        <div style={{ textAlign: 'center', padding: '20px 0 8px' }}>
+          <Link href="/" className="subpage-faq-cta">
+            ⚰ Issue a death certificate →
+          </Link>
+        </div>
       </div>
     </SubpageShell>
   )
