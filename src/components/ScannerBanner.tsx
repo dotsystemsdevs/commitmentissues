@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import type { LeaderboardEntry } from '@/lib/types'
 import { HALL_OF_SHAME } from '@/lib/hallOfShame'
-import ThemeToggle from '@/components/ThemeToggle'
 
 const MONO = `var(--font-courier), system-ui, sans-serif`
 
@@ -98,9 +97,6 @@ export default function ScannerBanner() {
             )
           })}
         </div>
-      </div>
-      <div style={{ padding: '0 8px', display: 'flex', alignItems: 'center', borderLeft: '1px solid color-mix(in srgb, var(--c-bg) 20%, transparent)', height: '100%' }}>
-        <ThemeToggle />
       </div>
     </div>
   )

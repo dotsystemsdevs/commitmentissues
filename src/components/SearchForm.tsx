@@ -224,26 +224,8 @@ export default function SearchForm({ url, setUrl, onSubmit, onUserSubmit, onSele
         </button>
       </div>
 
-      <div className="famous-chips-row" role="list" aria-label="Try a famous repo">
-        {FAMOUS_CHIPS.map(slug => (
-          <button
-            key={slug}
-            type="button"
-            role="listitem"
-            className="famous-chip"
-            disabled={loading}
-            onClick={() => {
-              track('famous_chip_clicked', { repo: slug })
-              onSelect(`https://github.com/${slug}`)
-            }}
-          >
-            {slug}
-          </button>
-        ))}
-      </div>
 
     </form>
   )
 }
 
-const FAMOUS_CHIPS = ['atom/atom', 'angular/angular.js', 'adobe/brackets', 'gulpjs/gulp']
