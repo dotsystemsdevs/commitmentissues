@@ -4,11 +4,11 @@ import BreadcrumbJsonLd from '@/components/BreadcrumbJsonLd'
 
 export const metadata: Metadata = {
   title: 'Legal · Commitment Issues',
-  description: 'Terms of use and privacy policy for Commitment Issues: no accounts, no logins, only public GitHub data, and privacy-friendly analytics with aggregate counts, not profiles.',
+  description: 'Terms of use and privacy policy for Commitment Issues: no accounts, no logins, only public GitHub data, and privacy-friendly analytics only.',
   alternates: { canonical: 'https://commitmentissues.dev/legal' },
   openGraph: {
     title: 'Legal · Commitment Issues',
-    description: 'Terms of use and privacy policy for Commitment Issues: no accounts, no logins, only public GitHub data, and privacy-friendly analytics with aggregate counts, not profiles.',
+    description: 'Terms of use and privacy policy for Commitment Issues: no accounts, no logins, only public GitHub data, and privacy-friendly analytics only.',
     url: 'https://commitmentissues.dev/legal',
   },
 }

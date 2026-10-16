@@ -4,11 +4,11 @@ import BreadcrumbJsonLd from '@/components/BreadcrumbJsonLd'
 
 export const metadata: Metadata = {
   title: 'FAQ · Commitment Issues',
-  description: 'Frequently asked questions about Commitment Issues, the death certificate generator for abandoned GitHub repositories. Free, no sign-up.',
+  description: 'Answers to common questions about Commitment Issues, the free death certificate generator for abandoned GitHub repositories. No sign-up needed.',
   alternates: { canonical: 'https://commitmentissues.dev/faq' },
   openGraph: {
     title: 'FAQ · Commitment Issues',
-    description: 'Everything about the death certificate generator for dead GitHub repos.',
+    description: 'Answers to common questions about Commitment Issues, the free death certificate generator for abandoned GitHub repositories. No sign-up needed.',
     url: 'https://commitmentissues.dev/faq',
     type: 'website',
   },

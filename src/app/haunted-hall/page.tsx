@@ -4,11 +4,11 @@ import BreadcrumbJsonLd from '@/components/BreadcrumbJsonLd'
 
 export const metadata: Metadata = {
   title: 'The 2026 Haunted Hall · Commitment Issues',
-  description: 'The real GitHub repos that got archived or abandoned in 2026 — verified via the GitHub API, with cause of death and a certificate for each.',
+  description: 'The real GitHub repos that were archived or abandoned in 2026, checked against the GitHub API, each with a cause of death and its own death certificate.',
   alternates: { canonical: 'https://commitmentissues.dev/haunted-hall' },
   openGraph: {
     title: 'The 2026 Haunted Hall · Commitment Issues',
-    description: 'The real GitHub repos that got archived or abandoned in 2026, verified via the GitHub API.',
+    description: 'The real GitHub repos that were archived or abandoned in 2026, checked against the GitHub API, each with a cause of death and its own death certificate.',
     url: 'https://commitmentissues.dev/haunted-hall',
   },
 }

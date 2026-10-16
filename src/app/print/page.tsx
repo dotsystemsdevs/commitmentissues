@@ -5,11 +5,11 @@ import BreadcrumbJsonLd from '@/components/BreadcrumbJsonLd'
 
 export const metadata: Metadata = {
   title: 'Framed prints · Commitment Issues',
-  description: 'A death certificate for your abandoned repo, printed on archival paper and framed. Gauging interest before we build it.',
+  description: 'Order a death certificate for your abandoned repo, printed on archival paper and framed. We are gauging interest before we build it, so tell us if you want one.',
   alternates: { canonical: 'https://commitmentissues.dev/print' },
   openGraph: {
     title: 'Framed prints · Commitment Issues',
-    description: 'A death certificate for your abandoned repo, printed on archival paper and framed.',
+    description: 'Order a death certificate for your abandoned repo, printed on archival paper and framed. We are gauging interest before we build it, so tell us if you want one.',
     url: 'https://commitmentissues.dev/print',
   },
 }

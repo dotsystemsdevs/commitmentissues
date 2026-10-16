@@ -4,11 +4,11 @@ import BreadcrumbJsonLd from '@/components/BreadcrumbJsonLd'
 
 export const metadata: Metadata = {
   title: 'About · Commitment Issues · How It Works',
-  description: 'How Commitment Issues works: we analyze your GitHub repo\'s commit history, activity decay, and open issues to assign a cause of death and generate a printable death certificate.',
+  description: 'How Commitment Issues reads the commit history, activity decay and open issues of a repo to pick a cause of death and make a printable death certificate.',
   alternates: { canonical: 'https://commitmentissues.dev/about' },
   openGraph: {
     title: 'About · Commitment Issues · How It Works',
-    description: 'How Commitment Issues works: we analyze your GitHub repo\'s commit history, activity decay, and open issues to assign a cause of death and generate a printable death certificate.',
+    description: 'How Commitment Issues reads the commit history, activity decay and open issues of a repo to pick a cause of death and make a printable death certificate.',
     url: 'https://commitmentissues.dev/about',
   },
 }
