@@ -113,6 +113,7 @@ const jsonLd = {
       '@id': 'https://commitmentissues.dev/#org',
       name: 'Stackpine',
       url: 'https://stackpine.app',
+      logo: 'https://stackpine.app/stackpine-logo.png',
       description: 'Independent app studio. Maker of Commitment Issues.',
       sameAs: [
         'https://github.com/dotsystemsdevs',
