@@ -1,18 +1,13 @@
 import type { Metadata } from 'next'
 import FAQContent from './FAQContent'
+import { pageMeta } from '@/lib/seo'
 import BreadcrumbJsonLd from '@/components/BreadcrumbJsonLd'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: 'FAQ · Commitment Issues',
   description: 'Answers to common questions about Commitment Issues, the free death certificate generator for abandoned GitHub repositories. No sign-up needed.',
-  alternates: { canonical: 'https://commitmentissues.dev/faq' },
-  openGraph: {
-    title: 'FAQ · Commitment Issues',
-    description: 'Answers to common questions about Commitment Issues, the free death certificate generator for abandoned GitHub repositories. No sign-up needed.',
-    url: 'https://commitmentissues.dev/faq',
-    type: 'website',
-  },
-}
+  path: '/faq',
+})
 
 const FAQ: { q: string; a: string }[] = [
   {

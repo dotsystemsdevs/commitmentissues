@@ -1,17 +1,13 @@
 import type { Metadata } from 'next'
 import LegalContent from './legalContent'
+import { pageMeta } from '@/lib/seo'
 import BreadcrumbJsonLd from '@/components/BreadcrumbJsonLd'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: 'Legal · Commitment Issues',
   description: 'Terms of use and privacy policy for Commitment Issues: no accounts, no logins, only public GitHub data, and privacy-friendly analytics only.',
-  alternates: { canonical: 'https://commitmentissues.dev/legal' },
-  openGraph: {
-    title: 'Legal · Commitment Issues',
-    description: 'Terms of use and privacy policy for Commitment Issues: no accounts, no logins, only public GitHub data, and privacy-friendly analytics only.',
-    url: 'https://commitmentissues.dev/legal',
-  },
-}
+  path: '/legal',
+})
 
 export default function LegalPage() {
   return (

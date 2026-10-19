@@ -74,6 +74,7 @@ const jsonLd = {
       url: 'https://commitmentissues.dev',
       name: 'Commitment Issues',
       description: 'Death certificate generator for abandoned GitHub repositories.',
+      inLanguage: 'en',
       publisher: { '@id': 'https://commitmentissues.dev/#org' },
       potentialAction: {
         '@type': 'SearchAction',
@@ -91,8 +92,12 @@ const jsonLd = {
       alternateName: 'commitmentissues.dev',
       description: 'Free tool that generates official death certificates for abandoned GitHub repos. Paste any public repo URL to see the cause of death, last commit as last words, and full repo stats.',
       url: 'https://commitmentissues.dev',
+      image: 'https://commitmentissues.dev/opengraph-image',
       applicationCategory: 'DeveloperApplication',
       operatingSystem: 'Web',
+      browserRequirements: 'Requires a modern web browser with JavaScript enabled',
+      inLanguage: 'en',
+      isAccessibleForFree: true,
       featureList: [
         'Death certificate generation for GitHub repos',
         'Cause of death analysis based on commit activity',
@@ -100,7 +105,7 @@ const jsonLd = {
         'Shareable certificate image',
         'README badge embed',
       ],
-      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/InStock', url: 'https://commitmentissues.dev/pricing' },
       creator: { '@id': 'https://commitmentissues.dev/#org' },
     },
     {
@@ -108,6 +113,7 @@ const jsonLd = {
       '@id': 'https://commitmentissues.dev/#org',
       name: 'Stackpine',
       url: 'https://stackpine.app',
+      description: 'Independent app studio. Maker of Commitment Issues.',
       sameAs: [
         'https://github.com/dotsystemsdevs',
         'https://x.com/stackpinehq',

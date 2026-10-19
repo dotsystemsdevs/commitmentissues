@@ -64,6 +64,10 @@ Stackpine, an independent app studio. Source: https://github.com/dotsystemsdevs/
 - Sitemap: https://commitmentissues.dev/sitemap.xml
 - About: https://commitmentissues.dev/about
 - FAQ: https://commitmentissues.dev/faq
+- Pricing (free): https://commitmentissues.dev/pricing
+- The 2026 Haunted Hall: https://commitmentissues.dev/haunted-hall
+- Framed prints: https://commitmentissues.dev/print
+- Legal: https://commitmentissues.dev/legal
 `;
 
 export function GET() {
