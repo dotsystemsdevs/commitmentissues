@@ -128,7 +128,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <head>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-        <script defer src="https://tracker-mauve-sigma.vercel.app/t.js" data-project="commitmentissues" />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{document.documentElement.setAttribute('data-theme','dark');var q=new URLSearchParams(location.search).get('halloween'),d=new Date().toISOString().slice(0,10),h=q==='1'||(q!=='0'&&d>='2026-10-15'&&d<='2026-11-02');if(h)document.documentElement.setAttribute('data-halloween','1')}catch(e){}})();`,
