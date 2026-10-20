@@ -1,6 +1,7 @@
 'use client'
 
 import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { useRepoAnalysis } from '@/hooks/useRepoAnalysis'
 import SearchForm from '@/components/SearchForm'
@@ -17,6 +18,14 @@ import ResurrectLine from '@/components/ResurrectLine'
 import HalloweenHeroBanner from '@/components/HalloweenHeroBanner'
 
 const MONO = `var(--font-courier), system-ui, sans-serif`
+
+function InformationLinks() {
+  return <nav aria-label="About the repo checker" className="footer-row" style={{ justifyContent: 'center', gap: '20px', marginTop: '24px' }}>
+    <Link href="/faq" className="footer-link">How the repo checker works</Link>
+    <Link href="/pricing" className="footer-link">Pricing</Link>
+    <Link href="/about" className="footer-link">About Commitment Issues</Link>
+  </nav>
+}
 
 // SSR fallback â€” ensures search engines see an h1 even when the dynamic page
 // is awaiting Suspense (useSearchParams forces a client boundary).
@@ -35,6 +44,7 @@ function SuspenseFallback() {
             Official death certificates for abandoned GitHub repos.
           </div>
         </header>
+        <InformationLinks />
       </div>
     </main>
   )
@@ -242,6 +252,7 @@ function HomePage() {
         </div>
       )}
 
+      <InformationLinks />
       <SiteFooter compact={idle} />
       </div>
     </main>

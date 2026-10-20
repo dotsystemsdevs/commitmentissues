@@ -4,7 +4,7 @@ import { pageMeta } from '@/lib/seo'
 import BreadcrumbJsonLd from '@/components/BreadcrumbJsonLd'
 
 export const metadata: Metadata = pageMeta({
-  title: 'FAQ · Commitment Issues',
+  title: 'Abandoned GitHub repo checker FAQ | Commitment Issues',
   description: 'Answers to common questions about Commitment Issues, the free death certificate generator for abandoned GitHub repositories. No sign-up needed.',
   path: '/faq',
 })

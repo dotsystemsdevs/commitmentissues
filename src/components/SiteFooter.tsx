@@ -31,6 +31,10 @@ export default function SiteFooter({ compact = false }: SiteFooterProps) {
     <footer className={`site-footer${compact ? ' site-footer--compact' : ''}`}>
       <nav className="footer-row" aria-label="Site footer">
         <div className="footer-group">
+          <Link href="/faq" className="footer-link">FAQ</Link>
+          <span className="footer-sep" aria-hidden>·</span>
+          <Link href="/pricing" className="footer-link">Pricing</Link>
+          <span className="footer-sep" aria-hidden>·</span>
           <Link href="/about" className="footer-link">About</Link>
           <span className="footer-sep" aria-hidden>·</span>
           <Link href="/legal" className="footer-link">Legal</Link>
