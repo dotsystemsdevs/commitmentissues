@@ -2,6 +2,7 @@
 
 import { Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
+import { track } from '@vercel/analytics'
 import { useSearchParams } from 'next/navigation'
 import { useRepoAnalysis } from '@/hooks/useRepoAnalysis'
 import SearchForm from '@/components/SearchForm'
@@ -250,6 +251,25 @@ function HomePage() {
           <UserDashboard repos={userRepos} username={scannedUsername} />
           <ResurrectLine username={scannedUsername} />
         </div>
+      )}
+
+      {idle && (
+        <section aria-labelledby="workflow-heading" style={{ width: '100%', maxWidth: '520px', margin: '36px auto 0', paddingTop: '24px', borderTop: '1px solid var(--c-border-light)', textAlign: 'center' }}>
+          <h2 id="workflow-heading" style={{ fontFamily: MONO, fontSize: '15px', fontWeight: 700, color: 'var(--c-ink)', margin: '0 0 8px' }}>Free vibe coding workflow</h2>
+          <p style={{ fontFamily: MONO, fontSize: '13px', lineHeight: 1.6, color: 'var(--c-muted)', margin: '0 0 16px' }}>
+            A free step-by-step guide to building an app with Claude Code, from idea to App Store.
+          </p>
+          <a
+            href="https://dotsystems.dev/pineflow?utm_source=commitmentissues&utm_medium=site&utm_campaign=workflow"
+            target="_blank"
+            rel="noopener"
+            className="subpage-faq-cta"
+            style={{ minHeight: '44px', padding: '11px 20px' }}
+            onClick={() => track('pineflow_clicked', { from: 'home_block' })}
+          >
+            See the workflow
+          </a>
+        </section>
       )}
 
       <InformationLinks />

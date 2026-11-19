@@ -60,6 +60,16 @@ export default function SiteFooter({ compact = false }: SiteFooterProps) {
           >
             Made by Stackpine
           </a>
+          <span className="footer-sep" aria-hidden>·</span>
+          <a
+            href="https://dotsystems.dev/pineflow?utm_source=commitmentissues&utm_medium=site&utm_campaign=workflow"
+            target="_blank"
+            rel="noopener"
+            className="footer-link"
+            onClick={() => track('pineflow_clicked', { from: 'footer' })}
+          >
+            Free vibe coding workflow
+          </a>
         </div>
 
         <span className="footer-divider" aria-hidden />
